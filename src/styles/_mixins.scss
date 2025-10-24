@@ -1,0 +1,107 @@
+@import './variables';
+
+// width
+@mixin publicWidth {
+    width: $publicWidth;
+    margin: 0 auto;
+}
+
+// img
+@mixin img_layout {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+// flex
+@mixin flex{
+    display: flex;
+    align-items: center;
+}
+
+@mixin footer_before{
+    padding-right: 6px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+@mixin Glassmorphism1{
+    backdrop-filter: blur(5px);
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 0 0 5px 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+@mixin Glassmorphism2{
+    border: 1px solid rgba(255, 255, 255);
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+}
+
+// font
+@font-face {
+  font-family: 'logo';
+  src: url('/fonts/Cafe24Decoshadow.ttf') format('truetype');
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: 'GmarketBold';
+  src: url('/fonts/GmarketSansTTFBold.ttf') format('truetype');
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: 'GmarketMedium';
+  src: url('/fonts/GmarketSansTTFMedium.ttf') format('truetype');
+  font-weight: 500;
+}
+
+// font_style
+@mixin logo_style {
+    font-family: $logo;
+    font-size: 23px;
+    color: $blue;
+    font-weight: normal;
+}
+@mixin code_font_style {
+    font-family: $logo;
+    font-size: 60px;
+    color: $black;
+    font-weight: normal;
+}
+
+@mixin GmarketBold_black_40 {
+    font-family: $GmarketBold;
+    font-size: 40px;
+    color: $black;
+}
+
+
+@mixin GmarketMedium_black_13 {
+    font-family: $GmarketMedium;
+    font-weight: normal;
+    font-size: 13px;
+    color: $black;
+}
+
+@mixin GmarketMedium_black_20 {
+    font-family: $GmarketMedium;
+    font-weight: normal;
+    font-size: 20px;
+    color: $black;
+}
+@mixin GmarketMedium_black_30 {
+    font-family: $GmarketMedium;
+    font-weight: normal;
+    font-size: 30px;
+    color: $black;
+}
+
+
+//white
+@mixin GmarketMedium_white_20 {
+    font-family: $GmarketMedium;
+    font-weight: normal;
+    font-size: 20px;
+    color: $white;
+}

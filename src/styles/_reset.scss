@@ -1,0 +1,33 @@
+@import './variables.scss';
+@import './mixins';
+
+*{box-sizing: border-box; padding:0; margin: 0; word-break: keep-all;} 
+html{font-size: 20px; color: $black; background-color: #E9F7FF; font-family: $GmarketMedium;
+    scrollbar-width: none; /* Firefox */
+} 
+body{ 
+    // user-select: none; 
+    // -webkit-user-select: none;
+    -ms-overflow-style: none; /* IE 10+ */
+    -webkit-tap-highlight-color: transparent;
+    margin: 0 auto; padding: 0;
+    max-width: 390px; min-height: 100vh;
+    font-family: $GmarketMedium;
+    background-color: $white;
+}
+body::-webkit-scrollbar {display: none; /* Chrome, Safari, Opera */}
+h1,h2,h3,h4,h5,p,figure{margin: 0; padding: 0;}
+ol,ul,li{list-style: none; margin: 0; padding:0;}
+button{
+    border: 0; margin: 0; padding: 0; background-color: transparent; 
+    font-family: $GmarketMedium;
+    color: $black;
+}
+img{border: 0; vertical-align: middle; @include img_layout; }
+a{text-decoration: none; color: $black;}
+input, textarea{
+    border:0;
+    font-family: $GmarketMedium;
+    color: $black;
+}
+::before,::after{margin:0; padding: 0; box-sizing: border-box;}

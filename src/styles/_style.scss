@@ -1,0 +1,25 @@
+@import './reset';
+@import './mixins';
+@import './variables';
+
+.header{
+    @include publicWidth;
+    @include logo_style;
+    padding: 20px 0;
+}
+
+.tagbtn{
+    @include GmarketMedium_black_13;
+    display: inline-block;
+    padding: 11px 14px 9px;
+    border: 1px solid $blue;
+    border-radius: 85px;
+}
+input:checked + .tagbtn{
+    display: inline-block;
+    padding: 11px 14px 9px;
+    color: white;
+    border: 1px solid $blue;
+    background-color: $blue;
+    border-radius: 85px;
+}
