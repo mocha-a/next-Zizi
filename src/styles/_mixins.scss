@@ -56,6 +56,12 @@
   font-weight: 500;
 }
 
+@font-face {
+    font-family: 'Galmuri9';
+    src: url('/fonts/Galmuri9.ttf') format('truetype');
+    font-weight: 500;
+  }
+
 // font_style
 @mixin logo_style {
     font-family: $logo;
@@ -104,4 +110,16 @@
     font-weight: normal;
     font-size: 20px;
     color: $white;
+}
+
+
+@mixin Galmuri9_18 {
+    font-family: $Galmuri;
+    font-weight: normal;
+    font-size: 18px;
+}
+@mixin Galmuri9_20 {
+    font-family: $Galmuri;
+    font-weight: normal;
+    font-size: 20px;
 }

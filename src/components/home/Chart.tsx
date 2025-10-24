@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { fetchTopTracks, Track } from "@/pages/api/lastfm";
+import { fetchTopTracks, Track } from "@/pages/api/lastfm/lastfm";
+import Image from "next/image";
 
 export default function TopTracksList() {
   const [tracks, setTracks] = useState<Track[]>([]);
@@ -12,7 +13,7 @@ export default function TopTracksList() {
       .catch((err) => console.error("API 호출 실패:", err));
   }, []);
 
-  console.log(tracks)
+  console.log(tracks);
 
   return (
     <div className='chart-container'>
@@ -20,7 +21,17 @@ export default function TopTracksList() {
       <ul>
         {tracks.map((track, i) => (
           <li key={i}>
-            {i + 1}. {track.name} - {track.artist.name}
+            <span className='chart-num'>{i + 1}</span>
+            <Image
+              src={track.image}
+              alt="album"
+              width={45}
+              height={45}
+            />
+            <div>
+              {track.name}
+              {track.artist.name}
+            </div>
           </li>
         ))}
       </ul>

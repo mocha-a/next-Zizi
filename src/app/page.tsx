@@ -10,11 +10,14 @@ import '../styles/home/home.scss';
 export default function Home() {
 
   return (
-    <div className="home-container">
-      <Dashboard/>
-      <Mood/>
-      <NewRelease/>
-      <Chart/>
-    </div>
+    <>
+      <div className='header'>Zizi !</div>
+      <div className="home-container">
+        <Dashboard/>
+        <Mood/>
+        <NewRelease/>
+        <Chart/>
+      </div>
+    </>
   );
 }

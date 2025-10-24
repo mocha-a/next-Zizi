@@ -5,7 +5,7 @@
     >*{ margin: 50px auto; }
 }
 .myMusic-container{
-    margin-top: 0;
+    margin-top: 0; margin-bottom: 25px;
     width: $publicWidth;
     position: relative;
     .overlay{
@@ -29,8 +29,9 @@
     }
     .myMusic-text-absolute{
         position: absolute;
+        width: calc(100% - 26px);
         left: 15px;
-        bottom: 15px;
+        bottom: 5px;
         z-index: 2;
         .myMusic-text-content{
             display: flex;
@@ -42,18 +43,24 @@
     }
 }
 .mood-container{
-    margin-left: 18px;
-    >h2{
-        @include GmarketMedium_black_20;
+    margin: 0 18px;
+    padding: 16px 0;
+    text-align: center;
+    border: 1px solid $gray;
+    border-radius: 5px;
+    box-shadow: 2px 2px 2px 1px rgba(26, 26, 26, 0.2);
+    @include Galmuri9_18;
+    >span{
         margin: 20px 0;
-        &::before{
+        color: $blue;
+        &::after{
             content: '🌈 ';
         }
     }
 }
 
 .NewRelease-container{
-    margin-left: 18px;
+    margin-top: 25px; margin-left: 18px;
     >h2{
         @include GmarketMedium_black_20;
         margin: 20px 0;
@@ -78,11 +85,20 @@
 }
 
 .chart-container{
+    width: calc(100% - 36px);
+    position: relative;
     >h2{
         @include GmarketMedium_black_20;
         margin: 20px 0;
         >span::after{
             content: '🔥';
+        }
+    }
+    >ul{
+        .chart-num{
+            position: absolute;
+            display: block;
+            color: $orange;
         }
     }
 

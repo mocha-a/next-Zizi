@@ -19,7 +19,6 @@ export default function RootLayout({
       <body
         className={'antialiased'}
       >
-        <Header/>
         {children}
         <SimpleBottomNavigation/>
       </body>

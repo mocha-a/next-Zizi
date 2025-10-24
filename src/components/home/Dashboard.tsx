@@ -14,33 +14,35 @@ function Dashboard() {
 
     return (
     <>
-    <div className="myMusic-container">
-    <div className="overlay" />
-    <div className="img-grid">
-        {imageList.map((src, i) => (
-        <div className="img-box" key={i}>
-            <Image
-            src={src}
-            alt={`이미지 ${i + 1}`}
-            fill
-            sizes="(max-width: 100px) 100px, 100px"
-            />
+        <div className="myMusic-container">
+            <div className="overlay" />
+            <div className="img-grid">
+                {imageList.map((src, i) => (
+                <div className="img-box" key={i}>
+                    <Image
+                    src={src}
+                    alt={`이미지 ${i + 1}`}
+                    fill
+                    sizes="(max-width: 100px) 100px, 100px"
+                    />
+                </div>
+                ))}
+            </div>
+            <div className="myMusic-text-absolute">
+                <div className="myMusic-text-content">
+                    <h2 className="myMusic-text">MY뮤직.exe</h2>
+                    <div>
+                        <Image
+                            src='/icons/play.svg'
+                            alt='이미지'
+                            width={14}
+                            height={18}
+                            style={{ objectFit: 'cover' }}
+                            />
+                    </div>
+                </div>
+            </div>
         </div>
-        ))}
-    </div>
-    <div className="myMusic-text-absolute">
-        <div className="myMusic-text-content">
-        <h2 className="myMusic-text">MY뮤직.exe</h2>
-        <Image
-            src='/icons/play.svg'
-            alt='이미지'
-            width={14}
-            height={18}
-            style={{ objectFit: 'cover' }}
-            />
-        </div>
-    </div>
-    </div>
     </>
     )
 }
