@@ -78,7 +78,7 @@ export default function SimpleBottomNavigation() {
         icon={value === 2 ? <SearchOn /> : <SearchOff />}
         />
         <BottomNavigationAction
-        label="내 Zapp"
+        label="내 Zizi"
         icon={value === 3 ? <MypageOn /> : <MypageOff />}
         />
       </BottomNavigation>

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { fetchTopTracks, Track } from "@/pages/api/lastfm";
+import { fetchTopTracks, Track } from "@/pages/api/lastfm/lastfm";
 
 export default function TopTracksList() {
   const [tracks, setTracks] = useState<Track[]>([]);
@@ -11,8 +11,6 @@ export default function TopTracksList() {
       .then(setTracks)
       .catch((err) => console.error("API 호출 실패:", err));
   }, []);
-
-  console.log(tracks)
 
   return (
     <div className='chart-container'>

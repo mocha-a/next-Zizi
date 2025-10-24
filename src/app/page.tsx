@@ -8,13 +8,15 @@ import Chart from "@/components/home/Chart";
 import '../styles/home/home.scss';
 
 export default function Home() {
-
   return (
+  <>
+    <div className='header'>Zizi !</div>
     <div className="home-container">
       <Dashboard/>
       <Mood/>
       <NewRelease/>
       <Chart/>
     </div>
+  </>
   );
 }

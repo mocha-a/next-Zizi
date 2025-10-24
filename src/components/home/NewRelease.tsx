@@ -30,7 +30,7 @@ function NewRelease() {
     setLoading(true);
     setError(null);
 
-    fetch('/api/spotify-new-releases')
+    fetch('/api/spotify/spotify-new-releases')
       .then(res => {
         if (!res.ok) throw new Error('Failed to fetch new releases');
         return res.json();

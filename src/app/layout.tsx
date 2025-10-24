@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Header from '@/components/common/Header';
 import SimpleBottomNavigation from "@/components/common/BottomNavigation";
 
 import '../styles/_style.scss';
@@ -19,7 +18,6 @@ export default function RootLayout({
       <body
         className={'antialiased'}
       >
-        <Header/>
         {children}
         <SimpleBottomNavigation/>
       </body>
