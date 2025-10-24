@@ -8,6 +8,11 @@
     padding: 20px 0;
 }
 
+.title{
+    @include GmarketMedium_black_23;
+    padding: 20px 0;
+}
+
 .tagbtn{
     @include GmarketMedium_black_13;
     display: inline-block;
@@ -15,6 +20,7 @@
     border: 1px solid $blue;
     border-radius: 85px;
 }
+
 input:checked + .tagbtn{
     display: inline-block;
     padding: 11px 14px 9px;

@@ -1,0 +1,33 @@
+@import '../variables';
+@import '../mixins';
+
+.search-container{
+    @include publicWidth;
+    .search-bar{
+        width: 100%;
+        display: flex;
+        margin-bottom: 30px;
+        border-bottom: 2px solid black;
+        >input{
+            width: 100%;
+            padding: 8px 2px;
+        }
+    }
+    h3{
+        margin-bottom: 20px;
+    }
+    .trending{
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+    .num{
+        width: 23px;
+        color: $blue;
+    }
+    .tag-ul{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+}

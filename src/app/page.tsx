@@ -8,8 +8,8 @@ import Chart from "@/components/home/Chart";
 import '../styles/home/home.scss';
 
 export default function Home() {
-
   return (
+<<<<<<< HEAD
     <>
       <div className='header'>Zizi !</div>
       <div className="home-container">
@@ -19,5 +19,16 @@ export default function Home() {
         <Chart/>
       </div>
     </>
+=======
+  <>
+    <div className='header'>Zizi !</div>
+    <div className="home-container">
+      <Dashboard/>
+      <Mood/>
+      <NewRelease/>
+      <Chart/>
+    </div>
+  </>
+>>>>>>> origin/jihyeon
   );
 }

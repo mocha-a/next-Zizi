@@ -69,6 +69,7 @@
     color: $blue;
     font-weight: normal;
 }
+
 @mixin code_font_style {
     font-family: $logo;
     font-size: 60px;
@@ -81,7 +82,6 @@
     font-size: 40px;
     color: $black;
 }
-
 
 @mixin GmarketMedium_black_13 {
     font-family: $GmarketMedium;
@@ -96,6 +96,14 @@
     font-size: 20px;
     color: $black;
 }
+
+@mixin GmarketMedium_black_23 {
+    font-family: $GmarketMedium;
+    font-weight: normal;
+    font-size: 23px;
+    color: $black;
+}
+
 @mixin GmarketMedium_black_30 {
     font-family: $GmarketMedium;
     font-weight: normal;

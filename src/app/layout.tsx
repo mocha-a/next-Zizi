@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Header from '@/components/common/Header';
 import SimpleBottomNavigation from "@/components/common/BottomNavigation";
 
 import '../styles/_style.scss';

@@ -13,7 +13,7 @@ export default function TopTracksList() {
       .catch((err) => console.error("API 호출 실패:", err));
   }, []);
 
-  console.log(tracks);
+  // console.log(tracks);
 
   return (
     <div className='chart-container'>
