@@ -1,5 +1,5 @@
-@import '../variables';
-@import '../mixins';
+@use '../variables'as *;
+@use '../mixins'as *;
 
 .search-container{
     @include publicWidth;
@@ -13,21 +13,33 @@
             padding: 8px 2px;
         }
     }
-    h3{
-        margin-bottom: 20px;
+
+    .trendingTags-contanier, .trendingSearches-contanier{
+        >*{margin-bottom: 50px;}
+        h3{
+            margin-bottom: 20px;
+            @include Galmuri9_20;
+        }
     }
-    .trending{
-        display: flex;
-        gap: 10px;
-        margin-bottom: 20px;
+    .trendingSearches-contanier{
+        .trending{
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            >span{font-size: 14px;}
+        }
+        .num{
+            width: 23px;
+            color: $blue;
+            font-size: 15px;
+        }
     }
-    .num{
-        width: 23px;
-        color: $blue;
-    }
-    .tag-ul{
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
+    .trendingTags-contanier{
+        .tag-ul{
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
     }
 }

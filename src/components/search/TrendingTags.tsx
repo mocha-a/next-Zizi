@@ -18,12 +18,12 @@ const TrendingTags = () => {
   ]
 
   return (
-    <div>
+    <div className='trendingTags-contanier'>
       <h3>핫한_분위기.zip</h3>
       <ul className='tag-ul'>
         {tag.map((item, i)=>
           <li key={i} className='trending-tag'>
-            <TagBtn tagbtn={item}/>
+            <div><TagBtn tagbtn={item}/></div>
           </li>
         )}
       </ul>

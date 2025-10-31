@@ -1,5 +1,5 @@
-@import '../variables';
-@import '../mixins';
+@use '../variables'as *;
+@use '../mixins'as *;
 
 .home-container{
     >*{ margin: 50px auto; }
@@ -100,6 +100,11 @@
             display: block;
             color: $orange;
         }
+    }
+    .chart-image{
+        border-radius: 5px;
+        overflow: hidden;
+        width: 45px; height: 45px;
     }
 
 }

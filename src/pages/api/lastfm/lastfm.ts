@@ -1,21 +1,51 @@
+// pages/api/tracks.ts
+import type { NextApiRequest, NextApiResponse } from 'next';
 import axios from "axios";
-import { searchSpotifyForAlbumCover } from "../spotify/spotify-new-releases";
+import { getSpotifyAccessToken } from '@/lib/spotify';
 
 const API_KEY = "1a683a3bff554bed77e6d5e89b7d5a63";
 const BASE_URL = "https://ws.audioscrobbler.com/2.0/";
+const SPOTIFY_API_URL = 'https://api.spotify.com/v1';
 
 export interface Track {
   name: string;
   artist: { name: string };
   url: string;
-  playcount: string;
-  image: string; // 추가
+  playcount: number;
+  image: string;
 }
 
-// 컴포넌트에서 import 가능하도록 export
-export async function fetchTopTracks(): Promise<Track[]> {
+interface RawTrack {
+  name: string;
+  url: string;
+  playcount: string;
+  artist: {
+    name: string;
+    url?: string;
+  };
+  image: {
+    ['#text']: string;
+    size: string;
+  }[];
+}
+
+// API Route  //default : Next.js의 API Route(서버 전용 엔드포인트) 를 만드는 코드 ! !
+export default async function handler(req: NextApiRequest, res: NextApiResponse<Track[] | { message: string }>) {
   try {
-    // 1. Last.fm에서 트랙 목록 가져오기
+    const tracks = await fetchTopTracks();
+    res.status(200).json(tracks);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: '트랙 가져오기 실패' });
+  }
+}
+
+// 캐싱용 Map
+const spotifyImageCache = new Map<string, string>();
+
+async function fetchTopTracks(): Promise<Track[]> {
+  try {
+    // Last.fm 트랙 가져오기
     const res = await axios.get(BASE_URL, {
       params: {
         method: "tag.getTopTracks",
@@ -26,41 +56,64 @@ export async function fetchTopTracks(): Promise<Track[]> {
       },
     });
 
-    const rawTracks: any[] = res.data.tracks.track;
-    
-    // 2. 트랙 목록을 순회하며 Spotify 이미지 검색 요청
-    const trackWithImages = rawTracks.map(async (rawTracks) => {
-      const artistName = rawTracks.artist.name;
-      const trackName = rawTracks.name;
+    const rawTracks: RawTrack[] = res.data.tracks.track;
+
+    const trackWithImages = rawTracks.map(async (rawTrack) => {
+      const artistName = rawTrack.artist.name;
+      const trackName = rawTrack.name;
+      const key = `${artistName}-${trackName}`;
 
       let ImgUrl = '';
 
-      try {
-        // 3. Spotify API 호출
-        ImgUrl = await searchSpotifyForAlbumCover(artistName, trackName) || "";
-      } catch (err) {
-        console.error(`이미지 검색 실패 (${artistName} - ${trackName}):`, err);
-        ImgUrl = "";
+      if (spotifyImageCache.has(key)) {
+        ImgUrl = spotifyImageCache.get(key)!;
+      } else {
+        try {
+          ImgUrl = await searchSpotifyForAlbumCover(artistName, trackName) || "";
+          spotifyImageCache.set(key, ImgUrl);
+        } catch (err) {
+          console.error(`이미지 검색 실패 (${artistName} - ${trackName}):`, err);
+          ImgUrl = "";
+        }
       }
 
-      // 4. 이미지 반환
-      const track: Track = {
+      return {
         name: trackName,
         artist: { name: artistName },
-        url: rawTracks.url,
-        playcount: rawTracks.playcount,
-        image: ImgUrl || "",
+        url: rawTrack.url,
+        playcount: parseInt(rawTrack.playcount, 10) || 0,
+        image: ImgUrl,
       };
-      return track;
     });
 
-    // 5. 모든 비동기 작업(Spotify 요청)이 완료될 때까지 기다립니다.
-    const finalTracks = await Promise.all(trackWithImages);
+    return await Promise.all(trackWithImages);
 
-    return finalTracks;
-    
   } catch (error) {
     console.error("데이터 가져오기 실패:", error);
     return [];
+  }
+}
+
+async function searchSpotifyForAlbumCover(artistName: string, trackName: string): Promise<string | null> {
+  try {
+    const accessToken = await getSpotifyAccessToken();
+    if (!accessToken) return null;
+
+    const query = `track:"${trackName}" artist:"${artistName}"`;
+
+    const apiRes = await fetch(
+      `${SPOTIFY_API_URL}/search?q=${encodeURIComponent(query)}&type=track&limit=1`,
+      {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      }
+    );
+
+    if (!apiRes.ok) return null;
+
+    const data = await apiRes.json();
+    return data.tracks?.items?.[0]?.album?.images?.[2]?.url ?? null;
+  } catch (err) {
+    console.error('Spotify track search error:', err);
+    return null;
   }
 }

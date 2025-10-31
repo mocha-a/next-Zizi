@@ -15,7 +15,7 @@ const TrendingSearches = () => {
   ]
 
   return (
-    <div className='TrendingSearches-contanier'>
+    <div className='trendingSearches-contanier'>
       <h3>인기 검색어 top 10.exe</h3>
       <ul>
         {top.map((item, i)=>

@@ -1,6 +1,6 @@
-@import './reset';
-@import './mixins';
-@import './variables';
+@use './reset' as *;
+@use './mixins' as *;
+@use './variables' as *;
 
 .header{
     @include publicWidth;
