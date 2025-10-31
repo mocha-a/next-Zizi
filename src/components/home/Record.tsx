@@ -1,7 +1,7 @@
 import React from 'react'
 import Image from "next/image";
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Grid, Pagination } from 'swiper/modules';
+import { Pagination } from 'swiper/modules';
 import Play from '../icons/Play';
 
 import 'swiper/css';
