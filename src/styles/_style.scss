@@ -39,3 +39,92 @@ input:checked + .tagbtn{
     background-color: $blue;
     border-radius: 85px;
 }
+
+// textfield
+.textfield{
+    width: 100%;
+    margin-bottom: 12px !important;
+
+    .MuiOutlinedInput-root {
+        font-size: 14px !important;
+        color: $black !important;
+
+        .MuiInputBase-input {
+            &::placeholder {
+                color: $gray;
+                opacity: 1; // MUI 기본 opacity 0.5라 명시적으로 지정해주는 게 좋아
+            }
+        }
+
+        // 기본 border
+        .MuiOutlinedInput-notchedOutline {
+            border-color: #ccc;
+        }
+
+        // hover 시 border
+        &:hover .MuiOutlinedInput-notchedOutline {
+            border-color: $blue;
+        }
+
+        // focus 시 border
+        &.Mui-focused .MuiOutlinedInput-notchedOutline {
+            border-color: $blue;
+        }
+
+        // error 시 border
+        &.Mui-error .MuiOutlinedInput-notchedOutline {
+            border-color: $orange;
+        }
+    }
+
+    // 라벨
+    .MuiInputLabel-root {
+        font-size: 14px;
+
+        &.Mui-focused {
+            color: $blue;
+        }
+
+        &.Mui-error {
+            color: $orange;
+        }
+    }
+
+    // 헬퍼 텍스트 (error 메시지 등)
+    .MuiFormHelperText-root {
+        font-size: 12px;
+        color: $gray;
+
+        &.Mui-error {
+            color: $orange;
+        }
+    }
+
+    // placeholder
+    .MuiInputBase-input{
+        font-size: 14px;     // 글자 크기
+        color: $black;
+
+        &::placeholder {
+            color: $gray;         // placeholder 색상
+            opacity: 1;          // 기본 opacity 0.5라 명시적으로 지정 추천
+        }
+    }
+
+}
+
+// longbtn
+.longbtn{
+    width: 100%;
+    padding: 17px 0;
+    color: $white;
+    font-size: 16px;
+    text-align: center;
+    border-radius: $radius10;
+    background-color: $gray;
+    opacity: 0.5;
+
+    .active{
+        background-color: $blue;
+    }
+}

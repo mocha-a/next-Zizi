@@ -51,29 +51,29 @@ function NewRelease() {
     <div className='NewRelease-container'>
         <h2>갓구운_노래.mp3</h2>
         <Swiper
-            slidesPerView={2.4}
-            grid={{
+          slidesPerView={2.4}
+          grid={{
             rows: 2,
             fill: 'row'
-            }}
-            spaceBetween={10}
-            modules={[Grid, Pagination]}
-            className="mySwiper"
+          }}
+          spaceBetween={10}
+          modules={[Grid, Pagination]}
+          className="mySwiper"
         >
         {data.map((item) => (
-            <SwiperSlide key={item.id}>
-            {/* <div className="album-img">
-                <Image
-                    src={item.images[0]?.url}
-                    alt={item.name}
-                    width={150}
-                    height={150}
-                />
-                <Play />
-            </div> */}
-            <p className="album-name">{item.name}</p>
-            <p className="artists-name">{item.artists[0]?.name}</p>
-            </SwiperSlide>
+          <SwiperSlide key={item.id}>
+          <div className="album-img">
+            <Image
+              src={item.images[0]?.url}
+              alt={item.name}
+              width={150}
+              height={150}
+            />
+            <Play />
+          </div>
+          <p className="album-name">{item.name}</p>
+          <p className="artists-name">{item.artists[0]?.name}</p>
+          </SwiperSlide>
         ))}
         </Swiper>
     </div>

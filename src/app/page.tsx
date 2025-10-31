@@ -7,6 +7,7 @@ import Record from "@/components/home/Record";
 import Chart from "@/components/home/Chart";
 
 import '../styles/home/home.scss';
+import Footer from "@/components/home/Footer";
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
         <NewRelease/>
         <Record/>
         <Chart/>
+        <Footer/>
       </div>
     </>
   );

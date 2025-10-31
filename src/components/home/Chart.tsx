@@ -27,7 +27,7 @@ export default function TopTracksList() {
     <div className='chart-container'>
       <h2><span>Hot</span> 트랙_맛보기.zip</h2>
       <ul>
-        {tracks.map((track, i) => (
+        {tracks.slice(0, 5).map((track, i) => (
           <li key={i}>
             <div className='chart-left'>
               <span className='chart-num'>{i + 1}</span>
@@ -40,15 +40,13 @@ export default function TopTracksList() {
                 />
               </div>
             </div>
+            <div className='chart-center'>
+              <p>{track.name}</p>
+              <span>{track.artist.name}</span>
+            </div>
             <div className='chart-right'>
-              <div className='track-info'>
-                <p>{track.name}</p>
-                <span>{track.artist.name}</span>
-              </div>
-              <div className='track-icons'>
-                <PlayBk className={"icons-play"}/>
-                <Dot3 className={"icons-dot"}/>
-              </div>
+              <PlayBk className={"icons-play"}/>
+              <Dot3 className={"icons-dot"}/>
             </div>
           </li>
         ))}
