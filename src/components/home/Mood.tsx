@@ -1,21 +1,46 @@
 import 'swiper/css'; // 기본 스타일
 
 function Mood() {
-    const tags = [
-      '여름',
-      '운동',
-      '드라이브',
-      '스트레스',
-      '출퇴근',
-      '추억소환',
-      '집중할때',
-      '비오는날',
+    const moodData = [
+      {
+        tag: '여름',
+        icon: '🌈'
+      },
+      {
+        tag: '운동',
+        icon: '⚽'
+      },
+      {
+        tag: '드라이브',
+        icon: '🚗'
+      },
+      {
+        tag: '스트레스',
+        icon: '💥'
+      },
+      {
+        tag: '출퇴근',
+        icon: '💼'
+      },
+      {
+        tag: '추억소환',
+        icon: '📹'
+      },
+      {
+        tag: '집중할때',
+        icon: '👓'
+      },
+      {
+        tag: '비오는날',
+        icon: '☔'
+      }
     ];
 
   return (
     <div className="mood-container">
       <span>today is...</span>
-      <b>{tags[0]}</b>
+      <span>{moodData[0].icon}</span>
+      <b>{moodData[0].tag}</b>
     </div>
   )
 }

@@ -53,10 +53,8 @@
     >span{
         margin: 20px 0;
         color: $blue;
-        &::after{
-            content: '🌈 ';
-        }
     }
+    >b{margin-left: 10px;}
 }
 
 .NewRelease-container{
@@ -76,10 +74,15 @@
             position: absolute;
             bottom: 8px; right: 10px;
         }
-    
     }
     .album-name, .artists-name{
         @include GmarketMedium_black_13;
+        
+        display: -webkit-box;
+        -webkit-line-clamp: 2; // 최대 2줄
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
     .artists-name{ color: $gray; margin-top: 8px; }
 }
@@ -119,36 +122,39 @@
         }
     }
     >ul{
-        li{margin-bottom: 20px;}
+        li{
+            margin-bottom: 20px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+        }
         .chart-num{
             position: absolute;
             display: block;
+            left: -13px; bottom: -15px;
             color: $orange;
             font-size: 40px;
             text-shadow: 2px 2px 6px rgba(26, 26, 26, 0.3);
         }
     }
+    .chart-center{
+        width: 65%;
+        p{font-size: 13px;}
+        span{
+            font-size: 11.5px;
+            color: $gray;
+        }
+    }
     .chart-right{
         display: flex;
-        align-items: center;
-        justify-content: space-between;
-
-        .track-info{
-            p{font-size: 13px;}
-            span{
-                font-size: 11.5px;
-                color: $gray;
-            }
+        gap: 30px;
+        .icons-play{
+            width: 11px; height: 14px;
         }
-        .track-icons{
-            display: flex;
-            gap: 30px;
-            .icons-play{
-                width: 11px; height: 14px;
-            }
-            .icons-dot{
-                width: 4px; height: 18px;
-            }
+        .icons-dot{
+            width: 4px; height: 18px;
         }
     }
     .chart-image{
@@ -156,5 +162,27 @@
         overflow: hidden;
         width: 45px; height: 45px;
     }
+}
 
+.footer-container{
+    padding-bottom: 50px;
+
+    .footer-icons{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 16px;
+
+        .icons-git{ width: 15px; }
+        .icons-figma{ width: 13px; }
+    }
+
+    p{ margin: 12px 0 10px;}
+    
+    p, span{
+        font-family: $Galmuri;
+        font-size: 9px;
+        display: block;
+        text-align: center;
+    }
 }

@@ -1,0 +1,57 @@
+@use '../variables'as *;
+@use '../mixins'as *;
+
+.login-container{
+    @include publicWidth;
+    text-align: center;
+
+    .login-logo{
+        padding: 120px 0 70px;
+        color: $blue;
+
+        span{
+            font-size: 16px;
+            opacity: 0.6;
+        }
+        .header{font-size: 50px;}
+    }
+
+    .login-join-btn{
+        font-size: 12px;
+    }
+
+    .login{
+        margin: 34px 0 17px;
+    }
+
+    .login-social-container{
+        span{
+            display: block;
+            position: relative;
+            margin: 34px 0 20px;
+            font-size: 10px;
+            opacity: 0.5;
+
+            &::before, &::after{
+                content: '';
+                display: block;
+                position: absolute;
+                width: 40%; height: 1px;
+                top: 50%;
+                background-color: $black;
+            }
+
+            &::before{ left: 0; }
+            &::after{ right: 0; }
+        }
+
+        .login-social-icons{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+
+            img{ width: 60px; height: 60px; }
+        }
+    }
+}
