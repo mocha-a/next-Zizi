@@ -20,6 +20,16 @@
     border: 1px solid $blue;
     border-radius: 85px;
 }
+.section-header{
+    >h2{
+        @include GmarketMedium_black_13;
+    }
+    display: flex;
+}
+
+.more-arrow{
+    width: 5px; height: 10px;
+}
 
 input:checked + .tagbtn{
     display: inline-block;

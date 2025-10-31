@@ -27,7 +27,7 @@ function CustomTabPanel(props: TabPanelProps) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {value === index && <Box sx={{ paddingTop: '10px', fontFamily: 'GmarketMedium', fontSize: '14px', color: '#1A1A1A' }}>{children}</Box>}
+      {value === index && <Box sx={{ paddingTop: '10px', fontFamily: 'GmarketMedium', fontSize: '13px', color: '#1A1A1A' }}>{children}</Box>}
     </div>
   );
 }
@@ -75,8 +75,8 @@ export default function BasicTabs() {
           }}
         >
           <CustomTab label="전체" {...a11yProps(0)} sx={{ minWidth: 'auto', px: 1 }} />
-          <CustomTab label="곡" {...a11yProps(1)} sx={{ minWidth: 'auto', px: 1 }} />
-          <CustomTab label="아티스트" {...a11yProps(2)} sx={{ minWidth: 'auto', px: 1 }} />
+          <CustomTab label="아티스트" {...a11yProps(1)} sx={{ minWidth: 'auto', px: 1 }} />
+          <CustomTab label="곡" {...a11yProps(2)} sx={{ minWidth: 'auto', px: 1 }} />
           <CustomTab label="앨범" {...a11yProps(3)} sx={{ minWidth: 'auto', px: 1 }} />
           <CustomTab label="플레이리스트" {...a11yProps(4)} sx={{ minWidth: 'auto', px: 1 }} />
         </Tabs>

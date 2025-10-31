@@ -4,18 +4,12 @@ import axios from 'axios';
 import Image from 'next/image'
 
 import React, { useState } from 'react'
+import { useSearchStore } from '@/store/searchStore';
 import { useRouter } from 'next/navigation';
 
-interface SpotifySearchResults {
-  artists?: unknown;
-  albums?: unknown;
-  tracks?: unknown;
-  playlists?: unknown;
-}
-
 const SearchBar = () => {
+  const { setResults } = useSearchStore();
   const [ query, setQuery ] = useState('');
-  const [ results, setResults ] = useState<SpotifySearchResults | null>(null);
   const router = useRouter();
 
   const onSearchSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -34,10 +28,6 @@ const SearchBar = () => {
         console.error('검색 실패:', err);
     }
   };
-
-  React.useEffect(() => {
-    console.log('results 업데이트됨:', results);
-  }, [results]);
 
   return (
     <form id="search" className='search-bar' onSubmit={(e) => onSearchSubmit(e)}>

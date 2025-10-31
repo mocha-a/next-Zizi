@@ -42,4 +42,31 @@
             gap: 10px;
         }
     }
+    .allReslts-container{
+        .allReslts{ 
+            .section-header{ margin-bottom: 20px; }
+            margin-bottom: 50px; 
+
+            .artist-container{
+                display: flex;
+                gap: 10px;
+                .artist-image{ margin-bottom: 13px; }
+                .artist-box{ text-align: center; }
+            }
+
+            .artist-image{
+                width: 98px; height: 98px;
+                border-radius: 50%;
+                overflow: hidden;
+            }
+        }
+
+
+
+        .album-image{
+            width: 90px; height: 90px;
+            border-radius: 5px;
+            overflow: hidden; 
+        }
+    }
 }
