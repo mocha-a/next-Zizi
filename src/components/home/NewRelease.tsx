@@ -62,7 +62,7 @@ function NewRelease() {
         >
         {data.map((item) => (
             <SwiperSlide key={item.id}>
-            <div className="album-img">
+            {/* <div className="album-img">
                 <Image
                     src={item.images[0]?.url}
                     alt={item.name}
@@ -70,7 +70,7 @@ function NewRelease() {
                     height={150}
                 />
                 <Play />
-            </div>
+            </div> */}
             <p className="album-name">{item.name}</p>
             <p className="artists-name">{item.artists[0]?.name}</p>
             </SwiperSlide>
