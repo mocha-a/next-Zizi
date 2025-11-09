@@ -46,12 +46,19 @@
         .allReslts{ 
             .section-header{ margin-bottom: 20px; }
             margin-bottom: 50px; 
+            
 
+        }
+        .allReslts-artist{
             .artist-container{
                 display: flex;
                 gap: 10px;
-                .artist-image{ margin-bottom: 13px; }
-                .artist-box{ text-align: center; }
+                .artist-box{ 
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    gap: 13px;
+                }
             }
 
             .artist-image{
@@ -60,13 +67,36 @@
                 overflow: hidden;
             }
         }
-
-
-
-        .album-image{
-            width: 90px; height: 90px;
-            border-radius: 5px;
-            overflow: hidden; 
+        .allReslts-track{}
+        .allReslts-album{
+            .album-box{
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                margin-bottom: 20px;
+                .album-image{
+                    width: 90px; height: 90px;
+                    border-radius: 5px;
+                    overflow: hidden; 
+                }
+                .album-detail{
+                    .albumA-name{
+                        margin: 6px 0 15px 0;
+                        font-size: 10px;
+                    }
+                    .album-bottom{
+                        span:last-of-type::before{
+                            content: ' | ';
+                            color: $gray;
+                        }
+                        span{
+                            font-size: 10px;
+                        }
+                    }
+                }
+            }
         }
+
+
     }
 }

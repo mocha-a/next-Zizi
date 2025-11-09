@@ -1,14 +1,15 @@
 'use client'
 
-import axios from 'axios';
 import Image from 'next/image'
 
 import React, { useState } from 'react'
-import { useSearchStore } from '@/store/searchStore';
 import { useRouter } from 'next/navigation';
+import { useSearchStore } from '@/store/searchStore';
+import { fetchSearch } from '@/lib/fetchSearch';
+import { AllResults } from '@/types/spotify';
 
 const SearchBar = () => {
-  const { setResults } = useSearchStore();
+  const { setAllResults  } = useSearchStore();
   const [ query, setQuery ] = useState('');
   const router = useRouter();
 
@@ -19,13 +20,10 @@ const SearchBar = () => {
     router.push(`/search/${query}`);
 
     try {
-        const res = await axios.get(`/api/spotify/search`, {
-        params: { query: query, limit: 5, type: 'artist,album,track,playlist' }
-        });
-        setResults(res.data);
-        console.log('검색 결과:', res.data);
+      const data: AllResults = await fetchSearch(query, 'artist,album,track,playlist', 5);
+      setAllResults(data);     
     } catch (err) {
-        console.error('검색 실패:', err);
+      console.error('검색 실패:', err);
     }
   };
 

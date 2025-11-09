@@ -2,14 +2,14 @@
 
 import React from 'react'
 import SearchLayout from '../SearchLayout'
-import BasicTabs from '@/components/search/TapMenu'
+import SearchTabs from '@/components/search/SearchTab'
 
 import '../../../styles/search/search.scss'
 
 const page = () => {
   return (
     <SearchLayout>
-      <BasicTabs />
+      <SearchTabs />
     </SearchLayout>
   )
 }
