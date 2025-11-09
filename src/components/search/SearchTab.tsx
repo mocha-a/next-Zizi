@@ -1,4 +1,3 @@
-// components/search/SearchTabs.tsx
 'use client';
 
 import React from 'react';

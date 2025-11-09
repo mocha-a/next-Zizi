@@ -1,5 +1,4 @@
-// components/common/TabsContainer.tsx
-'use client'; // Next.js에서 클라이언트 컴포넌트로 사용
+'use client';
 
 import * as React from 'react';
 import { styled } from '@mui/material/styles';

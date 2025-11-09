@@ -13,6 +13,21 @@
     object-fit: cover;
 }
 
+// search cover
+@mixin searchCover_img {
+    width: 90px; height: 90px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+// search cover
+@mixin searchCover_layout{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
 // flex
 @mixin flex{
     display: flex;

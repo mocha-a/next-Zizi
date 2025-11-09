@@ -1,0 +1,87 @@
+@font-face {
+  font-family: "logo";
+  src: url("/fonts/Cafe24Decoshadow.ttf") format("truetype");
+  font-weight: normal;
+}
+@font-face {
+  font-family: "GmarketBold";
+  src: url("/fonts/GmarketSansTTFBold.ttf") format("truetype");
+  font-weight: 700;
+}
+@font-face {
+  font-family: "GmarketMedium";
+  src: url("/fonts/GmarketSansTTFMedium.ttf") format("truetype");
+  font-weight: 500;
+}
+@font-face {
+  font-family: "Galmuri9";
+  src: url("/fonts/Galmuri9.ttf") format("truetype");
+  font-weight: 500;
+}
+.login-container {
+  width: calc(100% - 36px);
+  margin: 0 auto;
+  text-align: center;
+}
+.login-container .login-logo {
+  padding: 120px 0 70px;
+  color: #058CD7;
+}
+.login-container .login-logo span {
+  font-size: 16px;
+  opacity: 0.6;
+}
+.login-container .login-logo .header {
+  font-size: 50px;
+}
+.login-container .login-join-btn {
+  font-size: 12px;
+  position: relative;
+}
+.login-container .login-join-btn:hover {
+  cursor: pointer;
+}
+.login-container .login-join-btn:hover::after {
+  position: absolute;
+  content: "";
+  display: block;
+  width: 100%;
+  left: 0;
+  bottom: -2px;
+  border-bottom: 1px solid #1A1A1A;
+}
+.login-container .login {
+  margin: 34px 0 20px;
+}
+.login-container .login-social-container span {
+  display: block;
+  position: relative;
+  margin: 34px 0 20px;
+  font-size: 10px;
+  opacity: 0.5;
+}
+.login-container .login-social-container span::before, .login-container .login-social-container span::after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 40%;
+  height: 1px;
+  top: 50%;
+  background-color: #1A1A1A;
+}
+.login-container .login-social-container span::before {
+  left: 0;
+}
+.login-container .login-social-container span::after {
+  right: 0;
+}
+.login-container .login-social-container .login-social-icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+}
+.login-container .login-social-container .login-social-icons img {
+  width: 60px;
+  height: 60px;
+}

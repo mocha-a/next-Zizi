@@ -79,7 +79,7 @@ function page() {
     fetch('/api/spotify/spotify-mood-tracks')
       .then(res => res.json())
       .then(data => {
-        const filteredMoods = data.categoryRes.items.filter((cat: any) =>
+        const filteredMoods = data?.categoryRes?.items?.filter((cat: any) =>
           moodTags.some(tag => tag.eng === cat.name)
         );
 
