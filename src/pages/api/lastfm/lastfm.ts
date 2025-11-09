@@ -32,7 +32,10 @@ interface RawTrack {
 // API Route  //default : Next.js의 API Route(서버 전용 엔드포인트) 를 만드는 코드 ! !
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Track[] | { message: string }>) {
   try {
-    const tracks = await fetchTopTracks();
+    // req.query에서 tag 값 추출
+    const tag = Array.isArray(req.query.tag) ? req.query.tag[0] : req.query.tag;
+
+    const tracks = await fetchTopTracks(tag);
     res.status(200).json(tracks);
   } catch (err) {
     console.error(err);
@@ -43,13 +46,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 // 캐싱용 Map
 const spotifyImageCache = new Map<string, string>();
 
-async function fetchTopTracks(): Promise<Track[]> {
+async function fetchTopTracks(tag?: string): Promise<Track[]> {
+
   try {
+    const finalTag = tag || 'k-pop';
     // Last.fm 트랙 가져오기
     const res = await axios.get(BASE_URL, {
       params: {
         method: "tag.getTopTracks",
-        tag: "k-pop",
+        tag: finalTag,
         api_key: API_KEY,
         format: "json",
         limit: 100,

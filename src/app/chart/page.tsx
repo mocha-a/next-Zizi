@@ -8,119 +8,146 @@ import TrackItem from '@/components/common/TrackItem';
 import Footer from '@/components/common/Footer';
 import Check from '@/components/icons/Check';
 import PlayBorder from '@/components/icons/PlayBorder';
+import { useTabStore } from '@/store/tabStore';
+import TabsContainer from '@/components/common/TabsContainer';
 
 import '../../styles/chart/chart.scss';
 
-type Album = {
-  id: string;
-  name: string;
-  images: {
-    url: string;
-  }[];
-  artists: {
-    name: string;
-  }[];
-};
-
-interface MoodTag {
-  kor: string;
-  eng: string;
-}
-
 function page() {
+
   const topTags = ['GLOBAL', 'K-POP', 'J-POP', 'POP'];
-  const moodTags: MoodTag[] = [
+  const genreTags = [
     {
-      kor: '여유로운',
-      eng: 'Chill'
+      kor: 'POP',
+      eng: 'pop'
     },
     {
-      kor: '집중',
-      eng: 'Focus'
+      kor: 'K-POP',
+      eng: 'k-pop'
+    },
+    {
+      kor: '댄스',
+      eng: 'dance'
+    },
+    {
+      kor: '락',
+      eng: 'rock'
+    },
+    {
+      kor: '인디',
+      eng: 'Indie'
+    },
+    {
+      kor: '재즈',
+      eng: "Jazz"
+    },
+    {
+      kor: '알앤비',
+      eng: 'r&b'
+    },
+    {
+      kor: '힙합',
+      eng: 'hip-hop'
+    },
+    {
+      kor: '클래식',
+      eng: 'classical'
+    }
+  ];
+  const moodTags = [
+    {
+      kor: '여유로운',
+      eng: 'chill'
+    },
+    {
+      kor: '행복한',
+      eng: 'happy'
     },
     {
       kor: '수면',
-      eng: 'Sleep'
+      eng: 'sleep'
     },
     {
-      kor: '파티',
-      eng: 'Party'
+      kor: '공부',
+      eng: 'study'
     },
     {
       kor: '사랑',
-      eng: 'Love'
+      eng: 'love'
     },
     {
-      kor: '새해',
-      eng: "New Year's"
+      kor: '슬픈',
+      eng: "sad"
     },
     {
-      kor: '여행',
-      eng: 'Travel'
+      kor: '운동',
+      eng: 'workout'
+    },
+    {
+      kor: '드라이브',
+      eng: 'driving'
+    },
+    {
+      kor: '어두운',
+      eng: 'dark'
+    },
+    {
+      kor: '휴식',
+      eng: "relaxing"
     }
   ];
 
-  const [mood, setMood] = useState<string[]>([]);
-  const [genre, setGenre] = useState<string[]>([]);
+  const [selectedTag, setSelectedTag] = useState<string>('k-pop');
   const [topTracks, setTopTracks] = useState<Track[]>([]);
-  const [moodTracks, setMoodTracks] = useState<Album[]>();
+      
+  const tabs = [
+    { label: '인기차트', content: topTracks },
+    { label: '장르별', content: topTracks },
+    { label: '무드별', content: topTracks },
+  ];
   
   useEffect(() => {
-    fetch('/api/lastfm/lastfm')
+    fetch(`/api/lastfm/lastfm?tag=${selectedTag}`)
       .then(res => {
         if (!res.ok) throw new Error('Failed to fetch tracks');
         return res.json();
       })
       .then(data => setTopTracks(data))
       .catch(err => console.error(err));
-  }, []);
-
-  useEffect(() => {
-    fetch('/api/spotify/spotify-mood-tracks')
-      .then(res => res.json())
-      .then(data => {
-        const filteredMoods = data.categoryRes.items.filter((cat: any) =>
-          moodTags.some(tag => tag.eng === cat.name)
-        );
-
-        setMood(filteredMoods);
-      })
-      .catch(console.error);
-  }, []);
-
-  // console.log(mood);
-
-  // useEffect(() => {
-  //   fetch(`/api/spotify/spotify-mood-tracks?mood=${mood}`)
-  //     .then(res => {
-  //       if (!res.ok) throw new Error('Failed to fetch mood tracks');
-  //       return res.json();
-  //     })
-  //     .then(data => setMoodTracks(data.albums.items))
-  //     .catch(err => console.error(err))
-  // }, []);
+  }, [selectedTag]);
   
   return (
     <div className='chart-container'>
       <PageTitle text='차트'/>
-
+      
+      
+      
       <div className='chart-tagbtn-box'>
-        {/* {
+        {
           topTags.map((tag, i) => (
             <button
-              key={i}                                                                         onClick={() => {
-                const filtered = topTracks.
-              }}
+              key={i}
+              onClick={() => {setSelectedTag(tag)}}
             >
               <TagBtn tagbtn={tag} className='chart-tagbtn'/>
             </button>
           ))
-        } */}
+        }
+        {
+          genreTags?.map((tag, i) => (
+            <button 
+              key={i}
+              onClick={() => setSelectedTag(tag.eng)}
+            >
+              <TagBtn tagbtn={tag.kor} className='chart-tagbtn'/>
+            </button>
+          ))
+        }
         {
           moodTags?.map((tag, i) => (
             <button 
               key={i}
-              onClick={() => setMood([tag.eng])} // 클릭한 무드만 배열로 저장
+              onClick={() => setSelectedTag(tag.eng)}
             >
               <TagBtn tagbtn={tag.kor} className='chart-tagbtn'/>
             </button>
