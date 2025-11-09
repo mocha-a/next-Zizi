@@ -4,6 +4,7 @@ import { FormTextFielFieldDatas } from '@/components/common/FormTextFields'
 
 import '../../styles/login/login.scss';
 import LongBtn from '@/components/common/LongBtn';
+import Link from 'next/link';
 
 function page() {
     const data = [
@@ -36,7 +37,9 @@ function page() {
         <LongBtn longbtn={'로그인'} className='login'/>
 
         {/* 회원가입 버튼 */}
-        <p className='login-join-btn'>회원가입</p>
+        <Link href="/join">
+            <button className='login-join-btn'>회원가입</button>
+        </Link>
 
         {/* 소셜 로그인 */}
         <div className='login-social-container'>

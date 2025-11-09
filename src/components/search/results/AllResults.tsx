@@ -27,7 +27,7 @@ const AllResults = () => {
       <SectionHeader title="아티스트" />
       <div className='artist-container'>
         { artists.map((artist)=>
-          <div key={artist.id} className='artist-container'>
+          <div key={artist.id} className='artist-box'>
             <div className='artist-image'>
               <Image
                 src={artist?.images[0]?.url}

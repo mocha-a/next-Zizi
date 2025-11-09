@@ -5,9 +5,9 @@ import Mood from "@/components/home/Mood";
 import NewRelease from "@/components/home/NewRelease";
 import Record from "@/components/home/Record";
 import Chart from "@/components/home/Chart";
+import Footer from "@/components/common/Footer";
 
 import '../styles/home/home.scss';
-import Footer from "@/components/home/Footer";
 
 export default function Home() {
   return (

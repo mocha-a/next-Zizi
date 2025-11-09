@@ -1,0 +1,44 @@
+.chart-container{
+    width: calc(100% - 36px);
+    min-height: 100vh;
+
+    margin: 0 auto;
+    position: relative;
+    overflow: visible;
+
+    .chart-tagbtn-box{
+        .chart-tagbtn{
+            margin-right: 10px;
+        }
+    }
+
+    .chart-section-list-box{
+        margin-bottom: 50px;
+    }
+
+    .chart-topmenu-box{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 13px;
+        margin: 30px 0 20px;
+
+        div{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .chart-icon-check{
+            width: 12px;
+        }
+        .chart-icon-play{
+            width: 10px;
+        }
+    }
+}
+
+.chart-footer{
+    margin: 50px 0;
+}

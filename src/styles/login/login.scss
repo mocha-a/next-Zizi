@@ -18,10 +18,24 @@
 
     .login-join-btn{
         font-size: 12px;
+        position: relative;
+
+        &:hover{
+            cursor: pointer;
+
+            &::after{
+            position: absolute;
+            content: '';
+            display: block;
+            width: 100%;
+            left: 0; bottom: -2px;
+            border-bottom: 1px solid $black;
+        }
+        }
     }
 
     .login{
-        margin: 34px 0 17px;
+        margin: 34px 0 20px;
     }
 
     .login-social-container{

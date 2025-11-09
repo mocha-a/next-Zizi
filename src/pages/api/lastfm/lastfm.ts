@@ -52,7 +52,7 @@ async function fetchTopTracks(): Promise<Track[]> {
         tag: "k-pop",
         api_key: API_KEY,
         format: "json",
-        limit: 10,
+        limit: 100,
       },
     });
 
