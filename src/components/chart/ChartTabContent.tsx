@@ -7,6 +7,8 @@ import TagBtn from '@/components/common/TagBtn';
 import TrackItem from '@/components/common/TrackItem';
 import Check from '@/components/icons/Check';
 import PlayBorder from '@/components/icons/PlayBorder';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { FreeMode } from 'swiper/modules';
 
 interface ChartTabContentProps {
     tabType: 'top' | 'genre' | 'mood';
@@ -44,19 +46,29 @@ function ChartTabContent({ tabType }: ChartTabContentProps) {
   return (
     <>
       <div className='chart-tagbtn-box'>
-        {tabType === 'top' ? (
-            (tagByenteredTab as string[]).map((tag, i) => (
-                <button key={i} onClick={() => {setSelectedTag(tag)}}>
-                    <TagBtn tagbtn={tag} className='chart-tagbtn'/>
-                </button>
-            ))
-        ) : (
-            (tagByenteredTab as { kor: string, eng: string }[]).map((tag, i) => (
-                <button key={i} onClick={() => {setSelectedTag(tag.eng)}}>
-                    <TagBtn tagbtn={tag.kor} className='chart-tagbtn'/>
-                </button>
-            ))
-        )}
+        <Swiper
+          modules={[FreeMode]}
+          slidesPerView={'auto'}
+          freeMode={true}
+        >
+          {tabType === 'top' ? (
+              (tagByenteredTab as string[]).map((tag) => (
+                  <SwiperSlide key={tag}>
+                    <button onClick={() => {setSelectedTag(tag)}}>
+                        <TagBtn tagbtn={tag} className='chart-tagbtn'/>
+                    </button>
+                  </SwiperSlide>
+              ))
+          ) : (
+              (tagByenteredTab as { kor: string, eng: string }[]).map((tag) => (
+                  <SwiperSlide key={tag.kor}>
+                    <button onClick={() => {setSelectedTag(tag.eng)}}>
+                        <TagBtn tagbtn={tag.kor} className='chart-tagbtn'/>
+                    </button>
+                  </SwiperSlide>
+              ))
+          )}
+        </Swiper>
       </div>
 
       <div className='chart-topmenu-box'>
