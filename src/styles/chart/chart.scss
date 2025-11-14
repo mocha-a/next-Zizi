@@ -7,8 +7,16 @@
     overflow: visible;
 
     .chart-tagbtn-box{
-        .chart-tagbtn{
-            margin-right: 10px;
+        .swiper-slide{
+            width: auto !important;
+            display: inline-flex !important;
+            overflow: hidden;
+
+            .chart-tagbtn{
+                display: inline-flex;
+                white-space: nowrap;
+                margin-right: 10px;
+            }
         }
     }
 
