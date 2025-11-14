@@ -7,7 +7,7 @@ export function GetDailyMood() {
     useEffect(()=>{
         const saved = localStorage.getItem('dailyMood');
         const savedDate = localStorage.getItem('dailyMoodDate');
-        const today = new Date().toDateString();
+        const today = new Date().toDateString();  // 오늘 날짜
 
         if ( saved && savedDate === today ) {
             setMood(JSON.parse(saved));
