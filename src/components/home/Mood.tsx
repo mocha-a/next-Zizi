@@ -1,46 +1,16 @@
 import 'swiper/css'; // 기본 스타일
+import GetDailyMood from './GetDailyMood';
 
 function Mood() {
-    const moodData = [
-      {
-        tag: '여름',
-        icon: '🌈'
-      },
-      {
-        tag: '운동',
-        icon: '⚽'
-      },
-      {
-        tag: '드라이브',
-        icon: '🚗'
-      },
-      {
-        tag: '스트레스',
-        icon: '💥'
-      },
-      {
-        tag: '출퇴근',
-        icon: '💼'
-      },
-      {
-        tag: '추억소환',
-        icon: '📹'
-      },
-      {
-        tag: '집중할때',
-        icon: '👓'
-      },
-      {
-        tag: '비오는날',
-        icon: '☔'
-      }
-    ];
+  const moodOfToday = GetDailyMood(); // 오늘의 무드를 결정하는 함수 불러오기
 
+  if (!moodOfToday) return null; // 값이 없으면 null return
+  
   return (
     <div className="mood-container">
       <span>today is...</span>
-      <span>{moodData[0].icon}</span>
-      <b>{moodData[0].tag}</b>
+      <span>{moodOfToday.icon}</span>
+      <b>{moodOfToday.kor}</b>
     </div>
   )
 }
