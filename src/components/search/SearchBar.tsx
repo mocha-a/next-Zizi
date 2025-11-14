@@ -1,15 +1,16 @@
 'use client'
 
 import Image from 'next/image'
-
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation';
 import { useSearchStore } from '@/store/searchStore';
+import { useTabStore } from '@/store/tabStore';
 import { fetchSearch } from '@/lib/fetchSearch';
 import { AllResults } from '@/types/spotify';
 
 const SearchBar = () => {
-  const { setAllResults  } = useSearchStore();
+  const { setAllResults, setArtistResults, setAlbumResults, setTrackResults, setPlaylistResults, setSearchQuery } = useSearchStore();
+  const { setTabValue } = useTabStore(); 
   const [ query, setQuery ] = useState('');
   const router = useRouter();
 
@@ -17,6 +18,15 @@ const SearchBar = () => {
     e.preventDefault();
     if (!query.trim()) return;
 
+    setSearchQuery(query);
+    
+    setAllResults(null);
+    setArtistResults(null);
+    setAlbumResults(null);
+    setTrackResults(null);
+    setPlaylistResults(null);
+
+    setTabValue(0);
     router.push(`/search/${query}`);
 
     try {

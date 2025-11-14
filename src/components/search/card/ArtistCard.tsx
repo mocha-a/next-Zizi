@@ -4,9 +4,11 @@ import Image from 'next/image'
 interface Props {
   name: string;
   imageUrl?: string;
+  genres?: string[];
+  popularity?: number;
 }
 
-const ArtistCard = ({ name, imageUrl }: Props) => {
+const ArtistCard = ({ name, imageUrl, genres, popularity }: Props) => {
   return (
     <div className='artist-box'>
       <div className='artist-image'>
@@ -17,7 +19,11 @@ const ArtistCard = ({ name, imageUrl }: Props) => {
           height={98}
         />
       </div>
-    <p className='artist-name'>{name}</p>
+      <div>
+        <p className='artist-name'>{name}</p>
+        {genres && genres.length > 0 && <p>{genres.join(', ')}</p>}
+        {popularity !== undefined && <p className='heart'>{popularity}%</p>}
+      </div>
     </div>
   )
 }

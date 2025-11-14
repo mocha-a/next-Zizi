@@ -103,4 +103,17 @@
             }
         }
     }
+
+    // 아티스트 컴포넌트
+    .artist-container{
+        .artist-box{
+            display: flex;
+            align-items: center;
+            gap: 13px;
+
+            .heart::before{
+                content: '💖';
+            }
+        }
+    }
 }

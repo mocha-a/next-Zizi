@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useSearchStore } from '@/store/searchStore';
 import { Artist, Album, Track, Playlist } from '@/types/spotify';
 import { MapTrack } from '@/types/trackMapper';
+import Image from 'next/image';
 import Link from 'next/link';
+import TrackItem from '@/components/common/TrackItem';
 import SectionHeader from './SectionHeader';
 import ArtistCard from '../card/ArtistCard';
 import AlbumCard from '../card/AlbumCard';
@@ -11,8 +13,6 @@ import AlbumCard from '../card/AlbumCard';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
-import TrackItem from '@/components/common/TrackItem';
-import Image from 'next/image';
 
 const AllResults = () => {
   const { allResults } = useSearchStore();
@@ -28,12 +28,10 @@ const AllResults = () => {
     setPlaylists(allResults?.playlists?.items || []);
   }, [allResults]);
 
-  console.log(playlists);
-
   return (
     <div className='allReslts-container'>
       <div className='allReslts allReslts-artist'>
-        <SectionHeader title="아티스트" targetIndex={1}/>
+        <SectionHeader title="아티스트" targetIndex={1} type="artist"/>
         <Swiper
           slidesPerView={'auto'}
           spaceBetween={ 10 }
@@ -50,7 +48,7 @@ const AllResults = () => {
       </div>
 
       <div className='allReslts allReslts-track tracklist'>
-        <SectionHeader title="곡" targetIndex={2}/>
+        <SectionHeader title="곡" targetIndex={2} type="album"/>
         {tracks.map((track)=>
           <TrackItem
             key={track.id}
@@ -62,7 +60,7 @@ const AllResults = () => {
       </div>
 
       <div className='allReslts allReslts-album'>
-        <SectionHeader title="앨범" targetIndex={3}/>
+        <SectionHeader title="앨범" targetIndex={3} type="track"/>
         {albums.map((album) => (
           <AlbumCard
             key={album.id}
@@ -77,7 +75,7 @@ const AllResults = () => {
       </div>
 
       <div className='allReslts allReslts-playlist'>
-        <SectionHeader title="플레이리스트" targetIndex={4}/>
+        <SectionHeader title="플레이리스트" targetIndex={4} type="playlist"/>
         {playlists.map((playlist, i)=>
           <div key={i} className='playlist-box'>
             <div className='playlist-image'>
