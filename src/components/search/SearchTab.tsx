@@ -42,5 +42,5 @@ export default function SearchTabs() {
     }
   };
 
-  return <TabsContainer tabs={tabs} tabValue={tabValue} setTabValue={TabChange}/>;
+  return <TabsContainer tabs={tabs} tabValue={tabValue} setTabValue={TabChange} fullWidth={false} tabMarginRight="20px"/>;
 }

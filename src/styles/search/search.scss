@@ -36,11 +36,13 @@
         }
     }
     .trendingTags-contanier{
+        padding-bottom: $paddingForNavbar;
         .tag-ul{
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
         }
+        
     }
     .allReslts-container{
         .allReslts{ 

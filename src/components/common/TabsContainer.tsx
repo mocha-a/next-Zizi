@@ -16,6 +16,9 @@ interface TabItem {
 interface TabsContainerProps {
   tabs: TabItem[]; // 탭 목록
   tabValue: number; // 선택된 탭 index
+  tabMarginRight?: string; // CustomTab marginRight 조절
+  fullWidth?: boolean;  // fullWidth 조절
+  width?: boolean;
   setTabValue: (value: number) => void; // 탭 변경 함수
 }
 
@@ -52,21 +55,30 @@ function CustomTabPanel({
   );
 }
 
-const CustomTab = styled(Tab)({
-  marginRight: '20px',
+interface CustomTabProps {
+  mr?: string; // marginRight 값을 외부에서 조절
+}
+
+const CustomTab = styled((props: CustomTabProps & any) => (
+  <Tab {...props} />
+))(({ mr }) => ({
+  marginRight: mr || '0px',
   fontSize: '13px',
   fontFamily: 'GmarketMedium',
   color: '#D9D9D9',
   '&.Mui-selected': {
     color: '#1A1A1A',
   },
-});
+}));
 
 // TabsContainer 컴포넌트
 export default function TabsContainer({
   tabs,
   tabValue,
   setTabValue,
+  fullWidth,
+  tabMarginRight = '0px',
+  width = false,
 }: TabsContainerProps) {
   // 탭 클릭 시 호출되는 함수
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -82,12 +94,14 @@ export default function TabsContainer({
           display: 'flex',
           justifyContent: 'center',
         }}
-      >
+        >
         <Tabs
           value={tabValue} // 선택된 탭
           onChange={handleChange} // 탭 변경 이벤트
           aria-label="custom tabs"
+          variant={fullWidth ? 'fullWidth' : 'standard'}
           sx={{
+            width: width ? '100%' : undefined,
             minHeight: 'auto',
             '& .MuiTab-root': {
               padding: '7px 8px',
@@ -96,12 +110,16 @@ export default function TabsContainer({
             '& .MuiTabs-indicator': {
               backgroundColor: '#058CD7', // 선택된 탭 밑줄 색
             },
+            '& .MuiTabs-flexContainer': {
+              justifyContent: 'space-between', // <-- 이 부분 추가
+            },
           }}
         >
           {tabs.map((tab, index) => (
             <CustomTab
               key={index}
               label={tab.label}
+              mr={tabMarginRight}
               sx={{ minWidth: 'auto', px: 1 }}
             />
           ))}

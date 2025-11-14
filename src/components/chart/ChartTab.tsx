@@ -15,7 +15,7 @@ function ChartTab() {
     ];
 
   return (
-    <TabsContainer tabs={tabs} tabValue={tabValue} setTabValue={setTabValue}/>
+    <TabsContainer tabs={tabs} tabValue={tabValue} setTabValue={setTabValue} fullWidth={true} width={true}/>
   )
 }
 
