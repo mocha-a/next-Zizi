@@ -1,4 +1,5 @@
 'use client';
+
 import React, { useEffect } from 'react';
 import { useSearchStore } from '@/store/searchStore';
 import ArtistCard from '../card/ArtistCard';
