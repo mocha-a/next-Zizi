@@ -6,6 +6,13 @@
     margin: 0 auto;
 }
 
+// ...
+@mixin ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 // img
 @mixin img_layout {
     width: 100%;
@@ -54,28 +61,28 @@
 
 // font
 @font-face {
-  font-family: 'logo';
-  src: url('/fonts/Cafe24Decoshadow.ttf') format('truetype');
-  font-weight: normal;
+    font-family: 'logo';
+    src: url('/fonts/Cafe24Decoshadow.ttf') format('truetype');
+    font-weight: normal;
 }
 
 @font-face {
-  font-family: 'GmarketBold';
-  src: url('/fonts/GmarketSansTTFBold.ttf') format('truetype');
-  font-weight: 700;
+    font-family: 'GmarketBold';
+    src: url('/fonts/GmarketSansTTFBold.ttf') format('truetype');
+    font-weight: 700;
 }
 
 @font-face {
-  font-family: 'GmarketMedium';
-  src: url('/fonts/GmarketSansTTFMedium.ttf') format('truetype');
-  font-weight: 500;
+    font-family: 'GmarketMedium';
+    src: url('/fonts/GmarketSansTTFMedium.ttf') format('truetype');
+    font-weight: 500;
 }
 
 @font-face {
     font-family: 'Galmuri9';
     src: url('/fonts/Galmuri9.ttf') format('truetype');
     font-weight: 500;
-  }
+}
 
 // font_style
 @mixin logo_style {

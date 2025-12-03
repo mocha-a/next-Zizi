@@ -28,6 +28,8 @@ const AllResults = () => {
     setPlaylists(allResults?.playlists?.items || []);
   }, [allResults]);
 
+  console.log(albums)
+
   return (
     <div className='allReslts-container'>
       <div className='allReslts allReslts-artist'>

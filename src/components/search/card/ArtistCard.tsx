@@ -8,7 +8,19 @@ interface Props {
   popularity?: number;
 }
 
+// 장르 맵핑
+const genreMap: Record<string, string> = {
+  "k-ballad": "발라드",
+  "soundtrack": "OST",
+  "k-pop": "K-POP",
+  "k-rock": "락",
+  "k-rap": "랩"
+};
+
 const ArtistCard = ({ name, imageUrl, genres, popularity }: Props) => {
+  // 매핑 후 문자열로 변환
+  const mappedGenres = genres?.map((g) => genreMap[g] || g).join(' • ');
+
   return (
     <div className='artist-box'>
       <div className='artist-image'>
@@ -21,8 +33,11 @@ const ArtistCard = ({ name, imageUrl, genres, popularity }: Props) => {
       </div>
       <div>
         <p className='artist-name'>{name}</p>
-        {genres && genres.length > 0 && <p>{genres.join(', ')}</p>}
-        {popularity !== undefined && <p className='heart'>{popularity}%</p>}
+        {mappedGenres && (
+          <p className='artist-genre'>
+            {mappedGenres}
+          </p>
+        )}
       </div>
     </div>
   )
