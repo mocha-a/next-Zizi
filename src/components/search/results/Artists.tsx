@@ -13,12 +13,16 @@ const Artists = () => {
 
   if (!artistResults) return <div>로딩 중...</div>;
 
-  console.log(artistResults);
-
   return (
     <div className='artist-container'>
       {artistResults.map((artist) => (
-        <ArtistCard name={artist.name} imageUrl={artist.images[0]?.url} key={artist.id} genres={artist.genres} popularity={artist.popularity}/>
+        <ArtistCard 
+          name={artist.name} 
+          imageUrl={artist.images[0]?.url} 
+          key={artist.id} 
+          genres={artist.genres} 
+          popularity={artist.popularity}
+        />
       ))}
     </div>
   )
