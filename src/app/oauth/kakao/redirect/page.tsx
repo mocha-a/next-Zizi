@@ -19,7 +19,6 @@ export default function KakaoRedirect() {
         fetch("/api/oauth/kakao", { 
             method: "POST",
             headers: {
-                // ❗ 이 헤더가 누락되면 서버가 body를 JSON으로 인식 못할 수 있습니다.
                 'Content-Type': 'application/json', 
             },
             body: JSON.stringify({ code })
