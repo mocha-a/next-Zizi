@@ -11,6 +11,7 @@ interface Props {
 }
 
 const AlbumCard = ({ id, name, images, release_date, album_type, artists }: Props) => {
+
   return (
     <div key={id} className='album-box'>
       <div className='album-image'>
@@ -24,11 +25,9 @@ const AlbumCard = ({ id, name, images, release_date, album_type, artists }: Prop
       <div className='album-detail'>
         <div className='album-top'>
           <p className='album-name'>{name}</p>
-          {artists.map((artist) => (
-            <p key={artist.id} className='albumA-name'>
-              {artist.name}
-            </p>
-          ))}
+          <p className='albumA-name'>
+            {artists.map(artist => artist.name).join(', ')}
+          </p>
         </div>
         <div className='album-bottom'>
           <span>{release_date.replace(/-/g, ".")}</span>

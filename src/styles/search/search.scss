@@ -60,12 +60,6 @@
                     gap: 13px;
                 }
             }
-
-            .artist-image{
-                width: 98px; height: 98px;
-                border-radius: 50%;
-                overflow: hidden;
-            }
         }
         
         // 앨범, 플레이리스트 스타일 공통
@@ -75,9 +69,11 @@
                 @include searchCover_img; 
             }
         }
-        
+
         .allReslts-album{
             .album-detail{
+                width: 70%;
+                .album-name{ @include ellipsis; }
                 .albumA-name{
                     margin: 6px 0 15px 0;
                     font-size: 10px;
@@ -95,6 +91,7 @@
         }
 
         .allReslts-playlist{
+            padding-bottom: $paddingForNavbar;
             .playlist-detail{
                 p:nth-of-type(2), p:nth-of-type(3){
                     font-size: 10px;
@@ -112,10 +109,19 @@
             display: flex;
             align-items: center;
             gap: 13px;
-
-            .heart::before{
-                content: '💖';
+            margin-bottom: 20px;
+            .artist-genre{
+                margin-top: 15px;
+                text-transform: uppercase;
+                color: $gray;
             }
         }
+    }
+
+    // all, artist 공통 스타일
+    .artist-image{
+        width: 98px; height: 98px;
+        border-radius: 50%;
+        overflow: hidden;
     }
 }
