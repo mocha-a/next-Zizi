@@ -1,4 +1,4 @@
-//spotify type 정의
+// spotify type 정의
 
 // 전체
 export interface AllResults {
