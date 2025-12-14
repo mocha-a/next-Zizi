@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useSearchStore } from '@/store/searchStore';
 import { Artist, Album, Track, Playlist } from '@/types/spotify';
 import { MapTrack } from '@/types/trackMapper';
-import Image from 'next/image';
 import Link from 'next/link';
 import TrackItem from '@/components/common/TrackItem';
 import SectionHeader from './SectionHeader';
 import ArtistCard from '../card/ArtistCard';
 import AlbumCard from '../card/AlbumCard';
+import PlaylistCard from '../card/PlaylistCard';
 
 // Swiper
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -27,8 +27,6 @@ const AllResults = () => {
     setAlbums(allResults?.albums?.items || []);
     setPlaylists(allResults?.playlists?.items || []);
   }, [allResults]);
-
-  console.log(albums)
 
   return (
     <div className='allReslts-container'>
@@ -78,24 +76,14 @@ const AllResults = () => {
 
       <div className='allReslts allReslts-playlist'>
         <SectionHeader title="플레이리스트" targetIndex={4} type="playlist"/>
-        {playlists.map((playlist, i)=>
-          <div key={i} className='playlist-box'>
-            <div className='playlist-image'>
-              {playlist?.images[0]?.url && (
-                <Image
-                  src={playlist.images[0].url}
-                  alt={`${playlist.name} cover`}
-                  width={90}
-                  height={90}
-                />
-              )}
-            </div>
-            <div className='playlist-detail'>
-              <p>{playlist?.name}</p>
-              <p>{`총 ${playlist?.tracks.total} 곡`}</p>
-              <p>{playlist?.owner.display_name}</p>
-            </div>
-          </div>
+        {playlists.map((playlist)=>
+          <PlaylistCard 
+            id={playlist.id}
+            images={playlist.images}
+            name={playlist.name}
+            owner={playlist.owner}
+            tracks={playlist.tracks}
+          />
         )}
       </div>
     </div>

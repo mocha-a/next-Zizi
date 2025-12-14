@@ -53,12 +53,12 @@ export interface Playlist {
     display_name: string; 
     id: string; 
     external_urls: { spotify: string } 
-};
+  };
   public: boolean;
   collaborative: boolean;
   tracks: { 
     href: string; 
     total: number 
-};
+  };
   external_urls: { spotify: string };
 }
