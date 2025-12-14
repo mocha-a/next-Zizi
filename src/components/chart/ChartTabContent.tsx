@@ -3,12 +3,10 @@
 import React, { useEffect, useState } from 'react'
 import { Track } from '@/pages/api/lastfm/lastfm';
 import { allTags } from '@/constants/chartTags';
-import TagBtn from '@/components/common/TagBtn';
 import TrackItem from '@/components/common/TrackItem';
 import Check from '@/components/icons/Check';
 import PlayBorder from '@/components/icons/PlayBorder';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { FreeMode } from 'swiper/modules';
+import ChartTagSwiper from './ChartTagSwiper';
 
 interface ChartTabContentProps {
     tabType: 'top' | 'genre' | 'mood';
@@ -17,17 +15,13 @@ interface ChartTabContentProps {
 function ChartTabContent({ tabType }: ChartTabContentProps) {
     const tagByenteredTab = allTags[tabType];
 
-    const [selectedTag, setSelectedTag] = useState<string>('');
+    const [selectedTag, setSelectedTag] = useState<string>(
+      tabType === 'top'
+        ? allTags.top[0]
+        : allTags[tabType][0].eng
+    );
+    
     const [topTracks, setTopTracks] = useState<Track[]>([]);
-
-      // tabType이 바뀔 때마다 기본 태그 설정
-    useEffect(() => {
-        if (tabType === 'top') {
-            setSelectedTag(allTags.top[0].toLowerCase()); // ex. 'GLOBAL' → 'global'
-        } else {
-            setSelectedTag(allTags[tabType][0].eng); // genre나 mood일 경우 첫 번째 eng 값
-        }
-    }, [tabType]);
     
     // selectedTag가 바뀔 때마다 데이터 fetch
     useEffect(() => {
@@ -42,34 +36,9 @@ function ChartTabContent({ tabType }: ChartTabContentProps) {
         .catch(err => console.error(err));
     }, [selectedTag]);
 
-
   return (
     <>
-      <div className='chart-tagbtn-box'>
-        <Swiper
-          modules={[FreeMode]}
-          slidesPerView={'auto'}
-          freeMode={true}
-        >
-          {tabType === 'top' ? (
-              (tagByenteredTab as string[]).map((tag) => (
-                  <SwiperSlide key={tag}>
-                    <button onClick={() => {setSelectedTag(tag)}}>
-                        <TagBtn tagbtn={tag} className='chart-tagbtn'/>
-                    </button>
-                  </SwiperSlide>
-              ))
-          ) : (
-              (tagByenteredTab as { kor: string, eng: string }[]).map((tag) => (
-                  <SwiperSlide key={tag.kor}>
-                    <button onClick={() => {setSelectedTag(tag.eng)}}>
-                        <TagBtn tagbtn={tag.kor} className='chart-tagbtn'/>
-                    </button>
-                  </SwiperSlide>
-              ))
-          )}
-        </Swiper>
-      </div>
+      <ChartTagSwiper tabType={tabType} tagList={tagByenteredTab} selectedTag={selectedTag} setSelectedTag={setSelectedTag}/>
 
       <div className='chart-topmenu-box'>
         <div>

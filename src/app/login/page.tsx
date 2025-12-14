@@ -1,10 +1,11 @@
 import React from 'react'
 import Image from 'next/image';
 import { FormTextFielFieldDatas } from '@/components/common/FormTextFields'
-
-import '../../styles/login/login.scss';
 import LongBtn from '@/components/common/LongBtn';
 import Link from 'next/link';
+
+import '../../styles/login/login.scss';
+import KakaoLoginButton from '@/components/Login/LoginButton';
 
 function page() {
     const data = [
@@ -20,7 +21,7 @@ function page() {
             placeholder: '비밀번호를 입력해주세요.',
             required: false
         }
-    ]
+    ];
 
   return (
     <div className='login-container'>
@@ -45,24 +46,21 @@ function page() {
         <div className='login-social-container'>
             <span>소셜 로그인</span>
             <div className='login-social-icons'>
-                <Image
-                    src={'/imgs/login_google.png'}
-                    alt='login-google'
-                    width={60}
-                    height={60}
-                />
+                <button>
+                    <Image
+                        src={'/imgs/login_google.png'}
+                        alt='login-google'
+                        width={60}
+                        height={60}
+                    />
+                </button>
                 <Image
                     src={'/imgs/login_naver.png'}
                     alt='login-naver'
                     width={60}
                     height={60}
                 />
-                <Image
-                    src={'/imgs/login_kakao.png'}
-                    alt='login-kakao'
-                    width={60}
-                    height={60}
-                />
+                <KakaoLoginButton/>
             </div>
         </div>
 
