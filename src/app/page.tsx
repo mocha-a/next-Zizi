@@ -1,4 +1,4 @@
-'use client';
+// import { auth } from "@/auth";
 
 import Dashboard from "@/components/home/Dashboard";
 import Mood from "@/components/home/Mood";
@@ -9,7 +9,10 @@ import Footer from "@/components/common/Footer";
 
 import '../styles/home/home.scss';
 
-export default function Home() {
+export default async function Home() {
+  // 세션 정보 가져오기
+  // const session = await auth();
+
   return (
     <>
       <div className='header'>Zizi !</div>

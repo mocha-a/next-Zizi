@@ -3,9 +3,10 @@ import Image from 'next/image';
 import { FormTextFielFieldDatas } from '@/components/common/FormTextFields'
 import LongBtn from '@/components/common/LongBtn';
 import Link from 'next/link';
+import LoginButtons from '@/components/Login/LoginButton';
+
 
 import '../../styles/login/login.scss';
-import KakaoLoginButton from '@/components/Login/LoginButton';
 
 function page() {
     const data = [
@@ -45,23 +46,7 @@ function page() {
         {/* 소셜 로그인 */}
         <div className='login-social-container'>
             <span>소셜 로그인</span>
-            <div className='login-social-icons'>
-                <button>
-                    <Image
-                        src={'/imgs/login_google.png'}
-                        alt='login-google'
-                        width={60}
-                        height={60}
-                    />
-                </button>
-                <Image
-                    src={'/imgs/login_naver.png'}
-                    alt='login-naver'
-                    width={60}
-                    height={60}
-                />
-                <KakaoLoginButton/>
-            </div>
+            <LoginButtons/>
         </div>
 
     </div>

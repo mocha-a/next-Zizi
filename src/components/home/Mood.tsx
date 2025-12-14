@@ -1,3 +1,5 @@
+'use client';
+
 import 'swiper/css'; // 기본 스타일
 import GetDailyMood from './GetDailyMood';
 

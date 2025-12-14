@@ -201,3 +201,13 @@ input:checked + .tagbtn{
         text-align: center;
     }
 }
+
+// iconbutton
+.icon-button{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5px;
+    margin: 20px 0;
+    cursor: pointer;
+}

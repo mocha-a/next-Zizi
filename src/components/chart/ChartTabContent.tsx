@@ -7,6 +7,7 @@ import TrackItem from '@/components/common/TrackItem';
 import Check from '@/components/icons/Check';
 import PlayBorder from '@/components/icons/PlayBorder';
 import ChartTagSwiper from './ChartTagSwiper';
+import { IconButton } from '../common/IconButton';
 
 interface ChartTabContentProps {
     tabType: 'top' | 'genre' | 'mood';
@@ -41,14 +42,14 @@ function ChartTabContent({ tabType }: ChartTabContentProps) {
       <ChartTagSwiper tabType={tabType} tagList={tagByenteredTab} selectedTag={selectedTag} setSelectedTag={setSelectedTag}/>
 
       <div className='chart-topmenu-box'>
-        <div>
-          <Check className='chart-icon-check'/>
-          <p>전체선택</p>
-        </div>
-        <div>
-          <PlayBorder className='chart-icon-play'/>
-          <p>전체듣기</p>
-        </div>
+        <IconButton
+          icon={<Check className="chart-icon-check"/>}
+          text="전체선택"
+        />
+        <IconButton
+          icon={<PlayBorder className='chart-icon-play'/>}
+          text="전체듣기"
+        />
       </div>
 
       <ul className='tracklist'>
