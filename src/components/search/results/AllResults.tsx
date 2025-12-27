@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useEffect, useState } from 'react';
 import { useSearchStore } from '@/store/searchStore';
 import { Artist, Album, Track, Playlist } from '@/types/spotify';
@@ -27,6 +29,8 @@ const AllResults = () => {
     setAlbums(allResults?.albums?.items || []);
     setPlaylists(allResults?.playlists?.items || []);
   }, [allResults]);
+
+  console.log(allResults?.artists?.items)
 
   return (
     <div className='allReslts-container'>
@@ -77,7 +81,7 @@ const AllResults = () => {
       <div className='allReslts allReslts-playlist'>
         <SectionHeader title="플레이리스트" targetIndex={4} type="playlist"/>
         {playlists.map((playlist)=>
-          <PlaylistCard 
+          <PlaylistCard
             id={playlist.id}
             images={playlist.images}
             name={playlist.name}

@@ -1,4 +1,6 @@
-import React from 'react'
+import React from 'react';
+import { useRouter } from 'next/navigation';
+import { doSearch } from '@/lib/search';
 
 const TrendingSearches = () => {
   const top = [
@@ -14,16 +16,27 @@ const TrendingSearches = () => {
     "에스파"
   ]
 
+  const router = useRouter();
+
+  const handleClick = async (query: string) => {
+    await doSearch(query, router);
+  };
+
   return (
     <div className='trendingSearches-contanier'>
       <h3>인기 검색어 top 10.exe</h3>
       <ul>
-        {top.map((item, i)=>
-        <li key={i} className='trending'>
-            <b className='num'>{1 + i}</b>
-            <span>{item}</span>
-        </li>
-        )}
+        {top.map((item, i) => (
+          <li key={i} className="trending">
+            <b className="num">{i + 1}</b>
+            <button
+              className="keyword"
+              onClick={() => handleClick(item)}
+            >
+              {item}
+            </button>
+          </li>
+        ))}
       </ul>
     </div>
   )
