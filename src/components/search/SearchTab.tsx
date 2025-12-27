@@ -16,10 +16,10 @@ export default function SearchTabs() {
 
   const tabs = [
     { label: '전체', content: <AllResults /> },
-    { label: '아티스트', content: <Artists /> },
-    { label: '곡', content: <Tracks /> },
-    { label: '앨범', content: <Albums /> },
-    { label: '플레이리스트', content: <Playlists /> },
+    { label: '아티스트', type: "artist", content: <Artists /> },
+    { label: '곡', type: "track", content: <Tracks /> },
+    { label: '앨범', type: "album", content: <Albums /> },
+    { label: '플레이리스트', type: "playlist", content: <Playlists /> },
   ];
 
   // 탭 클릭 핸들러

@@ -5,11 +5,13 @@ import { styled } from '@mui/material/styles';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
+import { useSearchStore } from '@/store/searchStore';
 
 // tab 데이터 타입
 interface TabItem {
   label: string;
-  content: React.ReactNode; // 렌더링 가능한 모든 요소
+  type?: string;          // 탭 클릭 시 검색할 타입
+  content: React.ReactNode;
 }
 
 // TabsContainer props 데이터 타입
@@ -80,9 +82,17 @@ export default function TabsContainer({
   tabMarginRight = '0px',
   width = false,
 }: TabsContainerProps) {
-  // 탭 클릭 시 호출되는 함수
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+
+  const { searchQuery, fetchSearchResults } = useSearchStore();
+
+  const handleChange = async (event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
+    const type = tabs[newValue].type; // 여기서 type 가져오기
+    console.log(type);
+    
+    if (type && searchQuery) {
+      await fetchSearchResults(searchQuery, type, 50);
+    }
   };
 
   return (
