@@ -1,10 +1,8 @@
 import React from 'react'
-import Image from 'next/image';
 import { FormTextFielFieldDatas } from '@/components/common/FormTextFields'
 import LongBtn from '@/components/common/LongBtn';
 import Link from 'next/link';
 import LoginButtons from '@/components/Login/LoginButton';
-
 
 import '../../styles/login/login.scss';
 

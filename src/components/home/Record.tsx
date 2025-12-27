@@ -4,6 +4,7 @@ import React from 'react'
 import Image from "next/image";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
+import { useSession } from 'next-auth/react';
 import Play from '../icons/Play';
 
 import 'swiper/css';
@@ -30,11 +31,14 @@ function Record() {
             imgUrl: 'record2.png',
             recordUrl: '',
         },
-    ]
+    ];
+    const { data: session, status } = useSession();
+
+  if (status === "loading") return null; // 값이 없으면 null return
+
   return (
     <div className='record-container'>
-        {/* <h2>{ session ? `${session.user.name}님_맞춤_레코드.dll` : '맞춤_레코드.dll'}</h2> */}
-        <h2>OO님_맞춤_레코드.dll</h2>
+        <h2>{ session ? `${session.user.name}님_맞춤_레코드.dll` : '맞춤_레코드.dll'}</h2>
         <Swiper
             slidesPerView={2.4}
             spaceBetween={10}
