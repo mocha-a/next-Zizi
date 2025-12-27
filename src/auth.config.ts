@@ -28,7 +28,7 @@ const CustomPrismaAdapter = (prismaClient: typeof prisma): Adapter => {
   };
 };
 
-// 1. Session 타입 확장 (클라이언트에서 접근할 때 사용)
+// 1. Session 타입 확장 (클라이언트에서 접근할 때)
 declare module 'next-auth' {
     interface Session {
         user: {
