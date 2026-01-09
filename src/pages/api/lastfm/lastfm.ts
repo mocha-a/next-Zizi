@@ -3,7 +3,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import axios from "axios";
 import { getSpotifyAccessToken } from '@/lib/spotify';
 
-const API_KEY = "1a683a3bff554bed77e6d5e89b7d5a63";
+const LASTFM_API_KEY = process.env.LASTFM_API_KEY;
 const BASE_URL = "https://ws.audioscrobbler.com/2.0/";
 const SPOTIFY_API_URL = 'https://api.spotify.com/v1';
 
@@ -55,7 +55,7 @@ async function fetchTopTracks(tag?: string): Promise<Track[]> {
       params: {
         method: "tag.getTopTracks",
         tag: finalTag,
-        api_key: API_KEY,
+        api_key: LASTFM_API_KEY,
         format: "json",
         limit: 100,
       },

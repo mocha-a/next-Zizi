@@ -1,36 +1,57 @@
 import React from 'react';
 
-interface SortOption<T extends string> {
-  label: string
-  value: T
+export interface SortOption<T extends string> {
+  label: string;
+  value: T;
 }
 
-interface SortSelectProps<T extends string | null> {
-  value: T
-  options: readonly SortOption<Exclude<T, null>>[]
-  onChange: (value: T) => void
+export interface SortSelectProps<T extends string | null> {
+  value: T;
+  options: readonly SortOption<Exclude<T, null>>[];
+  onChange: (value: T | null) => void; // null도 받을 수 있도록
 }
 
-const SortSelect = <T extends string | null>({
+export const SortSelect = <T extends string | null>({
   value,
   options,
   onChange,
 }: SortSelectProps<T>) => {
   return (
-    <select
-      value={value ?? ''}
-      onChange={(e) =>
-        onChange((e.target.value || null) as T)
-      }
-    >
-      <option value="">정렬 기준</option>
-      {options.map((opt) => (
-        <option key={opt.value} value={opt.value}>
-          {opt.label}
-        </option>
-      ))}
-    </select>
-  )
-}
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+      {/* 기본 버튼 */}
+      <button
+        onClick={() => onChange(null)}
+        style={{
+          padding: '12px',
+          borderRadius: 8,
+          backgroundColor: value === null ? '#e3f2fd' : '#fff',
+          fontSize: 13,
+          cursor: 'pointer',
+          textAlign: 'left',
+        }}
+      >
+        추천순
+      </button>
 
-export default SortSelect
+      {/* 옵션 버튼 */}
+      {options.map((opt) => (
+        <button
+          key={opt.value}
+          onClick={() => onChange(opt.value as T)}
+          style={{
+            padding: '12px',
+            borderRadius: 8,
+            backgroundColor: value === opt.value ? '#e3f2fd' : '#fff',
+            fontSize: 13,
+            cursor: 'pointer',
+            textAlign: 'left',
+          }}
+        >
+          {opt.label}
+        </button>
+      ))}
+    </div>
+  );
+};
+
+export default SortSelect;

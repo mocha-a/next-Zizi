@@ -1,36 +1,22 @@
 'use client'
 
-import React, { useEffect, useState } from 'react';
-import { useSearchStore } from '@/store/searchStore';
-import { Artist, Album, Track, Playlist } from '@/types/spotify';
-import { MapTrack } from '@/types/trackMapper';
+import React from 'react';
 import Link from 'next/link';
+import { useSearchStore } from '@/store/searchStore';
+import { MapTrack } from '@/types/trackMapper';
 import TrackItem from '@/components/common/TrackItem';
-import SectionHeader from './SectionHeader';
-import ArtistCard from '../card/ArtistCard';
-import AlbumCard from '../card/AlbumCard';
-import PlaylistCard from '../card/PlaylistCard';
+import SectionHeader from '../ui/SectionHeader';
 
 // Swiper
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
+import ArtistCard from '@/components/entities/artist/ui/ArtistCard';
+import AlbumCard from '@/components/entities/album/ui/AlbumCard';
+import PlaylistCard from '@/components/entities/playlist/ui/PlaylistCard';
 
 const AllResults = () => {
   const { allResults } = useSearchStore();
-  const [ artists, setArtists ] = useState<Artist[]>([]);
-  const [ tracks, setTracks ] = useState<Track[]>([]);
-  const [ albums, setAlbums ] = useState<Album[]>([]);
-  const [ playlists, setPlaylists ] = useState<Playlist[]>([]);
-
-  useEffect(() => {
-    setArtists(allResults?.artists?.items || []);
-    setTracks(allResults?.tracks?.items || []);
-    setAlbums(allResults?.albums?.items || []);
-    setPlaylists(allResults?.playlists?.items || []);
-  }, [allResults]);
-
-  console.log(allResults?.artists?.items)
 
   return (
     <div className='allReslts-container'>
@@ -41,9 +27,9 @@ const AllResults = () => {
           spaceBetween={ 10 }
           className="mySwiper artist-container"
         >
-        {artists.map((artist) => (
+        {allResults?.artists?.items.map((artist) => (
           <SwiperSlide key={artist.id} style={{ width: '110px' }}>
-            <Link href={`/`}>
+            <Link href={`/search/artist/${artist.id}`}>
               <ArtistCard name={artist.name} imageUrl={artist.images[0]?.url} />
             </Link>
           </SwiperSlide>
@@ -53,7 +39,7 @@ const AllResults = () => {
 
       <div className='allReslts allReslts-track tracklist'>
         <SectionHeader title="곡" targetIndex={2} type="album"/>
-        {tracks.map((track)=>
+        {allResults?.tracks?.items.map((track)=>
           <TrackItem
             key={track.id}
             trackData={MapTrack(track)}
@@ -65,7 +51,7 @@ const AllResults = () => {
 
       <div className='allReslts allReslts-album'>
         <SectionHeader title="앨범" targetIndex={3} type="track"/>
-        {albums.map((album) => (
+        {allResults?.albums?.items.map((album) => (
           <AlbumCard
             key={album.id}
             id={album.id}
@@ -80,8 +66,9 @@ const AllResults = () => {
 
       <div className='allReslts allReslts-playlist'>
         <SectionHeader title="플레이리스트" targetIndex={4} type="playlist"/>
-        {playlists.map((playlist)=>
+        {allResults?.playlists?.items.map((playlist)=>
           <PlaylistCard
+            key={playlist.id}
             id={playlist.id}
             images={playlist.images}
             name={playlist.name}

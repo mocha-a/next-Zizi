@@ -1,8 +1,9 @@
+'use client'; 
 import React from 'react';
 import { allTags } from '@/constants/chartTags';
 import { useRouter } from 'next/navigation';
 import { doSearch } from '@/lib/search';
-import TagBtn from '../common/TagBtn';
+import TagBtn from '../../common/TagBtn';
 
 const TrendingTags = () => {
   const mood = allTags.mood.map(item => item.kor);

@@ -1,11 +1,12 @@
-import React from 'react'
-import Image from 'next/image'
+import React from 'react';
+import Image from 'next/image';
 
-interface Props {
+interface props {
   name: string;
   imageUrl?: string;
   genres?: string[];
   popularity?: number;
+  onClick?: () => void;
 }
 
 // 장르 맵핑
@@ -17,12 +18,12 @@ const genreMap: Record<string, string> = {
   "k-rap": "랩"
 };
 
-const ArtistCard = ({ name, imageUrl, genres, popularity }: Props) => {
+const ArtistCard = ({ name, imageUrl, genres, onClick }: props) => {
   // 매핑 후 문자열로 변환
   const mappedGenres = genres?.map((g) => genreMap[g] || g).join(' • ');
 
   return (
-    <div className='artist-box'>
+    <div className='artist-box' onClick={onClick}>
       <div className='artist-image'>
         <Image
           src={imageUrl || '/placeholder.png'}
@@ -43,4 +44,4 @@ const ArtistCard = ({ name, imageUrl, genres, popularity }: Props) => {
   )
 }
 
-export default ArtistCard
+export default ArtistCard;

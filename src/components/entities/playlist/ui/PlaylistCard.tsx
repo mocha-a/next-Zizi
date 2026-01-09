@@ -14,11 +14,12 @@ interface Props {
     href: string; 
     total: number 
   };
+  onClick?: () => void;
 }
 
-const PlaylistCard = ({ id, name, images, owner, tracks }: Props) => {
+const PlaylistCard = ({ id, name, images, owner, tracks, onClick }: Props) => {
   return (
-  <div key={id} className='playlist-box'>
+  <div key={id} className='playlist-box' onClick={onClick}>
     <div className='playlist-image'>
       {images[0]?.url && (
       <Image

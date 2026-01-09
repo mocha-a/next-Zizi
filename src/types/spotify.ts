@@ -1,5 +1,7 @@
 // spotify type 정의
 
+export type SearchCategory = 'artist' | 'album' | 'track' | 'playlist';
+
 // 전체
 export interface AllResults {
   artists?: { items: Artist[] };

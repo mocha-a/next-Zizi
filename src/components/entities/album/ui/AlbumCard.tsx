@@ -1,19 +1,20 @@
-import React from 'react'
-import Image from 'next/image'
+import React from 'react';
+import Image from 'next/image';
 
-interface Props {
+interface props {
   id: string;
   name: string;
   images: { url: string; width: number; height: number }[];
   release_date: string;
   album_type: string;
   artists: { id: string; name: string }[];
+  onClick?: () => void;
 }
 
-const AlbumCard = ({ id, name, images, release_date, album_type, artists }: Props) => {
+const AlbumCard = ({ id, name, images, release_date, album_type, artists, onClick }: props) => {
 
   return (
-    <div key={id} className='album-box'>
+    <div key={id} className='album-box' onClick={onClick}>
       <div className='album-image'>
         <Image
           src={images?.[0]?.url || '/placeholder.png'}

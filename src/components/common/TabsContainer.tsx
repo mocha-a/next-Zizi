@@ -10,18 +10,18 @@ import { useSearchStore } from '@/store/searchStore';
 // tab 데이터 타입
 interface TabItem {
   label: string;
-  type?: string;          // 탭 클릭 시 검색할 타입
+  type?: string;
   content: React.ReactNode;
 }
 
 // TabsContainer props 데이터 타입
 interface TabsContainerProps {
-  tabs: TabItem[]; // 탭 목록
-  tabValue: number; // 선택된 탭 index
-  tabMarginRight?: string; // CustomTab marginRight 조절
-  fullWidth?: boolean;  // fullWidth 조절
+  tabs: TabItem[];
+  tabValue: number;
+  tabMarginRight?: string;
+  fullWidth?: boolean;
   width?: boolean;
-  setTabValue: (value: number) => void; // 탭 변경 함수
+  setTabValue: (value: number) => void;
 }
 
 // 각 탭 패널 컴포넌트
@@ -37,20 +37,20 @@ function CustomTabPanel({
   return (
     <div
       role="tabpanel"
-      hidden={value !== index} // 현재 선택된 탭만 표시
+      hidden={value !== index}
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
     >
       {value === index && (
         <Box
           sx={{
-            paddingTop: '20px',
+            paddingTop: '10px',
             fontFamily: 'GmarketMedium',
             fontSize: '13px',
             color: '#1A1A1A',
           }}
         >
-          {children} {/* 실제 탭 내용 렌더링 */}
+          {children}
         </Box>
       )}
     </div>
@@ -58,12 +58,11 @@ function CustomTabPanel({
 }
 
 interface CustomTabProps {
-  mr?: string; // marginRight 값을 외부에서 조절
+  mr?: string;
 }
 
-const CustomTab = styled((props: CustomTabProps & any) => (
-  <Tab {...props} />
-))(({ mr }) => ({
+// ✅ any 제거된 CustomTab
+const CustomTab = styled(Tab)<CustomTabProps>(({ mr }) => ({
   marginRight: mr || '0px',
   fontSize: '13px',
   fontFamily: 'GmarketMedium',
@@ -82,16 +81,17 @@ export default function TabsContainer({
   tabMarginRight = '0px',
   width = false,
 }: TabsContainerProps) {
+  const { searchQuery, allSearchResults } = useSearchStore();
 
-  const { searchQuery, fetchSearchResults } = useSearchStore();
-
-  const handleChange = async (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = async (
+    _event: React.SyntheticEvent,
+    newValue: number
+  ) => {
     setTabValue(newValue);
-    const type = tabs[newValue].type; // 여기서 type 가져오기
-    console.log(type);
-    
+    const type = tabs[newValue].type;
+
     if (type && searchQuery) {
-      await fetchSearchResults(searchQuery, type, 50);
+      await allSearchResults(searchQuery);
     }
   };
 
@@ -104,10 +104,10 @@ export default function TabsContainer({
           display: 'flex',
           justifyContent: 'center',
         }}
-        >
+      >
         <Tabs
-          value={tabValue} // 선택된 탭
-          onChange={handleChange} // 탭 변경 이벤트
+          value={tabValue}
+          onChange={handleChange}
           aria-label="custom tabs"
           variant={fullWidth ? 'fullWidth' : 'standard'}
           sx={{
@@ -118,10 +118,10 @@ export default function TabsContainer({
               minHeight: 'auto',
             },
             '& .MuiTabs-indicator': {
-              backgroundColor: '#058CD7', // 선택된 탭 밑줄 색
+              backgroundColor: '#058CD7',
             },
             '& .MuiTabs-flexContainer': {
-              justifyContent: 'space-between', // <-- 이 부분 추가
+              justifyContent: 'space-between',
             },
           }}
         >
@@ -136,10 +136,9 @@ export default function TabsContainer({
         </Tabs>
       </Box>
 
-      {/* 각 탭 패널 렌더링 */}
       {tabs.map((tab, index) => (
         <CustomTabPanel key={index} value={tabValue} index={index}>
-          {tab.content} {/* 탭 내용 */}
+          {tab.content}
         </CustomTabPanel>
       ))}
     </Box>

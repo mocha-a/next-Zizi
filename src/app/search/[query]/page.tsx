@@ -1,17 +1,19 @@
-"use client"
+import SearchLayout from '../SearchLayout';
+import SearchTabs from '@/components/search/containers/SearchTab';
+import '../../../styles/search/search.scss';
 
-import React from 'react'
-import SearchLayout from '../SearchLayout'
-import SearchTabs from '@/components/search/SearchTab'
-
-import '../../../styles/search/search.scss'
-
-const page = () => {
-  return (
-    <SearchLayout>
-      <SearchTabs />
-    </SearchLayout>
-  )
+interface props {
+  searchParams: Promise<{
+    type?: string;
+  }>;
 }
 
-export default page
+export default async function Page({ searchParams }: props) {
+  const { type } = await searchParams;
+
+  return (
+    <SearchLayout>
+      <SearchTabs type={type} />
+    </SearchLayout>
+  );
+}

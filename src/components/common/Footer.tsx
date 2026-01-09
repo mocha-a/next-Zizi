@@ -10,7 +10,7 @@ function Footer() {
             <Figma className='icons-figma'/>
         </div>
         <p>사업자정보 | 개인정보처리방침</p>
-        <span>© 2025 Zizi! - All beats reserved 💿...</span>
+        <span>© 2026 Zizi! - All beats reserved 💿...</span>
     </div>
   )
 }

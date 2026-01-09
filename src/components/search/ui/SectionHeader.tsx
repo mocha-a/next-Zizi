@@ -1,23 +1,24 @@
+'use client';
+
 import React from 'react';
 import MoreArrow from '@/components/icons/MoreArrow';
 import { useTabStore } from '@/store/tabStore';
 import { useSearchStore } from '@/store/searchStore';
+import { SearchCategory } from '@/types/spotify';
 
 interface Props {
   title: string;
-  targetIndex?: number;
-  type?: string;
+  type?: SearchCategory;
+  targetIndex?: number; // 클릭 시 이동할 탭 index
 }
 
-const SectionHeader = ({ title, targetIndex, type }: Props) => {
+const SectionHeader = ({ title, type, targetIndex }: Props) => {
   const { setTabValue } = useTabStore();
-  const { searchQuery, fetchSearchResults } = useSearchStore();
+  const { fetchSectionIfNeeded } = useSearchStore();
 
   const onClick = async () => {
-    if (!searchQuery) return;
-    
-    if (type) await fetchSearchResults(searchQuery, type, 50);
-    if (typeof targetIndex === 'number') setTabValue(targetIndex);
+    if (type) await fetchSectionIfNeeded(type); // 여기서 필요한 데이터 fetch
+    if (typeof targetIndex === 'number') setTabValue(targetIndex); // 탭 이동
   };
 
   return (

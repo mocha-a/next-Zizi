@@ -27,11 +27,12 @@
     }
 }
 .section-header{
-    >h2{
-        @include GmarketMedium_black_13;
-    }
+    margin-bottom: 20px;
     display: flex;
+    justify-content: flex-start;
+    gap: 5px;
     cursor: pointer;
+    >h2{ @include GmarketMedium_black_13; }
 }
 
 .more-arrow{
@@ -175,6 +176,20 @@ input:checked + .tagbtn{
         border-radius: 5px;
         overflow: hidden;
         width: 45px; height: 45px;
+    }
+}
+
+//sortBtn
+.sortBtn-wrapper{
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: flex-end;
+    .sortBtn{
+        display: flex;
+        gap: 6px;
+        .drop{
+            width: 9px; height: 7px;
+        }
     }
 }
 

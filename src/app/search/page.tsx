@@ -1,10 +1,8 @@
-"use client"
+import React from 'react';
 
-import React from 'react'
-
-import SearchLayout from './SearchLayout'
-import TrendingSearches from '@/components/search/TrendingSearches'
-import TrendingTags from '@/components/search/TrendingTags'
+import SearchLayout from './SearchLayout';
+import TrendingSearches from '@/components/search/ui/TrendingSearches';
+import TrendingTags from '@/components/search/ui/TrendingTags';
 
 import '../../styles/search/search.scss';
 
