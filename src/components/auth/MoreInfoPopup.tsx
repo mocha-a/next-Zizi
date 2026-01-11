@@ -1,17 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import TagBtn from '../common/TagBtn';
-
-const GENDER_OPTIONS = [
-  { label: '여성', value: 'female'},
-  { label: '남성', value: 'male'},
-  { label: '기타', value: 'etc'},
-];
+import ShortBtn from '../common/ShortBtn';
+import GenderSelect from './GenderSelect';
 
 export default function OnboardingPopup() {
   const [birth, setBirth] = useState('');
-  const [gender, setGender] = useState<'여성' | '남성' | ''>('');
+  const [gender, setGender] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
@@ -38,7 +33,12 @@ export default function OnboardingPopup() {
   return (
     <div className='onboarding_overlay'>
       <div className='onboarding_contents'>
-        <h2>추가 정보 입력</h2>
+        <p className='onboarding_icon'>🎧</p>
+        <h2>나만의 음악을 만나볼까요?</h2>
+        <span>
+          간단한 정보만 입력하면<br />
+          취향에 딱 맞는 음악을 추천해 드려요&nbsp; .❛ ᴗ ❛.
+        </span>
 
         <label className='onboarding_birth'>
           생년월일
@@ -49,12 +49,9 @@ export default function OnboardingPopup() {
           />
         </label>
 
-        <div className='onboarding_gender'>
-          {GENDER_OPTIONS.map((option, i) => (
-            <div key={i}>
-              {/* <TagBtn className={value === } tagbtn={option.label}/> */}
-            </div>
-          ))}
+        <div className="onboarding_gender">
+          <span>성별</span>
+          <GenderSelect value={gender} onChange={setGender}/>
         </div>
         {/* <label className='onboarding_gender'>
           성별
@@ -69,13 +66,11 @@ export default function OnboardingPopup() {
         </label> */}
 
         <div className='onboarding_buttons'>
-          <button onClick={handleSubmit} disabled={loading}>
-            {loading ? '저장 중...' : '완료'}
-          </button>
-
-          <button>
-            다음에 할게요
-          </button>
+          <ShortBtn label="다음에 할게요" active={false} onClick={()=>{ setLoading(false) }}/>
+          <ShortBtn 
+            label={loading ? '저장 중...' : '완료'}
+            active={true} onClick={handleSubmit}
+          />
         </div>
 
       </div>

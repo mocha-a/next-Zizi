@@ -38,7 +38,7 @@ function JoinForm({ listData }: { listData: any[] }) {
 
         <Agree isComplete={isComplete}/>
 
-        <LongBtn longbtn='회원가입' className='join'/>
+        <LongBtn label='회원가입' className='join'/>
     </div>
   )
 }

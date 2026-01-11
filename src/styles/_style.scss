@@ -111,14 +111,32 @@ input:checked + .tagbtn{
     width: 100%;
     padding: 20px 0;
     color: $white;
-    font-size: 16px;
+    font-size: $regular;
     text-align: center;
     border-radius: $radius10;
     background-color: $lightgray;
     opacity: 0.5;
 
-    .active{
+    &.active{
         background-color: $blue;
+        opacity: 1;
+    }
+}
+
+// Shortbtn
+.shortbtn{
+    width: 50%;
+    padding: 15px 20px;
+    color: $white;
+    font-size: 14px;
+    text-align: center;
+    border-radius: $radius10;
+    background-color: $lightgray;
+    opacity: 0.5;
+
+    &.active{
+        background-color: $blue;
+        opacity: 1;
     }
 }
 
@@ -132,7 +150,7 @@ input:checked + .tagbtn{
         justify-content: space-between;
         position: relative;
     }
-    .chart-num-home{
+    .trackitem-num-home{
         position: absolute;
         display: block;
         left: -13px; bottom: -15px;
@@ -140,31 +158,42 @@ input:checked + .tagbtn{
         font-size: 40px;
         text-shadow: 2px 2px 6px rgba(26, 26, 26, 0.3);
     }
-    .chart-center{
+    .trackitem-center{
         width: 65%;
         display: flex;
-        justify-content: start;
         align-items: start;
         gap: 16px;
 
-        .chart-num-chart{
-            width: 20px;
-            text-align: center;
+        .trackitem-num-chart{
+            width: 8%;
+            flex-shrink: 0;
             font-family: $GmarketBold;
             font-size: 14px;
         }
 
         > div{
-            p{font-size: 13px;}
+            flex: 1;
+            min-width: 0;
+
+            p, span{
+                display: block;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+            p{
+                font-size: 13px;
+                margin-bottom: 5px;
+            }
             span{
                 font-size: 11.5px;
                 color: $gray;
             }
         }
     }
-    .chart-right{
+    .trackitem-right{
         display: flex;
-        gap: 30px;
+        gap: 22px;
         .icons-play{
             width: 11px; height: 14px;
         }
@@ -172,7 +201,7 @@ input:checked + .tagbtn{
             width: 4px; height: 18px;
         }
     }
-    .chart-image{
+    .trackitem-image{
         border-radius: 5px;
         overflow: hidden;
         width: 45px; height: 45px;
@@ -181,7 +210,7 @@ input:checked + .tagbtn{
 
 //sortBtn
 .sortBtn-wrapper{
-    margin-bottom: 20px;
+    margin-bottom: 18px;
     display: flex;
     justify-content: flex-end;
     .sortBtn{
@@ -240,21 +269,41 @@ input:checked + .tagbtn{
     display: block;
     left: 50%; top: 50%;
     transform: translate(-50%, -50%);
-    width: 300px; height: 500px;
+    width: 320px; height: auto;
     border-radius: $radius10;
     background-color: $white;
     padding: 22px;
+    text-align: center;
+
+    .onboarding_icon{margin: 8px 0 25px;}
 
     >h2{
-        font-size: $subTitle;
-        margin-bottom: 25px;
+        font-size: 20px;
+    }
+    >span{
+        font-size: 12px;
+        color: $gray;
+        display: block;
+        margin: 8px 0 30px;
     }
 
-    .onboarding_birth{
-        display: block;
+    .onboarding_birth, .onboarding_gender, .onboarding_buttons{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .onboarding_gender{
+        margin: 15px 0 30px;
+
+        .gender-item-box{
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
     }
 
     .onboarding_buttons{
-        display: block;
+        gap: 10px;
     }
 }
