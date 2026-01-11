@@ -6,7 +6,7 @@ import KakaoProvider from "next-auth/providers/kakao";
 import GoogleProvider from "next-auth/providers/google";
 import NaverProvider from "next-auth/providers/naver";
 
-// custom adapter
+// custom adapter - refresh token에 의한 에러 방지를 위해
 const CustomPrismaAdapter = (prismaClient: typeof prisma): Adapter => {
   // 1. 여기서 PrismaAdapter를 any로 캐스팅하여 내부 메서드 접근 제한을 풉니다.
   const adapter = PrismaAdapter(prismaClient) as any;
@@ -36,11 +36,19 @@ declare module 'next-auth' {
             name?: string | null;
             email?: string | null;
             image?: string | null;
+            needMoreInfo?: boolean;
         } & DefaultSession["user"];
     }
 
     interface User extends DefaultUser {
         id?: string;
+    }
+}
+
+declare module "next-auth/adapters" {
+    interface AdapterUser {
+        birth?: string | null;
+        gender?: string | null;
     }
 }
 
@@ -115,6 +123,7 @@ export const authOptions: NextAuthOptions = {
         async session({ session, user }) {
             if (session.user && user) {
                 session.user.id = user.id;
+                session.user.needMoreInfo = !user.birth || !user.gender;
             }
 
             return session;

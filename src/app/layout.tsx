@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import SimpleBottomNavigation from "@/components/common/BottomNavigation";
 import NextAuthProvider from "./providers";
+import SessionGate from "@/components/auth/SessionGate";
 
 import '../styles/_style.scss';
 
@@ -20,8 +21,10 @@ export default function RootLayout({
         className={'antialiased'}
       >
         <NextAuthProvider>
-          {children}
-          <SimpleBottomNavigation/>
+          <SessionGate>
+            {children}
+            <SimpleBottomNavigation/>
+          </SessionGate>
         </NextAuthProvider>
       </body>
     </html>
