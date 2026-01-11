@@ -11,7 +11,7 @@ interface TracksProps {
   loading: boolean;
   hasMore: boolean;
   onLoadMore: () => void;
-}
+} 
 
 const Tracks = ({ tracks, loading, hasMore, onLoadMore }: TracksProps) => {
   if (!tracks?.length) return <div>로딩 중...</div>;
