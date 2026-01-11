@@ -1,18 +1,18 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
-import Image from 'next/image';
 import { useParams } from 'next/navigation';
-
-import TabsContainer from '@/components/common/TabsContainer';
-
 import { useTabStore } from '@/store/tabStore';
 import { useSearchStore } from '@/store/searchStore';
 import { artistById } from '@/lib/search';
-import { Artist } from '@/types/spotify';
+import TabsContainer from '@/components/common/TabsContainer';
 import DetailHeader from '@/components/common/DetailHeader';
-
 import ArtistAlbums from '@/components/entities/artist/container/ArtistAlbums';
+import { mapGenres, Artist, Album } from '@/types/spotify';
+
+import '../../../../styles/artist/artist.scss';
+import Image from 'next/image';
+import axios from 'axios';
 
 // 탭 메뉴
 const tabs = [
@@ -24,7 +24,8 @@ const Page = () => {
   /**
    * URL에서 아티스트 id 추출
    */
-  const { id } = useParams<{ id: string }>();
+  const params = useParams<{ id: string }>();
+  const id = params?.id ?? null;
 
   /**
    * 검색 결과 캐시(store)에서
@@ -34,7 +35,9 @@ const Page = () => {
    * - 직접 URL 접근 / 새로고침: undefined
    */
   const { getEntityById } = useSearchStore();
-  const cachedArtist = getEntityById('artist', id);
+  const cachedArtist = id
+    ? getEntityById('artist', id)
+    : undefined;
 
   /**
    * 상세 페이지에서 실제로 사용할 아티스트 상태
@@ -58,6 +61,9 @@ const Page = () => {
    * - 전역 UI 상태이므로 zustand 사용
    */
   const { tabValue, setTabValue } = useTabStore();
+  const [ trackCount, setTrackCount ] = useState<number | null>(null);
+  const [ albumData, setAlbumData ] = useState<Album[] | null>(null);
+  const [ loadingTracks, setLoadingTracks ] = useState(false);
 
   /**
    * fallback fetch 로직
@@ -67,7 +73,7 @@ const Page = () => {
    * - 가져온 데이터는 페이지 로컬 state에만 저장
    */
   useEffect(() => {
-    if (cachedArtist) return;
+    if (!id || cachedArtist) return;
 
     const fetch = async () => {
       setLoading(true);
@@ -79,35 +85,77 @@ const Page = () => {
     fetch();
   }, [id, cachedArtist]);
 
-  /**
-   * 렌더링 분기
-   */
+  // 발매곡 수만 가져오기
+  useEffect(() => {
+    if (!id) return;
+
+    const fetchTrackCount = async () => {
+      setLoadingTracks(true);
+      try {
+        const res = await axios.get<{ trackCount: number }>(`/api/spotify/artist/${id}/track-count`);
+        setTrackCount(res.data.trackCount);
+      } catch (err) {
+        console.error('발매곡 수 조회 실패', err);
+      } finally {
+        setLoadingTracks(false);
+      }
+    };
+
+    fetchTrackCount();
+  }, [id]);
+
+  useEffect(() => {
+    if (!id) return;
+
+    const fetchAlbums = async () => {
+      try {
+        const res = await axios.get<{ albums: Album[] }>(
+          `/api/spotify/artist/${id}/albums`
+        );
+        setAlbumData(res.data.albums);
+      } catch (err) {
+        console.error('앨범 조회 실패', err);
+      }
+    };
+
+    fetchAlbums();
+  }, [id]);
+
+
+
+  console.log(trackCount);
+  console.log(cachedArtist);
+  console.log(albumData);
+
   if (loading) return <div>로딩중...</div>;
   if (!artist) return <div>아티스트 없음</div>;
 
-  /**
-   * 정상 렌더링
-   */
   return (
-    <div className="artist-Detail">
-      <DetailHeader />
-      {/* 상단: 아티스트 기본 정보 */}
-      <div className="artist-top">
-        <p>
+    <div className="artist-detail">
+      <section className="artist-top">
+        <div className="artist-img">
           <Image
             src={artist.images?.[0]?.url ?? '/imgs/default-artist.png'}
             alt={artist.name}
-            width={390}
-            height={360}
+            fill
+            style={{ objectFit: 'cover' }}
           />
-        </p>
-
-        <div>{artist.name}</div>
-        <div>{artist.genres?.join(', ')}</div>
-        <div>
-          팔로워 {artist.followers?.total.toLocaleString()}
+          <div className='artist-backBtn'>
+            <DetailHeader />
+          </div>
+          <h1 className="artist-name">{artist.name}</h1>
         </div>
-      </div>
+
+        <div className="artist-info">
+          <p className="artist-genres">{mapGenres(artist.genres)}</p>
+          <p className="artist-tracks">
+            총 {loadingTracks ? '로딩중...' : trackCount ?? 0}곡
+          </p>
+          <p className="artist-followers">
+            팔로워 {artist.followers?.total.toLocaleString()}명
+          </p>
+        </div>
+      </section>
 
       {/* 하단: 곡 / 앨범 탭 */}
       <div className="artist-down">

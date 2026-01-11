@@ -1,13 +1,6 @@
 import { create } from 'zustand';
-import {
-  AllResults,
-  Artist,
-  Album,
-  Track,
-  Playlist,
-  SearchCategory,
-} from '@/types/spotify';
 import { allSearch, typeSearch } from '@/lib/search';
+import { AllResults, Artist, Album, Track, Playlist, SearchCategory,} from '@/types/spotify';
 
 type EntityByCategory<T extends SearchCategory> =
   T extends 'artist'

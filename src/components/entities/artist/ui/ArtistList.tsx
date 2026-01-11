@@ -4,7 +4,7 @@ import InfiniteScroll from '@/components/common/InfiniteScroll';
 import ArtistCard from './ArtistCard';
 import type { Artist } from '@/types/spotify';
 
-interface props {
+interface Props {
   artists: Artist[];
   loading: boolean;
   hasMore: boolean;
@@ -12,13 +12,7 @@ interface props {
   onClick: (id: string) => void;
 }
 
-const ArtistList = ({
-  artists,
-  loading,
-  hasMore,
-  onLoadMore,
-  onClick,
-}: props) => {
+const ArtistList = ({ artists, loading, hasMore, onLoadMore, onClick }: Props) => {
   if (!artists.length && loading) return <div>로딩 중...</div>;
   if (!artists.length && !hasMore) return <div>검색 결과 없음</div>;
 

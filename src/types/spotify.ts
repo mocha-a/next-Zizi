@@ -2,6 +2,19 @@
 
 export type SearchCategory = 'artist' | 'album' | 'track' | 'playlist';
 
+// 장르 맵핑
+export const genreMap: Record<string, string> = {
+  "k-ballad": "발라드",
+  "soundtrack": "OST",
+  "k-pop": "K-POP",
+  "k-rock": "락",
+  "k-rap": "랩"
+};
+
+// 장르 배열 → 한글 문자열 변환
+export const mapGenres = (genres?: string[]) =>
+  genres?.map(g => genreMap[g] || g).join(' • ') ?? '';
+
 // 전체
 export interface AllResults {
   artists?: { items: Artist[] };
@@ -44,6 +57,7 @@ export interface Album {
   name: string;
   release_date: string;
   artists: { id: string; name: string }[];
+  popularity: number;
 }
 
 export interface Playlist {

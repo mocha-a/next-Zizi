@@ -1,0 +1,42 @@
+@use '../variables'as *;
+@use '../mixins'as *;
+
+.artist-info, .artist-down{@include publicWidth;}
+
+.artist-detail{
+    .artist-top{
+        margin-bottom: 30px;
+        .artist-info{
+            .artist-genres{ font-size: 15px;}
+            .artist-tracks, .artist-followers{
+                font-size: 12px;
+            }
+        }
+    }
+}
+
+.artist-img {
+    position: relative;
+    height: 360px;
+    background-size: cover;
+    background-position: center;
+    
+    .artist-backBtn{
+        position: absolute;
+        top: 4px; left: 18px;
+    }
+
+    .artist-name {
+        position: absolute;
+        bottom: 0px;
+        left: 16px;
+        color: black;
+        font-size: 30px;
+    }
+
+    >img{
+        background-color: #000000e6;
+        mask-image: linear-gradient(to bottom, rgba(255, 255, 255, 1) 80%, rgba(255, 255, 255, 0) 100%);
+        -webkit-mask-image: linear-gradient(to bottom, rgba(255, 255, 255, 1) 80%, rgba(255, 255, 255, 0) 100%);
+    }
+}

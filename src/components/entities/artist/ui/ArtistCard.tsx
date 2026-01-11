@@ -1,7 +1,8 @@
 import React from 'react';
 import Image from 'next/image';
+import { mapGenres } from '@/types/spotify';
 
-interface props {
+interface Props {
   name: string;
   imageUrl?: string;
   genres?: string[];
@@ -9,19 +10,8 @@ interface props {
   onClick?: () => void;
 }
 
-// 장르 맵핑
-const genreMap: Record<string, string> = {
-  "k-ballad": "발라드",
-  "soundtrack": "OST",
-  "k-pop": "K-POP",
-  "k-rock": "락",
-  "k-rap": "랩"
-};
 
-const ArtistCard = ({ name, imageUrl, genres, onClick }: props) => {
-  // 매핑 후 문자열로 변환
-  const mappedGenres = genres?.map((g) => genreMap[g] || g).join(' • ');
-
+const ArtistCard = ({ name, imageUrl, genres, onClick }: Props) => {
   return (
     <div className='artist-box' onClick={onClick}>
       <div className='artist-image'>
@@ -34,9 +24,9 @@ const ArtistCard = ({ name, imageUrl, genres, onClick }: props) => {
       </div>
       <div>
         <p className='artist-name'>{name}</p>
-        {mappedGenres && (
+        {genres && (
           <p className='artist-genre'>
-            {mappedGenres}
+            {mapGenres(genres)}
           </p>
         )}
       </div>
