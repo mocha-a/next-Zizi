@@ -1,7 +1,6 @@
 import React from 'react'
 import Image from "next/image";
-import PlayBk from "../icons/PlayBk";
-import Dot3 from "../icons/Dot3";
+import TrackItemRight from './TrackItemRight';
 
 interface Artist {
     name: string;
@@ -23,13 +22,13 @@ function TrackItem({trackData, page = '', index}: PropsType) {
   return (
     <li>
         {/* 좌측 이미지 섹션: 앨범 이미지 */}
-        <div className='chart-left'>
+        <div className='trackitem-left'>
             {/* 메인 홈에 표시할 차트 숫자 */}
             {page === 'home' && (
-                <span className='chart-num-home'>{index + 1}</span>
+                <span className='trackitem-num-home'>{index + 1}</span>
             )}
 
-            <div className='chart-image'>
+            <div className='trackitem-image'>
                 <Image
                 src={trackData.image}
                 alt="album"
@@ -40,10 +39,10 @@ function TrackItem({trackData, page = '', index}: PropsType) {
         </div>
 
         {/* 가수 및 제목 정보 */}
-        <div className='chart-center'>
+        <div className='trackitem-center'>
             {/* 차트 메뉴에 표시할 차트 숫자 */}
             {page === 'chart' && (
-                <span className='chart-num-chart'>{index + 1}</span>
+                <span className='trackitem-num-chart'>{index + 1}</span>
             )}
             
             <div>
@@ -53,9 +52,8 @@ function TrackItem({trackData, page = '', index}: PropsType) {
         </div>
 
         {/* 아이콘 섹션: 재생 및 더보기 */}
-        <div className='chart-right'>
-            <PlayBk className={"icons-play"}/>
-            <Dot3 className={"icons-dot"}/>
+        <div className='trackitem-right'>
+            <TrackItemRight track={trackData}/>
         </div>
     </li>
   )

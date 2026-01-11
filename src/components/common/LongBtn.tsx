@@ -1,11 +1,11 @@
 interface PropsType {
-  longbtn: React.ReactNode;
+  label: React.ReactNode;
   className?: string;
 }
 
-function LongBtn({ longbtn, className = '' }: PropsType) {
+function LongBtn({ label, className = '' }: PropsType) {
     return (
-    <div className={`longbtn ${className}`}>{longbtn}</div>
+    <button className={`longbtn ${className}`}>{label}</button>
     )
 }
 
