@@ -35,6 +35,20 @@
     margin-bottom: 20px;
 }
 
+//album-box, playlist-box Layout
+@mixin CoverLayout_item($image, $detail) {
+    @include searchCover_layout;
+    .#{$image} {
+        @include searchCover_img;
+        flex-shrink: 0;
+    }
+    .#{$detail} {
+        flex: 1;
+        min-width: 0;
+    }
+}
+
+
 // flex
 @mixin flex{
     display: flex;

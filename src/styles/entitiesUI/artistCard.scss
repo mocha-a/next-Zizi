@@ -1,0 +1,22 @@
+@use '../variables'as *;
+@use '../mixins'as *;
+
+// all, artist 공통 스타일
+.artist-image{
+    width: 98px; height: 98px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+// 아티스트 Card 컴포넌트
+.artist-box{
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    margin-bottom: 20px;
+    .artist-genre{
+        margin-top: 15px;
+        text-transform: uppercase;
+        color: $gray;
+    }
+}

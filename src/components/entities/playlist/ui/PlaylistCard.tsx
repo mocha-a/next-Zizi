@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import React from 'react'
+import React from 'react';
 
 interface Props {
   id: string;
@@ -38,4 +38,4 @@ const PlaylistCard = ({ id, name, images, owner, tracks, onClick }: Props) => {
   </div>
 )}
 
-export default PlaylistCard
+export default PlaylistCard;

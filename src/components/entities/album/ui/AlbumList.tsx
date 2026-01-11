@@ -4,7 +4,7 @@ import InfiniteScroll from '@/components/common/InfiniteScroll';
 import AlbumCard from './AlbumCard';
 import type { Album } from '@/types/spotify';
 
-interface props {
+interface Props {
   albums: Album[];
   loading: boolean;
   hasMore: boolean;
@@ -18,8 +18,8 @@ const AlbumList = ({
   hasMore,
   onLoadMore,
   onClick,
-}: props) => {
-  if (!albums.length) return <div>로딩 중...</div>;
+}: Props) => {
+  if (!albums?.length) return <div>로딩 중...</div>;
 
   return (
     <div className="albumTab-container">

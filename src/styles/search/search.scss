@@ -1,5 +1,8 @@
 @use '../variables'as *;
 @use '../mixins'as *;
+@use '../entitiesUI/artistCard.scss'as *;
+@use '../entitiesUI/albumCard.scss'as *;
+@use '../entitiesUI/playlistCard.scss'as *;
 
 .search-container{
     @include publicWidth;
@@ -59,79 +62,10 @@
 
         .allReslts-playlist{
             padding-bottom: $paddingForNavbar;
-            .playlist-detail{
-                p:nth-of-type(2), p:nth-of-type(3){
-                    font-size: 10px;
-                }
-                p:nth-of-type(2){
-                    margin: 6px 0 15px 0;
-                }
-            }
-        }
-    }
-
-    // all, artist 공통 스타일
-    .artist-image{
-        width: 98px; height: 98px;
-        border-radius: 50%;
-        overflow: hidden;
-    }
-
-    // 앨범, 플레이리스트 스타일 공통
-    .album-box, .playlist-box{
-        @include searchCover_layout;
-        .album-image, .playlist-image{
-            @include searchCover_img;
-            flex-shrink: 0;
-        }
-        .album-detail, .playlist-detail{
-            flex: 1;
-            min-width: 0;
         }
     }
 
     .artistTab-container, .albumTab-container, .playlistTab-container, .trackTab-container{
         padding-bottom: 60px;
-    }
-
-    // 아티스트 Card 컴포넌트
-    .artist-box{
-        display: flex;
-        align-items: center;
-        gap: 13px;
-        margin-bottom: 20px;
-        .artist-genre{
-            margin-top: 15px;
-            text-transform: uppercase;
-            color: $gray;
-        }
-    }
-
-    // 앨범 Card 컴포넌트
-    .album-box{
-        .album-detail{
-            .album-name{ @include ellipsis; }
-            .albumA-name{
-                @include ellipsis;
-                margin: 6px 0 15px 0;
-                font-size: 10px;
-            }
-            .album-bottom{
-                span:last-of-type::before{
-                    content: ' | ';
-                    color: $gray;
-                }
-                span{
-                    font-size: 10px;
-                }
-            }
-        }
-    }
-
-    // 플레이리스트 Card 컴포넌트
-    .playlist-box{
-        .playlist-detail{
-            >p{ @include ellipsis; }
-        }
     }
 }

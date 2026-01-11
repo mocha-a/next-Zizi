@@ -14,7 +14,7 @@ interface TracksProps {
 }
 
 const Tracks = ({ tracks, loading, hasMore, onLoadMore }: TracksProps) => {
-  if (!tracks.length) return <div>로딩 중...</div>;
+  if (!tracks?.length) return <div>로딩 중...</div>;
 
   return (
     <div className="trackTab-container tracklist">

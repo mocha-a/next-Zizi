@@ -8,13 +8,7 @@ import SortBtn from '@/components/common/SortBtn';
 import SortSelect from '@/components/common/SortSelect';
 import BottomDialog from '@/components/common/Dialog';
 import AlbumList from '@/components/entities/album/ui/AlbumList';
-import type { AlbumSortType } from '@/types/sort';
-
-const sortOptions = [
-  { label: '가나다 순', value: 'name' },
-  { label: '최신 순', value: 'new' },
-  { label: '오래된 순', value: 'old' },
-] as const;
+import { AlbumSortType, AlbumSortOptions } from '@/types/sort';
 
 const SearchAlbums = () => {
   const { albumResults, loadMore, loading, hasMore } = useSearchStore();
@@ -34,7 +28,7 @@ const SearchAlbums = () => {
     : albumResults;
 
   const label =
-    sortOptions.find((opt) => opt.value === sortType)?.label || '추천순';
+    AlbumSortOptions.find((opt) => opt.value === sortType)?.label || '추천순';
 
   return (
     <>
@@ -43,7 +37,7 @@ const SearchAlbums = () => {
       <BottomDialog open={openSort} onClose={() => setOpenSort(false)}>
         <SortSelect
           value={sortType}
-          options={sortOptions}
+          options={AlbumSortOptions}
           onChange={(v) => {
             setSortType(v);
             setOpenSort(false);

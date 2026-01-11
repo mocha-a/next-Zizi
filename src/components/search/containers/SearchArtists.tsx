@@ -8,12 +8,7 @@ import SortBtn from '@/components/common/SortBtn';
 import SortSelect from '@/components/common/SortSelect';
 import BottomDialog from '@/components/common/Dialog';
 import ArtistList from '@/components/entities/artist/ui/ArtistList';
-import { ArtistSortType } from '@/types/sort';
-
-const sortOptions = [
-  { label: '인기순', value: 'popularity' },
-  { label: '가나다 순', value: 'name' },
-] as const;
+import { ArtistSortType, ArtistSortOptions } from '@/types/sort';
 
 const SearchArtists = () => {
   const { artistResults, loadMore, loading, hasMore } = useSearchStore();
@@ -31,7 +26,7 @@ const SearchArtists = () => {
     : artistResults;
 
   const label =
-    sortOptions.find((opt) => opt.value === sortType)?.label || '추천순';
+    ArtistSortOptions.find((opt) => opt.value === sortType)?.label || '추천순';
 
   return (
     <>
@@ -40,7 +35,7 @@ const SearchArtists = () => {
       <BottomDialog open={openSort} onClose={() => setOpenSort(false)}>
         <SortSelect
           value={sortType}
-          options={sortOptions}
+          options={ArtistSortOptions}
           onChange={(v) => {
             setSortType(v);
             setOpenSort(false);

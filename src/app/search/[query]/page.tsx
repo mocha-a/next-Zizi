@@ -1,6 +1,6 @@
 import SearchLayout from '../SearchLayout';
 import SearchTabs from '@/components/search/containers/SearchTab';
-import '../../../styles/search/search.scss';
+import '@/styles/search/search.scss';
 
 interface props {
   searchParams: Promise<{

@@ -1,5 +1,6 @@
 @use '../variables'as *;
 @use '../mixins'as *;
+@use '../entitiesUI/albumCard.scss'as *;
 
 .artist-info, .artist-down{@include publicWidth;}
 
