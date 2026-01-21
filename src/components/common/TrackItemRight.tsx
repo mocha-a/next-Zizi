@@ -9,7 +9,6 @@ interface Artist {
 }
 
 interface Track {
-    image: string;
     name: string;
     artist: Artist;
 }

@@ -222,6 +222,10 @@ input:checked + .tagbtn{
     }
 }
 
+.artistTab-container, .albumTab-container, .playlistTab-container, .trackTab-container{
+    padding-bottom: 60px;
+}
+
 // footer
 .footer-container{
     padding-bottom: $paddingForNavbar;

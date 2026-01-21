@@ -15,6 +15,25 @@ export const genreMap: Record<string, string> = {
 export const mapGenres = (genres?: string[]) =>
   genres?.map(g => genreMap[g] || g).join(' • ') ?? '';
 
+//==============================================================
+//==============================================================
+//==============================================================
+
+export interface EntityBase {
+  id: string;
+  name: string;
+}
+
+export interface Image {
+  url: string;
+  width: number;
+  height: number;
+}
+
+export interface ArtistWithImage extends EntityBase {
+  images: Image[];
+}
+
 // 전체
 export interface AllResults {
   artists?: { items: Artist[] };
@@ -28,7 +47,7 @@ export interface Artist {
   name: string;
   genres: string[];
   popularity: number;
-  images: { url: string; height: number; width: number }[];
+  images: Image[];
   followers: { href: string | null; total: number };
   external_urls: { spotify: string };
 }
@@ -43,9 +62,9 @@ export interface Track {
   album: { 
     id: string; 
     name: string; 
-    images: { url: string; height: number; width: number }[] 
+    images: Image[] 
     };
-  artists: { id: string; name: string }[];
+  artists: EntityBase[];
 }
 
 export interface Album {
@@ -53,18 +72,33 @@ export interface Album {
   total_tracks: number;
   href: string;
   id: string;
-  images: { height: number; url: string; width: number }[];
+  images: Image[];
   name: string;
   release_date: string;
-  artists: { id: string; name: string }[];
+  artists: ArtistWithImage[];
   popularity: number;
+  tracks: {
+    items: AlbumTrack[];
+    total: number;
+  };
+}
+
+export interface AlbumTrack {
+  id: string;
+  name: string;
+  duration_ms: number;
+  track_number: number;
+  disc_number: number;
+  preview_url: string | null;
+  explicit: boolean;
+  artists: EntityBase[];
 }
 
 export interface Playlist {
   id: string;
   name: string;
   description: string;
-  images: { url: string; width: number; height: number }[];
+  images: Image[];
   owner: { 
     display_name: string; 
     id: string; 

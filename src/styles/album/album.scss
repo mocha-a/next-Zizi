@@ -1,3 +1,88 @@
 @use '../variables'as *;
 @use '../mixins'as *;
 
+.album-detail{
+    @include publicWidth;
+    .album-img{
+        margin: 15px auto 30px;
+        width: 200px; height: 200px;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+    h2{
+       @include GmarketBold_black_18;
+       margin: 10px 0 15px;
+       line-height: $lineHeight2;
+    }
+    .album-release{
+        @include album-release;
+        @include GmarketMedium_black_13;
+        margin-bottom: 15px;
+    }
+    .album-artists{
+        @include GmarketMedium_black_13;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 20px;
+
+        .album-artist-img{
+            display: inline-block;
+            position: relative; 
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            overflow: hidden;
+            &:not(:first-child) {
+                margin-left: -8px;
+            }
+        }
+    }
+
+    .album-track-list{
+        padding-bottom: $paddingForNavbar;
+        .album-track-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+    
+            .album-track-left {
+                width: 30px; // 번호 영역 고정
+                flex-shrink: 0;
+            }
+    
+            // 제목
+            .album-track-center {
+                flex: 1; // 남은 공간 다 차지
+                min-width: 0;
+                display: flex;
+                gap: 5px;
+                flex-direction: column;
+                .album-track-name {
+                    @include GmarketMedium_black_13;
+                    @include ellipsis;
+                }
+                .album-track-artist {
+                    font-size: 11.5px;
+                    color: $gray;
+                }
+            }
+            
+            .album-track-right {
+                display: flex;
+                gap: 22px;
+                margin-left: 16px;
+                flex-shrink: 0; // 오른쪽 고정
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+}

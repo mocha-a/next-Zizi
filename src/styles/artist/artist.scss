@@ -8,12 +8,45 @@
     .artist-top{
         margin-bottom: 30px;
         .artist-info{
-            .artist-genres{ font-size: 15px;}
+            .artist-genres{ 
+                margin-top: 5px;
+                font-size: 15px;}
+            .artist-tracks{
+                margin: 12px 0 5px;
+                &::before{
+                    content: ' 🎤 ';
+                }
+            }
             .artist-tracks, .artist-followers{
                 font-size: 12px;
             }
+            .artist-followers::before{
+                content: ' 👻 ';
+            }
         }
     }
+
+    //앨범 부분 2열씩 하려고
+    // .albumTab-container {
+    //     width: 50%;
+    //     display: grid !important;
+    //     grid-template-columns: repeat(2, 1fr);
+    //     .album-box{
+    //         display: block;
+    //     }
+    //     @include searchCover_layout;
+    //     .album-image {
+    //         @include searchCover_img;
+    //         flex-shrink: 0;
+    //     }
+    //     .album-detail {
+    //         .album-name{
+    //             width: 50%;
+    //         }
+    //         flex: 1;
+    //         min-width: 0;
+    //     }
+    // }
 }
 
 .artist-img {

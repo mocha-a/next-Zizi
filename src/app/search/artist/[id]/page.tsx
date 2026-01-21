@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
+import axios from 'axios';
 import { useParams } from 'next/navigation';
 import { useTabStore } from '@/store/tabStore';
 import { useSearchStore } from '@/store/searchStore';
@@ -8,39 +10,25 @@ import { artistById } from '@/lib/search';
 import TabsContainer from '@/components/common/TabsContainer';
 import DetailHeader from '@/components/common/DetailHeader';
 import ArtistAlbums from '@/components/entities/artist/container/ArtistAlbums';
-import { mapGenres, Artist, Album } from '@/types/spotify';
-
-import Image from 'next/image';
-import axios from 'axios';
+import ArtistTracks from '@/components/entities/artist/container/ArtistTrack';
+import { mapGenres, Artist } from '@/types/spotify';
 
 import '@/styles/artist/artist.scss';
-import ArtistTracks from '@/components/entities/track/container/ArtistTrack';
 
 const Page = () => {
-  /**
-   * URL에서 아티스트 id 추출
-  */
-  const params = useParams<{ id: string }>();
-  const id = params?.id;
-  
-  if (!id) return null;
-  
+  // URL에서 아티스트 id 추출
+  const { id } = useParams() as { id: string };
+
   // 탭 메뉴
   const tabs = [
-    { label: '곡', content: <ArtistTracks id={id} /> },
+    { label: '인기곡', content: <ArtistTracks id={id} /> },
     { label: '앨범', content: <ArtistAlbums id={id} /> },
   ];
-  /**
-   * 검색 결과 캐시(store)에서
-   * 동일한 id의 아티스트가 있는지 먼저 확인
-   *
-   * - 검색 → 상세 진입: 값 있음
-   * - 직접 URL 접근 / 새로고침: undefined
-   */
+
+  // 동일한 id의 아티스트가 있는지 먼저 확인
   const { getEntityById } = useSearchStore();
-  const cachedArtist = id
-    ? getEntityById('artist', id)
-    : undefined;
+  const { tabValue, setTabValue } = useTabStore();
+  const cachedArtist = getEntityById('artist', id);
 
   /**
    * 상세 페이지에서 실제로 사용할 아티스트 상태
@@ -48,25 +36,11 @@ const Page = () => {
    * 1. 검색 결과에 이미 있으면 → 그 데이터 사용
    * 2. 없으면 → API로 단건 fetch 후 로컬 state에 저장
    */
-  const [artist, setArtist] = useState<Artist | null>(
-    cachedArtist ?? null
-  );
-
-  /**
-   * 로딩 상태
-   * - 캐시가 있으면 false
-   * - 캐시가 없으면 true (fetch 필요)
-   */
-  const [loading, setLoading] = useState(!cachedArtist);
-
-  /**
-   * 탭 상태 (곡 / 앨범)
-   * - 전역 UI 상태이므로 zustand 사용
-   */
-  const { tabValue, setTabValue } = useTabStore();
+  const [ artist, setArtist ] = useState<Artist | null>( cachedArtist ?? null );
+  const [ loading, setLoading ] = useState(!cachedArtist);
   const [ trackCount, setTrackCount ] = useState<number | null>(null);
-  const [ albumData, setAlbumData ] = useState<Album[] | null>(null);
   const [ loadingTracks, setLoadingTracks ] = useState(false);
+
 
   /**
    * fallback fetch 로직
@@ -89,46 +63,26 @@ const Page = () => {
   }, [id, cachedArtist]);
 
   // 발매곡 수만 가져오기
-  // useEffect(() => {
-  //   if (!id) return;
+  useEffect(() => {
+    if (!id) return;
 
-  //   const fetchTrackCount = async () => {
-  //     setLoadingTracks(true);
-  //     try {
-  //       const res = await axios.get<{ trackCount: number }>(`/api/spotify/artist/${id}/track-count`);
-  //       setTrackCount(res.data.trackCount);
-  //     } catch (err) {
-  //       console.error('발매곡 수 조회 실패', err);
-  //     } finally {
-  //       setLoadingTracks(false);
-  //     }
-  //   };
+    // 탭 초기화
+    setTabValue(0);
 
-  //   fetchTrackCount();
-  // }, [id]);
+    const fetchTrackCount = async () => {
+      setLoadingTracks(true);
+      try {
+        const res = await axios.get<{ trackCount: number }>(`/api/spotify/artist/${id}/track-count`);
+        setTrackCount(res.data.trackCount);
+      } catch (err) {
+        console.error('발매곡 수 조회 실패', err);
+      } finally {
+        setLoadingTracks(false);
+      }
+    };
 
-  // useEffect(() => {
-  //   if (!id) return;
-
-  //   const fetchAlbums = async () => {
-  //     try {
-  //       const res = await axios.get<{ albums: Album[] }>(
-  //         `/api/spotify/artist/${id}/albums`
-  //       );
-  //       setAlbumData(res.data.albums);
-  //     } catch (err) {
-  //       console.error('앨범 조회 실패', err);
-  //     }
-  //   };
-
-  //   fetchAlbums();
-  // }, [id]);
-
-
-
-  // console.log(trackCount);
-  // console.log(cachedArtist);
-  // console.log(albumData);
+    fetchTrackCount();
+  }, [id, setTabValue]);
 
   if (loading) return <div>로딩중...</div>;
   if (!artist) return <div>아티스트 없음</div>;
@@ -160,8 +114,7 @@ const Page = () => {
         </div>
       </section>
 
-      {/* 하단: 곡 / 앨범 탭 */}
-      <div className="artist-down">
+      <div className='artist-down'>
         <TabsContainer
           tabs={tabs}
           tabValue={tabValue}

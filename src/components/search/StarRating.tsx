@@ -21,7 +21,7 @@ export default function StarRating({ popularity }: Props) {
       Icon = StarHalf;
     }
   return (
-      <Icon width={12} height={12} />
+      <Icon width={15} height={15} />
   );
   };
 
@@ -35,10 +35,10 @@ export default function StarRating({ popularity }: Props) {
         IconContainerComponent={IconContainer}
         sx={{
           '& .MuiRating-root': { lineHeight: 0 },   // 중요: 전체 height 줄이기
-          '& svg': { display: 'block', height: 12, width: 12 }, // SVG 크기 확실하게
+          '& svg': { display: 'block', height: 15, width: 15 }, // SVG 크기 확실하게
         }}
       />
-      <span>{rawRating.toFixed(1)}</span>
+      <span style={{ fontSize: '11.5px' }}>{rawRating.toFixed(1)}</span>
     </Box>
   );
 }

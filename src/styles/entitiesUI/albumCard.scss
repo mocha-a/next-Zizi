@@ -3,19 +3,16 @@
 
 // 앨범 Card 컴포넌트
 .album-box{
-    @include CoverLayout_item('album-image', 'album-detail');
-    .album-detail{
+    @include CoverLayout_item('album-image', 'album-info');
+    .album-info{
         .album-name{ @include ellipsis; }
-        .albumA-name{
+        .album-artist-name{
             @include ellipsis;
             margin: 6px 0 15px 0;
             font-size: 10px;
         }
-        .album-bottom{
-            span:last-of-type::before{
-                content: ' | ';
-                color: $gray;
-            }
+        .album-release{
+            @include album-release;
             span{
                 font-size: 10px;
             }

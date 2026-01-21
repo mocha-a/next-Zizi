@@ -23,14 +23,14 @@ const AlbumCard = ({ id, name, images, release_date, album_type, artists, onClic
           height={90}
         />
       </div>
-      <div className='album-detail'>
+      <div className='album-info'>
         <div className='album-top'>
           <p className='album-name'>{name}</p>
-          <p className='albumA-name'>
+          <p className='album-artist-name'>
             {artists.map(artist => artist.name).join(', ')}
           </p>
         </div>
-        <div className='album-bottom'>
+        <div className='album-release'>
           <span>{release_date.replace(/-/g, ".")}</span>
           <span>{album_type}</span>
         </div>
