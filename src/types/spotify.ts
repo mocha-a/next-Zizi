@@ -1,6 +1,6 @@
 // spotify type 정의
 
-export type SearchCategory = 'artist' | 'album' | 'track' | 'playlist';
+export type SearchCategory = 'artist' | 'track' | 'album' | 'playlist';
 
 // 장르 맵핑
 export const genreMap: Record<string, string> = {
@@ -64,7 +64,7 @@ export interface Track {
     name: string; 
     images: Image[] 
     };
-  artists: EntityBase[];
+  artists: ArtistWithImage[];
 }
 
 export interface Album {

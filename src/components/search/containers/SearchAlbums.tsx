@@ -1,31 +1,73 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { typeSearch } from '@/lib/search';
 import { useSearchStore } from '@/store/searchStore';
 import { sortBy } from '@/lib/sortBy';
+
 import SortBtn from '@/components/common/SortBtn';
 import SortSelect from '@/components/common/SortSelect';
 import BottomDialog from '@/components/common/Dialog';
 import AlbumList from '@/components/entities/album/ui/AlbumList';
+
 import { AlbumSortType, AlbumSortOptions } from '@/types/sort';
+import { Album } from '@/types/spotify';
+
+const LIMIT = 50;
 
 const SearchAlbums = () => {
-  const { albumResults, loadMore, loading, hasMore } = useSearchStore();
+  const { searchQuery } = useSearchStore();
+  const router = useRouter();
+
+  const [ albums, setAlbums ] = useState<Album[]>([]);
+  const [ offset, setOffset ] = useState(0);
+  const [ hasMore, setHasMore ] = useState(true);
+  const [ loading, setLoading ] = useState(false);
+
   const [ sortType, setSortType ] = useState<AlbumSortType>(null);
   const [ openSort, setOpenSort ] = useState(false);
-  const router = useRouter();
+
+  useEffect(() => {
+    if (!searchQuery) return;
+
+    const fetchInitial = async () => {
+      setLoading(true);
+      const data = await typeSearch(searchQuery, 'album', LIMIT, 0);
+      const items = data.albums?.items ?? [];
+
+      setAlbums(items);
+      setOffset(items.length);
+      setHasMore(items.length === LIMIT);
+      setLoading(false);
+    };
+
+    fetchInitial();
+  }, [searchQuery]);
+
+  const loadMore = async () => {
+    if (!searchQuery || loading || !hasMore) return;
+
+    setLoading(true);
+    const data = await typeSearch(searchQuery, 'album', LIMIT, offset);
+    const items = data.albums?.items ?? [];
+
+    setAlbums((prev) => [...prev, ...items]);
+    setOffset((prev) => prev + items.length);
+    setHasMore(items.length === LIMIT);
+    setLoading(false);
+  };
 
   const sortedAlbums = sortType
     ? sortBy(
-        albumResults,
+        albums,
         (album) =>
           sortType === 'name'
             ? album.name
             : new Date(album.release_date).getTime(),
         sortType === 'old' ? 'asc' : 'desc'
       )
-    : albumResults;
+    : albums;
 
   const label =
     AlbumSortOptions.find((opt) => opt.value === sortType)?.label || '추천순';
@@ -48,8 +90,8 @@ const SearchAlbums = () => {
       <AlbumList
         albums={sortedAlbums}
         loading={loading}
-        hasMore={hasMore.album}
-        onLoadMore={() => loadMore('album', 50)}
+        hasMore={hasMore}
+        onLoadMore={loadMore}
         onClick={(id) => router.push(`/search/album/${id}`)}
       />
     </>

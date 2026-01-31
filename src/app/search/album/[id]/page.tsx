@@ -7,10 +7,12 @@ import TabsContainer from '@/components/common/TabsContainer';
 import StarRating from '@/components/search/StarRating';
 import AlbumInfo from '@/components/entities/album/container/AlbumInfo';
 import AlbumTrack from '@/components/entities/album/container/AlbumTrack';
+import ArtistBadge from '@/components/entities/artist/ui/ArtistBadge';
 import { useTabStore } from '@/store/tabStore';
 import { Album } from '@/types/spotify';
 
 import '@/styles/album/album.scss';
+import '@/styles/entitiesUI/ArtistBadge.scss';
 
 const Page = () => {
   const { id } = useParams() as { id: string };
@@ -63,24 +65,9 @@ const Page = () => {
         <span>{album.release_date.replace(/-/g, ".")}</span>
         <span>{album.album_type}</span>
       </div>
-      <div className="album-artists">
-        <div>
-          {album.artists.map((artist, i) => (
-            <span key={artist.id} className="album-artist-img" style={{ zIndex: album.artists.length - i }}>
-              <Image
-                src={artist.images?.[0]?.url ?? '/imgs/default-artist.png'}
-                alt={artist.name}
-                width={32}
-                height={32}
-              />
-            </span>
-          ))}
-        </div>
-        <p className="album-artist-name">
-          {album.artists.map(artist => artist.name).join(' • ')}
-        </p>
+      <div className='album-artist'>
+        <ArtistBadge artists={album.artists}/>
       </div>
-
       <TabsContainer
         tabs={tabs}
         tabValue={tabValue}

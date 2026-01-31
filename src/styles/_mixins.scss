@@ -134,24 +134,28 @@
 
 @mixin GmarketMedium_black_13 {
     font-family: $GmarketMedium;
+    font-weight: normal;
     font-size: 13px;
     color: $black;
 }
 
 @mixin GmarketMedium_black_20 {
     font-family: $GmarketMedium;
+    font-weight: normal;
     font-size: 20px;
     color: $black;
 }
 
 @mixin GmarketMedium_black_23 {
     font-family: $GmarketMedium;
+    font-weight: normal;
     font-size: 23px;
     color: $black;
 }
 
 @mixin GmarketMedium_black_30 {
     font-family: $GmarketMedium;
+    font-weight: normal;
     font-size: 30px;
     color: $black;
 }
@@ -160,6 +164,7 @@
 //white
 @mixin GmarketMedium_white_20 {
     font-family: $GmarketMedium;
+    font-weight: normal;
     font-size: 20px;
     color: $white;
 }

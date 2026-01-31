@@ -19,8 +19,8 @@ const AlbumCard = ({ id, name, images, release_date, album_type, artists, onClic
         <Image
           src={images?.[0]?.url || '/placeholder.png'}
           alt={`${name} cover`}
-          width={90}
-          height={90}
+          width={168}
+          height={168}
         />
       </div>
       <div className='album-info'>

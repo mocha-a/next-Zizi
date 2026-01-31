@@ -26,28 +26,25 @@
         }
     }
 
-    //앨범 부분 2열씩 하려고
-    // .albumTab-container {
-    //     width: 50%;
-    //     display: grid !important;
-    //     grid-template-columns: repeat(2, 1fr);
-    //     .album-box{
-    //         display: block;
-    //     }
-    //     @include searchCover_layout;
-    //     .album-image {
-    //         @include searchCover_img;
-    //         flex-shrink: 0;
-    //     }
-    //     .album-detail {
-    //         .album-name{
-    //             width: 50%;
-    //         }
-    //         flex: 1;
-    //         min-width: 0;
-    //     }
-    // }
+    //앨범 부분 2열
+    .albumTab-container {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+        
+        .album-box {
+            flex-direction: column;
+            align-items: stretch;
+            margin-bottom: 2px;
+            gap: 12px;
+            
+            .album-image{
+                width: 168px; height: 168px;
+            }
+        }      
+    }
 }
+
 
 .artist-img {
     position: relative;
