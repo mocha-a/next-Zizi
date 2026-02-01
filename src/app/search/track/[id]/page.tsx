@@ -12,6 +12,7 @@ import TabsContainer from '@/components/common/TabsContainer';
 
 import '@/styles/track/track.scss';
 import '@/styles/entitiesUI/ArtistBadge.scss';
+import SimilarTracks from '@/components/entities/track/container/SimilarTracks';
 
 const Page = () => {
   const { id } = useParams() as { id: string };
@@ -27,7 +28,7 @@ const Page = () => {
   // 탭 메뉴
   const tabs = [
     { label: '어떡할까?', content: <TrackInfo />},
-    { label: '어떡하지?',content: <TrackInfo />},
+    { label: '유사한 곡',content: <SimilarTracks id = {id}/>},
   ];
 
   useEffect(() => {

@@ -28,7 +28,7 @@ const Page = () => {
   // 탭 메뉴
   const tabs = [
     { label: '수록곡', content: <AlbumTrack album={album} /> },
-    { label: '상세정보', content: <AlbumInfo /> },
+    { label: '상세정보', content: <AlbumInfo album={album} /> },
   ];
 
   useEffect(() => {
