@@ -8,6 +8,11 @@
     padding: 20px 0;
 }
 
+//디테일 헤더
+.detailHeader{
+    margin-bottom: 20px
+}
+
 .title{
     @include GmarketMedium_black_23;
     padding: 20px 0;
@@ -28,11 +33,19 @@
 }
 .section-header{
     margin-bottom: 20px;
-    display: flex;
-    justify-content: flex-start;
-    gap: 5px;
     cursor: pointer;
-    >h2{ @include GmarketMedium_black_13; }
+    >h2{ 
+        @include GmarketMedium_black_13;
+        display: inline-block;
+        &::after{
+            content: '';
+            display: inline-block;
+            width: 6px; height: 11px;
+            vertical-align: middle;
+            margin: 0 0 1px 5px;
+            background: url('/icons/more-arrow.svg') no-repeat center / contain;
+        }
+    }
 }
 
 .more-arrow{
@@ -220,6 +233,10 @@ input:checked + .tagbtn{
             width: 9px; height: 7px;
         }
     }
+}
+
+.artistTab-container, .albumTab-container, .playlistTab-container, .trackTab-container{
+    padding-bottom: 60px;
 }
 
 // footer

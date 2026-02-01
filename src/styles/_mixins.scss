@@ -48,6 +48,13 @@
     }
 }
 
+//album-release
+@mixin album-release {
+    span:last-of-type::before{
+        content: ' | ';
+        color: $gray;
+    }
+}
 
 // flex
 @mixin flex{
@@ -116,6 +123,12 @@
 @mixin GmarketBold_black_40 {
     font-family: $GmarketBold;
     font-size: 40px;
+    color: $black;
+}
+
+@mixin GmarketBold_black_18 {
+    font-family: $GmarketBold;
+    font-size: 18px;
     color: $black;
 }
 

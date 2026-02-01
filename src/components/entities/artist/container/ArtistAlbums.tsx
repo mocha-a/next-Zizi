@@ -11,13 +11,13 @@ import AlbumList from '@/components/entities/album/ui/AlbumList';
 import { Album } from '@/types/spotify';
 import { AlbumSortType, AlbumSortOptions } from '@/types/sort';
 
-interface ArtistAlbumsProps {
+interface Props {
   id: string;
 }
 
 const LIMIT = 50;
 
-const ArtistAlbums = ({ id }: ArtistAlbumsProps) => {
+const ArtistAlbums = ({ id }: Props) => {
   const [ albums, setAlbums ] = useState<Album[]>([]);
   const [ offset, setOffset ] = useState(0);
   const [ hasMore, setHasMore ] = useState(true);

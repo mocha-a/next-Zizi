@@ -54,8 +54,11 @@ export default function SimpleBottomNavigation() {
         value={value}
         onChange={click}
         sx={{
+            '& .MuiBottomNavigationAction-root': {
+              gap: '5px',
+            },
             '& .MuiBottomNavigationAction-label': {
-            fontFamily: 'GmarketSans, sans-serif',
+            fontFamily: 'GmarketMedium',
             fontSize: '10px',
             color: 'rgba(5, 140, 215, 0.5)',              // 선택 안 됐을 때 글자색
             },

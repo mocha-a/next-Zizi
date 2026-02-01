@@ -10,9 +10,9 @@ const SearchBar = () => {
   const params = useParams<{ query?: string }>();
   const { setSearchQuery } = useSearchStore();
 
-  const [value, setValue] = useState('');
+  const [ value, setValue ] = useState('');
 
-  // ✅ URL → input 동기화 + searchQuery만 세팅
+  // URL → input 동기화 + searchQuery만 세팅
   useEffect(() => {
     if (params?.query) {
       const decoded = decodeURIComponent(params.query);
