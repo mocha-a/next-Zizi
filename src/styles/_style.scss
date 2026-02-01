@@ -307,3 +307,16 @@ input:checked + .tagbtn{
         gap: 10px;
     }
 }
+
+// dialog - track
+.track-dialog-content{
+    padding: 20px;
+    button{
+        display: block;
+        margin: 20px auto;
+        cursor: pointer;
+    }
+    hr{
+        width: 100%;
+    }
+}

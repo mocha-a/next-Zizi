@@ -1,24 +1,19 @@
 import React from 'react'
 import Image from "next/image";
 import TrackItemRight from './TrackItemRight';
+import { TrackItemData } from '@/types/trackItem';
 
-interface Artist {
-    name: string;
-}
-
-interface Track {
-    image: string;
-    name: string;
-    artist: Artist;
-}
 
 interface PropsType {
-    trackData: Track;  // data
+    trackData: TrackItemData;  // data
     index: number;
     page: string;      // page에 따라 UI 변경
+    onPlayClick: (track: any) => void;
+    onMoreClick: (track: any) => void;
 }
 
-function TrackItem({trackData, page = '', index}: PropsType) {
+function TrackItem({trackData, page = '', index, onPlayClick, onMoreClick}: PropsType) {
+    
   return (
     <li>
         {/* 좌측 이미지 섹션: 앨범 이미지 */}
@@ -53,7 +48,7 @@ function TrackItem({trackData, page = '', index}: PropsType) {
 
         {/* 아이콘 섹션: 재생 및 더보기 */}
         <div className='trackitem-right'>
-            <TrackItemRight track={trackData}/>
+            <TrackItemRight trackData={trackData} onPlayClick={onPlayClick} onMoreClick={onMoreClick}/>
         </div>
     </li>
   )
