@@ -5,9 +5,13 @@
 @use '../entitiesUI/playlistCard.scss'as *;
 
 .search-container{
-    @include publicWidth;
+    .title, .search-tabs, .allReslts-track, .allReslts-playlist, .allReslts-album, 
+    .artistTab-container, .trackTab-container, .albumTab-container, .playlistTab-container, .sortBtn-wrapper{
+        @include publicWidth;
+    }
+
     .search-bar{
-        width: 100%;
+        @include publicWidth;
         display: flex;
         margin-bottom: 30px;
         border-bottom: 2px solid black;
@@ -18,6 +22,8 @@
     }
 
     .trendingTags-contanier, .trendingSearches-contanier{
+        @include publicWidth;
+
         >*{margin-bottom: 50px;}
         h3{
             margin-bottom: 20px;
@@ -53,13 +59,14 @@
             margin-bottom: 50px; 
         }
         .allReslts-artist{
+            margin-left: 18px;
             .artist-box{ 
                 flex-direction: column; margin-bottom: 0px;
                 .artist-name{ text-align: center; }
             }
             .artist-container{
+                padding-right: 18px;
                 display: flex;
-                gap: 10px;
             }
         }
 

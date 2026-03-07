@@ -5,7 +5,6 @@ import { styled } from '@mui/material/styles';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
-import { useSearchStore } from '@/store/searchStore';
 
 // tab 데이터 타입
 interface TabItem {
@@ -81,23 +80,19 @@ export default function TabsContainer({
   tabMarginRight = '0px',
   width = false,
 }: TabsContainerProps) {
-  const { searchQuery, allSearchResults } = useSearchStore();
 
   const handleChange = async (
     _event: React.SyntheticEvent,
     newValue: number
   ) => {
     setTabValue(newValue);
-    const type = tabs[newValue].type;
 
-    if (type && searchQuery) {
-      await allSearchResults(searchQuery);
-    }
   };
 
   return (
     <Box sx={{ width: '100%' }}>
       <Box
+        className="search-tabs"
         sx={{
           borderBottom: 1,
           borderColor: '#D9D9D9',

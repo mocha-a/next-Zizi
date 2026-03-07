@@ -55,12 +55,12 @@ export default function SearchTabs({ type }: SearchTabsProps) {
   };
 
   return (
-    <TabsContainer
-      tabs={tabs}
-      tabValue={tabValue}
-      setTabValue={handleTabChange}
-      fullWidth={false}
-      tabMarginRight="20px"
-    />
+      <TabsContainer
+        tabs={tabs}
+        tabValue={tabValue}
+        setTabValue={handleTabChange}
+        fullWidth={false}
+        tabMarginRight="20px"
+      />
   );
 }
