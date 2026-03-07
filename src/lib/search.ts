@@ -109,7 +109,7 @@ import { useSearchStore } from '@/store/searchStore';
 import { useTabStore } from '@/store/tabStore';
 
 export const doSearch = async (query: string, router: any) => {
-  const { setSearchQuery, allSearchResults } = useSearchStore.getState();
+  const { setSearchQuery } = useSearchStore.getState();
   const { setTabValue } = useTabStore.getState();
 
   // 탭 초기화
@@ -121,8 +121,6 @@ export const doSearch = async (query: string, router: any) => {
   // 검색 페이지로 이동
   router.push(`/search/${encodeURIComponent(query)}`); 
 
-  // API 호출 후 zustand에 검색 결과 저장
-  await allSearchResults(query); 
 }; 
 
 // ======================

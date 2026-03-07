@@ -45,8 +45,8 @@ const Results = () => {
       <div className='allReslts allReslts-artist'>
         <SectionHeader title="아티스트" targetIndex={1} type="artist"/>
         <Swiper
-          slidesPerView={'auto'}
-          spaceBetween={ 10 }
+          slidesPerView={3.35}
+          // spaceBetween={ 10 }
           className="mySwiper artist-container"
         >
         {allData?.artists?.items.map((artist) => (

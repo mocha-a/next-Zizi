@@ -28,7 +28,7 @@ export default async function handler(
     const accessToken = await getSpotifyAccessToken();
 
     const apiRes = await fetch(
-      'https://api.spotify.com/v1/browse/new-releases?country=KR&limit=10',
+      'https://api.spotify.com/v1/browse/new-releases?country=US&limit=10',
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
