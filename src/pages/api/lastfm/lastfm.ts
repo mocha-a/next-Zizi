@@ -50,6 +50,8 @@ async function fetchTopTracks(tag?: string): Promise<Track[]> {
 
   try {
     const finalTag = tag || 'k-pop';
+    const randomPage = Math.floor(Math.random() * 5) + 1;
+
     // Last.fm 트랙 가져오기
     const res = await axios.get(BASE_URL, {
       params: {
@@ -58,6 +60,7 @@ async function fetchTopTracks(tag?: string): Promise<Track[]> {
         api_key: LASTFM_API_KEY,
         format: "json",
         limit: 100,
+        page: randomPage,
       },
     });
 

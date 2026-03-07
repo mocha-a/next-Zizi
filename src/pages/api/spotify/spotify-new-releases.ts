@@ -26,9 +26,10 @@ export default async function handler(
 ) {
   try {
     const accessToken = await getSpotifyAccessToken();
+    const randomOffset = Math.floor(Math.random() * 3) * 10;
 
     const apiRes = await fetch(
-      'https://api.spotify.com/v1/browse/new-releases?country=KR&limit=10',
+      `https://api.spotify.com/v1/browse/new-releases?country=KR&limit=10&offset=${randomOffset}`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,

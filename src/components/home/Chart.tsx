@@ -3,9 +3,14 @@
 import React, { useEffect, useState } from "react";
 import { Track } from "@/pages/api/lastfm/lastfm";
 import TrackItem from "../common/TrackItem";
-import Footer from "../common/Footer";
+import { PlayableTrack } from '@/types/trackItem';
 
-export default function TopTracksList() {
+interface Props {
+  onOpenDialog: (track: Track) => void;
+  onPlayClick: (track: PlayableTrack) => void;
+}
+
+export default function TopTracksList({onOpenDialog, onPlayClick}: Props) {
   const [tracks, setTracks] = useState<Track[]>([]);
 
   useEffect(() => {
@@ -23,7 +28,9 @@ export default function TopTracksList() {
       <h2><span>Hot</span> 트랙_맛보기.zip</h2>
       <ul className='chart-section-list-box tracklist'>
         {tracks.slice(0, 5).map((tracks, i) => (
-            <TrackItem key={i} trackData={tracks} index={i} page="home"/>
+            <TrackItem key={i} trackData={tracks} index={i} page="home"
+                        onPlayClick={onPlayClick} onMoreClick={onOpenDialog}
+            />
         ))}
       </ul>
     </div>

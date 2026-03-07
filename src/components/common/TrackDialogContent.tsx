@@ -1,16 +1,9 @@
 'use client';
 
-interface Artist {
-    name: string;
-}
-
-interface Track {
-    name: string;
-    artist: Artist;
-}
+import { TrackItemData } from "@/types/trackItem";
 
 interface Props {
-    trackData: Track;  // data
+    trackData: TrackItemData;  // data
 }
 
 export default function TrackDialogContent({ trackData }: Props) {
