@@ -1,0 +1,80 @@
+@use '../variables'as *;
+@use '../mixins'as *;
+@use '../entitiesUI/artistCard.scss'as *;
+@use '../entitiesUI/albumCard.scss'as *;
+@use '../entitiesUI/playlistCard.scss'as *;
+
+.search-container{
+    .title, .search-tabs, .allReslts-track, .allReslts-playlist, .allReslts-album, 
+    .artistTab-container, .trackTab-container, .albumTab-container, .playlistTab-container, .sortBtn-wrapper{
+        @include publicWidth;
+    }
+
+    .search-bar{
+        @include publicWidth;
+        display: flex;
+        margin-bottom: 30px;
+        border-bottom: 2px solid black;
+        >input{
+            width: 100%;
+            padding: 8px 2px;
+        }
+    }
+
+    .trendingTags-contanier, .trendingSearches-contanier{
+        @include publicWidth;
+
+        >*{margin-bottom: 50px;}
+        h3{
+            margin-bottom: 20px;
+            @include Galmuri9_20;
+        }
+    }
+    .trendingSearches-contanier{
+        .trending{
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            >.keyword{
+                cursor: pointer;
+                font-size: 14px;
+            }
+        }
+        .num{
+            width: 23px;
+            color: $blue;
+            font-size: 15px;
+        }
+    }
+    .trendingTags-contanier{
+        padding-bottom: $paddingForNavbar;
+        .tag-ul{
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+    }
+    .allReslts-container{
+        margin-top: 10px;
+        .allReslts{ 
+            margin-bottom: 50px; 
+        }
+        .allReslts-artist{
+            margin-left: 18px;
+            .artist-box{ 
+                flex-direction: column; margin-bottom: 0px;
+                .artist-name{ text-align: center; }
+            }
+            .artist-container{
+                padding-right: 18px;
+                display: flex;
+            }
+        }
+
+        .allReslts-playlist{
+            padding-bottom: $paddingForNavbar;
+        }
+    }
+}

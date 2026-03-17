@@ -1,0 +1,47 @@
+@use '../variables'as *;
+@use '../mixins'as *;
+
+.chart-container{
+    width: calc(100% - 36px);
+    min-height: 100vh;
+
+    margin: 0 auto;
+    position: relative;
+    overflow: visible;
+
+    .chart-tagbtn-box{
+        .swiper-slide{
+            width: auto !important;
+            display: inline-flex !important;
+            overflow: hidden;
+
+            .chart-tagbtn{
+                display: inline-flex;
+                white-space: nowrap;
+                margin-right: 10px;
+            }
+        }
+    }
+
+    .chart-section-list-box{
+        margin-bottom: 50px;
+    }
+
+    .chart-topmenu-box{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 13px;
+
+        .chart-icon-check{
+            width: 12px;
+        }
+        .chart-icon-play{
+            width: 10px;
+        }
+    }
+}
+
+.chart-footer{
+    margin: 50px 0;
+}

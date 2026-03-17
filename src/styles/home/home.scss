@@ -1,0 +1,128 @@
+@use '../variables'as *;
+@use '../mixins'as *;
+
+.home-container{
+    >*{ margin: 50px auto; }
+}
+
+.myMusic-container{
+    margin-top: 0; margin-bottom: 25px;
+    width: $publicWidth;
+    position: relative;
+    .overlay{
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background-color: rgba(0, 0, 0, 0.3);
+        z-index: 1;
+        pointer-events: none;
+    }
+    .img-grid{
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        justify-items: center;
+    
+        .img-box {
+            position: relative;
+            width: 100%;
+            padding-top: 100%; // 정사각형 비율 유지
+            overflow: hidden;
+        }
+    }
+    .myMusic-text-absolute{
+        position: absolute;
+        width: calc(100% - 26px);
+        left: 15px;
+        bottom: 5px;
+        z-index: 2;
+        .myMusic-text-content{
+            display: flex;
+            justify-content: space-between;
+            .myMusic-text{
+                @include GmarketMedium_white_20;
+            }
+        }
+    }
+}
+
+.mood-container{
+    margin: 0 18px;
+    padding: 16px 0;
+    text-align: center;
+    border: 1px solid $gray;
+    border-radius: 5px;
+    box-shadow: 2px 2px 2px 1px rgba(26, 26, 26, 0.2);
+    &:hover{cursor: pointer;}
+
+    @include Galmuri9_18;
+    >span{
+        margin: 20px 0;
+        color: $blue;
+    }
+    >b{margin-left: 10px;}
+}
+
+.NewRelease-container{
+    margin-top: 25px; margin-left: 18px;
+    >h2{
+        @include GmarketMedium_black_20;
+        margin: 20px 0;
+        &::before{
+            content: '🎧 ';
+        }
+    }
+    .album-img{ 
+        position: relative;
+        width: 150px; height: 150px; margin-bottom: 10px;
+        >.play{
+            width: 20px; height: 24px;
+            position: absolute;
+            bottom: 8px; right: 10px;
+        }
+    }
+    .album-name, .artists-name{
+        @include GmarketMedium_black_13;
+        
+        display: -webkit-box;
+        -webkit-line-clamp: 2; // 최대 2줄
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .artists-name{ color: $gray; margin-top: 8px; }
+}
+
+.record-container{
+    margin-top: 25px; margin-left: 18px;
+    >h2{
+        @include GmarketMedium_black_20;
+        margin: 20px 0;
+        &::before{
+            content: '💿 ';
+        }
+    }
+    .record-img{ 
+        position: relative;
+        width: 150px; height: 150px; margin-bottom: 10px;
+        >.play{
+            width: 20px; height: 24px;
+            position: absolute;
+            bottom: 8px; right: 10px;
+        }
+    
+    }
+    .record-title{
+        @include GmarketMedium_black_13;
+    }
+}
+
+.chart-section-container{
+    width: calc(100% - 36px);
+    position: relative;
+    >h2{
+        @include Galmuri9_20;
+        margin: 20px 0;
+        >span::after{
+            content: '🔥';
+        }
+    }
+}

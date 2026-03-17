@@ -1,0 +1,339 @@
+@use './reset' as *;
+@use './mixins' as *;
+@use './variables' as *;
+
+.header{
+    @include publicWidth;
+    @include logo_style;
+    padding: 20px 0;
+}
+
+//디테일 헤더
+.detailHeader{
+    margin-bottom: 20px
+}
+
+.title{
+    @include GmarketMedium_black_23;
+    padding: 20px 0;
+}
+
+.tagbtn{
+    @include GmarketMedium_black_13;
+    display: inline-block;
+    padding: 11px 14px 9px;
+    border: 1px solid $blue;
+    border-radius: 85px;
+    cursor: pointer;
+
+    &.active{
+        background-color: $blue;
+        color: $white;
+    }
+}
+.section-header{
+    margin-bottom: 20px;
+    cursor: pointer;
+    >h2{ 
+        @include GmarketMedium_black_13;
+        display: inline-block;
+        &::after{
+            content: '';
+            display: inline-block;
+            width: 6px; height: 11px;
+            vertical-align: middle;
+            margin: 0 0 1px 5px;
+            background: url('/icons/more-arrow.svg') no-repeat center / contain;
+        }
+    }
+}
+
+.more-arrow{
+    width: 5px; height: 10px;
+}
+
+input:checked + .tagbtn{
+    display: inline-block;
+    padding: 11px 14px 9px;
+    color: white;
+    border: 1px solid $blue;
+    background-color: $blue;
+    border-radius: 85px;
+}
+
+// textfield
+.textfield{
+    width: 100%;
+    margin-bottom: 12px !important;
+
+    .MuiInput-root {
+        font-family: $GmarketMedium;
+        font-size: 14px !important;
+        color: $black;
+
+        input {
+            padding: 10px 0;
+            &::placeholder {
+                color: $lightgray;
+                opacity: 1; // MUI 기본 opacity 0.5라 명시적으로 지정해주는 게 좋아
+            }
+        }
+
+        // 기본 border
+        &::before{
+            border-color: $lightgray;
+        }
+
+        // hover 시 border
+        &:hover:not(.Mui-disabled, .Mui-error)::before{
+            border-color: $blue;
+        }
+
+        // focus 시 border
+        &.Mui-focused::after{
+            border-color: $blue;
+        }
+
+        // error 시 border
+        &.Mui-error::after{
+            border-color: $orange;
+        }
+    }
+
+    // label
+    .MuiInputLabel-root {
+        font-family: $GmarketMedium !important;
+        font-size: 14px !important;
+        color: $lightgray;
+
+        // focus 시 label
+        &.Mui-focused {
+            color: $blue;
+        }
+    
+        // error 시 label
+        &.Mui-error {
+            color: $orange;
+        }
+    }
+
+}
+
+// longbtn
+.longbtn{
+    width: 100%;
+    padding: 20px 0;
+    color: $white;
+    font-size: $regular;
+    text-align: center;
+    border-radius: $radius10;
+    background-color: $lightgray;
+    opacity: 0.5;
+
+    &.active{
+        background-color: $blue;
+        opacity: 1;
+    }
+}
+
+// Shortbtn
+.shortbtn{
+    width: 50%;
+    padding: 15px 20px;
+    color: $white;
+    font-size: 14px;
+    text-align: center;
+    border-radius: $radius10;
+    background-color: $lightgray;
+    opacity: 0.5;
+
+    &.active{
+        background-color: $blue;
+        opacity: 1;
+    }
+}
+
+// tracklist
+.tracklist{
+    li{
+        margin-bottom: 20px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+    }
+    .trackitem-num-home{
+        position: absolute;
+        display: block;
+        left: -13px; bottom: -15px;
+        color: $orange;
+        font-size: 40px;
+        text-shadow: 2px 2px 6px rgba(26, 26, 26, 0.3);
+    }
+    .trackitem-center{
+        width: 65%;
+        display: flex;
+        align-items: start;
+        gap: 16px;
+
+        .trackitem-num-chart{
+            width: 8%;
+            flex-shrink: 0;
+            font-family: $GmarketBold;
+            font-size: 14px;
+        }
+
+        > div{
+            flex: 1;
+            min-width: 0;
+
+            p, span{
+                display: block;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+            p{
+                font-size: 13px;
+                margin-bottom: 5px;
+            }
+            span{
+                font-size: 11.5px;
+                color: $gray;
+            }
+        }
+    }
+    .trackitem-right{
+        display: flex;
+        gap: 22px;
+        .icons-play{
+            width: 11px; height: 14px;
+        }
+        .icons-dot{
+            width: 4px; height: 18px;
+        }
+    }
+    .trackitem-image{
+        border-radius: 5px;
+        overflow: hidden;
+        width: 45px; height: 45px;
+    }
+}
+
+//sortBtn
+.sortBtn-wrapper{
+    margin-bottom: 18px;
+    display: flex;
+    justify-content: flex-end;
+    .sortBtn{
+        display: flex;
+        gap: 6px;
+        .drop{
+            width: 9px; height: 7px;
+        }
+    }
+}
+
+.artistTab-container, .albumTab-container, .playlistTab-container, .trackTab-container{
+    padding-bottom: 60px;
+}
+
+// footer
+.footer-container{
+    padding-bottom: $paddingForNavbar;
+
+    .footer-icons{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 16px;
+
+        .icons-git{ width: 15px; }
+        .icons-figma{ width: 13px; }
+    }
+
+    p{ margin: 12px 0 10px;}
+    
+    p, span{
+        font-family: $Galmuri;
+        font-size: 9px;
+        display: block;
+        text-align: center;
+    }
+}
+
+// iconbutton
+.icon-button{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5px;
+    margin: 20px 0;
+    cursor: pointer;
+}
+
+// onboarding popup
+.onboarding_overlay{
+    position: fixed;
+    left: 0; top: 0;
+    width: 100%; height: 100vh;
+    background-color: rgba(26, 26, 26, 0.3);
+}
+
+.onboarding_contents{
+    position: absolute;
+    display: block;
+    left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    width: 320px; height: auto;
+    border-radius: $radius10;
+    background-color: $white;
+    padding: 22px;
+    text-align: center;
+
+    .onboarding_icon{margin: 8px 0 25px;}
+
+    >h2{
+        font-size: 20px;
+    }
+    >span{
+        font-size: 12px;
+        color: $gray;
+        display: block;
+        margin: 8px 0 30px;
+    }
+
+    .onboarding_birth, .onboarding_gender, .onboarding_buttons{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .onboarding_gender{
+        margin: 15px 0 30px;
+
+        .gender-item-box{
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+    }
+
+    .onboarding_buttons{
+        gap: 10px;
+    }
+}
+
+// dialog - track
+.track-dialog-content{
+    padding: 20px;
+    button{
+        display: block;
+        margin: 20px auto;
+        cursor: pointer;
+    }
+    hr{
+        width: 100%;
+    }
+}

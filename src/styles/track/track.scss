@@ -1,0 +1,36 @@
+@use '../variables'as *;
+@use '../mixins'as *;
+
+.track-detail{
+    @include publicWidth;
+    .track-header{
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        margin-bottom: 30px;
+        .track-info{
+            .track-album-name{ 
+                font-family: $GmarketMedium;
+                font-size: 13px;
+                color: $gray;
+                &::after{
+                    content: '';
+                    display: inline-block;
+                    width: 5px; height: 10px;
+                    vertical-align: middle;
+                    margin-left: 5px;
+                    background: url('/icons/more-arrow-gray.svg') no-repeat center / contain;
+                }
+            }
+            .track-name{     
+                @include GmarketBold_black_18; 
+                margin: 15px 0 10px
+            }
+        }
+        .track-album-img{
+            width: 123px; height: 123px;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+    }
+}
