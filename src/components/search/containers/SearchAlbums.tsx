@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { typeSearch } from '@/lib/search';
 import { useSearchStore } from '@/store/searchStore';
@@ -12,7 +12,8 @@ import BottomDialog from '@/components/common/Dialog';
 import AlbumList from '@/components/entities/album/ui/AlbumList';
 
 import { AlbumSortType, AlbumSortOptions } from '@/types/sort';
-import { SearchAlbum } from '@/types/deezer/search';
+import { useInfiniteList } from '@/hooks/useInfiniteList';
+import { Album } from '@/types/deezer/deezer';
 
 const LIMIT = 50;
 
@@ -20,50 +21,30 @@ const SearchAlbums = () => {
   const { searchQuery } = useSearchStore();
   const router = useRouter();
 
-  const [ albums, setAlbums ] = useState<SearchAlbum[]>([]);
-  const [ offset, setOffset ] = useState(0);
-  const [ hasMore, setHasMore ] = useState(true);
-  const [ loading, setLoading ] = useState(false);
-
   const [ sortType, setSortType ] = useState<AlbumSortType>(null);
   const [ openSort, setOpenSort ] = useState(false);
 
-  useEffect(() => {
-    if (!searchQuery) return;
-
-    const fetchInitial = async () => {
-      setLoading(true);
-      const data = await typeSearch(searchQuery, 'album', LIMIT, 0);
-      const items = data.albums?.items ?? [];
-
-      setAlbums(items);
-      setOffset(items.length);
-      setHasMore(items.length === LIMIT);
-      setLoading(false);
-    };
-
-    fetchInitial();
-  }, [searchQuery]);
-
-  const loadMore = async () => {
-    if (!searchQuery || loading || !hasMore) return;
-
-    setLoading(true);
-    const data = await typeSearch(searchQuery, 'album', LIMIT, offset);
-    const items = data.albums?.items ?? [];
-
-    setAlbums((prev) => [...prev, ...items]);
-    setOffset((prev) => prev + items.length);
-    setHasMore(items.length === LIMIT);
-    setLoading(false);
-  };
-
+  // React Query로 데이터 관리
+  const {
+    list: albums,
+    loadMore,
+    hasNextPage,
+    isLoading,
+    isFetchingNextPage,
+  } = useInfiniteList<Album>({
+    queryKey: ['SearchAlbum', searchQuery],
+    queryFn: (page) =>
+      typeSearch(searchQuery, 'album', LIMIT, page),
+    limit: LIMIT,
+    enabled: !!searchQuery,
+  });
+  
   const sortedAlbums = sortType
     ? sortBy(
         albums,
         (album) =>
           sortType === 'name'
-            ? album.name
+            ? album.title
             : new Date(album.release_date).getTime(),
         sortType === 'old' ? 'asc' : 'desc'
       )
@@ -89,8 +70,8 @@ const SearchAlbums = () => {
 
       <AlbumList
         albums={sortedAlbums}
-        loading={loading}
-        hasMore={hasMore}
+        loading={isLoading || isFetchingNextPage}
+        hasMore={hasNextPage}
         onLoadMore={loadMore}
         onClick={(id) => router.push(`/search/album/${id}`)}
       />

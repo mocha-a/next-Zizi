@@ -9,10 +9,10 @@ interface Props {
   loading: boolean;
   hasMore: boolean;
   onLoadMore: () => void;
-  onClick: (id: string) => void;
+  onClick: (id: number) => void;
 }
 
-const ArtistList = ({ artists, loading, hasMore, onLoadMore }: Props) => {
+const ArtistList = ({ artists, loading, hasMore, onLoadMore, onClick }: Props) => {
   console.log(artists);
   if (!artists.length && loading) return <div>로딩 중...</div>;
   if (!artists.length && !hasMore) return <div>검색 결과 없음</div>;
@@ -32,7 +32,7 @@ const ArtistList = ({ artists, loading, hasMore, onLoadMore }: Props) => {
             name={artist.name}
             imageUrl={artist.picture_medium}
             fan={artist.nb_fan}
-            onClick={(id) => console.log('clicked', id)}
+            onClick={() => onClick(artist.id)}
           />
         ))}
       </InfiniteScroll>

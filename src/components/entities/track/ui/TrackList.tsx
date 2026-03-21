@@ -3,7 +3,6 @@
 import React from 'react';
 import TrackItem from '@/components/common/TrackItem';
 import InfiniteScroll from '@/components/common/InfiniteScroll';
-import { MapTrack } from '@/types/trackMapper';
 import { SearchTrack } from '@/types/deezer/search';
 
 interface TracksProps {
@@ -26,9 +25,11 @@ const Tracks = ({ tracks, loading, hasMore, onLoadMore }: TracksProps) => {
         {tracks.map((track, index) => (
           <TrackItem
             key={track.id}
-            trackData={MapTrack(track)}
+            trackData={track}
             index={index}
             page=""
+            onPlayClick={(track) => console.log('play', track)}
+            onMoreClick={(track) => console.log('more', track)}
           />
         ))}
       </InfiniteScroll>

@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import SimpleBottomNavigation from "@/components/common/BottomNavigation";
 import NextAuthProvider from "./providers";
 import SessionGate from "@/components/auth/SessionGate";
+import SimpleBottomNavigation from "@/components/common/BottomNavigation";
+import ReactQueryProvider from "@/lib/providers/ReactQueryProvider";
 
 import '../styles/_style.scss';
 
@@ -12,7 +13,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: Readonly<{ //안 건드릴 값
   children: React.ReactNode;
 }>) {
   return (
@@ -20,12 +21,14 @@ export default function RootLayout({
       <body
         className={'antialiased'}
       >
-        <NextAuthProvider>
-          <SessionGate>
-            {children}
-            <SimpleBottomNavigation/>
-          </SessionGate>
-        </NextAuthProvider>
+        <ReactQueryProvider>              {/* 서버 데이터 관리 */}
+          <NextAuthProvider>              {/* 인증 상태 관리 */}
+            <SessionGate>                 {/* 사용자 상태 체크 (추가 정보 필요 시 팝업 띄우고, 아니면 children 렌더링) */}
+              {children}
+              <SimpleBottomNavigation />  {/* 하단 네비게이션 */}
+            </SessionGate>
+          </NextAuthProvider>
+        </ReactQueryProvider>
       </body>
     </html>
   );

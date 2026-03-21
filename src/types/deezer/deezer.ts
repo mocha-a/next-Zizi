@@ -22,7 +22,7 @@ export interface Track extends SearchTrack{
 // album
 // ======================================================
 export interface Album extends SearchAlbum{
-   share: string;
+  share: string;
   genres: {
     data: DeezerGenre[];
   };

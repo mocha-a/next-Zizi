@@ -1,3 +1,4 @@
+// 로그인 상태 전역 관리
 'use client';
 
 import { useSession } from 'next-auth/react';

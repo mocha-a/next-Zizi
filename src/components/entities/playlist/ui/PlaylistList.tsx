@@ -4,21 +4,15 @@ import InfiniteScroll from '@/components/common/InfiniteScroll';
 import PlaylistCard from './PlaylistCard';
 import type { SearchPlaylist } from '@/types/deezer/search';
 
-interface PlaylistListProps {
+interface Props {
   playlists: SearchPlaylist[];
   loading: boolean;
   hasMore: boolean;
   onLoadMore: () => void;
-  onClick: (id: string) => void;
+  onClick: (id: number) => void;
 }
 
-const PlaylistList = ({
-  playlists,
-  loading,
-  hasMore,
-  onLoadMore,
-  onClick,
-}: PlaylistListProps) => {
+const PlaylistList = ({ playlists, loading, hasMore, onLoadMore, onClick }: Props) => {
   if (!playlists.length && loading) {
     return <div>로딩 중...</div>;
   }
@@ -38,10 +32,10 @@ const PlaylistList = ({
           <PlaylistCard
             key={playlist.id}
             id={playlist.id}
-            images={playlist.images}
-            name={playlist.name}
-            owner={playlist.owner}
-            tracks={playlist.tracks}
+            picture={playlist.picture_medium}
+            title={playlist.title}
+            user={playlist.user.name}
+            tracks={playlist.nb_tracks}
             onClick={() => onClick(playlist.id)}
           />
         ))}

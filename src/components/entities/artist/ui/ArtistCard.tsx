@@ -1,19 +1,18 @@
 import React from 'react';
 import Image from 'next/image';
-import { mapGenres } from '@/types/deezer/search';
 
 interface Props {
   id: number;
   name: string;
-  imageUrl?: string;
+  imageUrl: string;
   fan?: number;
-  onClick?: (id: number) => void;
+  onClick?: () => void;
 }
 
 
-const ArtistCard = ({ name, imageUrl, fan, onClick, id }: Props) => {
+const ArtistCard = ({ name, imageUrl, fan, onClick }: Props) => {
   return (
-    <div className='artist-box' onClick={() => onClick && onClick(id)}>
+    <div className='artist-box' onClick={onClick}>
       <div className='artist-image'>
         <Image
           src={imageUrl || '/placeholder.png'}

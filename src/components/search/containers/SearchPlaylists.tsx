@@ -1,10 +1,11 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { typeSearch } from '@/lib/search';
-import { useSearchStore } from '@/store/searchStore';
 import { sortBy } from '@/lib/sortBy';
+import { useSearchStore } from '@/store/searchStore';
+import { useInfiniteList } from '@/hooks/useInfiniteList';
 
 import SortBtn from '@/components/common/SortBtn';
 import SortSelect from '@/components/common/SortSelect';
@@ -25,51 +26,30 @@ const SearchPlaylists = () => {
   const { searchQuery } = useSearchStore(); // 검색어만 전역에서 사용
   const router = useRouter();
 
-  const [ playlists, setPlaylists ] = useState<SearchPlaylist[]>([]); // 플레이리스트 목록
-  const [ offset, setOffset ] = useState(0); // 페이지네이션 offset
-  const [ hasMore, setHasMore ] = useState(true); // 더 불러올 데이터 여부
-  const [ loading, setLoading ] = useState(false); // 로딩 상태
-
   const [ sortType, setSortType ] = useState<PlaylistSortType>(null); // 정렬 타입
   const [ openSort, setOpenSort ] = useState(false); // 정렬 다이얼로그 상태
 
-  useEffect(() => {
-    if (!searchQuery) return;
-
-    const fetchInitial = async () => {
-      setLoading(true);
-      const data = await typeSearch(searchQuery, 'playlist', LIMIT, 0);
-      const items = data.playlists?.items ?? [];
-
-      setPlaylists(items);
-      setOffset(items.length);
-      setHasMore(items.length === LIMIT);
-      setLoading(false);
-    };
-
-    fetchInitial();
-  }, [searchQuery]);
-
-  const loadMore = async () => {
-    if (!searchQuery || loading || !hasMore) return;
-
-    setLoading(true);
-    const data = await typeSearch(searchQuery, 'playlist', LIMIT, offset);
-    const items = data.playlists?.items ?? [];
-
-    setPlaylists((prev) => [...prev, ...items]);
-    setOffset((prev) => prev + items.length);
-    setHasMore(items.length === LIMIT);
-    setLoading(false);
-  };
+  const {
+    list: playlists,
+    loadMore,
+    hasNextPage,
+    isLoading,
+    isFetchingNextPage,
+  } = useInfiniteList<SearchPlaylist>({
+    queryKey: ['searchPlaylist', searchQuery],
+    queryFn: (page) =>
+      typeSearch(searchQuery, 'playlist', LIMIT, page),
+    limit: LIMIT,
+    enabled: !!searchQuery,
+  });
 
   const sortedPlaylists = sortType
     ? sortBy(
         playlists,
         (playlist) =>
           sortType === 'name'
-            ? playlist.name
-            : playlist.tracks.total,
+            ? playlist.title
+            : playlist.nb_tracks,
         sortType === 'tracks' ? 'desc' : 'asc'
       )
     : playlists;
@@ -94,8 +74,8 @@ const SearchPlaylists = () => {
 
       <PlaylistList
         playlists={sortedPlaylists}
-        loading={loading}
-        hasMore={hasMore}
+        loading={isLoading || isFetchingNextPage}
+        hasMore={hasNextPage}
         onLoadMore={loadMore}
         onClick={(id) => router.push(`/search/playlist/${id}`)}
       />

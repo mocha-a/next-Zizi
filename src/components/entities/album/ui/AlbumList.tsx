@@ -9,7 +9,7 @@ interface Props {
   loading: boolean;
   hasMore: boolean;
   onLoadMore: () => void;
-  onClick: (id: string) => void;
+  onClick: (id: number) => void;
 }
 
 const AlbumList = ({
@@ -32,11 +32,11 @@ const AlbumList = ({
           <AlbumCard
             key={album.id}
             id={album.id}
-            name={album.name}
-            images={album.images}
-            release_date={album.release_date}
-            album_type={album.album_type}
-            artists={album.artists}
+            title={album.title}
+            cover={album.cover_medium}
+            // release_date={album.release_date}
+            record_type={album.record_type}
+            artist={album.artist}
             onClick={() => onClick(album.id)}
           />
         ))}
