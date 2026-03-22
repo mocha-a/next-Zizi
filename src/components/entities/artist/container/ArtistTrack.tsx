@@ -1,46 +1,30 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import axios from 'axios';
 import TrackList from '@/components/entities/track/ui/TrackList';
-import { SearchTrack } from '@/types/deezer/search';
+import { useQuery } from '@tanstack/react-query';
+import { getTop } from '@/lib/api/artist';
 
-interface ArtistTopTracksProps {
+interface Props {
   id: string;
 }
 
-const ArtistTracks = ({ id }: ArtistTopTracksProps) => {
-  const [tracks, setTracks] = useState<SearchTrack[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [hasMore, setHasMore] = useState(false); // Top Tracks는 고정 10곡
+const ArtistTracks = ({ id }: Props) => {
   const router = useRouter();
 
-  const fetchTracks = async () => {
-    setLoading(true);
-    try {
-      const res = await axios.get(`/api/spotify/artist/${id}/track`);
-      setTracks(res.data.tracks);
-      setHasMore(false); // Top Tracks는 10곡 고정이라 더 없음
-    } catch (err) {
-      console.error('대표곡 조회 실패', err);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const { data: track, isLoading } = useQuery({
+    queryKey: ['artist', id, 'top'],
+    queryFn: () => getTop(Number(id)),
+    enabled: !!id,
+  });
 
-  useEffect(() => {
-    fetchTracks();
-  }, [id]);
-
-  console.log(tracks);
-  console.log(id);
+  console.log(track);
 
   return (
     <TrackList
-      tracks={tracks}
-      loading={loading}
-      hasMore={hasMore}
+      tracks={track}
+      loading={isLoading}
+      hasMore={false}
       onLoadMore={() => {}} // Top Tracks는 추가 로딩 없음
     />
   );

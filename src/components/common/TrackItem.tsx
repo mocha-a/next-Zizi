@@ -25,7 +25,7 @@ function TrackItem({trackData, page = '', index, onPlayClick, onMoreClick}: Prop
 
             <div className='trackitem-image'>
                 <Image
-                src={trackData.artist.picture_medium}
+                src={trackData.album.cover_medium}
                 alt="album"
                 width={45}
                 height={45}

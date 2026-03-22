@@ -8,10 +8,11 @@ interface props {
   cover: string;
   record_type: string;
   artist: SearchArtist;
+  release_date?: string;
   onClick?: () => void;
 }
 
-const AlbumCard = ({ id, title, cover, record_type, artist, onClick }: props) => {
+const AlbumCard = ({ id, title, cover, record_type, artist, release_date, onClick }: props) => {
 
   return (
     <div key={id} className='album-box' onClick={onClick}>
@@ -31,6 +32,9 @@ const AlbumCard = ({ id, title, cover, record_type, artist, onClick }: props) =>
           </p>
         </div>
         <div className='album-release'>
+          {release_date && (  
+            <span>{release_date.replace(/-/g,'.')}</span>
+          )}
           <span>{record_type}</span>
         </div>
       </div>

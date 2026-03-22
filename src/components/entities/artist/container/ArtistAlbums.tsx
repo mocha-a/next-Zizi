@@ -1,65 +1,53 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import axios from 'axios';
 import { sortBy } from '@/lib/sortBy';
 import SortBtn from '@/components/common/SortBtn';
 import SortSelect from '@/components/common/SortSelect';
 import BottomDialog from '@/components/common/Dialog';
 import AlbumList from '@/components/entities/album/ui/AlbumList';
-import { SearchAlbum } from '@/types/deezer/search';
 import { AlbumSortType, AlbumSortOptions } from '@/types/sort';
+import { getArtistAlbums } from '@/lib/api/artist';
+import { useInfiniteList } from '@/hooks/useInfiniteList';
+import { Album } from '@/types/deezer/deezer';
+import { SearchArtist } from '@/types/deezer/search';
 
 interface Props {
   id: string;
+  artist: SearchArtist;
 }
 
 const LIMIT = 50;
 
-const ArtistAlbums = ({ id }: Props) => {
-  const [ albums, setAlbums ] = useState<SearchAlbum[]>([]);
-  const [ offset, setOffset ] = useState(0);
-  const [ hasMore, setHasMore ] = useState(true);
-  const [ loading, setLoading ] = useState(false);
-
+const ArtistAlbums = ({ id, artist }: Props) => {
   const [ sortType, setSortType ] = useState<AlbumSortType>(null);
   const [ openSort, setOpenSort ] = useState(false);
   const router = useRouter();
 
-  const fetchAlbums = async (currentOffset: number) => {
-  if (loading || !hasMore) return;
-
-  setLoading(true);
-  try {
-    const res = await axios.get(`/api/spotify/artist/${id}/albums`, {
-      params: { limit: LIMIT, offset: currentOffset },
-    });
-
-    const { items, total } = res.data;
-
-    setAlbums((prev) =>
-      currentOffset === 0 ? items : [...prev, ...items]
-    );
-    setOffset(currentOffset + LIMIT);
-    setHasMore(currentOffset + LIMIT < total);
-    } catch (err) {
-      console.error('앨범 조회 실패', err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // 최초 로드
-  useEffect(() => {
-    setAlbums([]);
-    setOffset(0);
-    setHasMore(true);
-    fetchAlbums(0);
-  }, [id]);
-
+  const {
+    list: albums,
+    loadMore,
+    hasNextPage,
+    isLoading,
+    isFetchingNextPage,
+  } = useInfiniteList<Album>({
+    queryKey: ['artist', id, 'albums'],
+    queryFn: async (pageParam) => {
+      const data = await getArtistAlbums({
+        id: Number(id),
+        limit: LIMIT,
+        index: pageParam,
+      });
+      
+      // 훅이 기대하는 { items: T[] } 구조로 반환
+      return { items: data }; 
+    },
+    limit: LIMIT,
+    enabled: !!id,
+  });
+  
   console.log(albums);
-  console.log(offset);
 
   const sortedAlbums = useMemo(() => {
     if (!sortType) return albums;
@@ -68,7 +56,7 @@ const ArtistAlbums = ({ id }: Props) => {
       albums,
       (album) =>
         sortType === 'name'
-          ? album.name
+          ? album.title 
           : new Date(album.release_date).getTime(),
       sortType === 'old' ? 'asc' : 'desc'
     );
@@ -94,9 +82,10 @@ const ArtistAlbums = ({ id }: Props) => {
 
       <AlbumList
         albums={sortedAlbums}
-        loading={loading}
-        hasMore={hasMore}
-        onLoadMore={() => fetchAlbums(offset)}
+        artist={artist}
+        loading={isLoading || isFetchingNextPage}
+        hasMore={hasNextPage}
+        loadMore={loadMore}
         onClick={(id) => router.push(`/search/album/${id}`)}
       />
     </>

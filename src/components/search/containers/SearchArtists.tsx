@@ -33,7 +33,7 @@ const SearchArtists = () => {
     isLoading,
     isFetchingNextPage,
   } = useInfiniteList<Artist>({
-    queryKey: ['searchArtist', searchQuery],
+    queryKey: ['search', 'artist', searchQuery],
     queryFn: (page) =>
       typeSearch(searchQuery, 'artist', LIMIT, page),
     limit: LIMIT,
@@ -51,6 +51,16 @@ const SearchArtists = () => {
         sortType === 'popularity' ? 'desc' : 'asc'
       )
     : artists;
+
+  const getArtistLevel = (fans: number) => {
+    if (fans > 100000) return '👑 Top Artist';
+    if (fans > 10000) return '⭐ Popular';
+  };
+
+  const artistsWithLevel = sortedArtists.map(artist => ({
+    ...artist,
+    level: getArtistLevel(artist.nb_fan),
+  }));
 
   const label =
     ArtistSortOptions.find((opt) => opt.value === sortType)?.label || '추천순';
@@ -71,7 +81,7 @@ const SearchArtists = () => {
       </BottomDialog>
 
       <ArtistList
-        artists={sortedArtists}
+        artists={artistsWithLevel}
         loading={isLoading || isFetchingNextPage}
         hasMore={hasNextPage}
         onLoadMore={loadMore}

@@ -36,8 +36,9 @@ export interface SearchArtist {
   picture_medium: string;
   picture_xl: string;
   tracklist: string;
-  nb_album?: number;
-  nb_fan?: number;
+  nb_album: number;
+  nb_fan: number;
+  level?: string;
   type: "artist";
 }
 

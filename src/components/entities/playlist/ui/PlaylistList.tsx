@@ -2,10 +2,10 @@
 
 import InfiniteScroll from '@/components/common/InfiniteScroll';
 import PlaylistCard from './PlaylistCard';
-import type { SearchPlaylist } from '@/types/deezer/search';
+import { Playlist } from '@/types/deezer/deezer';
 
 interface Props {
-  playlists: SearchPlaylist[];
+  playlists: Playlist[];
   loading: boolean;
   hasMore: boolean;
   onLoadMore: () => void;

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { typeSearch } from '@/lib/search';
+
 import { useSearchStore } from '@/store/searchStore';
 import { sortBy } from '@/lib/sortBy';
 
@@ -14,6 +14,7 @@ import AlbumList from '@/components/entities/album/ui/AlbumList';
 import { AlbumSortType, AlbumSortOptions } from '@/types/sort';
 import { useInfiniteList } from '@/hooks/useInfiniteList';
 import { Album } from '@/types/deezer/deezer';
+import { typeSearch } from '@/lib/api/serach';
 
 const LIMIT = 50;
 

@@ -1,4 +1,3 @@
-// deezer album Detail type 정의
 import { SearchArtist, SearchTrack, SearchAlbum, SearchPlaylist } from '@/types/deezer/search';
 
 // ======================================================

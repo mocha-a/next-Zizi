@@ -3,10 +3,10 @@
 import React from 'react';
 import TrackItem from '@/components/common/TrackItem';
 import InfiniteScroll from '@/components/common/InfiniteScroll';
-import { SearchTrack } from '@/types/deezer/search';
+import { Track } from '@/types/deezer/deezer';
 
 interface TracksProps {
-  tracks: SearchTrack[];
+  tracks: Track[];
   loading: boolean;
   hasMore: boolean;
   onLoadMore: () => void;

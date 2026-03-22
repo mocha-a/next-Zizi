@@ -2,10 +2,10 @@
 
 import InfiniteScroll from '@/components/common/InfiniteScroll';
 import ArtistCard from './ArtistCard';
-import type { SearchArtist } from '@/types/deezer/search';
+import { Artist } from '@/types/deezer/deezer';
 
 interface Props {
-  artists: SearchArtist[];
+  artists: Artist[];
   loading: boolean;
   hasMore: boolean;
   onLoadMore: () => void;
@@ -27,11 +27,11 @@ const ArtistList = ({ artists, loading, hasMore, onLoadMore, onClick }: Props) =
       >
         {artists.map((artist) => (
           <ArtistCard
-            key={artist.id} // React key
-            id={artist.id}  // ArtistCard prop
+            key={artist.id}
             name={artist.name}
             imageUrl={artist.picture_medium}
             fan={artist.nb_fan}
+            level={artist.level}
             onClick={() => onClick(artist.id)}
           />
         ))}

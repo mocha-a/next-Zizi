@@ -12,7 +12,7 @@ import SearchAlbums from './SearchAlbums';
 import SearchPlaylists from './SearchPlaylists';
 import SearchTracks from './SearchTracks';
 
-interface SearchTabsProps {
+interface Props {
   type?: string;
 }
 
@@ -25,7 +25,7 @@ const typeToIndex = (type?: string) =>
 const indexToType = (index: number): TabType =>
   TAB_TYPES[index] ?? 'all';
 
-export default function SearchTabs({ type }: SearchTabsProps) {
+export default function SearchTabs({ type }: Props) {
   const router = useRouter();
   const { tabValue, setTabValue } = useTabStore();
   const { searchQuery } = useSearchStore();
@@ -38,12 +38,12 @@ export default function SearchTabs({ type }: SearchTabsProps) {
     { label: '플레이리스트', content: <SearchPlaylists /> },
   ];
 
-  /* ✅ URL(type) → tab 동기화 */
+  // URL(type) → tab 동기화
   useEffect(() => {
     setTabValue(typeToIndex(type));
   }, [type, setTabValue]);
 
-  /* ✅ 탭 클릭 → URL 변경 */
+  // 탭 클릭 → URL 변경
   const handleTabChange = (index: number) => {
     const nextType = indexToType(index);
     const base = `/search/${encodeURIComponent(searchQuery)}`;

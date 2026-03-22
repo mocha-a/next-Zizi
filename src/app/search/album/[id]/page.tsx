@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import DetailHeader from '@/components/common/DetailHeader';
@@ -9,21 +9,21 @@ import AlbumInfo from '@/components/entities/album/container/AlbumInfo';
 import AlbumTrack from '@/components/entities/album/container/AlbumTrack';
 import ArtistBadge from '@/components/entities/artist/ui/ArtistBadge';
 import { useTabStore } from '@/store/tabStore';
-import { SearchAlbum } from '@/types/deezer/search';
 
 import '@/styles/album/album.scss';
 import '@/styles/entitiesUI/ArtistBadge.scss';
+import { getAlbum } from '@/lib/api/album';
+import { useQuery } from '@tanstack/react-query';
 
 const Page = () => {
   const { id } = useParams() as { id: string };
-  const [ album, setAlbum ] = useState<SearchAlbum | null>(null);
   const { tabValue, setTabValue } = useTabStore();
 
-  const fetchAlbumDetail = async (id: string): Promise<SearchAlbum> => {
-    const res = await fetch(`/api/spotify/album/${id}`);
-    if (!res.ok) throw new Error('앨범 조회 실패');
-    return res.json();
-  };
+  const { data: album, isLoading } = useQuery({
+    queryKey: ['album', id],
+    queryFn: () => getAlbum(Number(id)),
+    enabled: !!id,
+  });
 
   // 탭 메뉴
   const tabs = [
@@ -31,42 +31,29 @@ const Page = () => {
     { label: '상세정보', content: <AlbumInfo album={album} /> },
   ];
 
-  useEffect(() => {
-    if (!id) return;
-
-    // 탭 초기화
-    setTabValue(0);
-
-    fetchAlbumDetail(id)
-      .then(setAlbum)
-      .catch(console.error);
-  }, [id, setTabValue]);
-
-  if (!album) {
-    return <div>로딩중...</div>;
-  }
-
   console.log(album);
+  if (isLoading) return <div>로딩중...</div>;
+  if (!album) return <div>아티스트 없음</div>;
 
   return (
     <div className="album-detail">
       <DetailHeader />
       <div className='album-img'>
         <Image
-          src={album.images?.[0]?.url ?? '/imgs/default-artist.png'}
+          src={album.cover_medium ?? '/imgs/default-artist.png'}
           alt={album.name}
           width={200}
           height={200}
         />
       </div>
-      <StarRating popularity={album.popularity} />
-      <h2>{album.name}</h2>
+      {/* <StarRating popularity={album.popularity} /> */}
+      <h2>{album.title}</h2>
       <div className='album-release'>
         <span>{album.release_date.replace(/-/g, ".")}</span>
-        <span>{album.album_type}</span>
+        <span>{album.record_type}</span>
       </div>
       <div className='album-artist'>
-        <ArtistBadge artists={album.artists}/>
+        <ArtistBadge contributors={album.contributors}/>
       </div>
       <TabsContainer
         tabs={tabs}

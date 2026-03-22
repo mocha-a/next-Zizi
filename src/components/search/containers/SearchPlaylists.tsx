@@ -12,8 +12,9 @@ import SortSelect from '@/components/common/SortSelect';
 import BottomDialog from '@/components/common/Dialog';
 import PlaylistList from '@/components/entities/playlist/ui/PlaylistList';
 
-import type { SearchPlaylist } from '@/types/deezer/search';
+
 import type { PlaylistSortType } from '@/types/sort';
+import { Playlist } from '@/types/deezer/deezer';
 
 const LIMIT = 50;
 
@@ -35,8 +36,8 @@ const SearchPlaylists = () => {
     hasNextPage,
     isLoading,
     isFetchingNextPage,
-  } = useInfiniteList<SearchPlaylist>({
-    queryKey: ['searchPlaylist', searchQuery],
+  } = useInfiniteList<Playlist>({
+    queryKey: ['search', 'playlist', searchQuery],
     queryFn: (page) =>
       typeSearch(searchQuery, 'playlist', LIMIT, page),
     limit: LIMIT,

@@ -19,7 +19,7 @@ const SearchTracks = () => {
     isLoading,
     isFetchingNextPage,
   } = useInfiniteList<SearchTrack>({
-    queryKey: ['searchTrack', searchQuery],
+    queryKey: ['search', 'track', searchQuery],
     queryFn: (page) =>
       typeSearch(searchQuery, 'track', LIMIT, page),
     limit: LIMIT,

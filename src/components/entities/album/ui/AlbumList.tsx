@@ -2,29 +2,25 @@
 
 import InfiniteScroll from '@/components/common/InfiniteScroll';
 import AlbumCard from './AlbumCard';
-import type { SearchAlbum } from '@/types/deezer/search';
+import type { SearchArtist } from '@/types/deezer/search';
+import type { Album } from '@/types/deezer/deezer';
 
 interface Props {
-  albums: SearchAlbum[];
+  albums: Album[];
+  artist?: SearchArtist;
   loading: boolean;
   hasMore: boolean;
-  onLoadMore: () => void;
+  loadMore: () => void;
   onClick: (id: number) => void;
 }
 
-const AlbumList = ({
-  albums,
-  loading,
-  hasMore,
-  onLoadMore,
-  onClick,
-}: Props) => {
+const AlbumList = ({ albums, loading, hasMore, loadMore, onClick, artist }: Props) => {
   if (!albums?.length) return <div>로딩 중...</div>;
 
   return (
     <div className="albumTab-container">
       <InfiniteScroll
-        loadMore={onLoadMore}
+        loadMore={loadMore}
         loading={loading}
         hasMore={hasMore}
       >
@@ -34,9 +30,9 @@ const AlbumList = ({
             id={album.id}
             title={album.title}
             cover={album.cover_medium}
-            // release_date={album.release_date}
+            release_date={album.release_date}
             record_type={album.record_type}
-            artist={album.artist}
+            artist={album.artist || artist}
             onClick={() => onClick(album.id)}
           />
         ))}
