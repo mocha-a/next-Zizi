@@ -39,7 +39,7 @@ function TrackItem({trackData, page = '', index}: PropsType) {
             )}
             
             <div>
-                <p>{trackData.name}</p>
+                <p>{trackData.title}</p>
                 <span>{trackData.artist.name}</span>
             </div>
         </div>
