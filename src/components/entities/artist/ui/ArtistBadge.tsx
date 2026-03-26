@@ -1,6 +1,7 @@
 import { Artist } from '@/types/deezer/deezer';
 import Image from 'next/image';
 import React from 'react';
+import '@/styles/entitiesUI/artistBadge.scss';
 
 interface Props {
   contributors: Artist[]; // 항상 배열로 받음
@@ -11,13 +12,13 @@ const ArtistBadge = ({ contributors }: Props) => {
 
   return (
     <div className="artist-badge">
-      <div>
+      <div className="artist-badge__avatars">
         {contributors.map((artist, i) => (
           <span
             key={artist.id}
             className="artist-badge-img"
             style={{ zIndex: contributors.length - i }}
-            title={artist.role ? `${artist.name} (${artist.role})` : artist.name}
+            title={artist.name}
           >
             <Image
               src={artist.picture_medium ?? '/imgs/default-artist.png'}
@@ -28,9 +29,14 @@ const ArtistBadge = ({ contributors }: Props) => {
           </span>
         ))}
       </div>
-      <p className="artist-badge-name">
-        {contributors.map(artist => artist.name).join(' • ')}
-      </p>
+      <div className="artist-badge__names">
+        {contributors.map((artist, i) => (
+          <span key={artist.id ?? i} className="artist-item">
+            {artist.name}
+            {i !== contributors.length - 1 && ' • '}
+          </span>
+        ))}
+      </div>
     </div>
   );
 };

@@ -10,7 +10,8 @@ export const genreMap: Record<string, string> = {
   "soundtrack": "OST",
   "k-pop": "K-POP",
   "k-rock": "락",
-  "k-rap": "랩"
+  "k-rap": "랩",
+  "Asian Music": "아시아 팝",
 };
 
 // 장르 배열 → 한글 문자열 변환

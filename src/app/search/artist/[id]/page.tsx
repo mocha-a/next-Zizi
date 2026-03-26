@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import { useTabStore } from '@/store/tabStore';
@@ -11,7 +11,6 @@ import ArtistAlbums from '@/components/entities/artist/container/ArtistAlbums';
 import ArtistTracks from '@/components/entities/artist/container/ArtistTrack';
 import { useQuery } from '@tanstack/react-query';
 import { getArtist } from '@/lib/api/artist';
-
 
 import { mapGenres } from '@/types/deezer/search';
 
@@ -39,6 +38,10 @@ const Page = () => {
     { label: '인기곡', content: <ArtistTracks id={id} /> },
     { label: '앨범', content: <ArtistAlbums id={id} artist={artist}/> },
   ];
+
+  useEffect(() => {
+    setTabValue(0);
+  }, [setTabValue]);
 
   console.log(artist)
 

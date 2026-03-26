@@ -5,13 +5,14 @@ import { formatFans } from '@/lib/formatFans';
 interface Props {
   name: string;
   imageUrl: string;
-  fan: number;
+  fan?: number;
   level?: string;
+  showFans: boolean;
   onClick?: () => void;
 }
 
 
-const ArtistCard = ({ name, imageUrl, fan, level, onClick }: Props) => {
+const ArtistCard = ({ name, imageUrl, fan, level, showFans, onClick }: Props) => {
   return (
     <div className='artist-box' onClick={onClick}>
       <div className='artist-image'>
@@ -23,11 +24,9 @@ const ArtistCard = ({ name, imageUrl, fan, level, onClick }: Props) => {
         />
       </div>
       <div>
-        {level??
-          <p>{level}</p>
-        }
+        {level&& <p>{level}</p>}
         <p className='artist-name'>{name}</p>
-        <p>{formatFans(fan ?? 0)}</p>
+        {showFans&& <p>{formatFans(fan ?? 0)}</p>}
       </div>
     </div>
   )

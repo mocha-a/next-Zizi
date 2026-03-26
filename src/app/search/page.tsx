@@ -1,5 +1,6 @@
-import React from 'react';
+'use client';
 
+import React from 'react';
 import SearchLayout from './SearchLayout';
 import TrendingSearches from '@/components/search/ui/TrendingSearches';
 import TrendingTags from '@/components/search/ui/TrendingTags';
@@ -7,6 +8,7 @@ import TrendingTags from '@/components/search/ui/TrendingTags';
 import '@/styles/search/search.scss';
 
 function Page() {
+
   return (
     <SearchLayout>
       <TrendingSearches />
@@ -15,4 +17,4 @@ function Page() {
   );
 }
 
-export default Page
+export default Page;

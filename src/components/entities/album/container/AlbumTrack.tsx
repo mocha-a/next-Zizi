@@ -1,20 +1,14 @@
 import React from 'react';
 import AlbumTrackItem from '../ui/AlbumTrackItem'
+import { Track } from '@/types/deezer/deezer';
 
 interface Props {
-  album?: {
-    tracks: {
-      items: {
-        id: string;
-        name: string;
-        artists: { name: string }[];
-      }[];
-    };
-  } | null;
+  track: Track
 }
 
-const AlbumTrack = ({ album }: Props) => {
-  const items = album?.tracks.items ?? [];
+const AlbumTrack = ({ track }: Props) => {
+  const items = track ?? [];
+  
   return (
     <ul className="album-track-list">
       {items.map((track, i) => (

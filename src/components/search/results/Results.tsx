@@ -26,6 +26,8 @@ const Results = () => {
     staleTime: 1000 * 60 * 5,
   });
 
+  console.log(allData);
+
   if (isLoading) return <div>로딩중...</div>;
   if (error) return <div>검색 중 오류 발생</div>;
 
@@ -40,7 +42,7 @@ const Results = () => {
         {allData?.artists?.map((artist) => (
           <SwiperSlide key={artist.id} style={{ width: '110px' }}>
             <Link href={`/search/artist/${artist.name}`}>
-              <ArtistCard name={artist.name} imageUrl={artist.picture_medium} />
+              <ArtistCard name={artist.name} imageUrl={artist.picture_medium} showFans={false}/>
             </Link>
           </SwiperSlide>
         ))}

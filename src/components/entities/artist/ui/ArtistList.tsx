@@ -32,6 +32,7 @@ const ArtistList = ({ artists, loading, hasMore, onLoadMore, onClick }: Props) =
             imageUrl={artist.picture_medium}
             fan={artist.nb_fan}
             level={artist.level}
+            showFans={true}
             onClick={() => onClick(artist.id)}
           />
         ))}

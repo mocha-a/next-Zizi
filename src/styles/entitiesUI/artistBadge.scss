@@ -7,14 +7,32 @@
     align-items: center;
     gap: 8px;
 
-    .artist-badge-img{
-        display: inline-block;
-        position: relative; 
-        width: 32px; height: 32px;
-        border-radius: 50%;
-        overflow: hidden;
-        &:not(:first-child) {
-            margin-left: -8px;
+    .artist-badge__avatars {
+        display: flex;
+        align-items: center;
+        flex-shrink: 0;
+
+        .artist-badge-img{
+            display: inline-block;
+            position: relative; 
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            overflow: hidden;
+            &:not(:first-child) {
+                margin-left: -8px;
+            }
         }
     }
+    .artist-badge__names {
+        flex: 1;
+        overflow-x: auto;
+        white-space: nowrap;
+
+        scrollbar-width: none;
+    }
+
+    .artist-badge__names::-webkit-scrollbar {
+        display: none;
+    }
 }
+
