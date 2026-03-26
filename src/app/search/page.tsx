@@ -8,7 +8,6 @@ import TrendingTags from '@/components/search/ui/TrendingTags';
 import '@/styles/search/search.scss';
 
 function Page() {
-
   return (
     <SearchLayout>
       <TrendingSearches />

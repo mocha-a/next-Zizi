@@ -1,4 +1,4 @@
-import { Track as SpotifyTrack } from '@/types/deezer';
+import { Track as SpotifyTrack } from '@/types/spotify';
 
 export interface TrackItemData {
   image: string;

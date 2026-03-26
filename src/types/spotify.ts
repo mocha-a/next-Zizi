@@ -1,0 +1,114 @@
+// spotify type 정의
+
+export type SearchCategory = 'artist' | 'track' | 'album' | 'playlist';
+
+// 장르 맵핑
+export const genreMap: Record<string, string> = {
+  "k-ballad": "발라드",
+  "soundtrack": "OST",
+  "k-pop": "K-POP",
+  "k-rock": "락",
+  "k-rap": "랩"
+};
+
+// 장르 배열 → 한글 문자열 변환
+export const mapGenres = (genres?: string[]) =>
+  genres?.map(g => genreMap[g] || g).join(' • ') ?? '';
+
+//==============================================================
+//==============================================================
+//==============================================================
+
+export interface EntityBase {
+  id: string;
+  name: string;
+}
+
+export interface Image {
+  url: string;
+  width: number;
+  height: number;
+}
+
+export interface ArtistWithImage extends EntityBase {
+  images: Image[];
+}
+
+// 전체
+export interface AllResults {
+  artists?: { items: Artist[] };
+  albums?: { items: Album[] };
+  tracks?: { items: Track[] };
+  playlists?: { items: Playlist[] };
+}
+
+export interface Artist {
+  id: string;
+  name: string;
+  genres: string[];
+  popularity: number;
+  images: Image[];
+  followers: { href: string | null; total: number };
+  external_urls: { spotify: string };
+}
+
+export interface Track {
+  id: string;
+  name: string;
+  duration_ms: number;
+  popularity: number;
+  preview_url: string | null;
+  external_urls: { spotify: string };
+  album: { 
+    id: string; 
+    name: string; 
+    images: Image[] 
+    };
+  artists: ArtistWithImage[];
+}
+
+export interface Album {
+  album_type: string;
+  total_tracks: number;
+  href: string;
+  id: string;
+  images: Image[];
+  name: string;
+  release_date: string;
+  artists: ArtistWithImage[];
+  popularity: number;
+  tracks: {
+    items: AlbumTrack[];
+    total: number;
+  };
+}
+
+export interface AlbumTrack {
+  id: string;
+  name: string;
+  duration_ms: number;
+  track_number: number;
+  disc_number: number;
+  preview_url: string | null;
+  explicit: boolean;
+  artists: EntityBase[];
+}
+
+export interface Playlist {
+  id: string;
+  name: string;
+  description: string;
+  images: Image[];
+  owner: { 
+    display_name: string; 
+    id: string; 
+    external_urls: { spotify: string } 
+  };
+  public: boolean;
+  collaborative: boolean;
+  tracks: { 
+    href: string; 
+    total: number 
+  };
+  external_urls: { spotify: string };
+}

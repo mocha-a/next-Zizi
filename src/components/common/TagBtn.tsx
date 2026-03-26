@@ -1,12 +1,15 @@
 interface PropsType {
   tagbtn: React.ReactNode;
   className?: string;
+  onClick?: () => void;
 }
 
-function TagBtn({ tagbtn, className = '' }: PropsType) {
-    return (
-    <div className={`tagbtn ${className}`}>{tagbtn}</div>
-    )
+const TagBtn =({ tagbtn, className, onClick }: PropsType) => {
+  return (
+    <div className={`tagbtn ${className}`} onClick={onClick}>
+      {tagbtn}
+    </div>
+  )
 }
 
 export default TagBtn

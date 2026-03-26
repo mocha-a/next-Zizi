@@ -8,15 +8,12 @@ import Check from '@/components/icons/Check';
 import PlayBorder from '@/components/icons/PlayBorder';
 import ChartTagSwiper from './ChartTagSwiper';
 import { IconButton } from '../common/IconButton';
-import { PlayableTrack } from '@/types/trackItem';
 
 interface ChartTabContentProps {
     tabType: 'top' | 'genre' | 'mood';
-    onOpenDialog: (track: Track) => void;
-    onPlayClick: (track: PlayableTrack) => void;
 }
 
-function ChartTabContent({ tabType, onOpenDialog, onPlayClick }: ChartTabContentProps) {
+function ChartTabContent({ tabType }: ChartTabContentProps) {
     const tagByenteredTab = allTags[tabType];
 
     const [selectedTag, setSelectedTag] = useState<string>(
@@ -61,8 +58,6 @@ function ChartTabContent({ tabType, onOpenDialog, onPlayClick }: ChartTabContent
             trackData={top}
             index={i}
             page="chart"
-            onPlayClick={onPlayClick}
-            onMoreClick={onOpenDialog}
           />
         ))}
       </ul>

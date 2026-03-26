@@ -1,17 +1,21 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { Track } from "@/pages/api/lastfm/lastfm";
 import TrackItem from "../common/TrackItem";
-import { PlayableTrack } from '@/types/trackItem';
+import { useTrackDialog } from "@/store/useTrackDialog";
+import Dialog from "@mui/material/Dialog";
+import TrackDialogContent from "../common/TrackDialogContent";
 
-interface Props {
-  onOpenDialog: (track: Track) => void;
-  onPlayClick: (track: PlayableTrack) => void;
-}
-
-export default function TopTracksList({onOpenDialog, onPlayClick}: Props) {
+export default function TopTracksList() {
+  const pathname = usePathname();
   const [tracks, setTracks] = useState<Track[]>([]);
+  const { open, track, closeDialog } = useTrackDialog();
+
+  useEffect(() => {
+      closeDialog();
+    },[pathname])
 
   useEffect(() => {
     fetch('/api/lastfm/lastfm')
@@ -28,11 +32,15 @@ export default function TopTracksList({onOpenDialog, onPlayClick}: Props) {
       <h2><span>Hot</span> 트랙_맛보기.zip</h2>
       <ul className='chart-section-list-box tracklist'>
         {tracks.slice(0, 5).map((tracks, i) => (
-            <TrackItem key={i} trackData={tracks} index={i} page="home"
-                        onPlayClick={onPlayClick} onMoreClick={onOpenDialog}
-            />
+            <TrackItem key={i} trackData={tracks} index={i} page="home" />
         ))}
       </ul>
+
+      <Dialog open={open} onClose={closeDialog}>
+        {track && (
+          <TrackDialogContent trackData={track}/>
+        )}
+      </Dialog>
     </div>
   );
 }

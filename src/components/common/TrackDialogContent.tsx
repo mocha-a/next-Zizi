@@ -3,7 +3,7 @@
 import { TrackItemData } from "@/types/trackItem";
 
 interface Props {
-    trackData: TrackItemData;  // data
+  trackData: TrackItemData;  // data
 }
 
 export default function TrackDialogContent({ trackData }: Props) {

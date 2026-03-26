@@ -2,22 +2,29 @@
 
 import PlayBk from "../icons/PlayBk";
 import Dot3 from "../icons/Dot3";
-import { PlayableTrack } from "@/types/trackItem";
+import { TrackItemData } from "@/types/trackItem";
+import { useTrackDialog } from "@/store/useTrackDialog";
 
 interface PropsType {
-    trackData: PlayableTrack;  // data
-    onMoreClick: (track: any) => void;
-    onPlayClick: (track: any) => void;
+    trackData: TrackItemData;  // data
 }
 
-export default function TrackItemRight({ trackData, onMoreClick, onPlayClick }: PropsType) {
+export default function TrackItemRight({ trackData }: PropsType) {
+  const openDialog = useTrackDialog((s) => s.openDialog);
+
+  const handleYouTubeSearch = ({ artist, name }: TrackItemData) => {
+    // console.log(artist.name, name);
+    const query = `${artist.name} ${name}`;
+    const url = `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`;
+    window.open(url, '_blank', 'noopener,noreferrer');
+  };
     
   return (
     <>
-      <button onClick={() => onPlayClick(trackData)}>
+      <button onClick={() => handleYouTubeSearch(trackData)}>
         <PlayBk className="icons-play" />
       </button>
-      <button onClick={() => onMoreClick(trackData)}>
+      <button onClick={() => openDialog(trackData)}>
         <Dot3 className="icons-dot" />
       </button>
     </>

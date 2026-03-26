@@ -3,9 +3,10 @@ import Back from '@/components/icons/Back'
 import JoinForm from './joinForm';
 
 import '../../styles/join/join.scss'
+import { JoinField } from '@/types/join';
 
 function page() {
-    const data = [
+    const data: JoinField[] = [
         {
             label: '이름',
             type: 'name',

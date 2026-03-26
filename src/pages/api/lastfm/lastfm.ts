@@ -50,7 +50,7 @@ async function fetchTopTracks(tag?: string): Promise<Track[]> {
 
   try {
     const finalTag = tag || 'k-pop';
-    const randomPage = Math.floor(Math.random() * 5) + 1;
+    const randomPage = Math.floor(Math.random() * 4) + 1; // maximum 5 page이지만 마지막 페이지 track이 50개 이하임.
 
     // Last.fm 트랙 가져오기
     const res = await axios.get(BASE_URL, {

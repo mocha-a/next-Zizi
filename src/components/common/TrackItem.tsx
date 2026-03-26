@@ -1,18 +1,16 @@
 import React from 'react'
 import Image from "next/image";
 import TrackItemRight from './TrackItemRight';
-import { SearchTrack } from '@/types/deezer/search';
+import { TrackItemData } from '@/types/trackItem';
 
 
 interface PropsType {
-    trackData: SearchTrack;  // data
+    trackData: TrackItemData;  // data
     index: number;
     page: string;      // page에 따라 UI 변경
-    onPlayClick: (track: any) => void;
-    onMoreClick: (track: any) => void;
 }
 
-function TrackItem({trackData, page = '', index, onPlayClick, onMoreClick}: PropsType) {
+function TrackItem({trackData, page = '', index}: PropsType) {
     
   return (
     <li>
@@ -25,7 +23,7 @@ function TrackItem({trackData, page = '', index, onPlayClick, onMoreClick}: Prop
 
             <div className='trackitem-image'>
                 <Image
-                src={trackData?.album?.cover_medium}
+                src={trackData.image}
                 alt="album"
                 width={45}
                 height={45}
@@ -41,14 +39,14 @@ function TrackItem({trackData, page = '', index, onPlayClick, onMoreClick}: Prop
             )}
             
             <div>
-                <p>{trackData.title}</p>
+                <p>{trackData.name}</p>
                 <span>{trackData.artist.name}</span>
             </div>
         </div>
 
         {/* 아이콘 섹션: 재생 및 더보기 */}
         <div className='trackitem-right'>
-            <TrackItemRight trackData={trackData} onPlayClick={onPlayClick} onMoreClick={onMoreClick}/>
+            <TrackItemRight trackData={trackData} />
         </div>
     </li>
   )
