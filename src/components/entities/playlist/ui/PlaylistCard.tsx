@@ -32,7 +32,7 @@ const PlaylistCard = ({ id, name, images, owner, tracks, onClick }: Props) => {
     </div>
     <div className='playlist-info'>
       <p>{name}</p>
-      <p>{`총 ${tracks.total} 곡`}</p>
+      {/* <p>{`총 ${tracks.total} 곡`}</p> */}
       <p>{owner.display_name}</p>
     </div>
   </div>

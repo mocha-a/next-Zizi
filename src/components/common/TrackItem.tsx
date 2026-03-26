@@ -8,11 +8,9 @@ interface PropsType {
     trackData: TrackItemData;  // data
     index: number;
     page: string;      // page에 따라 UI 변경
-    onPlayClick: (track: any) => void;
-    onMoreClick: (track: any) => void;
 }
 
-function TrackItem({trackData, page = '', index, onPlayClick, onMoreClick}: PropsType) {
+function TrackItem({trackData, page = '', index}: PropsType) {
     
   return (
     <li>
@@ -48,7 +46,7 @@ function TrackItem({trackData, page = '', index, onPlayClick, onMoreClick}: Prop
 
         {/* 아이콘 섹션: 재생 및 더보기 */}
         <div className='trackitem-right'>
-            <TrackItemRight trackData={trackData} onPlayClick={onPlayClick} onMoreClick={onMoreClick}/>
+            <TrackItemRight trackData={trackData} />
         </div>
     </li>
   )
