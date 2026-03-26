@@ -3,23 +3,34 @@
 
 .album-detail{
     @include publicWidth;
-    .album-img{
+    .album-detail-img{
         margin: 15px auto 30px;
         width: 200px; height: 200px;
         border-radius: 5px;
         overflow: hidden;
+    }
+    .album-detail-fans-count{ 
+        font-family: $Galmuri;
+        font-weight: normal;
+        font-size: 12px;
+        &::after{
+            content: "💽 ";
+            font-size: 15px;
+        }
     }
     h2{
        @include GmarketBold_black_18;
        margin: 10px 0 15px;
        line-height: $lineHeight2;
     }
-    .album-release{
+    .album-detail-info{
         @include album-release;
         @include GmarketMedium_black_13;
         margin-bottom: 15px;
+        >span { text-transform: lowercase; color: $fontgray;}
     }
-    .album-artist{ margin-bottom: 20px; }
+    .album-detail-artist{ margin-bottom: 20px; }
+    
     .album-track-list{
         padding-bottom: $paddingForNavbar;
         .album-track-item {

@@ -32,6 +32,7 @@ const AlbumList = ({ albums, loading, hasMore, loadMore, onClick, artist }: Prop
             cover={album.cover_medium}
             release_date={album.release_date}
             record_type={album.record_type}
+            nb_tracks={album.nb_tracks}
             artist={album.artist || artist}
             onClick={() => onClick(album.id)}
           />

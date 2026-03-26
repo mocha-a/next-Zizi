@@ -2,8 +2,8 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-
 import { useSearchStore } from '@/store/searchStore';
+import { typeSearch } from '@/lib/api/serach';
 import { sortBy } from '@/lib/sortBy';
 
 import SortBtn from '@/components/common/SortBtn';
@@ -12,9 +12,8 @@ import BottomDialog from '@/components/common/Dialog';
 import AlbumList from '@/components/entities/album/ui/AlbumList';
 
 import { AlbumSortType, AlbumSortOptions } from '@/types/sort';
-import { useInfiniteList } from '@/hooks/useInfiniteList';
 import { Album } from '@/types/deezer/deezer';
-import { typeSearch } from '@/lib/api/serach';
+import { useInfiniteList } from '@/hooks/useInfiniteList';
 
 const LIMIT = 50;
 
@@ -73,7 +72,7 @@ const SearchAlbums = () => {
         albums={sortedAlbums}
         loading={isLoading || isFetchingNextPage}
         hasMore={hasNextPage}
-        onLoadMore={loadMore}
+        loadMore={loadMore}
         onClick={(id) => router.push(`/search/album/${id}`)}
       />
     </>

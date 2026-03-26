@@ -10,15 +10,17 @@ import ArtistBadge from '@/components/entities/artist/ui/ArtistBadge';
 import { useTabStore } from '@/store/tabStore';
 import { getAlbum } from '@/lib/api/album';
 import { useQuery } from '@tanstack/react-query';
+import { excludedGenres, genreMap } from '@/lib/genre';
 
 import '@/styles/album/album.scss';
-import { genreMap } from '@/types/deezer/search';
+
+import { Album } from '@/types/deezer/deezer';
 
 const Page = () => {
   const { id } = useParams() as { id: string };
   const { tabValue, setTabValue } = useTabStore();
 
-  const { data: album, isLoading } = useQuery({
+  const { data: album, isLoading } = useQuery<Album>({
     queryKey: ['album', id],
     queryFn: () => getAlbum(Number(id)),
     enabled: !!id,
@@ -26,7 +28,7 @@ const Page = () => {
 
   // 탭 메뉴
   const tabs = [
-    { label: '수록곡', content: <AlbumTrack album={album} /> },
+    { label: '수록곡', content: <AlbumTrack track={album?.tracks?.data ?? []} /> },
     { label: '비슷한 분위기', content: <AlbumInfo album={album} /> },
   ];
 
@@ -42,7 +44,7 @@ const Page = () => {
   return (
     <div className="album-detail">
       <DetailHeader />
-      <div className='album-img'>
+      <div className='album-detail-img'>
         <Image
           src={album.cover_medium ?? '/imgs/default-artist.png'}
           alt={album.title}
@@ -50,19 +52,19 @@ const Page = () => {
           height={200}
         />
       </div>
-      <p>❤️{album.fans}명이 푹 빠진 앨범</p>
+      <p className='album-detail-fans-count'>{album.fans}명이 무한재생 중</p>
       <h2>{album.title}</h2>
-      <div className='album-release'>
-        {album.genres.data.map((genre) => {
-          const mappedGenre = genreMap[genre.name] || genre.name;
-
-          return <span key={genre.name}>{mappedGenre}</span>;
-        })}
-        <span>{album.record_type}</span>
+      <div className='album-detail-info'>
         <span>{album.release_date.replace(/-/g, ".")}</span>
+        <span>{album.record_type}</span>
+        {album.genres.data
+          .filter(genre => !excludedGenres.includes(genre.name))
+          .map((genre) => (
+            <span key={genre.name}>{genreMap[genre.name] || genre.name}</span>
+        ))}
       </div>
-      <div className='album-artist'>
-        <ArtistBadge contributors={album.contributors}/>
+      <div className='album-detail-artist'>
+        <ArtistBadge contributors={album.contributors ?? []} />
       </div>
       <TabsContainer
         tabs={tabs}

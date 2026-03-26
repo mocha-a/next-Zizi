@@ -4,7 +4,7 @@ import React from 'react';
 import '@/styles/entitiesUI/artistBadge.scss';
 
 interface Props {
-  contributors: Artist[]; // 항상 배열로 받음
+  contributors: Artist[];
 }
 
 const ArtistBadge = ({ contributors }: Props) => {
@@ -33,7 +33,7 @@ const ArtistBadge = ({ contributors }: Props) => {
         {contributors.map((artist, i) => (
           <span key={artist.id ?? i} className="artist-item">
             {artist.name}
-            {i !== contributors.length - 1 && ' • '}
+            {i !== contributors.length - 1 && ', '}
           </span>
         ))}
       </div>

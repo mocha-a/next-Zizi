@@ -12,9 +12,9 @@ interface PropsType {
 export default function TrackItemRight({ trackData }: PropsType) {
   const openDialog = useTrackDialog((s) => s.openDialog);
 
-  const handleYouTubeSearch = ({ artist, name }: TrackItemData) => {
+  const handleYouTubeSearch = ({ artist, title }: TrackItemData) => {
     // console.log(artist.name, name);
-    const query = `${artist.name} ${name}`;
+    const query = `${artist.name} ${title}`;
     const url = `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`;
     window.open(url, '_blank', 'noopener,noreferrer');
   };

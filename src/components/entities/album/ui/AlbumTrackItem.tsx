@@ -1,18 +1,10 @@
 "use client";
 
 import TrackItemRight from "@/components/common/TrackItemRight";
-
-interface Artist {
-  name: string;
-}
-
-interface AlbumTrack {
-  name: string;
-  artists: Artist[];
-}
+import { Track } from "@/types/deezer/deezer";
 
 interface Props {
-  track: AlbumTrack;
+  track: Track;
   index: number;
 }
 
@@ -26,17 +18,18 @@ export default function AlbumTrackItem({ track, index }: Props) {
       </div>
 
       <div className="album-track-center">
-        <p className="album-track-name">{track.name}</p>
+        <p className="album-track-name">{track.title}</p>
         <span className="album-track-artist">
-          {track.artists.map(a => a.name).join(", ")}
+          {track.artist.name}
         </span>
       </div>
 
       <div className="album-track-right">
         <TrackItemRight
-          track={{
-            name: track.name,
-            artist: { name: track.artists.map(a => a.name).join(", ") }
+          trackData={{
+            title: track.title,
+            artist: { name: track.artist.name },
+            image: track.album.cover_medium
           }}
         />
       </div>

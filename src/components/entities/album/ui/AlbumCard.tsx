@@ -7,12 +7,13 @@ interface props {
   title: string;
   cover: string;
   record_type: string;
+  nb_tracks: number;
   artist: SearchArtist;
   release_date?: string;
   onClick?: () => void;
 }
 
-const AlbumCard = ({ id, title, cover, record_type, artist, release_date, onClick }: props) => {
+const AlbumCard = ({ id, title, cover, record_type, nb_tracks, artist, release_date, onClick }: props) => {
 
   return (
     <div key={id} className='album-box' onClick={onClick}>
@@ -31,9 +32,12 @@ const AlbumCard = ({ id, title, cover, record_type, artist, release_date, onClic
             {artist.name}
           </p>
         </div>
-        <div className='album-release'>
+        <div className='album-details'>
           {release_date && (  
             <span>{release_date.replace(/-/g,'.')}</span>
+          )}
+          {nb_tracks && (
+            <span>총 {nb_tracks} 곡</span>
           )}
           <span>{record_type}</span>
         </div>
@@ -42,4 +46,4 @@ const AlbumCard = ({ id, title, cover, record_type, artist, release_date, onClic
   )
 }
 
-export default AlbumCard
+export default AlbumCard;

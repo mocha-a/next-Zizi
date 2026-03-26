@@ -50,9 +50,9 @@
 
 //album-release
 @mixin album-release {
-    span:last-of-type::before{
-        content: ' | ';
-        color: $gray;
+    span {
+        &::after { content: ' · '; }
+        &:last-of-type::after { content: '';}
     }
 }
 
