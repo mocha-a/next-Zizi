@@ -8,14 +8,14 @@
         .album-name{ @include ellipsis; }
         .album-artist-name{
             @include ellipsis;
-            margin: 6px 0 15px 0;
+            @include meta-info-spacing;
             font-size: 10px;
         }
         .album-details{
             @include album-release;
             span{
                 font-size: 10px;
-                text-transform: uppercase;
+                text-transform: lowercase;
             }
         }
     }

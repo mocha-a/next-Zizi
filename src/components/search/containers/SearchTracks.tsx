@@ -24,7 +24,7 @@ const SearchTracks = () => {
       typeSearch(searchQuery, 'track', LIMIT, page),
     limit: LIMIT,
     enabled: !!searchQuery,
-  });
+  }); 
 
   return (
     <Tracks

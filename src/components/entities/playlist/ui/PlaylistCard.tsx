@@ -26,8 +26,8 @@ const PlaylistCard = ({ id, picture, title, user, tracks, onClick }: Props) => {
     </div>
     <div className='playlist-info'>
       <p>{title}</p>
-      <p>{`총 ${tracks} 곡`}</p>
       <p>{user}</p>
+      <p>{`총 ${tracks} 곡`}</p>
     </div>
   </div>
 )}

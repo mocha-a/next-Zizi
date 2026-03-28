@@ -31,40 +31,54 @@
     }
     .album-detail-artist{ margin-bottom: 20px; }
     
-    .album-track-list{
-        padding-bottom: $paddingForNavbar;
-        .album-track-item {
-            display: flex;
-            align-items: center;
-            padding: 10px 0;
-    
-            .album-track-left {
-                width: 30px; // 번호 영역 고정
-                flex-shrink: 0;
+
+// ======================================================
+// AlbumTrack.tsx
+// ======================================================
+    .album-track{
+        .album-track-summary{
+            text-align: right;
+            margin: 10px 0;
+            span:last-of-type::before{
+                content: " • ";
             }
-    
-            // 제목
-            .album-track-center {
-                flex: 1; // 남은 공간 다 차지
-                min-width: 0;
+        }
+        .album-track-list{
+            padding-bottom: $paddingForNavbar;
+            .album-track-item {
                 display: flex;
-                gap: 5px;
-                flex-direction: column;
-                .album-track-name {
-                    @include GmarketMedium_black_13;
-                    @include ellipsis;
+                align-items: center;
+                padding: 10px 0;
+        
+                .album-track-left {
+                    width: 30px; // 번호 영역 고정
+                    flex-shrink: 0;
                 }
-                .album-track-artist {
-                    font-size: 11.5px;
-                    color: $gray;
+        
+                // 제목
+                .album-track-center {
+                    flex: 1; // 남은 공간 다 차지
+                    min-width: 0;
+                    display: flex;
+                    gap: 5px;
+                    flex-direction: column;
+                    .album-track-name {
+                        @include GmarketMedium_black_13;
+                        @include ellipsis;
+                    }
+                    .album-track-artist {
+                        font-size: 11.5px;
+                        color: $gray;
+                    }
                 }
-            }
-            
-            .album-track-right {
-                display: flex;
-                gap: 22px;
-                margin-left: 16px;
-                flex-shrink: 0; // 오른쪽 고정
+                
+                .album-track-right {
+                    display: flex;
+                    gap: 22px;
+                    margin-left: 16px;
+                    flex-shrink: 0; // 오른쪽 고정
+                }
+
             }
         }
     }

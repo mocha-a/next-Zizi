@@ -4,20 +4,6 @@ export type SearchCategory = 'artist' | 'track' | 'album' | 'playlist';
 
 export interface EntityBase { id: string; name: string; }
 
-// 장르 맵핑
-export const genreMap: Record<string, string> = {
-  "k-ballad": "발라드",
-  "soundtrack": "OST",
-  "k-pop": "K-POP",
-  "k-rock": "락",
-  "k-rap": "랩",
-  "Asian Music": "아시아 팝",
-};
-
-// 장르 배열 → 한글 문자열 변환
-export const mapGenres = (genres?: string[]) =>
-  genres?.map(g => genreMap[g] || g).join(' • ') ?? '';
-
 // ======================================================
 // all
 // ======================================================

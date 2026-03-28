@@ -4,17 +4,18 @@ import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import DetailHeader from '@/components/common/DetailHeader';
 import TabsContainer from '@/components/common/TabsContainer';
-import AlbumInfo from '@/components/entities/album/container/AlbumInfo';
-import AlbumTrack from '@/components/entities/album/container/AlbumTrack';
 import ArtistBadge from '@/components/entities/artist/ui/ArtistBadge';
 import { useTabStore } from '@/store/tabStore';
 import { getAlbum } from '@/lib/api/album';
 import { useQuery } from '@tanstack/react-query';
-import { excludedGenres, genreMap } from '@/lib/genre';
+import { getUniqueGenres } from '@/lib/genre';
 
 import '@/styles/album/album.scss';
 
 import { Album } from '@/types/deezer/deezer';
+import { recordTypeMap } from '@/lib/recordType';
+import SimilarAlbums from '@/components/entities/album/container/SimilarAlbums';
+import AlbumTrackList from '@/components/entities/album/container/AlbumTrackList';
 
 const Page = () => {
   const { id } = useParams() as { id: string };
@@ -28,8 +29,8 @@ const Page = () => {
 
   // 탭 메뉴
   const tabs = [
-    { label: '수록곡', content: <AlbumTrack track={album?.tracks?.data ?? []} /> },
-    { label: '비슷한 분위기', content: <AlbumInfo album={album} /> },
+    { label: '수록곡', content: <AlbumTrackList track={album?.tracks?.data ?? []} duration={album?.duration ?? 0} /> },
+    { label: '비슷한 느낌', content: <SimilarAlbums genreId={album?.genre_id ?? -1} /> },
   ];
 
   useEffect(() => {
@@ -37,6 +38,8 @@ const Page = () => {
   }, [setTabValue]);
 
   console.log(album);
+  // 장르
+  const genres = getUniqueGenres(album?.genres.data);
 
   if (isLoading) return <div>로딩중...</div>;
   if (!album) return <div>아티스트 없음</div>;
@@ -52,16 +55,22 @@ const Page = () => {
           height={200}
         />
       </div>
-      <p className='album-detail-fans-count'>{album.fans}명이 무한재생 중</p>
+      <p className='album-detail-fans-count'>
+        {album.fans > 0
+          ? `${album.fans.toLocaleString()}명이 무한재생 중`
+          : "무한재생 앨범으로 찜해봐-!"}
+      </p>
       <h2>{album.title}</h2>
       <div className='album-detail-info'>
         <span>{album.release_date.replace(/-/g, ".")}</span>
-        <span>{album.record_type}</span>
-        {album.genres.data
-          .filter(genre => !excludedGenres.includes(genre.name))
-          .map((genre) => (
-            <span key={genre.name}>{genreMap[genre.name] || genre.name}</span>
-        ))}
+        <span>{recordTypeMap[album.record_type]}</span>
+        {genres.length > 0 && (
+          <span className="album-detail-genres">
+            {genres.map((genre, i) => (
+              <span key={i}>{genre}</span>
+            ))}
+          </span>
+        )}
       </div>
       <div className='album-detail-artist'>
         <ArtistBadge contributors={album.contributors ?? []} />

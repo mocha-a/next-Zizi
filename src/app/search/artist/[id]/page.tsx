@@ -12,8 +12,6 @@ import ArtistTracks from '@/components/entities/artist/container/ArtistTrack';
 import { useQuery } from '@tanstack/react-query';
 import { getArtist } from '@/lib/api/artist';
 
-import { mapGenres } from '@/types/deezer/search';
-
 import '@/styles/artist/artist.scss';
 
 const Page = () => {
@@ -67,7 +65,6 @@ const Page = () => {
         </div>
 
         <div className="artist-info">
-          <p className="artist-genres">{mapGenres(artist.genres)}</p>
           <p className="artist-tracks">
             총 {loadingTracks ? '로딩중...' : trackCount ?? 0}곡
           </p>

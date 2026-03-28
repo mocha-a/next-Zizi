@@ -53,8 +53,9 @@ const SearchArtists = () => {
     : artists;
 
   const getArtistLevel = (fans: number) => {
-    if (fans > 100000) return '👑 Top Artist';
-    if (fans > 10000) return '⭐ Popular';
+    if (fans > 500000) return '🌏Global Star';
+    if (fans > 100000) return '👑Top Artist';
+    if (fans > 10000) return '⭐Popular';
   };
 
   const artistsWithLevel = sortedArtists.map(artist => ({

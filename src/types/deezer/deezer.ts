@@ -11,7 +11,7 @@ export interface Artist extends SearchArtist {
 // track
 // ======================================================
 export interface Track extends SearchTrack{
-  title_short: string;
+  title_short?: string;
   title_version?: string;
   artist: Artist;              // 대표 아티스트 (Main)
   contributors?: Artist[];     // 참여 아티스트 (Featuring 등)

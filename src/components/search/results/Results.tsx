@@ -54,11 +54,9 @@ const Results = () => {
         {allData?.tracks?.map((track)=>
           <TrackItem
             key={track.id}
-            trackData={track}
+            track={track}
             index={0}
             page=""
-            onPlayClick={(track) => console.log('play', track)}
-            onMoreClick={(track) => console.log('more', track)}
           />
         )}
       </div>

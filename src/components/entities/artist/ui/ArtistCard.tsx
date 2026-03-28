@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import { formatFans } from '@/lib/formatFans';
+import { formatFans } from '@/lib/format';
 
 interface Props {
   name: string;
@@ -23,10 +23,10 @@ const ArtistCard = ({ name, imageUrl, fan, level, showFans, onClick }: Props) =>
           height={98}
         />
       </div>
-      <div>
-        {level&& <p>{level}</p>}
+      <div className='artist-box-info'>
+        {level&& <p className='artist-level'>{level}</p>}
         <p className='artist-name'>{name}</p>
-        {showFans&& <p>{formatFans(fan ?? 0)}</p>}
+        {showFans&& <p>{formatFans(fan ?? 0)} fans</p>}
       </div>
     </div>
   )

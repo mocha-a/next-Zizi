@@ -25,11 +25,9 @@ const Tracks = ({ tracks, loading, hasMore, onLoadMore }: TracksProps) => {
         {tracks.map((track, index) => (
           <TrackItem
             key={track.id}
-            trackData={track}
+            track={track}
             index={index}
             page=""
-            onPlayClick={(track) => console.log('play', track)}
-            onMoreClick={(track) => console.log('more', track)}
           />
         ))}
       </InfiniteScroll>

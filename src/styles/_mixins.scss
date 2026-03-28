@@ -48,6 +48,12 @@
     }
 }
 
+// Search album, playlist
+@mixin meta-info-spacing {
+    margin: 6px 0 15px 0;
+}
+
+
 //album-release
 @mixin album-release {
     span {

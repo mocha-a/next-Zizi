@@ -1,5 +1,5 @@
 export interface TrackItemData {
-  image: string;
+  image?: string;
   title: string;
   artist: { name: string };
 }

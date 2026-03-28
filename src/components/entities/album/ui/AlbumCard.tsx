@@ -1,14 +1,15 @@
 import React from 'react';
 import Image from 'next/image';
 import { SearchArtist } from '@/types/deezer/search';
+import { recordTypeMap } from '@/lib/recordType';
 
 interface props {
   id: number;
   title: string;
   cover: string;
   record_type: string;
-  nb_tracks: number;
   artist: SearchArtist;
+  nb_tracks?: number;
   release_date?: string;
   onClick?: () => void;
 }
@@ -39,7 +40,7 @@ const AlbumCard = ({ id, title, cover, record_type, nb_tracks, artist, release_d
           {nb_tracks && (
             <span>총 {nb_tracks} 곡</span>
           )}
-          <span>{record_type}</span>
+          <span>{recordTypeMap[record_type]}</span>
         </div>
       </div>
     </div>

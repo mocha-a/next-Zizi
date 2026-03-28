@@ -17,6 +17,16 @@
     align-items: center;
     gap: 13px;
     margin-bottom: 20px;
+    .artist-box-info{
+        .artist-level{
+            font-family: $Galmuri;
+            font-weight: normal;
+            font-size: 10px;
+            margin-bottom: 10px;
+        }
+        .artist-name{margin-bottom: 6px;}
+    }
+
     .artist-genre{
         margin-top: 15px;
         text-transform: uppercase;
