@@ -1,21 +1,21 @@
 "use client";
+
 import React, { useEffect } from 'react';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
+import { useQuery } from '@tanstack/react-query';
+import { useTabStore } from '@/store/tabStore';
 import DetailHeader from '@/components/common/DetailHeader';
 import TabsContainer from '@/components/common/TabsContainer';
 import ArtistBadge from '@/components/entities/artist/ui/ArtistBadge';
-import { useTabStore } from '@/store/tabStore';
-import { getAlbum } from '@/lib/api/album';
-import { useQuery } from '@tanstack/react-query';
-import { getUniqueGenres } from '@/lib/genre';
-
-import '@/styles/album/album.scss';
-
-import { Album } from '@/types/deezer/deezer';
-import { recordTypeMap } from '@/lib/recordType';
 import SimilarAlbums from '@/components/entities/album/container/SimilarAlbums';
 import AlbumTrackList from '@/components/entities/album/container/AlbumTrackList';
+import { getAlbum } from '@/lib/api/album';
+import { getUniqueGenres } from '@/lib/genre';
+import { recordTypeMap } from '@/lib/recordType';
+import { Album } from '@/types/deezer/deezer';
+
+import '@/styles/album/album.scss';
 
 const Page = () => {
   const { id } = useParams() as { id: string };

@@ -36,7 +36,7 @@ const SearchBar = () => {
     <form className="search-bar" onSubmit={onSearchSubmit}>
       <input
         type="search"
-        placeholder="🎧 요즘 꽂힌 노래 있어 ?"
+        placeholder="your taste... 너의 취향을 검색해봐 –☆"
         value={value}
         onChange={(e) => setValue(e.target.value)}
       />

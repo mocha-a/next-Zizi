@@ -3,14 +3,14 @@ export const excludedGenres = ["Asian Music"];
 
 // 장르 맵핑
 export const genreMap: Record<string, string> = {
-  "k-ballad": "발라드",
-  "soundtrack": "OST",
-  "K-Pop": "K-POP",
-  "k-rock": "락",
-  "k-rap": "랩",
   "Films/Games": "OST",
   "Film Scores": "OST",
   "Rap/Hip Hop": "Hip-Hop",
+  "African Music": "African Pop",
+  "Asian Music": "Asian Pop",
+  "Brazilian Music": "Brazilian Pop",
+  "Indian Music": "Indian Pop",
+  "Latin Music": "Latin Pop",
 };
 
 export function getUniqueGenres(genres?: { name: string }[]) {

@@ -13,10 +13,7 @@
         }
         .album-details{
             @include album-release;
-            span{
-                font-size: 10px;
-                text-transform: lowercase;
-            }
+            span{ font-size: 10px; }
         }
     }
 }

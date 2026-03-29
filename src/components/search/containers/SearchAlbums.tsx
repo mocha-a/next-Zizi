@@ -3,17 +3,15 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSearchStore } from '@/store/searchStore';
-import { typeSearch } from '@/lib/api/serach';
-import { sortBy } from '@/lib/sortBy';
-
 import SortBtn from '@/components/common/SortBtn';
 import SortSelect from '@/components/common/SortSelect';
 import BottomDialog from '@/components/common/Dialog';
 import AlbumList from '@/components/entities/album/ui/AlbumList';
-
+import { typeSearch } from '@/lib/api/serach';
+import { sortBy } from '@/lib/sortBy';
+import { useInfiniteList } from '@/hooks/useInfiniteList';
 import { AlbumSortType, AlbumSortOptions } from '@/types/sort';
 import { Album } from '@/types/deezer/deezer';
-import { useInfiniteList } from '@/hooks/useInfiniteList';
 
 const LIMIT = 50;
 
@@ -38,7 +36,7 @@ const SearchAlbums = () => {
     limit: LIMIT,
     enabled: !!searchQuery,
   });
-  
+  console.log(albums);
   const sortedAlbums = sortType
     ? sortBy(
         albums,

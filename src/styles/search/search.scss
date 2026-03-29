@@ -19,6 +19,9 @@
             width: 100%;
             padding: 8px 2px;
         }
+        >input::placeholder{
+            font-family: $Galmuri;
+        }
     }
 
     .trendingTags-contanier, .trendingSearches-contanier{
