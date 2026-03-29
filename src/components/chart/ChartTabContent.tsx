@@ -55,7 +55,7 @@ function ChartTabContent({ tabType }: ChartTabContentProps) {
       <ul className='tracklist'>
         {topTracks.slice(0, 50).map((top, i) => (
           <TrackItem key={i} 
-            trackData={top}
+            track={top}
             index={i}
             page="chart"
           />
