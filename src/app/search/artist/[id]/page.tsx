@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import { useTabStore } from '@/store/tabStore';
@@ -26,10 +26,6 @@ const Page = () => {
     queryFn: () => getArtist(Number(id)),
     enabled: !!id,
   });
-
-  // 발매곡 수
-  const [ trackCount, setTrackCount ] = useState<number | null>(null);
-  const [ loadingTracks, setLoadingTracks ] = useState(false);
 
   // 탭 정의
   const tabs = [
@@ -65,11 +61,11 @@ const Page = () => {
         </div>
 
         <div className="artist-info">
-          <p className="artist-tracks">
-            총 {loadingTracks ? '로딩중...' : trackCount ?? 0}곡
+          <p className="artist-nb_album">
+            {artist.nb_album.toLocaleString()}장의 앨범 발매
           </p>
           <p className="artist-followers">
-            팔로워 {artist.nb_fan}명
+            {artist.nb_fan.toLocaleString()}명이 밤새 덕질 중...zZ
           </p>
         </div>
       </section>

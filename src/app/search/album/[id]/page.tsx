@@ -57,8 +57,8 @@ const Page = () => {
       </div>
       <p className='album-detail-fans-count'>
         {album.fans > 0
-          ? `${album.fans.toLocaleString()}명이 무한재생 중`
-          : "무한재생 앨범으로 찜해봐-!"}
+          ? `${album.fans.toLocaleString()}명이 무한재생 중...`
+          : "무한재생 앨범으로 찜해봐 -!"}
       </p>
       <h2>{album.title}</h2>
       <div className='album-detail-info'>

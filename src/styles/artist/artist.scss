@@ -10,18 +10,23 @@
         .artist-info{
             .artist-genres{ 
                 margin-top: 5px;
-                font-size: 15px;}
-            .artist-tracks{
-                margin: 12px 0 5px;
+                font-size: 15px;
+            }
+            .artist-nb_album{
+                margin: 12px 0 2px;
                 &::before{
-                    content: ' 🎤 ';
+                    content: ' 💿 ';
+                    font-size: 15px;
                 }
             }
-            .artist-tracks, .artist-followers{
+            .artist-nb_album, .artist-followers{
+                font-family: $Galmuri;
+                font-weight: normal;
                 font-size: 12px;
             }
             .artist-followers::before{
-                content: ' 👻 ';
+                content: ' 🌠 ';
+                font-size: 15px;
             }
         }
     }

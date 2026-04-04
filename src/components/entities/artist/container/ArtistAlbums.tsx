@@ -7,11 +7,11 @@ import SortBtn from '@/components/common/SortBtn';
 import SortSelect from '@/components/common/SortSelect';
 import BottomDialog from '@/components/common/Dialog';
 import AlbumList from '@/components/entities/album/ui/AlbumList';
-import { AlbumSortType, AlbumSortOptions } from '@/types/sort';
 import { getArtistAlbums } from '@/lib/api/artist';
 import { useInfiniteList } from '@/hooks/useInfiniteList';
 import { Album } from '@/types/deezer/deezer';
 import { SearchArtist } from '@/types/deezer/search';
+import { AlbumSortType, AlbumSortOptions, RecordFilterOptions, RecordFilterType } from '@/types/sort';
 
 interface Props {
   id: string;
@@ -23,6 +23,8 @@ const LIMIT = 50;
 const ArtistAlbums = ({ id, artist }: Props) => {
   const [ sortType, setSortType ] = useState<AlbumSortType>(null);
   const [ openSort, setOpenSort ] = useState(false);
+  const [ openFilter, setOpenFilter ] = useState(false);
+  const [ recordFilter, setRecordFilter ] = useState<RecordFilterType>('all');
   const router = useRouter();
 
   const {
@@ -49,39 +51,75 @@ const ArtistAlbums = ({ id, artist }: Props) => {
   
   console.log(albums);
 
-  const sortedAlbums = useMemo(() => {
-    if (!sortType) return albums;
+  const sortedAndFilteredAlbums = useMemo(() => {
+
+    const filtered = albums.filter((item) => {
+      if (recordFilter === 'all') return true;
+
+      if (recordFilter === 'album') {
+        return item.record_type === 'album';
+      }
+
+      if (recordFilter === 'single') {
+        return item.record_type === 'single' || item.record_type === 'ep';
+      }
+
+      if (recordFilter === 'compile') {
+        return item.record_type === 'compile';
+      }
+
+      return true;
+    });
+
+    if (!sortType) return filtered;
 
     return sortBy(
-      albums,
+      filtered,
       (album) =>
         sortType === 'name'
           ? album.title 
-          : new Date(album.release_date).getTime(),
+          : new Date(album.release_date || 0).getTime(),
       sortType === 'old' ? 'asc' : 'desc'
     );
-  }, [albums, sortType]);
+  }, [albums, sortType, recordFilter]);
+  
+  const filterLabel = 
+    RecordFilterOptions.find((opt) => opt.value === recordFilter)?.label || '전체';
 
   const label =
     AlbumSortOptions.find((opt) => opt.value === sortType)?.label || '추천순';
 
+
   return (
     <>
-      <SortBtn label={label} setOpenSort={setOpenSort} />
+      <div className='album-filter-bar'>
+        {/* <SortBtn label={filterLabel} setOpenSort={setOpenFilter} />
+        <BottomDialog open={openFilter} onClose={() => setOpenFilter(false)}>
+          <SortSelect
+            value={recordFilter}
+            options={RecordFilterOptions}
+            onChange={(v) => {
+              setRecordFilter(v || 'all');
+              setOpenFilter(false);
+            }}
+          />
+        </BottomDialog> */}
 
-      <BottomDialog open={openSort} onClose={() => setOpenSort(false)}>
-        <SortSelect
-          value={sortType}
-          options={AlbumSortOptions}
-          onChange={(v) => {
-            setSortType(v);
-            setOpenSort(false);
-          }}
-        />
-      </BottomDialog>
+        <SortBtn label={label} setOpenSort={setOpenSort} />
+        <BottomDialog open={openSort} onClose={() => setOpenSort(false)}>
+          <SortSelect
+            value={sortType}
+            options={AlbumSortOptions}
+            onChange={(v) => {
+              setSortType(v);
+              setOpenSort(false);
+            }}
+          />
+        </BottomDialog>
+      </div>
 
       <AlbumList
-        albums={sortedAlbums}
+        albums={sortedAndFilteredAlbums}
         artist={artist}
         loading={isLoading || isFetchingNextPage}
         hasMore={hasNextPage}

@@ -7,10 +7,19 @@
 }
 
 // ...
-@mixin ellipsis {
+@mixin ellipsis($lines: 1) {
+  overflow: hidden;
+
+  @if $lines == 1 {
     white-space: nowrap;
-    overflow: hidden;
     text-overflow: ellipsis;
+  } @else {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    
+    line-clamp: $lines;
+    -webkit-line-clamp: $lines;
+  }
 }
 
 // img

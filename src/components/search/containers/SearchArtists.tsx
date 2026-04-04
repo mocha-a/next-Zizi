@@ -2,18 +2,17 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { typeSearch } from '@/lib/search';
 import { useSearchStore } from '@/store/searchStore';
+import { useInfiniteList } from '@/hooks/useInfiniteList';
+import { typeSearch } from '@/lib/search';
 import { sortBy } from '@/lib/sortBy';
+import { ArtistSortType, ArtistSortOptions } from '@/types/sort';
+import { Artist } from '@/types/deezer/deezer';
 
 import SortBtn from '@/components/common/SortBtn';
 import SortSelect from '@/components/common/SortSelect';
 import BottomDialog from '@/components/common/Dialog';
 import ArtistList from '@/components/entities/artist/ui/ArtistList';
-
-import { useInfiniteList } from '@/hooks/useInfiniteList';
-import { ArtistSortType, ArtistSortOptions } from '@/types/sort';
-import { Artist } from '@/types/deezer/deezer';
 
 const LIMIT = 50;
 
@@ -53,9 +52,18 @@ const SearchArtists = () => {
     : artists;
 
   const getArtistLevel = (fans: number) => {
-    if (fans > 500000) return '🌏Global Star';
-    if (fans > 100000) return '👑Top Artist';
-    if (fans > 10000) return '⭐Popular';
+    if (fans > 500000)
+      return { 
+              label: 'World Star👑', 
+              src: '/imgs/wolrd-star.gif',
+              className: 'world' 
+            };
+    if (fans > 100000)
+      return { label: 'Top Star', className: 'top' };
+    if (fans > 10000)
+      return { label: 'Popular Star', className: 'popular' };
+
+    return null;
   };
 
   const artistsWithLevel = sortedArtists.map(artist => ({
