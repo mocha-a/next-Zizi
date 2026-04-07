@@ -1,20 +1,34 @@
 import React from "react";
+import { useRouter } from 'next/navigation';
+import { getSimilarAlbums } from "@/lib/api/album";
+import { useQuery } from "@tanstack/react-query";
+import AlbumList from "../ui/AlbumList";
 
 interface Props {
+  id: string;
   genreId: number;
 }
 
-function SimilarAlbums({ genreId }: Props) {
+function SimilarAlbums({ genreId, id }: Props) {
+  const router = useRouter();
 
+  const { data: albums, isLoading } = useQuery({
+    queryKey: ['albums', 'similar', genreId, id],
+    queryFn: () => getSimilarAlbums(Number(genreId), Number(id)),
+    enabled: !!genreId,
+  });
+
+  if (isLoading) return <div>로딩중...</div>;
+  if (!albums) return <div>데이터 없음</div>;
 
   return (
-    <div style={{  }}>
-     {genreId}
-     <p>{`record_type : "album"`} 으로 필터 만들기 !</p>
-     <p>
-       앨범별 nb_tracks 속성으로 아티스트의 총 곡 수 표현 할 수 있을지 고민하기
-     </p>
-    </div>
+    <AlbumList
+      albums={albums}
+      loading={isLoading}
+      hasMore={false}
+      loadMore={() => {}}
+      onClick={(id) => router.push(`/search/album/${id}`)}
+    />
   );
 }
 

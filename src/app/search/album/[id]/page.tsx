@@ -30,7 +30,7 @@ const Page = () => {
   // 탭 메뉴
   const tabs = [
     { label: '수록곡', content: <AlbumTrackList track={album?.tracks?.data ?? []} duration={album?.duration ?? 0} /> },
-    { label: '비슷한 느낌', content: <SimilarAlbums genreId={album?.genre_id ?? -1} /> },
+    { label: '비슷한 느낌', content: <SimilarAlbums id={id} genreId={album?.genre_id ?? 0} /> },
   ];
 
   useEffect(() => {

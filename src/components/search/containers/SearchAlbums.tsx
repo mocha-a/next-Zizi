@@ -36,7 +36,7 @@ const SearchAlbums = () => {
     limit: LIMIT,
     enabled: !!searchQuery,
   });
-  console.log(albums);
+
   const sortedAlbums = sortType
     ? sortBy(
         albums,

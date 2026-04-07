@@ -25,13 +25,3 @@ export const PlaylistSortOptions = [
   { label: '가나다 순', value: 'name' },
   { label: '곡 많은 순', value: 'tracks' },
 ] as const;
-
-// ======================================================
-// album
-// ======================================================
-export const RecordFilterOptions = [
-  { label: '전체', value: 'all' },
-  { label: '정규', value: 'album' },
-  { label: '싱글/EP', value: 'single' },
-  { label: '기타/전집', value: 'compile' },
-] as const;

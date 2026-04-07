@@ -29,15 +29,13 @@ const Page = () => {
 
   // 탭 정의
   const tabs = [
-    { label: '인기곡', content: <ArtistTracks id={id} /> },
     { label: '앨범', content: <ArtistAlbums id={id} artist={artist}/> },
+    { label: '인기곡', content: <ArtistTracks id={id} /> }
   ];
 
   useEffect(() => {
     setTabValue(0);
   }, [setTabValue]);
-
-  console.log(artist)
 
   if (isLoading) return <div>로딩중...</div>;
   if (!artist) return <div>아티스트 없음</div>;
