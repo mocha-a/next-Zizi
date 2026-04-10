@@ -1,0 +1,46 @@
+@use '../variables'as *;
+@use '../mixins'as *;
+
+.creator-badge{
+  @include GmarketMedium_black_13;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  .creator-profile-wrapper{
+    position: relative;
+
+    .creator-badge-img{
+      display: inline-block;
+      position: relative; 
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+
+    .country-flag {
+      position: absolute;
+      bottom: -2px; right: -4px;
+
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      border: 1px solid $gray;
+
+      background-size: cover;
+      background-position: center;
+    }
+  }
+
+  .creator-badge__names {
+    flex: 1;
+    overflow-x: auto;
+    white-space: nowrap;
+
+    scrollbar-width: none;
+  }
+
+  .creator-badge__names::-webkit-scrollbar {
+    display: none;
+  }
+}
+

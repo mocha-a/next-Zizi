@@ -10,7 +10,7 @@
         margin-bottom: 30px;
         .track-info{
             .track-album-name{ 
-                font-family: $GmarketMedium;
+                font-family: var(--font-gmarketMedium);
                 font-size: 13px;
                 color: $gray;
                 &::after{

@@ -1,34 +1,3 @@
-// API 호출
-import axios from 'axios';
-import { AllResults, SearchArtist, SearchAlbum, SearchTrack, SearchPlaylist } from '@/types/deezer/search';
-
-export const fetchSearch = async (
-  query: string,
-  type?: string,
-  limit: number = 50,
-  offset: number = 0
-): Promise<AllResults> => {
-  const { data } = await axios.get('/api/spotify/search', {
-    params: { query, type, limit, offset },
-  });
-
-  const cleanData: AllResults = {
-    artists: data.artists
-      ? { items: data.artists.items.filter((item: Artist | null | undefined): item is Artist => item != null) }
-      : undefined,
-    albums: data.albums
-      ? { items: data.albums.items.filter((item: Album | null | undefined): item is Album => item != null) }
-      : undefined,
-    tracks: data.tracks
-      ? { items: data.tracks.items.filter((item: Track | null | undefined): item is Track => item != null) }
-      : undefined,
-    playlists: data.playlists
-      ? { items: data.playlists.items.filter((item: Playlist | null | undefined): item is Playlist => item != null) }
-      : undefined,
-  };
-
-  return cleanData;
-};
 
 // 전체 탭
 export const allSearch = async (query: string) => {
@@ -53,15 +22,7 @@ export const typeSearch = async (
   };
 };
 
-// 무한스크롤
-export const moreSearch = async (
-  query: string,
-  type: 'artist' | 'album' | 'track' | 'playlist',
-  limit: number,
-  offset: number
-) => {
-  return fetchSearch(query, type, limit, offset);
-};
+
 
 // 검색 실행 + 상태 업데이트 + 라우팅 처리
 import { useSearchStore } from '@/store/searchStore';
@@ -81,12 +42,3 @@ export const doSearch = async (query: string, router: any) => {
   router.push(`/search/${encodeURIComponent(query)}`); 
 
 }; 
-
-// ======================
-// ====== Artist ========
-// ======================
-
-export const artistById = async (id: string): Promise<Artist> => {
-  const { data } = await axios.get(`/api/spotify/artist/${id}`);
-  return data;
-};

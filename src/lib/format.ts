@@ -19,3 +19,11 @@ export function formatDuration(duration: number) {
     .toString()
     .padStart(2, "0")}초`;
 }
+
+// 생성 날짜 포맷 (플레이리스트)
+export function formatDate(date?: string) {
+  if (!date) return "";
+
+  const [d, t] = date.split(" ");
+  return `${d.replace(/-/g, ".")} · ${t.slice(0, 5)}`;
+}

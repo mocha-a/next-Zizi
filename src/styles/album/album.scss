@@ -10,7 +10,7 @@
         overflow: hidden;
     }
     .album-detail-fans-count{ 
-        font-family: $Galmuri;
+        font-family: var(--font-Galmuri9);
         font-weight: normal;
         font-size: 12px;
         &::after{
