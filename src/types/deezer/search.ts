@@ -70,6 +70,7 @@ export interface SearchAlbum {
 export interface SearchPlaylist {
   id: number;
   title: string;
+  add_date: string;
   creation_date: string;
   mod_date: string;
   tracklist: string;

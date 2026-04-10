@@ -11,7 +11,7 @@ import PlaylistTrackList from '@/components/entities/playlist/container/Playlist
 import PlaylistFlow from '@/components/entities/playlist/container/PlaylistFlow';
 import TabsContainer from '@/components/common/TabsContainer';
 import { getCreator, getPlaylist } from '@/lib/api/playlist';
-import { formatDate } from '@/lib/format';
+import { formatDate, formatUpDate } from '@/lib/format';
 import { Playlist } from '@/types/deezer/deezer';
 
 import '@/styles/playlist/playlist.scss';
@@ -20,7 +20,7 @@ const Page = () => {
   const { id } = useParams() as { id: string };
   const { tabValue, setTabValue } = useTabStore();
 
-  const { data: playlist, isLoading } = useQuery<Playlist>({
+  const { data: playlist, isLoading: playlistLoading } = useQuery<Playlist>({
     queryKey: ['playlist', id],
     queryFn: () => getPlaylist(Number(id)),
     enabled: !!id,
@@ -28,15 +28,26 @@ const Page = () => {
 
   const creatorId = playlist?.creator?.id;
 
-  const { data: creator } = useQuery({
+  const { data: creator, isLoading: creatorLoading } = useQuery({
     queryKey: ['creator', playlist?.creator?.id],
     queryFn: () => getCreator(creatorId!),
     enabled: !!creatorId
   });
 
-    // 탭 메뉴
+  console.log(playlist);
+
+  // 업데이트
+  const createdDate = playlist?.creation_date;
+  const updatedDate = playlist?.add_date;
+
+  const updatedText =
+    createdDate && updatedDate
+      ? formatUpDate(createdDate, updatedDate)
+      : '';
+
+  // 탭 메뉴
   const tabs = [
-    { label: '곡', content: <PlaylistTrackList />},
+    { label: '곡', content: <PlaylistTrackList track={playlist?.tracks?.data ?? []} duration={playlist?.duration ?? 0} />},
     { label: '취향저격', content: <PlaylistFlow /> },
   ];
 
@@ -44,9 +55,7 @@ const Page = () => {
     setTabValue(0);
   }, [setTabValue]);
 
-  console.log(playlist, creator);
-
-  if (isLoading) return <div>로딩중...</div>;
+  if (playlistLoading || creatorLoading) return <div>로딩중...</div>;
   if (!playlist) return <div>아티스트 없음</div>;
 
   return (
@@ -67,7 +76,8 @@ const Page = () => {
       </p>
       <h2>{playlist.title}</h2>
       <div className='playlist-detail-info'>
-        <span>{formatDate(playlist.creation_date)}</span>
+        <span>{formatDate(playlist.creation_date)} </span>
+        <span className='playlist-updated'>{updatedText} 업데이트</span>
       </div>
       <div className='playlist-detail-creator'>
         <CreatorBadge creator={creator ?? []} />
