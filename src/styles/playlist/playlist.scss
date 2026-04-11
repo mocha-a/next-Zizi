@@ -27,12 +27,38 @@
     line-height: $lineHeight2;
   }
 
-  .playlist-detail-info{
-    @include flex;
-    @include album-release;
+// ======================================================
+// ReadMore.tsx
+// ======================================================
+  .playlist-description {
     @include GmarketMedium_black_13;
-    margin-bottom: 15px;
+    position: relative;
+    line-height: 1.5;
+
+    .text {
+      @include ellipsis(2);
+    }
+  
+    .more-btn {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      background-color: $white;
+      padding-left: 6px;
+      margin-left: 4px;
+      color: $gray;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+  }
+
+  .playlist-detail-info{
+    @include GmarketMedium_black_13;
+    margin: 15px 0;
     >span {color: $fontgray;}
+    .playlist-updated::before{
+      content: " · ";
+    }
   }
 
   .playlist-detail-creator{ margin-bottom: 20px; }
@@ -44,11 +70,20 @@
     .playlist-track-summary{
       text-align: right;
       margin: 10px 0 20px;
+      span:last-of-type::before{
+        content: " • ";
+      }
+    }
+  }
 
-      >div{
-        span:last-of-type::before{
-            content: " • ";
-        }
+  .playlist-flow{
+    >p{
+      margin: 10px 0 20px;
+      font-family: var(--font-Galmuri9);
+      font-size: 12px;
+
+      &::before{
+        content: '> ';
       }
     }
   }

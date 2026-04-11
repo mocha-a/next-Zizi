@@ -29,17 +29,16 @@ export function formatDate(date?: string) {
 }
 
 // 마지막 업데이트 날짜 포맷 (플레이리스트)
-const isSameDate = (a: string, b: string) => {
-  const dateA = new Date(a);
-  const dateB = new Date(b);
-
+// 날짜 비교
+const isSameDate = (a: Date, b: Date) => {
   return (
-    dateA.getFullYear() === dateB.getFullYear() &&
-    dateA.getMonth() === dateB.getMonth() &&
-    dateA.getDate() === dateB.getDate()
+    a.getFullYear() === b.getFullYear() &&
+    a.getMonth() === b.getMonth() &&
+    a.getDate() === b.getDate()
   );
 };
 
+// 날짜 포맷
 const date = (date: Date) => {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -48,20 +47,32 @@ const date = (date: Date) => {
   return `${year}.${month}.${day}`;
 };
 
-export const formatUpDate = (
-  createdDate: string,
-  updatedDate: string
-) => {
-  const now = new Date();
-  const updated = new Date(updatedDate);
+// 시간 차이 계산
+const getTimeDiff = (date: Date) => {
+  const now = Date.now();
+  return Math.floor((now - date.getTime()) / 1000); // 초 단위
+};
 
-  const diff = (now.getTime() - updated.getTime()) / 1000;
+export const formatUpDate = (createdDate: string, addDate: string) => {
+  const created = new Date(createdDate);
+  const updated = new Date(addDate);
 
-  if (isSameDate(createdDate, updatedDate)) return null;
+  // 생성일 == 수정일 → 표시 안함
+  if (isSameDate(created, updated)) return null;
+
+  const diff = getTimeDiff(updated);
 
   if (diff < 60) return "방금 전";
-  if (diff < 3600) return `${Math.floor(diff / 60)}분 전`;
-  if (diff < 86400) return `${Math.floor(diff / 3600)}시간 전`;
+
+  if (diff < 3600) {
+    const minutes = Math.floor(diff / 60);
+    return `${minutes}분 전`;
+  }
+
+  if (diff < 86400) {
+    const hours = Math.floor(diff / 3600);
+    return `${hours}시간 전`;
+  }
 
   const days = Math.floor(diff / 86400);
 

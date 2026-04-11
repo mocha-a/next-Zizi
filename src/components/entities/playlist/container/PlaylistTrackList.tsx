@@ -10,16 +10,11 @@ interface Props {
 }
 
 const PlaylistTrackList = ({ track, duration }: Props) => {
-  console.log(track);
-
   return (
     <div className='playlist-track'>
       <div className='playlist-track-summary'>
-        
-        <div>
-          <span>{track.length}곡</span>
-          <span>{formatDuration(duration)}</span>
-        </div>
+        <span>{track.length}곡</span>
+        <span>{formatDuration(duration)}</span>
       </div>
       <ul className="tracklist">
         {track?.map((track, i) => (
