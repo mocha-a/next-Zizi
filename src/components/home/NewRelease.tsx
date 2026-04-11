@@ -31,14 +31,14 @@ interface newType {
 
 function NewRelease() {
 
-   const { data: newRelease, isLoading, error } = useQuery<newType, Error>({
+  const { data: newRelease, isLoading, error } = useQuery<newType, Error>({
     queryKey: ['newRelease'],
     queryFn: () => getNewRelease(),
     staleTime: 1000 * 60 * 30,
   });
 
   if (isLoading) return <div>로딩중...</div>;
-  if (error) return <div>검색 중 오류 발생</div>;
+  if (error) return <div>데이터 로딩 실패</div>;
 
   // const [data, setData] = useState<Album[]>([]);
   // const [loading, setLoading] = useState(false);

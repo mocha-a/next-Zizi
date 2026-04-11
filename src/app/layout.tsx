@@ -3,6 +3,8 @@ import NextAuthProvider from "./providers";
 import SessionGate from "@/components/auth/SessionGate";
 import SimpleBottomNavigation from "@/components/common/BottomNavigation";
 import ReactQueryProvider from "@/lib/providers/ReactQueryProvider";
+import GlobalTrackDialog from "@/components/common/GlobalTrackDialog";
+import MainPlayer from "@/components/common/MainPlayer";
 
 import '../styles/_style.scss';
 
@@ -24,8 +26,17 @@ export default function RootLayout({
         <ReactQueryProvider>              {/* 서버 데이터 관리 */}
           <NextAuthProvider>              {/* 인증 상태 관리 */}
             <SessionGate>                 {/* 사용자 상태 체크 (추가 정보 필요 시 팝업 띄우고, 아니면 children 렌더링) */}
+              {/* 1. 메인 콘텐츠 */}
               {children}
-              <SimpleBottomNavigation />  {/* 하단 네비게이션 */}
+
+              {/* 2. 전역 재생 플레이어 (하단 네비게이션 위에 떠 있어야 함) */}
+              <MainPlayer />
+
+              {/* 3. 하단 네비게이션 */}
+              <SimpleBottomNavigation />
+
+              {/* 4. 전역 다이얼로그 (최상위 레이어) */}
+              <GlobalTrackDialog />
             </SessionGate>
           </NextAuthProvider>
         </ReactQueryProvider>

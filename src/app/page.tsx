@@ -1,5 +1,5 @@
 import Dashboard from "@/components/home/Dashboard";
-import Mood from "@/components/home/Mood";
+import Mood from "@/components/home/Genre";
 import NewRelease from "@/components/home/NewRelease";
 import Record from "@/components/home/Record";
 import Chart from "@/components/home/Chart";

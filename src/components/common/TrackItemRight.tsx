@@ -2,26 +2,27 @@
 
 import PlayBk from "../icons/PlayBk";
 import Dot3 from "../icons/Dot3";
-import { TrackItemData } from "@/types/trackItem";
+import { Track } from "@/types/deezer/deezer";
+
 import { useTrackDialog } from "@/store/useTrackDialog";
+import { usePlayerStore } from "@/store/usePlayerStore";
 
 interface PropsType {
-    trackData: TrackItemData;  // data
+    trackData: Track;  // data
 }
 
 export default function TrackItemRight({ trackData }: PropsType) {
   const openDialog = useTrackDialog((s) => s.openDialog);
+  const setCurrentTrack = usePlayerStore((s) => s.setCurrentTrack);
 
-  const handleYouTubeSearch = ({ artist, title }: TrackItemData) => {
-    // console.log(artist.name, name);
-    const query = `${artist.name} ${title}`;
-    const url = `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`;
-    window.open(url, '_blank', 'noopener,noreferrer');
-  };
+  // const handlePlayPreview = () => {
+  //   const audio = new Audio(trackData.preview);
+  //   audio.play();
+  // };
     
   return (
     <>
-      <button onClick={() => handleYouTubeSearch(trackData)}>
+      <button onClick={() => setCurrentTrack(trackData)}>
         <PlayBk className="icons-play" />
       </button>
       <button onClick={() => openDialog(trackData)}>

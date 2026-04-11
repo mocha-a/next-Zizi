@@ -4,14 +4,9 @@ import axios from 'axios';
 export async function GET(_: Request) {
   try {
     const { data } = await axios.get(
-      'https://api.deezer.com/editorial/0/releases',
-      {
-        params: {
-          limit: 11,
-          // index: 0,
-        },
-      }
-    );
+      'https://api.deezer.com/editorial/0/releases', {
+        params: {limit: 10,},
+    });
 
     return NextResponse.json(data);
   } catch (error) {

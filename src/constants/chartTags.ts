@@ -1,99 +1,98 @@
 export type PageTags = {
     top: string[],
-    genre: { kor: string, eng: string }[],
-    mood: { kor: string, eng: string, icon: string }[]
+    genre: { name: string, id: string }[],
+    // mood: { kor: string, eng: string, icon: string }[]
 };
 
 export const allTags = {
-    top: ['GLOBAL', 'K-POP', 'J-POP', 'POP'],
+    // top: ['GLOBAL', 'K-POP', 'J-POP', 'POP'],
     genre: [
         {
-            kor: 'POP',
-            eng: 'pop'
+            name: 'POP',
+            id: '132'
+        },
+        // {
+        //     kor: 'K-POP',
+        //     eng: 'k-pop'
+        // },
+        {
+            name: '댄스',
+            id: '113'
         },
         {
-            kor: 'K-POP',
-            eng: 'k-pop'
+            name: '락',
+            id: '152'
+        },
+        // {
+        //     name: '인디',
+        // },
+        {
+            name: '재즈',
+            id: '129'
         },
         {
-            kor: '댄스',
-            eng: 'dance'
+            name: 'R&B',
+            id: '165'
         },
         {
-            kor: '락',
-            eng: 'rock'
+            name: '랩/힙합',
+            id: '116'
         },
         {
-            kor: '인디',
-            eng: 'Indie'
-        },
-        {
-            kor: '재즈',
-            eng: "Jazz"
-        },
-        {
-            kor: '알앤비',
-            eng: 'r&b'
-        },
-        {
-            kor: '힙합',
-            eng: 'hip-hop'
-        },
-        {
-            kor: '클래식',
-            eng: 'classical'
+            name: '클래식',
+            id: '98'
         }
     ],
-    mood: [
-        {
-            kor: '여유로운',
-            eng: 'chill',
-            icon: '☕'
-        },
-        {
-            kor: '행복한',
-            eng: 'happy',
-            icon: '😊'
-        },
-        {
-            kor: '수면',
-            eng: 'sleep',
-            icon: '💤'
-        },
-        {
-            kor: '공부',
-            eng: 'study',
-            icon: '✏'
-        },
-        {
-            kor: '사랑',
-            eng: 'love',
-            icon: '💗'
-        },
-        {
-            kor: '슬픈',
-            eng: "sad",
-            icon: '🌧'
-        },
-        {
-            kor: '운동',
-            eng: 'workout',
-            icon: '💪'
-        },
-        {
-            kor: '드라이브',
-            eng: 'driving',
-            icon: '🚗'
-        },
-        {
-            kor: '어두운',
-            eng: 'dark',
-            icon: '🕳'
-        },
-        {
-            kor: '휴식',
-            eng: "relaxing",
-            icon: '🌿'
-        }
-    ]
+    // mood: [
+    //     {
+    //         kor: '여유로운',
+    //         eng: 'chill',
+    //         icon: '☕'
+    //     },
+    //     {
+    //         kor: '행복한',
+    //         eng: 'happy',
+    //         icon: '😊'
+    //     },
+    //     {
+    //         kor: '수면',
+    //         eng: 'sleep',
+    //         icon: '💤'
+    //     },
+    //     {
+    //         kor: '공부',
+    //         eng: 'study',
+    //         icon: '✏'
+    //     },
+    //     {
+    //         kor: '사랑',
+    //         eng: 'love',
+    //         icon: '💗'
+    //     },
+    //     {
+    //         kor: '슬픈',
+    //         eng: "sad",
+    //         icon: '🌧'
+    //     },
+    //     {
+    //         kor: '운동',
+    //         eng: 'workout',
+    //         icon: '💪'
+    //     },
+    //     {
+    //         kor: '드라이브',
+    //         eng: 'driving',
+    //         icon: '🚗'
+    //     },
+    //     {
+    //         kor: '어두운',
+    //         eng: 'dark',
+    //         icon: '🕳'
+    //     },
+    //     {
+    //         kor: '휴식',
+    //         eng: "relaxing",
+    //         icon: '🌿'
+    //     }
+    // ]
 };

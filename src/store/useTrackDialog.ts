@@ -1,10 +1,10 @@
 import { create } from "zustand";
-import { TrackItemData } from "@/types/trackItem";
+import { Track } from '@/types/deezer/deezer';
 
 type TrackDialogStore = {
   open: boolean;
-  track: TrackItemData | null;
-  openDialog: (track: TrackItemData) => void;
+  track: Track | null;
+  openDialog: (track: Track) => void;
   closeDialog: () => void;
 };
 

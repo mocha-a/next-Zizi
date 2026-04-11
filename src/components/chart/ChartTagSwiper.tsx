@@ -7,13 +7,13 @@ import 'swiper/css';
 import 'swiper/css/free-mode';
 
 interface TagSwiperProps {
-    tabType: 'top' | 'genre' | 'mood';
+    // tabType: 'top' | 'genre' | 'mood';
     tagList: any[];
     selectedTag: string;
     setSelectedTag: (tag: string) => void;
 }
 
-function ChartTagSwiper({tabType, tagList, selectedTag, setSelectedTag}: TagSwiperProps) {
+function ChartTagSwiper({tagList, selectedTag, setSelectedTag}: TagSwiperProps) {
   return (
       <div className='chart-tagbtn-box'>
         {selectedTag && (
@@ -22,7 +22,14 @@ function ChartTagSwiper({tabType, tagList, selectedTag, setSelectedTag}: TagSwip
                 slidesPerView={'auto'}
                 freeMode={true}
             >
-                {tabType === 'top' ? (
+                {tagList.map((tag: { name: string, id: string }) => (
+                    <SwiperSlide key={tag.id}>
+                        <button onClick={() => {setSelectedTag(tag.id)}}>
+                            <TagBtn tagbtn={tag.name} className={`chart-tagbtn ${selectedTag === tag.id ? 'active' : ''}`}/>
+                        </button>
+                    </SwiperSlide>
+                ))}
+                {/* {tabType === 'top' ? (
                     tagList.map((tag: string) => (
                         <SwiperSlide key={tag}>
                             <button onClick={() => {setSelectedTag(tag)}}>
@@ -38,7 +45,7 @@ function ChartTagSwiper({tabType, tagList, selectedTag, setSelectedTag}: TagSwip
                             </button>
                         </SwiperSlide>
                     ))
-                )}
+                )} */}
             </Swiper>
         )}
     </div>
