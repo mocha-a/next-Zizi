@@ -1,10 +1,12 @@
 'use client';
-
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { typeSearch } from '@/lib/search';
-import { useSearchStore } from '@/store/searchStore';
+import { useSearchParams } from 'next/navigation';
 import { useInfiniteList } from '@/hooks/useInfiniteList';
+import { sortList } from '@/lib/sort';
+import { typeSearch } from '@/lib/api/serach';
+import { Playlist } from '@/types/deezer/deezer';
+import { PlaylistSortOptions, type PlaylistSortType } from '@/types/sort';
 
 import SortBtn from '@/components/common/SortBtn';
 import SortSelect from '@/components/common/SortSelect';
@@ -12,14 +14,12 @@ import BottomDialog from '@/components/common/Dialog';
 import PlaylistList from '@/components/entities/playlist/ui/PlaylistList';
 
 
-import { PlaylistSortOptions, type PlaylistSortType } from '@/types/sort';
-import { Playlist } from '@/types/deezer/deezer';
-import { sortList } from '@/lib/sortList';
-
 const LIMIT = 50;
 
 const SearchPlaylists = () => {
-  const { searchQuery } = useSearchStore(); // 검색어만 전역에서 사용
+  const searchParams = useSearchParams();
+  const query = searchParams?.get('query') ?? '';
+
   const router = useRouter();
 
   const [ sortType, setSortType ] = useState<PlaylistSortType>(null); // 정렬 타입
@@ -32,11 +32,11 @@ const SearchPlaylists = () => {
     isLoading,
     isFetchingNextPage,
   } = useInfiniteList<Playlist>({
-    queryKey: ['search', 'playlist', searchQuery],
+    queryKey: ['search', 'playlist', query],
     queryFn: (page) =>
-      typeSearch(searchQuery, 'playlist', LIMIT, page),
+      typeSearch(query, 'playlist', LIMIT, page),
     limit: LIMIT,
-    enabled: !!searchQuery,
+    enabled: !!query,
   });
 
   console.log(playlists);
@@ -95,7 +95,7 @@ const SearchPlaylists = () => {
         loading={isLoading || isFetchingNextPage}
         hasMore={hasNextPage}
         onLoadMore={loadMore}
-        onClick={(id) => router.push(`/search/playlist/${id}`)}
+        onClick={(id) => router.push(`/playlist/${id}`)}
       />
     </>
   );

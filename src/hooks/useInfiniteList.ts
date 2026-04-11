@@ -1,4 +1,3 @@
-// hooks/useInfiniteList.ts
 import { useInfiniteQuery } from '@tanstack/react-query';
 
 interface Props<T> {

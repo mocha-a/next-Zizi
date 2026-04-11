@@ -1,22 +1,22 @@
 'use client';
-
-import { typeSearch } from '@/lib/search';
-import { useSearchStore } from '@/store/searchStore';
-
-import { SearchTrack } from '@/types/deezer/search';
+import { useState } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { sortList } from '@/lib/sort';
+import { typeSearch } from '@/lib/api/serach';
 import { useInfiniteList } from '@/hooks/useInfiniteList';
+import { SearchTrack } from '@/types/deezer/search';
+import { TrackSortOptions, TrackSortType } from '@/types/sort';
+
 import TrackList from '@/components/entities/track/ui/TrackList';
 import SortBtn from '@/components/common/SortBtn';
 import SortSelect from '@/components/common/SortSelect';
 import BottomDialog from '@/components/common/Dialog';
-import { TrackSortOptions, TrackSortType } from '@/types/sort';
-import { useState } from 'react';
-import { sortList } from '@/lib/sortList';
 
 const LIMIT = 50;
 
 const SearchTracks = () => {
-  const { searchQuery } = useSearchStore(); // 검색어만 전역에서 사용
+  const searchParams = useSearchParams();
+  const query = searchParams?.get('query') ?? '';
 
   const [ sortType, setSortType ] = useState<TrackSortType>(null);
   const [ openSort, setOpenSort ] = useState(false);
@@ -28,11 +28,11 @@ const SearchTracks = () => {
     isLoading,
     isFetchingNextPage,
   } = useInfiniteList<SearchTrack>({
-    queryKey: ['search', 'track', searchQuery],
+    queryKey: ['search', 'track', query],
     queryFn: (page) =>
-      typeSearch(searchQuery, 'track', LIMIT, page),
+      typeSearch(query, 'track', LIMIT, page),
     limit: LIMIT,
-    enabled: !!searchQuery,
+    enabled: !!query,
   }); 
 
   console.log(tracks);

@@ -1,23 +1,24 @@
 'use client';
-
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useSearchStore } from '@/store/searchStore';
+import { useSearchParams } from 'next/navigation';
 import { useInfiniteList } from '@/hooks/useInfiniteList';
-import { typeSearch } from '@/lib/search';
-import { ArtistSortType, ArtistSortOptions } from '@/types/sort';
+import { sortList } from '@/lib/sort';
+import { typeSearch } from '@/lib/api/serach';
 import { Artist } from '@/types/deezer/deezer';
+import { ArtistSortType, ArtistSortOptions } from '@/types/sort';
 
 import SortBtn from '@/components/common/SortBtn';
 import SortSelect from '@/components/common/SortSelect';
 import BottomDialog from '@/components/common/Dialog';
 import ArtistList from '@/components/entities/artist/ui/ArtistList';
-import { sortList } from '@/lib/sortList';
 
 const LIMIT = 50;
 
 const SearchArtists = () => {
-  const { searchQuery } = useSearchStore();
+  const searchParams = useSearchParams();
+  const query = searchParams?.get('query') ?? '';
+
   const router = useRouter();
 
   // UI 상태 유지
@@ -32,11 +33,11 @@ const SearchArtists = () => {
     isLoading,
     isFetchingNextPage,
   } = useInfiniteList<Artist>({
-    queryKey: ['search', 'artist', searchQuery],
+    queryKey: ['search', 'artist', query],
     queryFn: (page) =>
-      typeSearch(searchQuery, 'artist', LIMIT, page),
+      typeSearch(query, 'artist', LIMIT, page),
     limit: LIMIT,
-    enabled: !!searchQuery,
+    enabled: !!query,
   });
 
   const sortedArtists = (() => {
@@ -100,7 +101,7 @@ const SearchArtists = () => {
         loading={isLoading || isFetchingNextPage}
         hasMore={hasNextPage}
         onLoadMore={loadMore}
-        onClick={(id) => router.push(`/search/artist/${id}`)}
+        onClick={(id) => router.push(`/artist/${id}`)}
       />
     </>
   );

@@ -1,10 +1,10 @@
 'use client'; 
-
 import React from 'react';
 import { useRouter } from 'next/navigation';
-import { doSearch } from '@/lib/search';
 
 const TrendingSearches = () => {
+  const router = useRouter();
+
   const top = [
     "케이팝 데몬 헌티스 OST",
     "여름이었다",
@@ -18,10 +18,8 @@ const TrendingSearches = () => {
     "에스파"
   ]
 
-  const router = useRouter();
-
-  const handleClick = async (query: string) => {
-    await doSearch(query, router);
+  const handleClick = (query: string) => {
+    router.push(`/search?query=${encodeURIComponent(query)}`);
   };
 
   return (

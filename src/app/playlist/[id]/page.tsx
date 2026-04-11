@@ -1,22 +1,21 @@
 "use client";
-
 import React, { useEffect } from 'react'
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { useTabStore } from '@/store/tabStore';
+import { formatDate, formatUpDate } from '@/lib/format';
+import { getCreator, getPlaylist, getTranslate } from '@/lib/api/playlist';
+import { Playlist } from '@/types/deezer/deezer';
+
 import DetailHeader from '@/components/common/DetailHeader';
 import CreatorBadge from '@/components/entities/playlist/ui/CreatorBadge';
 import PlaylistTrackList from '@/components/entities/playlist/container/PlaylistTrackList';
 import PlaylistFlow from '@/components/entities/playlist/container/PlaylistFlow';
 import TabsContainer from '@/components/common/TabsContainer';
-
-import { getCreator, getPlaylist, getTranslate } from '@/lib/api/playlist';
-import { formatDate, formatUpDate } from '@/lib/format';
-import { Playlist } from '@/types/deezer/deezer';
+import ReadMore from '@/components/entities/playlist/ui/ReadMore';
 
 import '@/styles/playlist/playlist.scss';
-import ReadMore from '@/components/entities/playlist/ui/ReadMore';
 
 const Page = () => {
   const { id } = useParams() as { id: string };
@@ -73,7 +72,7 @@ const Page = () => {
       <DetailHeader />
       <div className='playlist-detail-img'>
         <Image
-          src={playlist.picture_medium ?? '/imgs/default-user.png'}
+          src={playlist.picture_medium ?? '/imgs/default.png'}
           alt={playlist.title}
           width={200}
           height={200}

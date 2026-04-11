@@ -27,7 +27,7 @@ function SimilarAlbums({ genreId, id }: Props) {
       loading={isLoading}
       hasMore={false}
       loadMore={() => {}}
-      onClick={(id) => router.push(`/search/album/${id}`)}
+      onClick={(id) => router.push(`/album/${id}`)}
     />
   );
 }

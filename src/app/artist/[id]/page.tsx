@@ -1,16 +1,16 @@
 'use client';
-
 import React, { useEffect } from 'react';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import { useTabStore } from '@/store/tabStore';
+import { useQuery } from '@tanstack/react-query';
+import { getArtist } from '@/lib/api/artist';
+import { Artist } from '@/types/deezer/deezer';
 
 import TabsContainer from '@/components/common/TabsContainer';
 import DetailHeader from '@/components/common/DetailHeader';
 import ArtistAlbums from '@/components/entities/artist/container/ArtistAlbums';
 import ArtistTracks from '@/components/entities/artist/container/ArtistTrack';
-import { useQuery } from '@tanstack/react-query';
-import { getArtist } from '@/lib/api/artist';
 
 import '@/styles/artist/artist.scss';
 
@@ -21,7 +21,7 @@ const Page = () => {
   // 탭 상태
   const { tabValue, setTabValue } = useTabStore();
 
-  const { data: artist, isLoading } = useQuery({
+  const { data: artist, isLoading } = useQuery<Artist>({
     queryKey: ['artist', id],
     queryFn: () => getArtist(Number(id)),
     enabled: !!id,
@@ -45,7 +45,7 @@ const Page = () => {
       <section className="artist-top">
         <div className="artist-img">
           <Image
-            src={artist.picture_xl ?? '/imgs/default-artist.png'}
+            src={artist.picture_xl ?? '/imgs/default.png'}
             alt={artist?.name || 'artist image'}
             fill
             style={{ objectFit: 'cover' }}

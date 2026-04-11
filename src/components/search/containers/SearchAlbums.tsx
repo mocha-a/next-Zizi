@@ -1,22 +1,24 @@
 'use client';
-
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useSearchStore } from '@/store/searchStore';
+import { useSearchParams } from 'next/navigation';
+import { useInfiniteList } from '@/hooks/useInfiniteList';
+import { sortList } from '@/lib/sort';
+import { typeSearch } from '@/lib/api/serach';
+import { Album } from '@/types/deezer/deezer';
+import { AlbumSortType, AlbumSortOptions } from '@/types/sort';
+
 import SortBtn from '@/components/common/SortBtn';
 import SortSelect from '@/components/common/SortSelect';
 import BottomDialog from '@/components/common/Dialog';
 import AlbumList from '@/components/entities/album/ui/AlbumList';
-import { typeSearch } from '@/lib/api/serach';
-import { useInfiniteList } from '@/hooks/useInfiniteList';
-import { AlbumSortType, AlbumSortOptions } from '@/types/sort';
-import { Album } from '@/types/deezer/deezer';
-import { sortList } from '@/lib/sortList';
 
 const LIMIT = 50;
 
 const SearchAlbums = () => {
-  const { searchQuery } = useSearchStore();
+  const searchParams = useSearchParams();
+  const query = searchParams?.get('query') ?? '';
+
   const router = useRouter();
 
   const [ sortType, setSortType ] = useState<AlbumSortType>(null);
@@ -30,14 +32,12 @@ const SearchAlbums = () => {
     isLoading,
     isFetchingNextPage,
   } = useInfiniteList<Album>({
-    queryKey: ['SearchAlbum', searchQuery],
+    queryKey: ['SearchAlbum', query],
     queryFn: (page) =>
-      typeSearch(searchQuery, 'album', LIMIT, page),
+      typeSearch(query, 'album', LIMIT, page),
     limit: LIMIT,
-    enabled: !!searchQuery,
+    enabled: !!query,
   });
-
-  console.log(albums);
 
   const sortedAlbums = (() => {
     if (!sortType) return albums;
@@ -83,7 +83,7 @@ const SearchAlbums = () => {
         loading={isLoading || isFetchingNextPage}
         hasMore={hasNextPage}
         loadMore={loadMore}
-        onClick={(id) => router.push(`/search/album/${id}`)}
+        onClick={(id) => router.push(`/album/${id}`)}
       />
     </>
   );

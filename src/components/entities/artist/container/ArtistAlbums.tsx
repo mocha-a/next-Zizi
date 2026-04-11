@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { sortList } from '@/lib/sortList';
+
 import SortBtn from '@/components/common/SortBtn';
 import SortSelect from '@/components/common/SortSelect';
 import BottomDialog from '@/components/common/Dialog';
@@ -12,10 +12,11 @@ import { useInfiniteList } from '@/hooks/useInfiniteList';
 import { Album } from '@/types/deezer/deezer';
 import { SearchArtist } from '@/types/deezer/search';
 import { AlbumDetailSortType, AlbumDetailSortOptions } from '@/types/sort';
+import { sortList } from '@/lib/sort';
 
 interface Props {
   id: string;
-  artist: SearchArtist;
+  artist?: SearchArtist;
 }
 
 const LIMIT = 50;
@@ -47,8 +48,6 @@ const ArtistAlbums = ({ id, artist }: Props) => {
     limit: LIMIT,
     enabled: !!id,
   });
-  
-  console.log(albums);
 
   const sortedAlbums = (() => {
     if (!sortType) return albums;
@@ -81,6 +80,7 @@ const ArtistAlbums = ({ id, artist }: Props) => {
   const label =
     AlbumDetailSortOptions.find((opt) => opt.value === sortType)?.label || '추천순';
 
+  if (!artist) return null;
 
   return (
     <>
@@ -104,7 +104,7 @@ const ArtistAlbums = ({ id, artist }: Props) => {
         loading={isLoading || isFetchingNextPage}
         hasMore={hasNextPage}
         loadMore={loadMore}
-        onClick={(id) => router.push(`/search/album/${id}`)}
+        onClick={(id) => router.push(`/album/${id}`)}
       />
     </>
   );

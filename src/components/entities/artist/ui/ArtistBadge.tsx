@@ -21,7 +21,7 @@ const ArtistBadge = ({ contributors }: Props) => {
             title={artist.name}
           >
             <Image
-              src={artist.picture_medium ?? '/imgs/default-artist.png'}
+              src={artist.picture_medium ?? '/imgs/default.png'}
               alt={artist.name}
               width={32}
               height={32}

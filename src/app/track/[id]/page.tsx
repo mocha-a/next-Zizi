@@ -1,29 +1,31 @@
 "use client";
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { SearchTrack } from '@/types/deezer/search';
 import { useParams } from 'next/navigation';
 import { useTabStore } from '@/store/tabStore';
+import { useQuery } from '@tanstack/react-query';
+import { getTrack } from '@/lib/api/track';
+import { Track } from '@/types/deezer/deezer';
+
 import DetailHeader from '@/components/common/DetailHeader';
 import ArtistBadge from '@/components/entities/artist/ui/ArtistBadge';
+import SimilarTracks from '@/components/entities/track/container/SimilarTracks';
 import TrackInfo from '@/components/entities/track/container/TrackInfo';
 import TabsContainer from '@/components/common/TabsContainer';
 
 import '@/styles/track/track.scss';
 import '@/styles/entitiesUI/ArtistBadge.scss';
-import SimilarTracks from '@/components/entities/track/container/SimilarTracks';
 
 const Page = () => {
   const { id } = useParams() as { id: string };
-  const [ track, setTrack ] = useState<SearchTrack | null>(null);
   const { tabValue, setTabValue } = useTabStore();
 
-  const fetchTrackDetail = async (id: string): Promise<SearchTrack> => {
-    const res = await fetch(`/api/spotify/track/${id}`);
-    if (!res.ok) throw new Error('트랙 조회 실패');
-    return res.json();
-  };
+  const { data: track, isLoading } = useQuery<Track>({
+    queryKey: ['album', id],
+    queryFn: () => getTrack(Number(id)),
+    enabled: !!id,
+  });
 
   // 탭 메뉴
   const tabs = [
@@ -32,21 +34,13 @@ const Page = () => {
   ];
 
   useEffect(() => {
-    if (!id) return;
-
-    // 탭 초기화
     setTabValue(0);
-
-    fetchTrackDetail(id)
-      .then(setTrack)
-      .catch(console.error);
-  }, [id, setTabValue]);
+  }, [setTabValue]);
   
   console.log(track);
 
-    if (!track) {
-    return <div>로딩중...</div>;
-  }
+  if (isLoading) return <div>로딩중...</div>;
+  if (!track) return <div>아티스트 없음</div>;
 
   return (
     <div className="track-detail">
@@ -57,15 +51,15 @@ const Page = () => {
             href={`/search/album/${track.album.id}`}
             className="track-album-name"
           >
-            {track.album.name}
+            {track.album.title}
           </Link>
-          <h2 className='track-name'>{track.name}</h2>
-          <ArtistBadge artists={track.artists}/>
+          <h2 className='track-name'>{track.title}</h2>
+          <ArtistBadge contributors={track.contributors ?? []}/>
         </div>
         <div className='track-album-img'>
           <Image
-          src={track.album.images?.[0]?.url ?? '/imgs/default-artist.png'}
-          alt={track.album.name}
+          src={track.album.cover_medium ?? '/imgs/default.png'}
+          alt={track.album.title}
           width={123}
           height={123}
           />
