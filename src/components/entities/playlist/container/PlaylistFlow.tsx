@@ -21,7 +21,7 @@ const PlaylistFlow = ({ id }: Props) => {
 
   return (
     <div className='playlist-flow'>
-      <p>주인장’s 취향으로 꽉- 채운 추천 트랙.. ( ^_− )☆</p>
+      <p>{`주인장’s 취향으로 꽉- 채운 추천 트랙.. ( ^_− ) ☆`}</p>
       <ul className="tracklist">
         {flow?.map((track, i) => (
           <TrackItem

@@ -43,8 +43,8 @@ function CustomTabPanel({
       {value === index && (
         <Box
           sx={{
-            paddingTop: '10px',
-            fontFamily: 'GmarketMedium',
+            padding: '10px 0 60px',
+            fontFamily: 'var(--font-gmarketMedium)',
             fontSize: '13px',
             color: '#1A1A1A',
           }}
