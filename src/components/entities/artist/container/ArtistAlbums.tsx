@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { sortBy } from '@/lib/sortBy';
+import { sortList } from '@/lib/sortList';
 import SortBtn from '@/components/common/SortBtn';
 import SortSelect from '@/components/common/SortSelect';
 import BottomDialog from '@/components/common/Dialog';
@@ -11,7 +11,7 @@ import { getArtistAlbums } from '@/lib/api/artist';
 import { useInfiniteList } from '@/hooks/useInfiniteList';
 import { Album } from '@/types/deezer/deezer';
 import { SearchArtist } from '@/types/deezer/search';
-import { AlbumSortType, AlbumSortOptions } from '@/types/sort';
+import { AlbumDetailSortType, AlbumDetailSortOptions } from '@/types/sort';
 
 interface Props {
   id: string;
@@ -21,7 +21,7 @@ interface Props {
 const LIMIT = 50;
 
 const ArtistAlbums = ({ id, artist }: Props) => {
-  const [ sortType, setSortType ] = useState<AlbumSortType>(null);
+  const [ sortType, setSortType ] = useState<AlbumDetailSortType>(null);
   const [ openSort, setOpenSort ] = useState(false);
 
   const router = useRouter();
@@ -50,19 +50,36 @@ const ArtistAlbums = ({ id, artist }: Props) => {
   
   console.log(albums);
 
-  const sortedAlbums = sortType
-    ? sortBy(
-        albums,
-        (album) =>
-          sortType === 'name'
-            ? album.title
-            : new Date(album.release_date).getTime(),
-        sortType === 'old' ? 'asc' : 'desc'
-      )
-    : albums;
+  const sortedAlbums = (() => {
+    if (!sortType) return albums;
+
+    switch (sortType) {
+      case 'title':
+        return sortList(albums, (a) => a.title);
+
+      case 'latest':
+        return sortList(
+          albums,
+          (a) => new Date(a.release_date).getTime(),
+          'desc'
+        );
+
+      case 'oldest':
+        return sortList(
+          albums,
+          (a) => new Date(a.release_date).getTime()
+        );
+
+      case 'fans':
+        return sortList(albums, (a) => a.fans, 'desc');
+
+      default:
+        return albums;
+    }
+  })();
 
   const label =
-    AlbumSortOptions.find((opt) => opt.value === sortType)?.label || '추천순';
+    AlbumDetailSortOptions.find((opt) => opt.value === sortType)?.label || '추천순';
 
 
   return (
@@ -72,7 +89,7 @@ const ArtistAlbums = ({ id, artist }: Props) => {
         <BottomDialog open={openSort} onClose={() => setOpenSort(false)}>
           <SortSelect
             value={sortType}
-            options={AlbumSortOptions}
+            options={AlbumDetailSortOptions}
             onChange={(v) => {
               setSortType(v);
               setOpenSort(false);

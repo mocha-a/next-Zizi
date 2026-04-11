@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { typeSearch } from '@/lib/search';
-import { sortBy } from '@/lib/sortBy';
 import { useSearchStore } from '@/store/searchStore';
 import { useInfiniteList } from '@/hooks/useInfiniteList';
 
@@ -13,15 +12,11 @@ import BottomDialog from '@/components/common/Dialog';
 import PlaylistList from '@/components/entities/playlist/ui/PlaylistList';
 
 
-import type { PlaylistSortType } from '@/types/sort';
+import { PlaylistSortOptions, type PlaylistSortType } from '@/types/sort';
 import { Playlist } from '@/types/deezer/deezer';
+import { sortList } from '@/lib/sortList';
 
 const LIMIT = 50;
-
-const sortOptions = [
-  { label: '가나다 순', value: 'name' },
-  { label: '곡 많은 순', value: 'tracks' },
-] as const;
 
 const SearchPlaylists = () => {
   const { searchQuery } = useSearchStore(); // 검색어만 전역에서 사용
@@ -44,19 +39,41 @@ const SearchPlaylists = () => {
     enabled: !!searchQuery,
   });
 
-  const sortedPlaylists = sortType
-    ? sortBy(
-        playlists,
-        (playlist) =>
-          sortType === 'name'
-            ? playlist.title
-            : playlist.nb_tracks,
-        sortType === 'tracks' ? 'desc' : 'asc'
-      )
-    : playlists;
+  console.log(playlists);
+
+  const sortedPlaylists = (() => {
+    if (!sortType) return playlists;
+
+    switch (sortType) {
+      case 'title':
+        return sortList(playlists, (p) => p.title);
+
+      case 'tracks_desc':
+        return sortList(playlists, (p) => p.nb_tracks, 'desc');
+
+      case 'tracks_asc':
+        return sortList(playlists, (p) => p.nb_tracks);
+
+      case 'updated':
+        return sortList(
+          playlists,
+          (p) => new Date(p.mod_date).getTime(),
+          'desc'
+        );
+
+      case 'oldest':
+        return sortList(
+          playlists,
+          (p) => new Date(p.creation_date).getTime()
+        );
+
+      default:
+        return playlists;
+    }
+  })();
 
   const label =
-    sortOptions.find((opt) => opt.value === sortType)?.label || '추천순';
+    PlaylistSortOptions.find((opt) => opt.value === sortType)?.label || '추천순';
 
   return (
     <>
@@ -65,7 +82,7 @@ const SearchPlaylists = () => {
       <BottomDialog open={openSort} onClose={() => setOpenSort(false)}>
         <SortSelect
           value={sortType}
-          options={sortOptions}
+          options={PlaylistSortOptions}
           onChange={(v) => {
             setSortType(v);
             setOpenSort(false);

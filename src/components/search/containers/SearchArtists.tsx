@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import { useSearchStore } from '@/store/searchStore';
 import { useInfiniteList } from '@/hooks/useInfiniteList';
 import { typeSearch } from '@/lib/search';
-import { sortBy } from '@/lib/sortBy';
 import { ArtistSortType, ArtistSortOptions } from '@/types/sort';
 import { Artist } from '@/types/deezer/deezer';
 
@@ -13,6 +12,7 @@ import SortBtn from '@/components/common/SortBtn';
 import SortSelect from '@/components/common/SortSelect';
 import BottomDialog from '@/components/common/Dialog';
 import ArtistList from '@/components/entities/artist/ui/ArtistList';
+import { sortList } from '@/lib/sortList';
 
 const LIMIT = 50;
 
@@ -39,17 +39,23 @@ const SearchArtists = () => {
     enabled: !!searchQuery,
   });
 
-  // 기존 정렬 로직 그대로 사용
-  const sortedArtists = sortType
-    ? sortBy(
-        artists,
-        (artist) =>
-          sortType === 'name'
-            ? artist.name
-            : artist.nb_fan,
-        sortType === 'popularity' ? 'desc' : 'asc'
-      )
-    : artists;
+  const sortedArtists = (() => {
+    if (!sortType) return artists;
+
+    switch (sortType) {
+      case 'name':
+        return sortList(artists, (a) => a.name);
+
+      case 'fans':
+        return sortList(artists, (a) => a.nb_fan, 'desc');
+
+      case 'albums':
+        return sortList(artists, (a) => a.nb_album, 'desc');
+
+      default:
+        return artists;
+    }
+  })();
 
   const getArtistLevel = (fans: number) => {
     if (fans > 500000)
