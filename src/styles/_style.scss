@@ -2,8 +2,6 @@
 @use './mixins' as *;
 @use './variables' as *;
 
-// font-family: var(--font-mona10x12);
-
 .header{
     @include publicWidth;
     @include logo_style;
