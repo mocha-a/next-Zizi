@@ -41,7 +41,7 @@ const Results = () => {
         >
         {allData?.artists?.map((artist) => (
           <SwiperSlide key={artist.id} style={{ width: '110px' }}>
-            <Link href={`/search/artist/${artist.name}`}>
+            <Link href={`/artist/${artist.id}`}>
               <ArtistCard name={artist.name} imageUrl={artist.picture_medium} showFans={false}/>
             </Link>
           </SwiperSlide>
@@ -64,28 +64,30 @@ const Results = () => {
       <div className='allReslts allReslts-album'>
         <SectionHeader title="앨범" targetIndex={3} type="album"/>
         {allData?.albums?.map((album) => (
-          <AlbumCard
-            key={album.id}
-            id={album.id}
-            title={album.title}
-            cover={album.cover_medium}
-            record_type={album.record_type}
-            artist={album.artist}
-          />
+          <Link key={album.id} href={`/album/${album.id}`}>
+            <AlbumCard
+              id={album.id}
+              title={album.title}
+              cover={album.cover_medium}
+              record_type={album.record_type}
+              artist={album.artist}
+            />
+          </Link>
         ))}
       </div>
 
       <div className='allReslts allReslts-playlist'>
         <SectionHeader title="플레이리스트" targetIndex={4} type="playlist"/>
         {allData?.playlists?.map((playlist)=>
-          <PlaylistCard
-            key={playlist.id}
-            id={playlist.id}
-            picture={playlist.picture_medium}
-            title={playlist.title}
-            user={playlist.user.name}
-            tracks={playlist.nb_tracks}
-          />
+          <Link key={playlist.id} href={`/playlist/${playlist.id}`}>
+            <PlaylistCard
+              id={playlist.id}
+              picture={playlist.picture_medium}
+              title={playlist.title}
+              user={playlist.user.name}
+              tracks={playlist.nb_tracks}
+            />
+          </Link>
         )}
       </div>
     </div>

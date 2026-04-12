@@ -1,8 +1,7 @@
 'use client';
 import React from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useTabStore } from '@/store/tabStore';
-import { useSearchStore } from '@/store/searchStore';
 import { SearchCategory } from '@/types/deezer/search';
 
 interface Props {
@@ -14,16 +13,20 @@ interface Props {
 const SectionHeader = ({ title, type, targetIndex }: Props) => {
   const router = useRouter();
   const { setTabValue } = useTabStore();
-  const { searchQuery } = useSearchStore();
+
+  const searchParams = useSearchParams();
+  const query = searchParams?.get('query') ?? '';
 
   const onClick = () => {
     if (typeof targetIndex === 'number') {
       setTabValue(targetIndex);
     }
-    
-    if (type && searchQuery) {
-      const base = `/search/${encodeURIComponent(searchQuery)}`;
-      router.push(`${base}?type=${type}`, { scroll: true });
+
+    if (type && query) {
+      router.push(
+        `/search?query=${encodeURIComponent(query)}&type=${type}`,
+        { scroll: true }
+      );
     }
   };
 

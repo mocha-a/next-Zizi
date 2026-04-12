@@ -15,7 +15,7 @@ import TrackInfo from '@/components/entities/track/container/TrackInfo';
 import TabsContainer from '@/components/common/TabsContainer';
 
 import '@/styles/track/track.scss';
-import '@/styles/entitiesUI/ArtistBadge.scss';
+import '@/styles/entitiesUI/artistBadge.scss';
 
 const Page = () => {
   const { id } = useParams() as { id: string };
@@ -48,7 +48,7 @@ const Page = () => {
       <div className='track-header'>
         <div className='track-info'>
           <Link
-            href={`/search/album/${track.album.id}`}
+            href={`/album/${track.album.id}`}
             className="track-album-name"
           >
             {track.album.title}

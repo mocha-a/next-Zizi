@@ -1,0 +1,25 @@
+@use '../variables'as *;
+@use '../mixins'as *;
+
+.myPage-container{
+  @include publicWidth;
+  .myPage-greeting{
+    font-family: var(--font-Galmuri9);
+
+    .guest-prompt{
+      font-size: 18px;
+      .login-link{
+        color: $orange;
+      }
+    }
+  }
+  .myPage-tabs{
+    margin-top: 50px;
+  }
+}
+
+.tagbtn{
+  display: inline-flex;
+  white-space: nowrap;
+  margin-right: 10px;
+}
