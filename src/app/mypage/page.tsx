@@ -20,7 +20,7 @@ interface User {
   gender: string | null;
 }
 
-function page() {
+function Page() {
   const { data: session, status } = useSession();
   const { tabValue, setTabValue } = useTabStore();
   const [ user, setUser ] = useState<User | null>(null);
@@ -87,4 +87,4 @@ function page() {
   )
 }
 
-export default page
+export default Page

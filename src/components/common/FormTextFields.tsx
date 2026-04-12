@@ -3,7 +3,6 @@
 import React, { useState } from 'react'
 import TextField from '@mui/material/TextField';
 import TagBtn from './TagBtn';
-import InputAdornment from '@mui/material/InputAdornment';
 
 type Gender = '남성' | '여성' | '기타';
 const GENDER_OPTIONS: Gender[] = ['남성', '여성', '기타'];
@@ -27,7 +26,7 @@ export const FormTextFielFieldDatas = ({
   listData, formData, errors, onChange
 }: FormTextFieldsProps) => {
 
-  const [showPw, setShowPw] = useState(false);
+  const [showPw/* , setShowPw */] = useState(false);
 
   return (
     <>

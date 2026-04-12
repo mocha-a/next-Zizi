@@ -7,6 +7,14 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// enum : type 컬럼에는 이 4개 중 하나만 들어갈 수 있다
+enum TargetType {
+  TRACK
+  ARTIST
+  ALBUM
+  PLAYLIST
+}
+
 // User 모델 정의 (모든 가입 유형을 포함)
 model User {
   id            String   @id @default(uuid()) // Primary Key (UUID 사용 권장)
@@ -19,9 +27,12 @@ model User {
   gender        String?
   password      String? // 로컬 회원가입 사용자만 가짐 (NULL 허용)
 
+  createdAt     DateTime @default(now())
+  
   accounts      Account[]
   sessions      Session[]
-  createdAt     DateTime @default(now())
+  likes         Like[]
+  playlists     Playlist[]
 }
 
 model Account {
@@ -59,4 +70,81 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+// ======================================================
+// 인기 검색어
+// ======================================================
+model PopularSearch {
+  id        Int      @id @default(autoincrement())
+  keyword   String   @unique
+  count     Int      @default(1)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("popular_searches")
+}
+
+// ======================================================
+// 좋아요
+// ======================================================
+model Like {
+  id        Int      @id @default(autoincrement())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  targetId  String
+  type      TargetType
+  createdAt DateTime @default(now())
+
+  @@unique([userId, targetId, type])  //데이터 중복 방지
+  @@index([userId])
+}
+
+// ======================================================
+// 나의 플레이리스트
+// ======================================================
+model Playlist {
+  id          Int      @id @default(autoincrement())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+
+  title       String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt 
+
+  tracks      PlaylistTrack[]
+}
+
+// ======================================================
+// 나의 플레이리스트 곡 목록
+// ======================================================
+model PlaylistTrack {
+  id         Int      @id @default(autoincrement())
+  playlistId Int
+  playlist   Playlist @relation(fields: [playlistId], references: [id])
+
+  trackId    String   // Deezer 트랙 ID
+  order      Int?     // 순서
+
+  createdAt  DateTime @default(now())
+
+  @@index([playlistId])
+  @@map("playlist_tracks")
+}
+
+// ======================================================
+// 최근 기록
+// ======================================================
+model RecentView {
+  id        Int        @id @default(autoincrement())
+  userId    String
+
+  targetId  String
+  type      TargetType
+
+  createdAt DateTime   @default(now())
+
+  @@index([userId])
+  @@map("recent_views")
 }
