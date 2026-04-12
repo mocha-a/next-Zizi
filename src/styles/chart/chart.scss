@@ -9,7 +9,11 @@
     position: relative;
     overflow: visible;
 
+    .tracklist{margin-top: 10px;}
+
     .chart-tagbtn-box{
+        padding-bottom: 10px;
+
         .swiper-slide{
             width: auto !important;
             display: inline-flex !important;
@@ -40,8 +44,4 @@
             width: 10px;
         }
     }
-}
-
-.chart-footer{
-    margin: 50px 0;
 }

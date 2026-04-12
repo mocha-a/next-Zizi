@@ -13,6 +13,7 @@ import Play from "../icons/Play";
 import { Album } from "@/types/deezer/deezer";
 import { useQuery } from "@tanstack/react-query";
 import { getNewRelease } from "@/lib/api/new";
+import { useRouter } from "next/navigation";
 
 // type Album = {
 //   id: string;
@@ -30,6 +31,7 @@ interface newType {
 }
 
 function NewRelease() {
+  const router = useRouter();
 
   const { data: newRelease, isLoading, error } = useQuery<newType, Error>({
     queryKey: ['newRelease'],
@@ -79,7 +81,7 @@ function NewRelease() {
           className="mySwiper"
         >
         {newRelease?.data.map((item) => (
-          <SwiperSlide key={item.id}>
+          <SwiperSlide key={item.id} onClick={() => router.push(`/album/${item.id}`)}>
             <div className="album-img">
               <Image
                 src={item.cover_medium}

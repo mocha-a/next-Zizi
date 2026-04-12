@@ -7,7 +7,7 @@ import ChartTabContent from './ChartTabContent';
 
 function ChartTab() {
     const { tabValue, setTabValue } = useTabStore();
-        
+    
     const tabs = [
     { label: '인기차트', content: <ChartTabContent tabType={'top'} /> },
     { label: '장르별', content: <ChartTabContent tabType={'genre'} /> },

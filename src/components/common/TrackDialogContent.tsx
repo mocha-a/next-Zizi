@@ -9,9 +9,9 @@ interface Types {
 
 export default function TrackDialogContent({ trackData }: Types) {
   const menuItems = [
-    { Itemid: 'track', label: '곡 정보', path: '/chart', hideOn: '/track'},
-    { Itemid: 'artist', label: '아티스트 정보', path: `/search/artist/${trackData.artist?.id}`, hideOn: '/artist'},
-    { Itemid: 'album', label: '앨범 정보', path: `/search/album/${trackData.album?.id}`, hideOn: '/album'},
+    { Itemid: 'track', label: '곡 정보', path: `/track/${trackData.id}`, hideOn: '/track'},
+    { Itemid: 'artist', label: '아티스트 정보', path: `/artist/${trackData.artist?.id}`, hideOn: '/artist'},
+    { Itemid: 'album', label: '앨범 정보', path: `/album/${trackData.album?.id}`, hideOn: '/album'},
   ]
   const router = useRouter();
   const pathname = usePathname();
@@ -32,15 +32,6 @@ export default function TrackDialogContent({ trackData }: Types) {
           </button>
         ))
       }
-      {/* <button onClick={()=>{console.log(trackData.id)}}>
-        곡 정보
-      </button>
-      <button onClick={() => router.push(`/search/artist/${trackData.artist.id}`)}>
-        아티스트 정보
-      </button>
-      <button onClick={() => router.push(`/search/album/${trackData.album.id}`)}>
-        앨범 정보
-      </button> */}
       <button onClick={handleYouTubeSearch}>
         유튜브에서 즐기기 ♪
       </button>
