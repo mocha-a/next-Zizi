@@ -43,8 +43,8 @@ function CustomTabPanel({
       {value === index && (
         <Box
           sx={{
-            paddingTop: '10px',
-            fontFamily: 'GmarketMedium',
+            padding: '10px 0 60px',
+            fontFamily: 'var(--font-gmarketMedium)',
             fontSize: '13px',
             color: '#1A1A1A',
           }}
@@ -60,11 +60,10 @@ interface CustomTabProps {
   mr?: string;
 }
 
-// ✅ any 제거된 CustomTab
 const CustomTab = styled(Tab)<CustomTabProps>(({ mr }) => ({
   marginRight: mr || '0px',
   fontSize: '13px',
-  fontFamily: 'GmarketMedium',
+  fontFamily: 'var(--font-gmarketMedium)',
   color: '#D9D9D9',
   '&.Mui-selected': {
     color: '#1A1A1A',

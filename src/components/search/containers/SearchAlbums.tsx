@@ -1,22 +1,24 @@
 'use client';
-
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useSearchStore } from '@/store/searchStore';
+import { useSearchParams } from 'next/navigation';
+import { useInfiniteList } from '@/hooks/useInfiniteList';
+import { sortList } from '@/lib/sort';
+import { typeSearch } from '@/lib/api/serach';
+import { Album } from '@/types/deezer/deezer';
+import { AlbumSortType, AlbumSortOptions } from '@/types/sort';
+
 import SortBtn from '@/components/common/SortBtn';
 import SortSelect from '@/components/common/SortSelect';
 import BottomDialog from '@/components/common/Dialog';
 import AlbumList from '@/components/entities/album/ui/AlbumList';
-import { typeSearch } from '@/lib/api/serach';
-import { sortBy } from '@/lib/sortBy';
-import { useInfiniteList } from '@/hooks/useInfiniteList';
-import { AlbumSortType, AlbumSortOptions } from '@/types/sort';
-import { Album } from '@/types/deezer/deezer';
 
 const LIMIT = 50;
 
 const SearchAlbums = () => {
-  const { searchQuery } = useSearchStore();
+  const searchParams = useSearchParams();
+  const query = searchParams?.get('query') ?? '';
+
   const router = useRouter();
 
   const [ sortType, setSortType ] = useState<AlbumSortType>(null);
@@ -30,23 +32,33 @@ const SearchAlbums = () => {
     isLoading,
     isFetchingNextPage,
   } = useInfiniteList<Album>({
-    queryKey: ['SearchAlbum', searchQuery],
+    queryKey: ['SearchAlbum', query],
     queryFn: (page) =>
-      typeSearch(searchQuery, 'album', LIMIT, page),
+      typeSearch(query, 'album', LIMIT, page),
     limit: LIMIT,
-    enabled: !!searchQuery,
+    enabled: !!query,
   });
-  console.log(albums);
-  const sortedAlbums = sortType
-    ? sortBy(
-        albums,
-        (album) =>
-          sortType === 'name'
-            ? album.title
-            : new Date(album.release_date).getTime(),
-        sortType === 'old' ? 'asc' : 'desc'
-      )
-    : albums;
+
+  const sortedAlbums = (() => {
+    if (!sortType) return albums;
+
+    switch (sortType) {
+      case 'title':
+        return sortList(albums, (a) => a.title);
+
+      case 'artist':
+        return sortList(albums, (a) => a.artist.name);
+
+      case 'tracks_desc':
+        return sortList(albums, (a) => a.nb_tracks, 'desc');
+
+      case 'tracks_asc':
+        return sortList(albums, (a) => a.nb_tracks);
+
+      default:
+        return albums;
+    }
+  })();
 
   const label =
     AlbumSortOptions.find((opt) => opt.value === sortType)?.label || '추천순';
@@ -71,7 +83,7 @@ const SearchAlbums = () => {
         loading={isLoading || isFetchingNextPage}
         hasMore={hasNextPage}
         loadMore={loadMore}
-        onClick={(id) => router.push(`/search/album/${id}`)}
+        onClick={(id) => router.push(`/album/${id}`)}
       />
     </>
   );

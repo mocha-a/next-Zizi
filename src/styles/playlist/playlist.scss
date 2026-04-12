@@ -1,0 +1,90 @@
+@use '../variables'as *;
+@use '../mixins'as *;
+
+.playlist-detail{
+  @include publicWidth;
+
+  .playlist-detail-img{
+    margin: 15px auto 30px;
+    width: 200px; height: 200px;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+
+  .playlist-detail-fans-count{ 
+    font-family: var(--font-Galmuri9);
+    font-weight: normal;
+    font-size: 12px;
+    &::after{
+      content: "💽 ";
+      font-size: 15px;
+    }
+  }
+
+  h2{
+    @include GmarketBold_black_18;
+    margin: 10px 0 15px;
+    line-height: $lineHeight2;
+  }
+
+// ======================================================
+// ReadMore.tsx
+// ======================================================
+  .playlist-description {
+    @include GmarketMedium_black_13;
+    position: relative;
+    line-height: 1.5;
+
+    .text {
+      @include ellipsis(2);
+    }
+  
+    .more-btn {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      background-color: $white;
+      padding-left: 6px;
+      margin-left: 4px;
+      color: $gray;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+  }
+
+  .playlist-detail-info{
+    @include GmarketMedium_black_13;
+    margin: 15px 0;
+    >span {color: $fontgray;}
+    .playlist-updated::before{
+      content: " · ";
+    }
+  }
+
+  .playlist-detail-creator{ margin-bottom: 20px; }
+
+// ======================================================
+// PlaylistTrackList.tsx
+// ======================================================
+  .playlist-track{
+    .playlist-track-summary{
+      text-align: right;
+      margin: 10px 0 20px;
+      span:last-of-type::before{
+        content: " • ";
+      }
+    }
+  }
+
+  .playlist-flow{
+    >p{
+      margin: 10px 0 20px;
+      font-family: var(--font-Galmuri9);
+      font-size: 12px;
+
+      &::before{
+        content: '> ';
+      }
+    }
+  }
+}

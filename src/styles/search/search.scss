@@ -20,7 +20,7 @@
             padding: 8px 2px;
         }
         >input::placeholder{
-            font-family: $Galmuri;
+            font-family: var(--font-Galmuri9);
         }
     }
 
@@ -74,10 +74,6 @@
                 padding-right: 18px;
                 display: flex;
             }
-        }
-
-        .allReslts-playlist{
-            padding-bottom: $paddingForNavbar;
         }
     }
 }

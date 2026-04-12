@@ -40,6 +40,13 @@ export interface Album extends SearchAlbum{
 // ======================================================
 // playlist
 // ======================================================
+export interface Creator {
+  id: number;
+  name: string;
+  picture_medium?: string;
+  country?: string;
+}
+
 export interface Playlist extends SearchPlaylist{
   description: string;     //플레이리스트 설명
   duration: number;        //총 길이(초)
@@ -47,10 +54,7 @@ export interface Playlist extends SearchPlaylist{
   tracks?: {
     data: Track[];         // 상세 트랙 배열
   };
-  creator: {
-    name: string;
-    picture_medium?: string;
-  };
+  creator: Creator;
 }
 
 export interface DeezerGenre {

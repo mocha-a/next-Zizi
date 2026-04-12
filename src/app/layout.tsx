@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import localFont from 'next/font/local';
 import NextAuthProvider from "./providers";
 import SessionGate from "@/components/auth/SessionGate";
 import SimpleBottomNavigation from "@/components/common/BottomNavigation";
@@ -6,7 +7,32 @@ import ReactQueryProvider from "@/lib/providers/ReactQueryProvider";
 import GlobalTrackDialog from "@/components/common/GlobalTrackDialog";
 import MainPlayer from "@/components/common/MainPlayer";
 
+import 'flag-icons/css/flag-icons.min.css';
 import '../styles/_style.scss';
+
+const decoshadow = localFont({
+  src: './fonts/Cafe24Decoshadow.woff2',
+  variable: '--font-decoshadow',
+  display: 'swap',
+});
+
+const galmuri9 = localFont({
+  src: './fonts/Galmuri9.woff2',
+  variable: '--font-Galmuri9',
+  display: 'swap',
+});
+
+const gmarketBold = localFont({
+  src: './fonts/GmarketSansTTFBold.woff2',
+  variable: '--font-gmarketBold',
+  display: 'swap',
+});
+
+const gmarketMedium = localFont({
+  src: './fonts/GmarketSansTTFMedium.woff2',
+  variable: '--font-gmarketMedium',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: "Zizi !",
@@ -19,7 +45,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={`
+      ${decoshadow.variable}
+      ${galmuri9.variable}
+      ${gmarketBold.variable}
+      ${gmarketMedium.variable}`}>
       <body
         className={'antialiased'}
       >

@@ -2,31 +2,31 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { useSearchStore } from '@/store/searchStore';
+import { useSearchParams } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
+import { allSearch } from '@/lib/api/serach';
+import { AllResults } from '@/types/deezer/search';
+
 import TrackItem from '@/components/common/TrackItem';
 import ArtistCard from '@/components/entities/artist/ui/ArtistCard';
 import AlbumCard from '@/components/entities/album/ui/AlbumCard';
 import PlaylistCard from '@/components/entities/playlist/ui/PlaylistCard';
 import SectionHeader from '../ui/SectionHeader';
-import { AllResults } from '@/types/deezer/search';
-import { allSearch } from '@/lib/api/serach';
 
+import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 
 const Results = () => {
-  const { searchQuery } = useSearchStore();
+  const searchParams = useSearchParams();
+  const query = searchParams?.get('query') ?? '';
 
   const { data: allData, isLoading, error } = useQuery<AllResults, Error>({
-    queryKey: ['allSearch', searchQuery],
-    queryFn: () => allSearch(searchQuery!),
-    enabled: !!searchQuery,
+    queryKey: ['allSearch', query],
+    queryFn: () => allSearch(query!),
+    enabled: !!query,
     staleTime: 1000 * 60 * 5,
   });
-
-  console.log(allData);
 
   if (isLoading) return <div>로딩중...</div>;
   if (error) return <div>검색 중 오류 발생</div>;

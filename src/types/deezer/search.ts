@@ -25,7 +25,11 @@ export interface SearchArtist {
   tracklist: string;
   nb_album: number;
   nb_fan: number;
-  level?: string;
+  level?: {
+    label: string;
+    src?: string;
+    className: string;
+  } | null;
   type: "artist";
 }
 
@@ -66,6 +70,7 @@ export interface SearchAlbum {
 export interface SearchPlaylist {
   id: number;
   title: string;
+  add_date: string;
   creation_date: string;
   mod_date: string;
   tracklist: string;

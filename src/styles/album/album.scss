@@ -10,7 +10,7 @@
         overflow: hidden;
     }
     .album-detail-fans-count{ 
-        font-family: $Galmuri;
+        font-family: var(--font-Galmuri9);
         font-weight: normal;
         font-size: 12px;
         &::after{
@@ -47,7 +47,6 @@
             }
         }
         .album-track-list{
-            padding-bottom: $paddingForNavbar;
             .album-track-item {
                 display: flex;
                 align-items: center;
@@ -84,5 +83,26 @@
 
             }
         }
+    }
+
+
+// ======================================================
+// SimilarAlbums.tsx
+// ======================================================
+    .albumTab-container {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+        
+        .album-box {
+            flex-direction: column;
+            align-items: stretch;
+            margin-bottom: 2px;
+            gap: 12px;
+            
+            .album-image{
+                width: 168px; height: 168px;
+            }
+        }      
     }
 }

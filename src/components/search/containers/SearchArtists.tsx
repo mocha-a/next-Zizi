@@ -1,24 +1,24 @@
 'use client';
-
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { typeSearch } from '@/lib/search';
-import { useSearchStore } from '@/store/searchStore';
-import { sortBy } from '@/lib/sortBy';
+import { useSearchParams } from 'next/navigation';
+import { useInfiniteList } from '@/hooks/useInfiniteList';
+import { sortList } from '@/lib/sort';
+import { typeSearch } from '@/lib/api/serach';
+import { Artist } from '@/types/deezer/deezer';
+import { ArtistSortType, ArtistSortOptions } from '@/types/sort';
 
 import SortBtn from '@/components/common/SortBtn';
 import SortSelect from '@/components/common/SortSelect';
 import BottomDialog from '@/components/common/Dialog';
 import ArtistList from '@/components/entities/artist/ui/ArtistList';
 
-import { useInfiniteList } from '@/hooks/useInfiniteList';
-import { ArtistSortType, ArtistSortOptions } from '@/types/sort';
-import { Artist } from '@/types/deezer/deezer';
-
 const LIMIT = 50;
 
 const SearchArtists = () => {
-  const { searchQuery } = useSearchStore();
+  const searchParams = useSearchParams();
+  const query = searchParams?.get('query') ?? '';
+
   const router = useRouter();
 
   // UI 상태 유지
@@ -33,29 +33,44 @@ const SearchArtists = () => {
     isLoading,
     isFetchingNextPage,
   } = useInfiniteList<Artist>({
-    queryKey: ['search', 'artist', searchQuery],
+    queryKey: ['search', 'artist', query],
     queryFn: (page) =>
-      typeSearch(searchQuery, 'artist', LIMIT, page),
+      typeSearch(query, 'artist', LIMIT, page),
     limit: LIMIT,
-    enabled: !!searchQuery,
+    enabled: !!query,
   });
 
-  // 기존 정렬 로직 그대로 사용
-  const sortedArtists = sortType
-    ? sortBy(
-        artists,
-        (artist) =>
-          sortType === 'name'
-            ? artist.name
-            : artist.nb_fan,
-        sortType === 'popularity' ? 'desc' : 'asc'
-      )
-    : artists;
+  const sortedArtists = (() => {
+    if (!sortType) return artists;
+
+    switch (sortType) {
+      case 'name':
+        return sortList(artists, (a) => a.name);
+
+      case 'fans':
+        return sortList(artists, (a) => a.nb_fan, 'desc');
+
+      case 'albums':
+        return sortList(artists, (a) => a.nb_album, 'desc');
+
+      default:
+        return artists;
+    }
+  })();
 
   const getArtistLevel = (fans: number) => {
-    if (fans > 500000) return '🌏Global Star';
-    if (fans > 100000) return '👑Top Artist';
-    if (fans > 10000) return '⭐Popular';
+    if (fans > 500000)
+      return { 
+              label: 'World Star👑', 
+              src: '/imgs/wolrd-star.gif',
+              className: 'world' 
+            };
+    if (fans > 100000)
+      return { label: 'Top Star', className: 'top' };
+    if (fans > 10000)
+      return { label: 'Popular Star', className: 'popular' };
+
+    return null;
   };
 
   const artistsWithLevel = sortedArtists.map(artist => ({
@@ -86,7 +101,7 @@ const SearchArtists = () => {
         loading={isLoading || isFetchingNextPage}
         hasMore={hasNextPage}
         onLoadMore={loadMore}
-        onClick={(id) => router.push(`/search/artist/${id}`)}
+        onClick={(id) => router.push(`/artist/${id}`)}
       />
     </>
   );

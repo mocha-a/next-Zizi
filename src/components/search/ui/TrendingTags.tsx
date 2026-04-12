@@ -1,8 +1,7 @@
 'use client'; 
 import React from 'react';
-import { allTags } from '@/constants/chartTags';
 import { useRouter } from 'next/navigation';
-import { doSearch } from '@/lib/search';
+import { allTags } from '@/constants/chartTags';
 import TagBtn from '../../common/TagBtn';
 
 const TrendingTags = () => {
@@ -11,7 +10,7 @@ const TrendingTags = () => {
   const router = useRouter();
 
   const handleClick = async (query: string) => {
-    await doSearch(query, router);
+    router.push(`/search?query=${encodeURIComponent(query)}`);
   };
 
   return (

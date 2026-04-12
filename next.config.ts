@@ -7,10 +7,6 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "cdn-images.dzcdn.net", // Deezer
       },
-      {
-        protocol: "https",
-        hostname: "i.scdn.co", // Spotify
-      },
     ],
   },
   webpack(config) {

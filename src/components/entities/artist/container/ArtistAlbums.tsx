@@ -1,28 +1,30 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { sortBy } from '@/lib/sortBy';
+
 import SortBtn from '@/components/common/SortBtn';
 import SortSelect from '@/components/common/SortSelect';
 import BottomDialog from '@/components/common/Dialog';
 import AlbumList from '@/components/entities/album/ui/AlbumList';
-import { AlbumSortType, AlbumSortOptions } from '@/types/sort';
 import { getArtistAlbums } from '@/lib/api/artist';
 import { useInfiniteList } from '@/hooks/useInfiniteList';
 import { Album } from '@/types/deezer/deezer';
 import { SearchArtist } from '@/types/deezer/search';
+import { AlbumDetailSortType, AlbumDetailSortOptions } from '@/types/sort';
+import { sortList } from '@/lib/sort';
 
 interface Props {
   id: string;
-  artist: SearchArtist;
+  artist?: SearchArtist;
 }
 
 const LIMIT = 50;
 
 const ArtistAlbums = ({ id, artist }: Props) => {
-  const [ sortType, setSortType ] = useState<AlbumSortType>(null);
+  const [ sortType, setSortType ] = useState<AlbumDetailSortType>(null);
   const [ openSort, setOpenSort ] = useState(false);
+
   const router = useRouter();
 
   const {
@@ -46,39 +48,55 @@ const ArtistAlbums = ({ id, artist }: Props) => {
     limit: LIMIT,
     enabled: !!id,
   });
-  
-  console.log(albums);
 
-  const sortedAlbums = useMemo(() => {
+  const sortedAlbums = (() => {
     if (!sortType) return albums;
 
-    return sortBy(
-      albums,
-      (album) =>
-        sortType === 'name'
-          ? album.title 
-          : new Date(album.release_date).getTime(),
-      sortType === 'old' ? 'asc' : 'desc'
-    );
-  }, [albums, sortType]);
+    switch (sortType) {
+      case 'title':
+        return sortList(albums, (a) => a.title);
+
+      case 'latest':
+        return sortList(
+          albums,
+          (a) => new Date(a.release_date).getTime(),
+          'desc'
+        );
+
+      case 'oldest':
+        return sortList(
+          albums,
+          (a) => new Date(a.release_date).getTime()
+        );
+
+      case 'fans':
+        return sortList(albums, (a) => a.fans, 'desc');
+
+      default:
+        return albums;
+    }
+  })();
 
   const label =
-    AlbumSortOptions.find((opt) => opt.value === sortType)?.label || '추천순';
+    AlbumDetailSortOptions.find((opt) => opt.value === sortType)?.label || '추천순';
+
+  if (!artist) return null;
 
   return (
     <>
-      <SortBtn label={label} setOpenSort={setOpenSort} />
-
-      <BottomDialog open={openSort} onClose={() => setOpenSort(false)}>
-        <SortSelect
-          value={sortType}
-          options={AlbumSortOptions}
-          onChange={(v) => {
-            setSortType(v);
-            setOpenSort(false);
-          }}
-        />
-      </BottomDialog>
+      <div className='album-filter-bar'>
+        <SortBtn label={label} setOpenSort={setOpenSort} />
+        <BottomDialog open={openSort} onClose={() => setOpenSort(false)}>
+          <SortSelect
+            value={sortType}
+            options={AlbumDetailSortOptions}
+            onChange={(v) => {
+              setSortType(v);
+              setOpenSort(false);
+            }}
+          />
+        </BottomDialog>
+      </div>
 
       <AlbumList
         albums={sortedAlbums}
@@ -86,7 +104,7 @@ const ArtistAlbums = ({ id, artist }: Props) => {
         loading={isLoading || isFetchingNextPage}
         hasMore={hasNextPage}
         loadMore={loadMore}
-        onClick={(id) => router.push(`/search/album/${id}`)}
+        onClick={(id) => router.push(`/album/${id}`)}
       />
     </>
   );

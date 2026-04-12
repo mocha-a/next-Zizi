@@ -1,20 +1,14 @@
 'use client';
-
 import React, { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useTabStore } from '@/store/tabStore';
-import { useSearchStore } from '@/store/searchStore';
-import TabsContainer from '@/components/common/TabsContainer';
 
+import TabsContainer from '@/components/common/TabsContainer';
 import Results from '../results/Results';
 import SearchArtists from './SearchArtists';
 import SearchAlbums from './SearchAlbums';
 import SearchPlaylists from './SearchPlaylists';
 import SearchTracks from './SearchTracks';
-
-interface Props {
-  type?: string;
-}
 
 const TAB_TYPES = ['all', 'artist', 'track', 'album', 'playlist'] as const;
 type TabType = typeof TAB_TYPES[number];
@@ -25,10 +19,13 @@ const typeToIndex = (type?: string) =>
 const indexToType = (index: number): TabType =>
   TAB_TYPES[index] ?? 'all';
 
-export default function SearchTabs({ type }: Props) {
+export default function SearchTabs() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { tabValue, setTabValue } = useTabStore();
-  const { searchQuery } = useSearchStore();
+
+  const query = searchParams?.get('query') ?? '';
+  const type = searchParams?.get('type') ?? 'all';
 
   const tabs = [
     { label: '전체', content: <Results /> },
@@ -38,29 +35,30 @@ export default function SearchTabs({ type }: Props) {
     { label: '플레이리스트', content: <SearchPlaylists /> },
   ];
 
-  // URL(type) → tab 동기화
   useEffect(() => {
     setTabValue(typeToIndex(type));
   }, [type, setTabValue]);
 
-  // 탭 클릭 → URL 변경
   const handleTabChange = (index: number) => {
     const nextType = indexToType(index);
-    const base = `/search/${encodeURIComponent(searchQuery)}`;
+
+    const base = `/search?query=${encodeURIComponent(query)}`;
 
     router.push(
-      nextType === 'all' ? base : `${base}?type=${nextType}`,
+      nextType === 'all'
+        ? base
+        : `${base}&type=${nextType}`,
       { scroll: true }
     );
   };
 
   return (
-      <TabsContainer
-        tabs={tabs}
-        tabValue={tabValue}
-        setTabValue={handleTabChange}
-        fullWidth={false}
-        tabMarginRight="20px"
-      />
+    <TabsContainer
+      tabs={tabs}
+      tabValue={tabValue}
+      setTabValue={handleTabChange}
+      fullWidth={false}
+      tabMarginRight="20px"
+    />
   );
 }

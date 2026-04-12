@@ -5,16 +5,16 @@ import TrackItem from '@/components/common/TrackItem';
 import InfiniteScroll from '@/components/common/InfiniteScroll';
 import { Track } from '@/types/deezer/deezer';
 
-interface TracksProps {
+interface Props {
   tracks: Track[];
   loading: boolean;
   hasMore: boolean;
   onLoadMore: () => void;
 } 
 
-const Tracks = ({ tracks, loading, hasMore, onLoadMore }: TracksProps) => {
+const TrackList = ({ tracks, loading, hasMore, onLoadMore }: Props) => {
   if (!tracks?.length) return <div>로딩 중...</div>;
-
+  
   return (
     <div className="trackTab-container tracklist">
       <InfiniteScroll
@@ -35,4 +35,4 @@ const Tracks = ({ tracks, loading, hasMore, onLoadMore }: TracksProps) => {
   );
 };
 
-export default Tracks;
+export default TrackList;

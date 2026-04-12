@@ -19,3 +19,64 @@ export function formatDuration(duration: number) {
     .toString()
     .padStart(2, "0")}초`;
 }
+
+// 생성 날짜 포맷 (플레이리스트)
+export function formatDate(date?: string) {
+  if (!date) return "";
+
+  const [d] = date.split(" ");
+  return `${d.replace(/-/g, ".")}`;
+}
+
+// 마지막 업데이트 날짜 포맷 (플레이리스트)
+// 날짜 비교
+const isSameDate = (a: Date, b: Date) => {
+  return (
+    a.getFullYear() === b.getFullYear() &&
+    a.getMonth() === b.getMonth() &&
+    a.getDate() === b.getDate()
+  );
+};
+
+// 날짜 포맷
+const date = (date: Date) => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+
+  return `${year}.${month}.${day}`;
+};
+
+// 시간 차이 계산
+const getTimeDiff = (date: Date) => {
+  const now = Date.now();
+  return Math.floor((now - date.getTime()) / 1000); // 초 단위
+};
+
+export const formatUpDate = (createdDate: string, addDate: string) => {
+  const created = new Date(createdDate);
+  const updated = new Date(addDate);
+
+  // 생성일 == 수정일 → 표시 안함
+  if (isSameDate(created, updated)) return null;
+
+  const diff = getTimeDiff(updated);
+
+  if (diff < 60) return "방금 전";
+
+  if (diff < 3600) {
+    const minutes = Math.floor(diff / 60);
+    return `${minutes}분 전`;
+  }
+
+  if (diff < 86400) {
+    const hours = Math.floor(diff / 3600);
+    return `${hours}시간 전`;
+  }
+
+  const days = Math.floor(diff / 86400);
+
+  if (days <= 7) return `${days}일 전`;
+
+  return date(updated);
+};
