@@ -32,12 +32,12 @@ function JoinForm({ listData }: { listData: JoinField[] }) {
         switch (type) {
             case 'id':
                 const idReg = /^[a-zA-Z0-9]{4,16}$/;
-                if (!idReg.test(value)) error = "영문•숫자를 조합하여 4~16자로 입력해주세요.";
+                if (!idReg.test(value)) error = "영문 · 숫자를 조합하여 4~16자로 입력해주세요.";
                 break;
 
             case 'password':
                 const pwReg = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,}$/;
-                if (!pwReg.test(value)) error = "영문/숫자/특수문자를 모두 포함하여 8자 이상 입력해주세요.";
+                if (!pwReg.test(value)) error = "영문 · 숫자 · 특수문자를 모두 포함하여 8자 이상 입력해주세요.";
                 break;
 
             case 'password-check':

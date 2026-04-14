@@ -58,6 +58,19 @@ export const FormTextFielFieldDatas = ({
             error={!!errors[item.type]}
             helperText={errors[item.type]}
 
+            sx={{
+              '& .MuiInputBase-input': {
+                fontFamily: 'var(--font-gmarketMedium)',
+              },
+              '& .MuiFormLabel-root': {
+                fontFamily: 'var(--font-gmarketMedium)',
+              },
+              '& .MuiFormHelperText-root': {
+                fontFamily: 'var(--font-gmarketMedium)',
+                fontSize: '12px',
+              }
+            }}
+
             // 비밀번호 눈 아이콘
             // InputProps={item.type.includes('password') ? {
             //   endAdornment: (

@@ -157,7 +157,6 @@ input:checked + .tagbtn{
 .tracklist{
     li{
         margin-bottom: 20px;
-
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -240,9 +239,7 @@ input:checked + .tagbtn{
     padding-bottom: $paddingForNavbar;
 
     .footer-icons{
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        @include flex($justify: center, $align: center);
         gap: 16px;
 
         .icons-git{ width: 15px; }
@@ -332,4 +329,40 @@ input:checked + .tagbtn{
     hr{
         width: 100%;
     }
+}
+
+// cd
+.zizi-CD {
+  position: relative;
+  width: 120px;
+  height: 102px;
+
+  .CDcase-image {
+    width: 100%;
+    height: auto;
+    position: absolute;
+    top: 0; right: 0;
+  }
+
+  .CD-image {
+    width: 98px;
+    height: auto;
+    position: absolute;
+    top: 2px; right: 6.5px;
+
+    transform-origin: center;
+  }
+
+  &.spin .CD-image {
+    animation: spin 1.5s ease-out;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }

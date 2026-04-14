@@ -10,11 +10,8 @@
 
 // 아티스트 Card 컴포넌트
 .artist-box{
-    >div:last-child{
-        width: 68%;
-    }
-    display: flex;
-    align-items: center;
+    >div:last-child{ width: 68%; }
+    @include flex($align: center);
     gap: 13px;
     margin-bottom: 20px;
     .artist-box-info{
@@ -34,8 +31,7 @@
                 width: 12px; height: 12px; 
                 >img{ transform: translateY(-2px);}
             }
-            display: flex;
-            align-items: center;
+            @include flex($align: center);
             gap: 5px;
             color: $fontgray;
 

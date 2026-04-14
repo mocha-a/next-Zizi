@@ -38,8 +38,7 @@
 
 // search cover
 @mixin searchCover_layout{
-    display: flex;
-    align-items: center;
+    @include flex($justify: space-between, $align: flex-end);
     gap: 8px;
     margin-bottom: 20px;
 }
@@ -72,9 +71,10 @@
 }
 
 // flex
-@mixin flex{
-    display: flex;
-    align-items: center;
+@mixin flex($justify: flex-start, $align: center) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
 }
 
 @mixin footer_before{

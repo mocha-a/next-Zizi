@@ -143,8 +143,9 @@ model RecentView {
   targetId  String
   type      TargetType
 
-  createdAt DateTime   @default(now())
+  viewedAt DateTime @updatedAt
 
-  @@index([userId])
+  @@unique([userId, targetId, type])
+  @@index([userId, viewedAt(sort: Desc)])
   @@map("recent_views")
 }

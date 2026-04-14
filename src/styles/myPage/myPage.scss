@@ -3,16 +3,39 @@
 
 .myPage-container{
   @include publicWidth;
-  .myPage-greeting{
-    font-family: var(--font-Galmuri9);
 
-    .guest-prompt{
-      font-size: 18px;
-      .login-link{
+  .myPage-Hero{
+    @include flex($justify: space-between, $align: flex-end);
+    margin-bottom: 20px;
+
+    .myPage-greeting{
+      font-family: var(--font-Galmuri9);
+  
+      // ===========
+      // 로그인 후
+      // ===========
+      .myPage-name{
         color: $orange;
+      }
+
+      // ===========
+      // 로그인 전
+      // ===========
+      .guest-greeting{
+        font-size: 16px;
+        .guest-prompt{
+          margin-top: 10px;
+          line-height: 1.6;
+
+          .login-link{
+            color: $orange;
+            text-decoration: underline;
+          }
+        }
       }
     }
   }
+
   .myPage-tabs{
     margin-top: 50px;
   }

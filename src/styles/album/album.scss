@@ -48,8 +48,7 @@
         }
         .album-track-list{
             .album-track-item {
-                display: flex;
-                align-items: center;
+                @include flex($align: center);
                 padding: 10px 0;
         
                 .album-track-left {

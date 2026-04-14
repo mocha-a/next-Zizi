@@ -1,33 +1,38 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { api } from '@/lib/api/axios';
 import ShortBtn from '../common/ShortBtn';
 import GenderSelect from './GenderSelect';
 
 export default function OnboardingPopup() {
   const [birth, setBirth] = useState('');
   const [gender, setGender] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async () => {
+  const router = useRouter();
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: (data: { birth: string; gender: string }) =>
+      api.put('/api/user/profile', data),
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['user'],
+      });
+      router.push('/');
+    },
+  });
+
+  const handleSubmit = () => {
     if (!birth || !gender) {
       alert('모든 항목을 입력해주세요.');
       return;
     }
 
-    setLoading(true);
-
-    await fetch('/api/user/profile', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        birth,
-        gender, 
-      }),
-    });
-
-    setLoading(false);
-    window.location.reload(); // 세션 다시 불러오게 (제일 단순한 방법)
+    mutation.mutate({ birth, gender });
   };
 
   return (
@@ -66,9 +71,9 @@ export default function OnboardingPopup() {
         </label> */}
 
         <div className='onboarding_buttons'>
-          <ShortBtn label="다음에 할게요" active={false} onClick={()=>{ setLoading(false) }}/>
+          <ShortBtn label="다음에 할게요" active={false} onClick={() => { router.push('/'); }}/>
           <ShortBtn 
-            label={loading ? '저장 중...' : '완료'}
+            label={mutation.isPending ? '저장 중...' : '완료'}
             active={true} onClick={handleSubmit}
           />
         </div>

@@ -35,8 +35,7 @@
     }
     .trendingSearches-contanier{
         .trending{
-            display: flex;
-            align-items: center;
+            @include flex($align: center);
             gap: 10px;
             margin-bottom: 20px;
             >.keyword{
@@ -71,8 +70,8 @@
                 .artist-name{ text-align: center; }
             }
             .artist-container{
-                padding-right: 18px;
                 display: flex;
+                padding-right: 18px;
             }
         }
     }

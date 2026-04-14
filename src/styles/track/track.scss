@@ -4,9 +4,7 @@
 .track-detail{
     @include publicWidth;
     .track-header{
-        display: flex;
-        align-items: flex-end;
-        justify-content: space-between;
+        @include flex($justify: space-between, $align: flex-end);
         margin-bottom: 30px;
         .track-info{
             .track-album-name{ 

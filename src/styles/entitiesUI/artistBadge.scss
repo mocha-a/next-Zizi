@@ -3,13 +3,11 @@
 
 .artist-badge{
     @include GmarketMedium_black_13;
-    display: flex;
-    align-items: center;
+    @include flex($align: center);
     gap: 8px;
 
     .artist-badge__avatars {
-        display: flex;
-        align-items: center;
+        @include flex($align: center);
         flex-shrink: 0;
 
         .artist-badge-img{

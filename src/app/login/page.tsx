@@ -1,8 +1,8 @@
 'use client'
 import React, { useState } from 'react'
+import Link from 'next/link'
 import { FormTextFielFieldDatas } from '@/components/common/FormTextFields'
 import LongBtn from '@/components/common/LongBtn'
-import Link from 'next/link'
 import LoginButtons from '@/components/Login/LoginButton'
 
 import '../../styles/login/login.scss'
