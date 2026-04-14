@@ -1,11 +1,12 @@
 import { NextResponse } from 'next/server';
 import axios from 'axios';
 
-export async function GET(
-  _: Request,
-  { params }: { params: { id: string } }
-) {
-  const { id } = params;
+type Props = {
+  params: Promise<{ id: string }>;
+};
+
+export async function GET(_req: Request, { params }: Props) {
+  const { id } = await params;
 
   try {
     const { data } = await axios.get(

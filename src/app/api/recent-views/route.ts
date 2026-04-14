@@ -1,7 +1,11 @@
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import { authOptions } from "@/auth.config";
+import { typeMap } from "@/constants/metadata";
 import prisma from "@/lib/prisma";
+
+//type의 타입을 typeMap의 key로 정의
+type TypeKey = keyof typeof typeMap; 
 
 export async function PUT(req: Request) {
   try {
@@ -13,30 +17,34 @@ export async function PUT(req: Request) {
         { status: 401 }
       );
     }
-
+    
     const body = await req.json(); //프론트에서 데이터 받음
-    const { targetId, type } = body;
+    const { type, targetId } = body as {
+      type: TypeKey; 
+      targetId: string;
+    };
 
-    if (!targetId || !type) {
+    if (!targetId) {
       return NextResponse.json(
-        { message: "targetId와 type은 필수입니다." },
+        { message: "targetId는 필수입니다." },
         { status: 400 }
       );
     }
 
     const result = await prisma.recentView.upsert({
+      //where : DB에서 어떤 데이터를 기준으로 찾을 거냐
       where: {
         userId_targetId_type: {
           userId: session.user.id,
           targetId,
-          type,
+          type : typeMap[type],
         },
       },
       update: {}, // viewedAt은 @updatedAt이라 자동 갱신됨
       create: {
         userId: session.user.id,
         targetId,
-        type,
+        type : typeMap[type],
       },
     });
 

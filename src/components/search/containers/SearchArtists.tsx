@@ -6,7 +6,7 @@ import { useInfiniteList } from '@/hooks/useInfiniteList';
 import { sortList } from '@/lib/sort';
 import { typeSearch } from '@/lib/api/serach';
 import { Artist } from '@/types/deezer/deezer';
-import { ArtistSortType, ArtistSortOptions } from '@/types/sort';
+import { ArtistSortType, ArtistSortOptions } from '@/constants/sort';
 
 import SortBtn from '@/components/common/SortBtn';
 import SortSelect from '@/components/common/SortSelect';

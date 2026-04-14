@@ -2,11 +2,11 @@
 import React from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useTabStore } from '@/store/tabStore';
-import { SearchCategory } from '@/types/deezer/search';
+import { CategoryType } from '@/types/deezer/search';
 
 interface Props {
   title: string;
-  type?: SearchCategory;
+  type?: CategoryType;
   targetIndex?: number;
 }
 

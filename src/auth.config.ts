@@ -53,6 +53,7 @@ declare module "next-auth/adapters" {
 }
 
 export const authOptions: NextAuthOptions = {
+    //Adapter (DB 연결 담당)
     adapter: CustomPrismaAdapter(prisma),
 
     session: {

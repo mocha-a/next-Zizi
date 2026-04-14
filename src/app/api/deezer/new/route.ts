@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import axios from 'axios';
 
-export async function GET(_: Request) {
+export async function GET() {
   try {
     const { data } = await axios.get(
       'https://api.deezer.com/editorial/0/releases', {

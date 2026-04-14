@@ -2,13 +2,11 @@ import { NextResponse } from 'next/server';
 import axios from 'axios';
 
 interface Props {
-  params: {
-    id: string;
-  };
-}
+  params: Promise<{ id: string }>;
+};
 
 export async function GET(req: Request, { params }: Props) {
-  const { id } = params;
+  const { id } = await params;
 
   const { searchParams } = new URL(req.url);
   const limit = searchParams.get('limit') ?? '20';

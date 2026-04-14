@@ -3,14 +3,17 @@
 
 .myPage-container{
   @include publicWidth;
-
+  .myPage-Header{
+    @include flex($justify: space-between);
+  }
   .myPage-Hero{
     @include flex($justify: space-between, $align: flex-end);
     margin-bottom: 20px;
 
     .myPage-greeting{
       font-family: var(--font-Galmuri9);
-  
+      line-height: 1.5;
+
       // ===========
       // 로그인 후
       // ===========
@@ -25,7 +28,7 @@
         font-size: 16px;
         .guest-prompt{
           margin-top: 10px;
-          line-height: 1.6;
+          line-height: 1.5;
 
           .login-link{
             color: $orange;

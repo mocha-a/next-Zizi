@@ -1,6 +1,4 @@
 'use client';
-
-// import { useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import TrackList from '@/components/entities/track/ui/TrackList';
 import { getTop } from '@/lib/api/artist';
@@ -10,8 +8,7 @@ interface Props {
 }
 
 const ArtistTracks = ({ id }: Props) => {
-  // const router = useRouter();
-
+  
   const { data: track, isLoading } = useQuery({
     queryKey: ['artist', id, 'top'],
     queryFn: () => getTop(Number(id)),

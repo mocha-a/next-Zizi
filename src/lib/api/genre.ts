@@ -1,5 +1,5 @@
 import { genreIcons } from "@/constants/genreIcons";
-import { excludedGenres, genreMap } from "../genre";
+import { excludedGenres, genreMap } from "@/constants/metadata";
 import { api } from "./axios";
 
 export const getAllGenre = async () => { 

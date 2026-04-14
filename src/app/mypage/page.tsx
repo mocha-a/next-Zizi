@@ -33,12 +33,16 @@ function Page() {
 
   return (
     <div className='myPage-container'>
-      <PageTitle text="나의 Zizi !" />
+      <div className='myPage-Header'>
+        <PageTitle text="내 Zizi !" />
+        {/* 로그아웃 버튼 */}
+        { session && <LogoutButton/>}
+      </div>
       <div className='myPage-Hero'>
         <div className='myPage-greeting'>{session ? (
           <div>
             <span className='myPage-name'>{user?.name}</span> 님의
-            <p>아침을 깨우는 상쾌한 비트 시작 -! ♬</p>
+            <p>아침을 깨우는 <br />상쾌한 비트 시작 -! ♬</p>
           </div>
         ):(
           <div className='guest-greeting'>
@@ -61,8 +65,7 @@ function Page() {
         <p>성별: {user?.gender ?? '미입력'}</p>
       </div> */}
 
-      {/* 로그아웃 버튼 */}
-      { session && <LogoutButton/>}
+      
       
       {/* 로그인 버튼
       { !session && (

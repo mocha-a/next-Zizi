@@ -331,6 +331,12 @@ input:checked + .tagbtn{
     }
 }
 
+//logout 버튼
+.logout{
+    font-size: 11px;
+    color: $fontgray;
+}
+
 // cd
 .zizi-CD {
   position: relative;

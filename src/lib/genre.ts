@@ -1,17 +1,4 @@
-// 렌더링에서 제외할 장르
-export const excludedGenres = ["Asian Music"];
-
-// 장르 맵핑
-export const genreMap: Record<string, string> = {
-  "Films/Games": "OST",
-  "Film Scores": "OST",
-  "Rap/Hip Hop": "Hip-Hop",
-  "African Music": "African Pop",
-  "Asian Music": "Asian Pop",
-  "Brazilian Music": "Brazilian Pop",
-  "Indian Music": "Indian Pop",
-  "Latin Music": "Latin Pop",
-};
+import { excludedGenres, genreMap } from "@/constants/metadata";
 
 export function getUniqueGenres(genres?: { name: string }[]) {
   if (!genres) return [];

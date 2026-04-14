@@ -2,13 +2,11 @@ import { NextResponse } from 'next/server';
 import axios from 'axios';
 
 interface Props {
-  params: {
-    id: string;
-  };
-}
+  params: Promise<{ id: string }>;
+};
 
-export async function GET(_: Request, { params }: Props) {
-  const { id } = params;
+export async function GET(_req: Request, { params }: Props) {
+  const { id } = await params;
 
   try {
     const { data } = await axios.get(

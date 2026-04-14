@@ -1,6 +1,6 @@
 // deezer search type 정의
 
-export type SearchCategory = 'artist' | 'track' | 'album' | 'playlist';
+export type CategoryType = 'artist' | 'track' | 'album' | 'playlist';
 
 export interface EntityBase { id: string; name: string; }
 

@@ -1,18 +1,19 @@
 'use client';
-
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+
+import { AlbumDetailSortType, AlbumDetailSortOptions } from '@/constants/sort';
+import { useInfiniteList } from '@/hooks/useInfiniteList';
+import { getArtistAlbums } from '@/lib/api/artist';
+import { sortList } from '@/lib/sort';
+import { SearchArtist } from '@/types/deezer/search';
+import { Album } from '@/types/deezer/deezer';
 
 import SortBtn from '@/components/common/SortBtn';
 import SortSelect from '@/components/common/SortSelect';
 import BottomDialog from '@/components/common/Dialog';
 import AlbumList from '@/components/entities/album/ui/AlbumList';
-import { getArtistAlbums } from '@/lib/api/artist';
-import { useInfiniteList } from '@/hooks/useInfiniteList';
-import { Album } from '@/types/deezer/deezer';
-import { SearchArtist } from '@/types/deezer/search';
-import { AlbumDetailSortType, AlbumDetailSortOptions } from '@/types/sort';
-import { sortList } from '@/lib/sort';
+
 
 interface Props {
   id: string;

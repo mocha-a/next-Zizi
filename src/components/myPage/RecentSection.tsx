@@ -1,8 +1,10 @@
 import React from 'react'
+import TagSwiper from './TagSwiper'
+import { TAG_LIST } from '@/constants/metadata'
 
 const RecentSection = () => {
   return (
-    <div>RecentSection</div>
+    <TagSwiper tagList={TAG_LIST} />
   )
 }
 

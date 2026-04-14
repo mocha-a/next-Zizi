@@ -5,7 +5,7 @@ import { sortList } from '@/lib/sort';
 import { typeSearch } from '@/lib/api/serach';
 import { useInfiniteList } from '@/hooks/useInfiniteList';
 import { SearchTrack } from '@/types/deezer/search';
-import { TrackSortOptions, TrackSortType } from '@/types/sort';
+import { TrackSortOptions, TrackSortType } from '@/constants/sort';
 
 import TrackList from '@/components/entities/track/ui/TrackList';
 import SortBtn from '@/components/common/SortBtn';

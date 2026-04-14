@@ -4,9 +4,9 @@ import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { useTabStore } from '@/store/tabStore';
+import { RECORD_TYPE_MAP } from '@/constants/metadata';
 import { getUniqueGenres } from '@/lib/genre';
 import { getAlbum } from '@/lib/api/album';
-import { recordTypeMap } from '@/lib/recordType';
 import { Album } from '@/types/deezer/deezer';
 
 import DetailHeader from '@/components/common/DetailHeader';
@@ -16,6 +16,7 @@ import SimilarAlbums from '@/components/entities/album/container/SimilarAlbums';
 import AlbumTrackList from '@/components/entities/album/container/AlbumTrackList';
 
 import '@/styles/album/album.scss';
+import Recent from '@/components/tracking/Recent';
 
 const Page = () => {
   const { id } = useParams() as { id: string };
@@ -46,6 +47,7 @@ const Page = () => {
 
   return (
     <div className="album-detail">
+      <Recent type="album" id={id} />
       <DetailHeader />
       <div className='album-detail-img'>
         <Image
@@ -63,7 +65,7 @@ const Page = () => {
       <h2>{album.title}</h2>
       <div className='album-detail-info'>
         <span>{album.release_date.replace(/-/g, ".")}</span>
-        <span>{recordTypeMap[album.record_type]}</span>
+        <span>{RECORD_TYPE_MAP[album.record_type]}</span>
         {genres.length > 0 && (
           <span className="album-detail-genres">
             {genres.map((genre, i) => (
