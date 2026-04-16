@@ -1,8 +1,7 @@
 'use client';
-
 import InfiniteScroll from '@/components/common/InfiniteScroll';
-import PlaylistCard from './PlaylistCard';
 import { Playlist } from '@/types/deezer/deezer';
+import PlaylistCard from './PlaylistCard';
 
 interface Props {
   playlists: Playlist[];

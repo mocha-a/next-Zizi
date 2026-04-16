@@ -10,7 +10,7 @@ import LogoutButton from '@/components/auth/LogoutButton';
 import PageTitle from '@/components/common/PageTitle';
 import TabsContainer from '@/components/common/TabsContainer';
 import MyPlaylistsSection from '@/components/myPage/MyPlaylistsSection';
-import RecentSection from '@/components/myPage/RecentSection';
+import RecentSection from '@/components/myPage/recent/RecentSection';
 import LikedSection from '@/components/myPage/LikedSection';
 import CdImage from '@/components/myPage/CdImage';
 

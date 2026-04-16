@@ -1,6 +1,8 @@
 import Image from 'next/image';
 import React from 'react';
 
+import '@/styles/entitiesUI/playlistCard.scss';
+
 interface Props {
   id: number;
   picture: string;

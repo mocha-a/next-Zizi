@@ -8,6 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getTrack } from '@/lib/api/track';
 import { Track } from '@/types/deezer/deezer';
 
+import Recent from '@/components/tracking/Recent';
 import DetailHeader from '@/components/common/DetailHeader';
 import ArtistBadge from '@/components/entities/artist/ui/ArtistBadge';
 import SimilarTracks from '@/components/entities/track/container/SimilarTracks';
@@ -44,6 +45,7 @@ const Page = () => {
 
   return (
     <div className="track-detail">
+      <Recent type="track" id={id} />
       <DetailHeader />
       <div className='track-header'>
         <div className='track-info'>

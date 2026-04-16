@@ -7,6 +7,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getArtist } from '@/lib/api/artist';
 import { Artist } from '@/types/deezer/deezer';
 
+import Recent from '@/components/tracking/Recent';
 import TabsContainer from '@/components/common/TabsContainer';
 import DetailHeader from '@/components/common/DetailHeader';
 import ArtistAlbums from '@/components/entities/artist/container/ArtistAlbums';
@@ -42,6 +43,7 @@ const Page = () => {
 
   return (
     <div className="artist-detail">
+      <Recent type="artist" id={id} />
       <section className="artist-top">
         <div className="artist-img">
           <Image

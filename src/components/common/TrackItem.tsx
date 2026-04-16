@@ -3,7 +3,6 @@ import Image from "next/image";
 import TrackItemRight from './TrackItemRight';
 import { Track } from '@/types/deezer/deezer';
 
-
 interface PropsType {
     track: Track;  // data
     index: number;

@@ -1,8 +1,7 @@
 'use client';
-
 import InfiniteScroll from '@/components/common/InfiniteScroll';
-import ArtistCard from './ArtistCard';
 import { Artist } from '@/types/deezer/deezer';
+import ArtistCard from './ArtistCard';
 
 interface Props {
   artists: Artist[];

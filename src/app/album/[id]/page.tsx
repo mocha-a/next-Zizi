@@ -9,6 +9,7 @@ import { getUniqueGenres } from '@/lib/genre';
 import { getAlbum } from '@/lib/api/album';
 import { Album } from '@/types/deezer/deezer';
 
+import Recent from '@/components/tracking/Recent';
 import DetailHeader from '@/components/common/DetailHeader';
 import TabsContainer from '@/components/common/TabsContainer';
 import ArtistBadge from '@/components/entities/artist/ui/ArtistBadge';
@@ -16,7 +17,6 @@ import SimilarAlbums from '@/components/entities/album/container/SimilarAlbums';
 import AlbumTrackList from '@/components/entities/album/container/AlbumTrackList';
 
 import '@/styles/album/album.scss';
-import Recent from '@/components/tracking/Recent';
 
 const Page = () => {
   const { id } = useParams() as { id: string };

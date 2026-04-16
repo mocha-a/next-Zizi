@@ -1,5 +1,4 @@
 'use client';
-
 import React from 'react';
 import TrackItem from '@/components/common/TrackItem';
 import InfiniteScroll from '@/components/common/InfiniteScroll';

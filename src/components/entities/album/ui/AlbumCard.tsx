@@ -3,6 +3,8 @@ import Image from 'next/image';
 import { RECORD_TYPE_MAP } from '@/constants/metadata';
 import { SearchArtist } from '@/types/deezer/search';
 
+import '@/styles/entitiesUI/albumCard.scss'
+
 interface props {
   id: number;
   title: string;

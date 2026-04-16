@@ -3,6 +3,8 @@ import Image from 'next/image';
 import { formatFans } from '@/lib/format';
 import Fans from '@/components/icons/Fans';
 
+import '@/styles/entitiesUI/artistCard.scss'
+
 interface Props {
   name: string;
   imageUrl: string;

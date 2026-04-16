@@ -1,6 +1,7 @@
 import React from 'react'
-import TagSwiper from './TagSwiper';
+
 import { TAG_LIST } from '@/constants/metadata';
+import TagSwiper from './recent/TagSwiper';
 
 const LikedSection = () => {
   return (

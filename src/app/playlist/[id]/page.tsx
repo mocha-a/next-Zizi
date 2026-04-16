@@ -8,6 +8,7 @@ import { formatDate, formatUpDate } from '@/lib/format';
 import { getCreator, getPlaylist, getTranslate } from '@/lib/api/playlist';
 import { Playlist } from '@/types/deezer/deezer';
 
+import Recent from '@/components/tracking/Recent';
 import DetailHeader from '@/components/common/DetailHeader';
 import CreatorBadge from '@/components/entities/playlist/ui/CreatorBadge';
 import PlaylistTrackList from '@/components/entities/playlist/container/PlaylistTrackList';
@@ -69,6 +70,7 @@ const Page = () => {
 
   return (
     <div className='playlist-detail'>
+      <Recent type="playlist" id={id} />
       <DetailHeader />
       <div className='playlist-detail-img'>
         <Image

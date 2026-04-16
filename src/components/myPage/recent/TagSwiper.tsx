@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
 import TagBtn from '@/components/common/TagBtn';
+import { CategoryType } from '@/types/deezer/search';
+import { TagItem } from '@/constants/metadata';
 
-interface TagSwiperProps {
-  tagList: { id: string; name: string }[];
-  onChange?: (tagId: string) => void; // 선택값만 부모에 알려주고 싶으면
+interface Props {
+  tagList: TagItem[];
+  onChange?: (tagId: CategoryType) => void;
 }
 
-function TagSwiper({ tagList, onChange }: TagSwiperProps) {
-  const [selectedTag, setSelectedTag] = useState(tagList[0]?.id || '');
+function TagSwiper({ tagList, onChange }: Props) {
+  const [selectedTag, setSelectedTag] = useState<CategoryType>(
+    tagList[0]?.id || ''
+  );
 
-  const handleClick = (id: string) => {
+  const handleClick = (id: CategoryType) => {
     setSelectedTag(id);
     onChange?.(id);
   };

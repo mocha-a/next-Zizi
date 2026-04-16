@@ -2,6 +2,8 @@
 // Genre
 // ========================
 
+import { CategoryType } from "@/types/deezer/search";
+
 // 렌더링에서 제외할 장르
 export const excludedGenres = ["Asian Music", "Indian Music" ];
 
@@ -32,16 +34,16 @@ export const RECORD_TYPE_MAP: Record<string, string> = {
 // tag UI
 // ========================
 export interface TagItem {
-  id: string;
+  id: CategoryType;
   name: string;
 }
 
 // 태그 리스트
 export const TAG_LIST: TagItem[] = [
-  { id: 'tracks', name: '곡' },
-  { id: 'artists', name: '아티스트' },
-  { id: 'albums', name: '앨범' },
-  { id: 'playlists', name: '플레이리스트' },
+  { id: 'track', name: '곡' },
+  { id: 'artist', name: '아티스트' },
+  { id: 'album', name: '앨범' },
+  { id: 'playlist', name: '플레이리스트' },
 ]
 
 // ========================

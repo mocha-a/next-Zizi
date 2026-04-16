@@ -1,6 +1,7 @@
 import { Artist } from '@/types/deezer/deezer';
 import Image from 'next/image';
 import React from 'react';
+
 import '@/styles/entitiesUI/artistBadge.scss';
 
 interface Props {
