@@ -1,11 +1,11 @@
 import React from 'react'
 import { useQuery } from '@tanstack/react-query';
+import { TAG_LIST } from '@/constants/metadata'
 import { CategoryType } from '@/types/deezer/search';
 import { getRecentViews } from '@/lib/api/recent';
-import { RecentAlbums, RecentTracks, RecentArtists, RecentPlaylists } from '@/components/myPage/recent';
 
-import { TAG_LIST } from '@/constants/metadata'
 import TagSwiper from './TagSwiper';
+import { RecentAlbums, RecentTracks, RecentArtists, RecentPlaylists } from '@/components/myPage/recent';
 
 
 const RecentSection = () => {
@@ -16,8 +16,6 @@ const RecentSection = () => {
     queryFn: () => getRecentViews(type),
   });
 
-  console.log(data)
-
   if (isLoading) return <div>로딩중...</div>;
 
   return (
@@ -26,8 +24,8 @@ const RecentSection = () => {
 
       {type === 'track' && <RecentTracks items={data} />}
       {type === 'album' && <RecentAlbums items={data} />}
-      {type === 'artist' && <RecentArtists />}
-      {type === 'playlist' && <RecentPlaylists />}
+      {type === 'artist' && <RecentArtists items={data} />}
+      {type === 'playlist' && <RecentPlaylists items={data} />}
     </>
   )
 }

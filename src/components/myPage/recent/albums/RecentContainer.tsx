@@ -4,7 +4,6 @@ import { RecentView } from '@/types/recent';
 import { useRecentDetail } from '@/hooks/useRecentDetail';
 import AlbumCard from '@/components/entities/album/ui/AlbumCard';
 
-
 interface Props{
   album: RecentView;
 }

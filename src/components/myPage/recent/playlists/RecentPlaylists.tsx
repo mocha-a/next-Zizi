@@ -1,8 +1,18 @@
 import React from 'react'
+import { RecentView } from '@/types/recent';
+import RecentContainer from './RecentContainer';
 
-const RecentPlaylists = () => {
+interface Props{
+  items: RecentView[];
+}
+
+const RecentPlaylists = ({ items }: Props) => {
   return (
-    <div>RecentPlaylists</div>
+    <>
+      {items.map(playlist => (
+        <RecentContainer key={playlist.id} playlist={playlist} />
+      ))}
+    </>
   )
 }
 

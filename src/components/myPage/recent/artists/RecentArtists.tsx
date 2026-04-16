@@ -6,14 +6,14 @@ interface Props{
   items: RecentView[];
 }
 
-const RecentAlbums = ({ items }: Props) => {
+const RecentArtists = ({ items }: Props) => {
   return (
     <>
-      {items.map(album => (
-        <RecentContainer key={album.id} album={album} />
+      {items.map(artist => (
+        <RecentContainer key={artist.id} artist={artist}/>
       ))}
     </>
   )
 }
 
-export default RecentAlbums
+export default RecentArtists

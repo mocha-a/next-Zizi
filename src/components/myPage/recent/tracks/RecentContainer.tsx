@@ -9,7 +9,6 @@ interface Props{
 }
 
 const RecentContainer = ({ track, index }: Props) => {
-   
   const { data, isLoading } = useRecentDetail({
     type: track.type,
     targetId: track.targetId,
