@@ -12,7 +12,6 @@ interface Props {
 }
 
 export const useRecentDetail = ({ type, targetId }: Props) => {
-  console.log(targetId);
   return useQuery({
     queryKey: ['recent-detail', type, targetId],
     queryFn: () => getDetailByType(normalizeType(type), targetId),

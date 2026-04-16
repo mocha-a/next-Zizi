@@ -1,6 +1,6 @@
 import React from 'react'
 import { RecentView } from '@/types/recent';
-import RecentContainer from './RecentContainer';
+import RecentTrackItem from './RecentTrackItem';
 
 interface Props{
   items: RecentView[];
@@ -10,7 +10,7 @@ const RecentTracks = ({ items }: Props) => {
   return (
     <>
       {items.map((track, i) => (
-        <RecentContainer key={track.id} track={track} index={i}/>
+        <RecentTrackItem key={track.id} track={track} index={i}/>
       ))}
     </>
   )

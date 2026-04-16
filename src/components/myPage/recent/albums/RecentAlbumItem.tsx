@@ -8,7 +8,7 @@ interface Props{
   album: RecentView;
 }
 
-const RecentContainer = ({ album }: Props) => {
+const RecentAlbumCard = ({ album }: Props) => {
   const router = useRouter();
 
   const { data, isLoading } = useRecentDetail({
@@ -16,12 +16,10 @@ const RecentContainer = ({ album }: Props) => {
     targetId: album.targetId,
   });
 
-  console.log(data);
-
   if (isLoading || !data) return <div>로딩중...</div>;
   
   return (
-    <>
+    <div className='recent'>
       <AlbumCard
         key={data.id}
         id={data.id}
@@ -33,8 +31,8 @@ const RecentContainer = ({ album }: Props) => {
         artist={data.artist}
         onClick={() => router.push(`/album/${data.id}`)}
       />
-    </>
+    </div>
   )
 }
 
-export default RecentContainer
+export default RecentAlbumCard

@@ -8,7 +8,7 @@ interface Props{
   index: number;
 }
 
-const RecentContainer = ({ track, index }: Props) => {
+const RecentTrackCard = ({ track, index }: Props) => {
   const { data, isLoading } = useRecentDetail({
     type: track.type,
     targetId: track.targetId,
@@ -17,7 +17,7 @@ const RecentContainer = ({ track, index }: Props) => {
   if (isLoading || !data) return <div>로딩중...</div>;
 
   return (
-    <ul className='tracklist'>
+    <ul className='tracklist recent'>
       <TrackItem
         key={data.id}
         track={data}
@@ -28,4 +28,4 @@ const RecentContainer = ({ track, index }: Props) => {
   )
 }
 
-export default RecentContainer
+export default RecentTrackCard

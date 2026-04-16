@@ -9,7 +9,7 @@ interface Props{
   artist: RecentView;
 }
 
-const RecentContainer = ({ artist }: Props) => {
+const RecentArtistCard = ({ artist }: Props) => {
   const router = useRouter();
 
   const { data, isLoading } = useRecentDetail({
@@ -20,7 +20,7 @@ const RecentContainer = ({ artist }: Props) => {
   if (isLoading || !data) return <div>로딩중...</div>;
   
   return (
-    <div>
+    <div className='recent'>
       <ArtistCard
         key={data.id}
         name={data.name}
@@ -34,4 +34,4 @@ const RecentContainer = ({ artist }: Props) => {
   )
 }
 
-export default RecentContainer
+export default RecentArtistCard
