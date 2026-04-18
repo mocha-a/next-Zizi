@@ -8,7 +8,7 @@ import GlobalTrackDialog from "@/components/common/GlobalTrackDialog";
 import MainPlayer from "@/components/common/MainPlayer";
 
 import 'flag-icons/css/flag-icons.min.css';
-import '../styles/_style.scss';
+import '@/styles/_style.scss';
 
 const decoshadow = localFont({
   src: './fonts/Cafe24Decoshadow.woff2',

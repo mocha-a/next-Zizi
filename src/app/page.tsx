@@ -5,7 +5,7 @@ import Record from "@/components/home/Record";
 import Chart from "@/components/home/Chart";
 import Footer from "@/components/common/Footer";
 
-import '../styles/home/home.scss';
+import '@/styles/home/home.scss';
 
 export default async function Home() {
   return (
