@@ -37,7 +37,7 @@ export default function TrackDialogContent({ trackData }: Types) {
       </button>
       <hr/>
       <button>내 플레이리스트에 담기</button>
-      <button>좋아요</button>
+      {/* <button>좋아요</button> */}
     </div>
   );
 }
