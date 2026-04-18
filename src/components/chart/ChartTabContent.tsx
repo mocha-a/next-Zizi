@@ -24,7 +24,7 @@ function ChartTabContent({ tabType }: ChartTabContentProps) {
 
   // 2. 태그 값에 따른 데이터 필터링
   const [selectedTag, setSelectedTag] = useState<string>(
-    tabType === 'top' ? '0' : genreList[0].id);
+    tabType === 'top' ? '0' : genreList?.[0]?.id);
 
   // 3. 차트 데이터 가져오기 (API 호출)
   const { data: chartData, isLoading, error } = useQuery<any, Error>({

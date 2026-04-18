@@ -59,13 +59,13 @@ export default function RootLayout({
               {/* 1. 메인 콘텐츠 */}
               {children}
 
-              {/* 2. 전역 재생 플레이어 (하단 네비게이션 위에 떠 있어야 함) */}
-              <MainPlayer />
-
-              {/* 3. 하단 네비게이션 */}
+              {/* 2. 하단 네비게이션 */}
               <SimpleBottomNavigation />
 
-              {/* 4. 전역 다이얼로그 (최상위 레이어) */}
+              {/* 3 - 1. 전역 플레이어 */}
+              <MainPlayer />
+
+              {/* 3 - 2. 전역 다이얼로그 (최상위 레이어) */}
               <GlobalTrackDialog />
             </SessionGate>
           </NextAuthProvider>

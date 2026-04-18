@@ -14,15 +14,21 @@ interface TagSwiperProps {
 }
 
 function ChartTagSwiper({tagList, selectedTag, setSelectedTag}: TagSwiperProps) {
+    const selectedIndex = tagList?.findIndex((tag) => String(tag.id) === String(selectedTag));
+
+    if (!tagList || tagList.length === 0) return null;
   return (
       <div className='chart-tagbtn-box'>
         {selectedTag && (
             <Swiper
+                key={`swiper-${selectedIndex}`}
+                initialSlide={selectedIndex === -1 ? 0 : selectedIndex}
                 modules={[FreeMode]}
                 slidesPerView={'auto'}
                 freeMode={true}
+                // slideToClickedSlide={true} // 클릭하면 그 슬라이드로 이동하게 함
             >
-                {tagList.map((tag: { name: string, id: string }) => (
+                {tagList.map((tag) => (
                     <SwiperSlide key={tag.id}>
                         <button onClick={() => {setSelectedTag(tag.id)}}>
                             <TagBtn tagbtn={tag.name} className={`chart-tagbtn ${selectedTag === tag.id ? 'active' : ''}`}/>

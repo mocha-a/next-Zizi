@@ -377,3 +377,33 @@ input:checked + .tagbtn{
     transform: rotate(360deg);
   }
 }
+
+// player
+.main-player-wrapper {
+  position: fixed; // 반드시 fixed
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.9); // 배경이 있어야 뒤가 가려짐
+  z-index: 9999; // 네비게이션(Mui 등)보다 무조건 높아야 함
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .player-inner {
+    width: 90%; // 또는 적절한 사이즈
+    height: 500px;
+    background: #222;
+    position: relative;
+    
+    // 닫기 버튼이 위젯에 가려지지 않게
+    button {
+      position: absolute;
+      top: -25px;
+      right: 0;
+      width: 30px; height: 30px;
+    //   color: white;
+    }
+  }
+}

@@ -1,4 +1,4 @@
-"use-client";
+"use client";
 
 import PlayBk from "../icons/PlayBk";
 import Dot3 from "../icons/Dot3";
@@ -8,12 +8,12 @@ import { useTrackDialog } from "@/store/useTrackDialog";
 import { usePlayerStore } from "@/store/usePlayerStore";
 
 interface PropsType {
-    trackData: Track;  // data
+  trackData: Track;  // data
 }
 
 export default function TrackItemRight({ trackData }: PropsType) {
   const openDialog = useTrackDialog((s) => s.openDialog);
-  const setCurrentTrack = usePlayerStore((s) => s.setCurrentTrack);
+  const playTrack = usePlayerStore((s) => s.play);
 
   // const handlePlayPreview = () => {
   //   const audio = new Audio(trackData.preview);
@@ -22,7 +22,7 @@ export default function TrackItemRight({ trackData }: PropsType) {
     
   return (
     <>
-      <button onClick={() => setCurrentTrack(trackData)}>
+      <button onClick={() => playTrack(trackData.id)}>
         <PlayBk className="icons-play" />
       </button>
       <button onClick={() => openDialog(trackData)}>

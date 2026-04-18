@@ -33,8 +33,16 @@ function Record() {
         },
     ];
     const { data: session, status } = useSession();
+    const genreRawData = localStorage.getItem('dailyGenre');
 
   if (status === "loading") return null; // 값이 없으면 null return
+  
+  if (genreRawData) {
+        const parsedData = JSON.parse(genreRawData);
+        
+        const genreId = parsedData.id;
+        // console.log(genreId);
+    }
 
   return (
     <div className='record-container'>
