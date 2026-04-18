@@ -16,7 +16,7 @@ export default function OnboardingPopup() {
 
   const mutation = useMutation({
     mutationFn: (data: { birth: string; gender: string }) =>
-      api.put('/api/user/profile', data),
+      api.put('/user/profile', data),
 
     onSuccess: () => {
       queryClient.invalidateQueries({

@@ -11,7 +11,6 @@ import PageTitle from '@/components/common/PageTitle';
 import TabsContainer from '@/components/common/TabsContainer';
 import MyPlaylistsSection from '@/components/myPage/MyPlaylistsSection';
 import RecentSection from '@/components/myPage/recent/RecentSection';
-import LikedSection from '@/components/myPage/LikedSection';
 import CdImage from '@/components/myPage/CdImage';
 
 import '@/styles/myPage/myPage.scss';
@@ -25,7 +24,6 @@ function Page() {
   // 탭 메뉴
   const tabs = [
     { label: '최근 기록', content: <RecentSection />},
-    { label: '좋아요', content: <LikedSection />},
     { label: '내 플레이리스트', content: <MyPlaylistsSection />},
   ];
 
