@@ -12,6 +12,6 @@ export const useUserProfile = (session?: Session | null) => {
   return useQuery({
     queryKey: ['userProfile', session?.user?.id],
     queryFn: getUserProfile,
-    enabled: !!session,
+    enabled: !!session?.user?.id,
   });
 };

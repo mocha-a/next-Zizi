@@ -18,7 +18,7 @@ type EditorialItem = {
 export const getSimilarAlbums = async (genreId: number, id: number) => {
   const safeId = genreId === -1 ? 0 : genreId;
 
-  const res = await api.get(`/deezer/editorial/${safeId}`);
+  const res = await api.get(`/deezer/editorial/${safeId}/album`);
 
   const albums =
   res.data.data?.filter(
