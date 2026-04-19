@@ -1,43 +1,14 @@
 'use client';
 
 import * as React from 'react';
-import { useRouter } from 'next/navigation';
 import Box from '@mui/material/Box';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-import HomeOn from '../icons/HomeOn';
-import HomeOff from '../icons/HomeOff';
-import ChartOn from '../icons/ChartOn';
-import ChartOff from '../icons/ChartOff';
-import SearchOn from '../icons/SearchOn';
-import SearchOff from '../icons/SearchOff';
-import MypageOn from '../icons/MypageOn';
-import MypageOff from '../icons/MypageOff';
+import { useBottomNavigation } from '@/hooks/useBottomNavigation';
+import { HomeOn, HomeOff, ChartOn, ChartOff, SearchOn, SearchOff, MypageOn, MypageOff } from '@/components/icons';
 
 export default function SimpleBottomNavigation() {
-  const [ value, setValue ] = React.useState(0);
-  const router = useRouter();
-
-  const click = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
-
-    switch (newValue) {
-      case 0:
-        router.push('/');
-        break;
-      case 1:
-        router.push('/chart');
-        break;
-      case 2:
-        router.push('/search');
-        break;
-      case 3:
-        router.push('/mypage');
-        break;
-      default:
-        break;
-    }
-  };
+  const { value, onChange } = useBottomNavigation();
 
   return (
     <Box sx={{
@@ -52,7 +23,7 @@ export default function SimpleBottomNavigation() {
       <BottomNavigation
         showLabels
         value={value}
-        onChange={click}
+        onChange={onChange}
         sx={{
             '& .MuiBottomNavigationAction-root': {
               gap: '5px',
@@ -64,7 +35,7 @@ export default function SimpleBottomNavigation() {
             },
             '& .Mui-selected .MuiBottomNavigationAction-label': {
             fontSize: '11px',
-            color: 'rgba(5, 140, 215, 1)',              // 선택됐을 때 글자색
+            color: 'rgba(5, 140, 215, 1)',                // 선택됐을 때 글자색
             },
         }}
       >
