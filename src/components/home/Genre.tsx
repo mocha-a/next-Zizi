@@ -5,14 +5,22 @@ import GetDailyGenre from './GetDailyGenre';
 
 function Genre() {
   const { dailyGenre } = GetDailyGenre(); // 오늘의 무드를 결정하는 함수 불러오기
-
-  if (!dailyGenre) return null; // 값이 없으면 null return
   
   return (
-    <div className="mood-container" key={dailyGenre.id}>
+    <div className="mood-container">
       <span>today is...</span>
-      <span>{dailyGenre.icon}</span>
-      <b>{dailyGenre.name}</b>
+
+      {dailyGenre ? (
+        <>
+          <span>{dailyGenre.icon}</span>
+          <b>{dailyGenre.name}</b>
+        </>
+      ) : (
+        <>
+          <span>🎧</span>
+          <b>loading</b>
+        </>
+      )}
     </div>
   )
 }

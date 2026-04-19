@@ -10,6 +10,7 @@ import 'swiper/css/grid';
 import 'swiper/css/pagination';
 
 import Play from "../icons/Play";
+import HomeMediaSkeleton from "../loading/item/HomeMediaSkeleton";
 import { Album } from "@/types/deezer/deezer";
 import { useQuery } from "@tanstack/react-query";
 import { getNewRelease } from "@/lib/api/new";
@@ -39,7 +40,6 @@ function NewRelease() {
     staleTime: 1000 * 60 * 30,
   });
 
-  if (isLoading) return <div>로딩중...</div>;
   if (error) return <div>데이터 로딩 실패</div>;
 
   // const [data, setData] = useState<Album[]>([]);
@@ -69,35 +69,47 @@ function NewRelease() {
 
   return (
     <div className='NewRelease-container'>
-        <h2>갓구운_노래.mp3</h2>
-        <Swiper
-          slidesPerView={2.4}
-          grid={{
-            rows: 2,
-            fill: 'row'
-          }}
-          spaceBetween={10}
-          modules={[Grid, Pagination]}
-          className="mySwiper"
-        >
-        {newRelease?.data.map((item) => (
-          <SwiperSlide key={item.id} onClick={() => router.push(`/album/${item.id}`)}>
-            <div className="album-img">
-              <Image
-                src={item.cover_medium}
-                alt={item.title}
-                width={150}
-                height={150}
-              />
-              <Play />
-            </div>
-            <p className="album-name">{item.title}</p>
-            <p className="artists-name">{item.artist.name}</p>
-          </SwiperSlide>
-        ))}
-        </Swiper>
+      <h2>갓구운_노래.mp3</h2>
+
+      <Swiper
+        slidesPerView={2.4}
+        grid={{
+          rows: 2,
+          fill: 'row'
+        }}
+        spaceBetween={10}
+        modules={[Grid, Pagination]}
+        className="mySwiper"
+      >
+        {isLoading ? (
+          Array.from({ length: 6 }).map((_, i) => (
+            <SwiperSlide key={i}>
+              <HomeMediaSkeleton />
+            </SwiperSlide>
+          ))
+        ) : (
+          newRelease?.data.map((item) => (
+            <SwiperSlide
+              key={item.id}
+              onClick={() => router.push(`/album/${item.id}`)}
+            >
+              <div className="album-img">
+                <Image
+                  src={item.cover_medium}
+                  alt={item.title}
+                  width={150}
+                  height={150}
+                />
+                <Play />
+              </div>
+              <p className="album-name">{item.title}</p>
+              <p className="artists-name">{item.artist.name}</p>
+            </SwiperSlide>
+          ))
+        )}
+      </Swiper>
     </div>
-  )
+  );
 }
 
 export default NewRelease

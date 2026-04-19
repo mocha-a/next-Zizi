@@ -77,13 +77,6 @@ const InfiniteScroll: React.FC<InfiniteScrollProps> = ({
           </div>
         );
       })}
-
-      {/* 로딩 중 표시 (마지막 페이지에서는 숨김) */}
-      {loading && hasMore && (
-        <div style={{ textAlign: 'center', padding: 10 }}>
-          Loading...
-        </div>
-      )}
     </>
   );
 };

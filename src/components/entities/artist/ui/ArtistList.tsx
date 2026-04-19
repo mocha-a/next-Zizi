@@ -1,5 +1,6 @@
 'use client';
 import InfiniteScroll from '@/components/common/InfiniteScroll';
+import ArtistSkeleton from '@/components/loading/item/ArtistSkeleton';
 import { Artist } from '@/types/deezer/deezer';
 import ArtistCard from './ArtistCard';
 
@@ -12,8 +13,21 @@ interface Props {
 }
 
 const ArtistList = ({ artists, loading, hasMore, onLoadMore, onClick }: Props) => {
-  if (!artists.length && loading) return <div>로딩 중...</div>;
-  if (!artists.length && !hasMore) return <div>검색 결과 없음</div>;
+
+  if (!artists.length && loading) {
+    return (
+      <div className="artistTab-container">
+        {Array.from({ length: 6 }).map((_, i) => (
+          <ArtistSkeleton key={i} />
+        ))}
+      </div>
+    );
+  }
+
+  // 검색 결과 없음
+  if (!artists.length && !hasMore) {
+    return <div>검색 결과 없음</div>;
+  }
 
   return (
     <div className="artistTab-container">
@@ -33,6 +47,15 @@ const ArtistList = ({ artists, loading, hasMore, onLoadMore, onClick }: Props) =
             onClick={() => onClick(artist.id)}
           />
         ))}
+
+        {/* 추가 로딩 Skeleton */}
+        {loading && artists.length > 0 && (
+          <>
+            {Array.from({ length: 3 }).map((_, i) => (
+              <ArtistSkeleton key={`more-${i}`} />
+            ))}
+          </>
+        )}
       </InfiniteScroll>
     </div>
   );
