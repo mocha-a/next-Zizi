@@ -23,7 +23,7 @@ const TrackList = ({ tracks, loading, hasMore, onLoadMore }: Props) => {
         {/* 처음 로딩 + 데이터 없음 */}
         {loading && !tracks?.length &&
           Array.from({ length: 10 }).map((_, i) => (
-            <TrackSkeleton key={i} />
+            <TrackSkeleton key={i} index={i}/>
           ))}
 
         {tracks.map((track, index) => (
@@ -38,7 +38,7 @@ const TrackList = ({ tracks, loading, hasMore, onLoadMore }: Props) => {
         {/* 무한스크롤 로딩 */}
         {loading && tracks?.length > 0 &&
           Array.from({ length: 3 }).map((_, i) => (
-            <TrackSkeleton key={`more-${i}`} />
+            <TrackSkeleton key={`more-${i}`} index={i}/>
           ))}
       </InfiniteScroll>
     </div>

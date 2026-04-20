@@ -8,6 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Track } from '@/types/deezer/deezer';
 import { getChart } from '@/lib/api/chart';
 import { getAllGenre } from '@/lib/api/genre';
+import TrackSkeleton from '../loading/item/TrackSkeleton';
 
 interface ChartTabContentProps {
   tabType: 'top' | 'genre';
@@ -37,7 +38,6 @@ function ChartTabContent({ tabType }: ChartTabContentProps) {
     staleTime: 1000 * 60 * 30,
   });
 
-  if (isGenreLoading || isLoading) return <div>로딩중...</div>;
   if (error) return <div>데이터 로딩 실패</div>;
   
   // selectedTag가 바뀔 때마다 데이터 fetch
@@ -72,13 +72,18 @@ function ChartTabContent({ tabType }: ChartTabContentProps) {
       </div> */}
 
       <ul className='tracklist'>
-        {chartData?.data?.map((track: Track, i: number) => (
-            <TrackItem key={track.id || i} 
-              track={track}
-              index={i}
-              page="chart"
-            />
-        ))}
+        {(isGenreLoading || isLoading)
+          ? Array.from({ length: 20 }).map((_, i) => (
+              <TrackSkeleton key={i} index={i} page="chart" />
+            ))
+          : chartData?.data?.map((track: Track, i: number) => (
+              <TrackItem
+                key={track.id || i}
+                track={track}
+                index={i}
+                page="chart"
+              />
+            ))}
       </ul>
     </>
   )

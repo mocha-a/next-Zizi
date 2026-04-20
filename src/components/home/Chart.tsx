@@ -10,6 +10,7 @@ import TrackDialogContent from "../common/TrackDialogContent";
 import { useQuery } from "@tanstack/react-query";
 import { getChart } from "@/lib/api/chart";
 import { Track } from '@/types/deezer/deezer';
+import TrackSkeleton from "../loading/item/TrackSkeleton";
 
 export default function TopTracksList() {
   const pathname = usePathname();
@@ -36,20 +37,24 @@ export default function TopTracksList() {
   //     .catch(err => console.error(err));
   // }, []);
 
-  if (isLoading) return <div>로딩중...</div>;
   if (error) return <div>데이터 로딩 실패</div>;
 
   return (
     <div className='chart-section-container'>
       <h2><span>Hot</span> 트랙_맛보기.zip</h2>
       <ul className='chart-section-list-box tracklist'>
-        {chartData?.data.slice(0, 5).map((track: Track, i: number) => (
-            <TrackItem key={track.id || i} 
-              track={track}
-              index={i}
-              page="home"
-            />
-        ))}
+        {isLoading
+          ? Array.from({ length: 5 }).map((_, i) => (
+              <TrackSkeleton key={i} index={i} page="home" />
+            ))
+          : chartData?.data.slice(0, 5).map((track: Track, i: number) => (
+              <TrackItem
+                key={track.id || i}
+                track={track}
+                index={i}
+                page="home"
+              />
+            ))}
       </ul>
 
       <Dialog open={open} onClose={closeDialog}>
