@@ -48,14 +48,12 @@ const ArtistList = ({ artists, loading, hasMore, onLoadMore, onClick }: Props) =
           />
         ))}
 
-        {/* 추가 로딩 Skeleton */}
-        {loading && artists.length > 0 && (
-          <>
-            {Array.from({ length: 3 }).map((_, i) => (
-              <ArtistSkeleton key={`more-${i}`} />
-            ))}
-          </>
-        )}
+        {/* 무한스크롤 로딩 */}
+        {loading && artists.length > 0 && 
+          Array.from({ length: 3 }).map((_, i) => (
+            <ArtistSkeleton key={`more-${i}`} />
+        ))}
+        
       </InfiniteScroll>
     </div>
   );

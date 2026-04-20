@@ -1,16 +1,37 @@
+import React from 'react'
 import Skeleton from '@mui/material/Skeleton';
-import Stack from '@mui/material/Stack';
 
-export default function Variants() {
-  return (
-    <Stack spacing={1}>
-      {/* For variant="text", adjust the height via font-size */}
-      <Skeleton variant="text" sx={{ fontSize: '2rem' }} />
-
-      {/* For other variants, adjust the size with `width` and `height` */}
-      <Skeleton variant="circular" width={40} height={40} />
-      <Skeleton variant="rectangular" width={210} height={60} />
-      <Skeleton variant="rounded" width={210} height={60} />
-    </Stack>
-  );
+interface Props{
+  page?: string;
 }
+
+const TrackSkeleton = ({ page }: Props) => {
+  return (
+    <li>
+      {/* 좌측 */}
+      <div className="trackitem-left">
+        {page === 'home' && (
+          <Skeleton variant="text" width={20} height={20} />
+        )}
+
+        <div className="trackitem-image">
+          <Skeleton variant="rounded" width={45} height={45} />
+        </div>
+      </div>
+
+      {/* 중앙 */}
+      <div className="trackitem-center">
+        {page === 'chart' && (
+          <Skeleton variant="text" width={20} height={20} />
+        )}
+
+        <div>
+          <Skeleton variant="text" width={120} height={20} />
+          <Skeleton variant="text" width={80} height={15} />
+        </div>
+      </div>
+    </li>
+  )
+}
+
+export default TrackSkeleton
