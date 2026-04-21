@@ -1,9 +1,9 @@
 'use client';
-
-import InfiniteScroll from '@/components/common/InfiniteScroll';
-import AlbumCard from './AlbumCard';
 import type { SearchArtist } from '@/types/deezer/search';
 import type { Album } from '@/types/deezer/deezer';
+import InfiniteScroll from '@/components/common/InfiniteScroll';
+import MediaSkeleton from '@/components/loading/item/MediaSkeleton';
+import AlbumCard from './AlbumCard';
 
 interface Props {
   albums: Album[];
@@ -15,7 +15,22 @@ interface Props {
 }
 
 const AlbumList = ({ albums, loading, hasMore, loadMore, onClick, artist }: Props) => {
-  if (!albums?.length) return <div>로딩 중...</div>;
+
+  // 초기 로딩
+  if (!albums.length && loading) {
+    return (
+      <div className="albumTab-container">
+        {Array.from({ length: 10 }).map((_, i) => (
+          <MediaSkeleton key={`init-${i}`} />
+        ))}
+      </div>
+    );
+  }
+
+  // 결과 없음
+  if (!albums.length && !hasMore) {
+    return <div>검색 결과 없음</div>;
+  }
 
   return (
     <div className="albumTab-container">
@@ -24,6 +39,7 @@ const AlbumList = ({ albums, loading, hasMore, loadMore, onClick, artist }: Prop
         loading={loading}
         hasMore={hasMore}
       >
+        {/* 실제 데이터 */}
         {albums.map((album) => (
           <AlbumCard
             key={album.id}
@@ -37,6 +53,13 @@ const AlbumList = ({ albums, loading, hasMore, loadMore, onClick, artist }: Prop
             onClick={() => onClick(album.id)}
           />
         ))}
+
+        {/* 추가 로딩 */}
+        {loading && albums.length > 0 &&
+          Array.from({ length: 3 }).map((_, i) => (
+            <MediaSkeleton key={`more-${i}`} />
+          ))
+        }
       </InfiniteScroll>
     </div>
   );

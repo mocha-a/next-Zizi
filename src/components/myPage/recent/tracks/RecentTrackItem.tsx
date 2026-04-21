@@ -2,6 +2,7 @@ import React from 'react'
 import { useRecentDetail } from '@/hooks/useRecentDetail';
 import { RecentView } from '@/types/recent';
 import TrackItem from '@/components/common/TrackItem';
+import TrackSkeleton from '@/components/loading/item/TrackSkeleton';
 
 interface Props{
   track: RecentView;
@@ -14,7 +15,13 @@ const RecentTrackCard = ({ track, index }: Props) => {
     targetId: track.targetId,
   });
 
-  if (isLoading || !data) return <div>로딩중...</div>;
+   if (isLoading || !data) {
+    return (
+      <ul className='tracklist recent'>
+        <TrackSkeleton index={index} />
+      </ul>
+    );
+  }
 
   return (
     <ul className='tracklist recent'>

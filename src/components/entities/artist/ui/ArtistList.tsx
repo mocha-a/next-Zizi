@@ -17,7 +17,7 @@ const ArtistList = ({ artists, loading, hasMore, onLoadMore, onClick }: Props) =
   if (!artists.length && loading) {
     return (
       <div className="artistTab-container">
-        {Array.from({ length: 6 }).map((_, i) => (
+        {Array.from({ length: 10 }).map((_, i) => (
           <ArtistSkeleton key={i} />
         ))}
       </div>

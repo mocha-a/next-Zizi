@@ -39,8 +39,6 @@ const SearchPlaylists = () => {
     enabled: !!query,
   });
 
-  console.log(playlists);
-
   const sortedPlaylists = (() => {
     if (!sortType) return playlists;
 

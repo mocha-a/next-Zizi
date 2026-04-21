@@ -6,6 +6,7 @@ import { RecentView } from '@/types/recent';
 import { RecentAlbums, RecentTracks, RecentArtists, RecentPlaylists } from '@/components/myPage/recent';
 import { useUserProfile } from '@/hooks/useUserProfile';
 import { useSession } from 'next-auth/react';
+import TrackSkeleton from '@/components/loading/item/TrackSkeleton';
 
 interface Props{
   type: CategoryType;
@@ -21,8 +22,14 @@ const RecentContent = ({ type }: Props) => {
     enabled: !!user?.id,
     staleTime: 1000 * 60,
   });
-
-  if (isLoading) return <div>로딩중...</div>;
+  
+  if (isLoading || !data) {
+    return (
+      <ul className='tracklist recent'>
+        <TrackSkeleton index={2} />
+      </ul>
+    );
+  }
 
   switch (type) {
     case 'track':
