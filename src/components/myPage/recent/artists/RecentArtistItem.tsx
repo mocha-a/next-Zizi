@@ -2,8 +2,8 @@ import React from 'react'
 import { useRouter } from 'next/navigation';
 import { RecentView } from '@/types/recent';
 import { useRecentDetail } from '@/hooks/useRecentDetail';
-
 import ArtistCard from '@/components/entities/artist/ui/ArtistCard';
+import ArtistSkeleton from '@/components/loading/item/ArtistSkeleton';
 
 interface Props{
   artist: RecentView;
@@ -17,7 +17,13 @@ const RecentArtistCard = ({ artist }: Props) => {
     targetId: artist.targetId,
   });
 
-  if (isLoading || !data) return <div>로딩중...</div>;
+  if (isLoading || !data) {
+    return (
+      <div className='recent'>
+        <ArtistSkeleton />
+      </div>
+    ); 
+  }
   
   return (
     <div className='recent'>

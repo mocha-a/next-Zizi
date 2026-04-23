@@ -3,6 +3,7 @@ import { useRouter } from 'next/navigation';
 import { RecentView } from '@/types/recent';
 import { useRecentDetail } from '@/hooks/useRecentDetail';
 import PlaylistCard from '@/components/entities/playlist/ui/PlaylistCard';
+import MediaSkeleton from '@/components/loading/item/MediaSkeleton';
 
 interface Props{
   playlist: RecentView;
@@ -16,7 +17,13 @@ const RecentPlaylistCard = ({ playlist }: Props) => {
     targetId: playlist.targetId,
   });
 
-  if (isLoading || !data) return <div>로딩중...</div>;
+  if (isLoading || !data) {
+    return (
+      <div className='recent'>
+        <MediaSkeleton />
+      </div>
+    ); 
+  }
 
   return (
     <div className='recent'>

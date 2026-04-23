@@ -1,12 +1,11 @@
 import React from 'react'
+import { useSession } from 'next-auth/react';
 import { useQuery } from '@tanstack/react-query';
+import { useUserProfile } from '@/hooks/useUserProfile';
 import { getRecentViews } from '@/lib/api/recent';
 import { CategoryType } from '@/types/deezer/search';
 import { RecentView } from '@/types/recent';
 import { RecentAlbums, RecentTracks, RecentArtists, RecentPlaylists } from '@/components/myPage/recent';
-import { useUserProfile } from '@/hooks/useUserProfile';
-import { useSession } from 'next-auth/react';
-import TrackSkeleton from '@/components/loading/item/TrackSkeleton';
 
 interface Props{
   type: CategoryType;
@@ -16,21 +15,13 @@ const RecentContent = ({ type }: Props) => {
   const { data: session } = useSession();
   const { data: user } = useUserProfile(session);
 
-  const { data = [], isLoading } = useQuery<RecentView[]>({
+  const { data = [] } = useQuery<RecentView[]>({
     queryKey: ['recent', user?.id, type],
     queryFn: () => getRecentViews(type),
     enabled: !!user?.id,
     staleTime: 1000 * 60,
   });
   
-  if (isLoading || !data) {
-    return (
-      <ul className='tracklist recent'>
-        <TrackSkeleton index={2} />
-      </ul>
-    );
-  }
-
   switch (type) {
     case 'track':
       return <RecentTracks items={data} />;

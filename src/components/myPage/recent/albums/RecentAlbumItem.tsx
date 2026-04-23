@@ -3,6 +3,7 @@ import { useRouter } from 'next/navigation';
 import { RecentView } from '@/types/recent';
 import { useRecentDetail } from '@/hooks/useRecentDetail';
 import AlbumCard from '@/components/entities/album/ui/AlbumCard';
+import MediaSkeleton from '@/components/loading/item/MediaSkeleton';
 
 interface Props{
   album: RecentView;
@@ -16,12 +17,17 @@ const RecentAlbumCard = ({ album }: Props) => {
     targetId: album.targetId,
   });
 
-  if (isLoading || !data) return <div>로딩중...</div>;
+  if (isLoading || !data) {
+    return (
+      <div className='recent'>
+        <MediaSkeleton />
+      </div>
+    ); 
+  }
   
   return (
     <div className='recent'>
       <AlbumCard
-        key={data.id}
         id={data.id}
         title={data.title}
         cover={data.cover_medium}
