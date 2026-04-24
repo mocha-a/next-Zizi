@@ -1,0 +1,50 @@
+.select-track-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+
+  .trackitem-left {
+    display: flex;
+    align-items: center;
+
+    .trackitem-image img {
+      border-radius: 6px;
+    }
+  }
+
+  .trackitem-center {
+    flex: 1;
+    margin-left: 12px;
+
+    p {
+      font-size: 14px;
+    }
+
+    span {
+      font-size: 12px;
+      color: #888;
+    }
+  }
+
+  .trackitem-right {
+    display: flex;
+    align-items: center;
+
+    .select-circle {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #aaa;
+      border-radius: 50%;
+    }
+  }
+}
+
+.select-track-item.selected {
+  background: rgba(255, 255, 255, 0.05);
+
+  .select-circle {
+    border-color: #fff;
+    background: #fff;
+  }
+}

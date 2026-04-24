@@ -1,18 +1,22 @@
-'use client';
-import React from 'react';
-import TrackItem from '@/components/common/TrackItem';
+import React from 'react'
+import { SearchTrack } from '@/types/deezer/search';
 import InfiniteScroll from '@/components/common/InfiniteScroll';
 import TrackSkeleton from '@/components/loading/item/TrackSkeleton';
-import { Track } from '@/types/deezer/deezer';
+import TrackSelectItem from './TrackSelectItem';
 
 interface Props {
-  tracks: Track[];
+  tracks: SearchTrack[];
   loading: boolean;
   hasMore: boolean;
   onLoadMore: () => void;
-} 
+}
 
-const TrackList = ({ tracks, loading, hasMore, onLoadMore }: Props) => {
+const TrackSelectList = ({
+  tracks,
+  loading,
+  hasMore,
+  onLoadMore,
+}: Props) => {
   return (
     <div className="trackTab-container tracklist">
       <InfiniteScroll
@@ -20,29 +24,29 @@ const TrackList = ({ tracks, loading, hasMore, onLoadMore }: Props) => {
         loading={loading}
         hasMore={hasMore}
       >
-        {/* 처음 로딩 + 데이터 없음 */}
+        {/* 🔥 첫 로딩 (데이터 없을 때) */}
         {loading && !tracks?.length &&
           Array.from({ length: 10 }).map((_, i) => (
-            <TrackSkeleton key={i} index={i}/>
+            <TrackSkeleton key={i} index={i} />
           ))}
 
+        {/* 🎵 트랙 리스트 */}
         {tracks.map((track, index) => (
-          <TrackItem
+          <TrackSelectItem
             key={track.id}
             track={track}
             index={index}
-            page=""
           />
         ))}
 
-        {/* 무한스크롤 로딩 */}
+        {/* 🔄 무한스크롤 로딩 */}
         {loading && tracks?.length > 0 &&
           Array.from({ length: 3 }).map((_, i) => (
-            <TrackSkeleton key={`more-${i}`} index={i}/>
+            <TrackSkeleton key={`more-${i}`} index={i} />
           ))}
       </InfiniteScroll>
     </div>
-  );
-};
+  )
+}
 
-export default TrackList;
+export default TrackSelectList

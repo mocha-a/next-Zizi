@@ -1,13 +1,14 @@
 'use client';
 import React, { useState } from 'react'
-import Back from '@/components/icons/Back'
-import SearchBar from '@/components/search/ui/SearchBar';
-
-import '@/styles/playlist/NewPlaylist.scss';
 import { useInfiniteList } from '@/hooks/useInfiniteList';
 import { SearchTrack } from '@/types/deezer/search';
-import TrackList from '@/components/entities/track/ui/TrackList';
 import { typeSearch } from '@/lib/api/serach';
+import Back from '@/components/icons/Back'
+import SearchBar from '@/components/search/ui/SearchBar';
+import TrackSelectList from '@/components/entities/track/ui/TrackSelectList';
+
+import '@/styles/playlist/NewPlaylist.scss';
+
 
 const LIMIT = 50;
 
@@ -38,7 +39,7 @@ const Page = () => {
       </div>
       <SearchBar placeholder="한 곡 담아볼까? –♡" onSearch={(q) => setQuery(q)}/>
 
-      <TrackList
+      <TrackSelectList
         tracks={tracks}
         loading={isLoading || isFetchingNextPage}
         hasMore={hasNextPage}
