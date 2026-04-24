@@ -136,6 +136,13 @@
     color: $black;
 }
 
+@mixin GmarketMedium_black_18 {
+    font-family: var(--font-gmarketMedium);
+    font-weight: normal;
+    font-size: 18px;
+    color: $black;
+}
+
 @mixin GmarketMedium_black_23 {
     font-family: var(--font-gmarketMedium);
     font-weight: normal;

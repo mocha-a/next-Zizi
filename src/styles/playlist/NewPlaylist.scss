@@ -1,6 +1,41 @@
 @use '../variables'as *;
 @use '../mixins'as *;
 
+// 플레이리스트 추가
 .new-playlist-page{
   @include publicWidth;
+
+  .new-playlist-header{
+    @include flex($justify: space-between, $align: center);
+    .back{
+      width: 16px; height: 16px;
+    }
+  }
+}
+
+// 곡 추가
+.add-track{
+  @include publicWidth;
+
+  .add-track-header {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    .back{
+        width: 16px; height: 16px;
+      }
+  }
+
+  .search-bar{
+    display: flex;
+    margin-bottom: 30px;
+    border-bottom: 2px solid black;
+    >input{
+      width: 100%;
+      padding: 8px 2px;
+    }
+    >input::placeholder{
+      font-family: var(--font-Galmuri9);
+    }
+  }
 }

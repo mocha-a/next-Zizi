@@ -1,6 +1,6 @@
 'use client';
-
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Back from '@/components/icons/Back';
 import TextField from '@mui/material/TextField';
 import LongBtn from '@/components/common/LongBtn';
@@ -10,6 +10,8 @@ import '@/styles/playlist/NewPlaylist.scss';
 const Page = () => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
+
+  const router = useRouter();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,18 +26,21 @@ const Page = () => {
 
   return (
     <div className='new-playlist-page'>
-      <Back />
-
       <form
         onSubmit={handleSubmit}
         style={{
-          marginTop: '20px',
           display: 'flex',
           flexDirection: 'column',
           gap: '16px',
           maxWidth: '400px',
         }}
       >
+        <div className="new-playlist-header">
+          <Back />
+          <p className='sub-title'>내 플리 만들기</p>
+          <button type="submit">저장</button>
+        </div>
+
         {/* 플레이리스트 이름 */}
         <TextField
           label="플리 이름"
@@ -70,8 +75,9 @@ const Page = () => {
         />
 
         {/* 곡 추가 버튼 */}
-        <LongBtn label={`+ 곡 추가하기`} className='active'/>
       </form>
+
+      <LongBtn label={`+ 곡 추가하기`} className='active' onClick={() => router.push('/playlist/add-track')}/>
     </div>
   );
 };

@@ -3,7 +3,12 @@ import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-const SearchBar = () => {
+interface Props {
+  placeholder: string;
+  onSearch?: (query: string) => void;
+}
+
+const SearchBar = ({ placeholder, onSearch }: Props) => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -26,14 +31,18 @@ const SearchBar = () => {
     const query = value.trim();
     if (!query) return;
 
-    router.push(`/search?query=${encodeURIComponent(query)}`);
+    if (onSearch) {
+      onSearch(query);
+    } else {
+      router.push(`/search?query=${encodeURIComponent(query)}`);
+    }
   };
 
   return (
     <form className="search-bar" onSubmit={onSearchSubmit}>
       <input
         type="search"
-        placeholder="your taste... 너의 취향을 검색해봐 –☆"
+        placeholder={placeholder}
         value={value}
         onChange={(e) => setValue(e.target.value)}
       />
