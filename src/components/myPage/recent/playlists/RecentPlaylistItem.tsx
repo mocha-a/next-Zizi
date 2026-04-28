@@ -24,7 +24,7 @@ const RecentPlaylistCard = ({ playlist }: Props) => {
       </div>
     ); 
   }
-
+  console.log(data);
   return (
     <div className='recent'>
       <PlaylistCard 

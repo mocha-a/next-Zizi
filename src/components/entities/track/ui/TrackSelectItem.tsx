@@ -11,7 +11,7 @@ interface Props {
   index: number;
 }
 
-function TrackSelectItem({ track, index }: Props) {
+function TrackSelectItem({ track }: Props) {
   return (
     <li className="select-track-item">
       {/* 왼쪽 */}

@@ -32,6 +32,13 @@ export async function PUT(req: Request) {
       );
     }
 
+    if (!/^\d+$/.test(targetId)) {
+      return NextResponse.json(
+        { message: "targetId는 숫자만 가능합니다." },
+        { status: 400 }
+      );
+    }
+
     const result = await prisma.recentView.upsert({
       //where : DB에서 어떤 데이터를 기준으로 찾을 거냐
       where: {
