@@ -3,6 +3,7 @@ import { SearchTrack } from '@/types/deezer/search';
 import InfiniteScroll from '@/components/common/InfiniteScroll';
 import TrackSkeleton from '@/components/loading/item/TrackSkeleton';
 import TrackSelectItem from './TrackSelectItem';
+import { useSelectedTrackStore } from '@/store/useSelectedTrackStore';
 
 interface Props {
   tracks: SearchTrack[];
@@ -11,12 +12,9 @@ interface Props {
   onLoadMore: () => void;
 }
 
-const TrackSelectList = ({
-  tracks,
-  loading,
-  hasMore,
-  onLoadMore,
-}: Props) => {
+const TrackSelectList = ({ tracks, loading, hasMore, onLoadMore }: Props) => {
+  const { toggleTrack, isSelected } = useSelectedTrackStore();
+
   return (
     <div className="trackTab-container tracklist">
       <InfiniteScroll
@@ -36,6 +34,8 @@ const TrackSelectList = ({
             key={track.id}
             track={track}
             index={index}
+            isSelected={isSelected(track.id)}
+            onToggle={toggleTrack}
           />
         ))}
 

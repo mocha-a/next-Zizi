@@ -9,11 +9,16 @@ import { SearchTrack } from '@/types/deezer/search';
 interface Props {
   track: SearchTrack;
   index: number;
+  isSelected: boolean;
+  onToggle: (track: SearchTrack) => void;
 }
 
-function TrackSelectItem({ track }: Props) {
+function TrackSelectItem({ track, isSelected, onToggle }: Props) {
   return (
-    <li className="select-track-item">
+    <li
+      className={`select-track-item ${isSelected ? 'selected' : ''}`}
+      onClick={() => onToggle(track)}
+    >
       {/* 왼쪽 */}
       <div className="trackitem-left">
         <div className="trackitem-image">
@@ -36,7 +41,7 @@ function TrackSelectItem({ track }: Props) {
 
       {/* 오른쪽 (선택 UI) */}
       <div className="trackitem-right">
-        <div className="select-circle" />
+        <div className={`select-circle ${isSelected ? 'active' : ''}`} />
       </div>
     </li>
   );
