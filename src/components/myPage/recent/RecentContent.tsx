@@ -9,9 +9,10 @@ import { RecentAlbums, RecentTracks, RecentArtists, RecentPlaylists } from '@/co
 
 interface Props{
   type: CategoryType;
+  variant?: 'default' | 'select';
 }
 
-const RecentContent = ({ type }: Props) => {
+const RecentContent = ({ type, variant = 'default' }: Props) => {
   const { data: session } = useSession();
   const { data: user } = useUserProfile(session);
 
@@ -24,7 +25,7 @@ const RecentContent = ({ type }: Props) => {
   
   switch (type) {
     case 'track':
-      return <RecentTracks items={data} />;
+      return <RecentTracks items={data} variant={variant} />;
     case 'album':
       return <RecentAlbums items={data} />;
     case 'artist':

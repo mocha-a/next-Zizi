@@ -4,13 +4,14 @@ import RecentTrackItem from './RecentTrackItem';
 
 interface Props{
   items: RecentView[];
+  variant?: 'default' | 'select';
 }
 
-const RecentTracks = ({ items }: Props) => {
+const RecentTracks = ({ items, variant = 'default' }: Props) => {
   return (
     <>
       {items.map((track, i) => (
-        <RecentTrackItem key={track.id} track={track} index={i}/>
+        <RecentTrackItem key={track.id} track={track} index={i} variant={variant}/>
       ))}
     </>
   )

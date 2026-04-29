@@ -6,9 +6,9 @@ import { typeSearch } from '@/lib/api/serach';
 import Back from '@/components/icons/Back'
 import SearchBar from '@/components/search/ui/SearchBar';
 import TrackSelectList from '@/components/entities/track/ui/TrackSelectList';
+import RecentContent from '@/components/myPage/recent/RecentContent';
 
 import '@/styles/playlist/NewPlaylist.scss';
-
 
 const LIMIT = 50;
 
@@ -39,12 +39,20 @@ const Page = () => {
       </div>
       <SearchBar placeholder="한 곡 담아볼까? –♡" onSearch={(q) => setQuery(q)}/>
 
-      <TrackSelectList
-        tracks={tracks}
-        loading={isLoading || isFetchingNextPage}
-        hasMore={hasNextPage}
-        onLoadMore={loadMore}
-      />
+      {query ? (
+        // 검색했을 때
+        <TrackSelectList
+          tracks={tracks}
+          loading={isLoading || isFetchingNextPage}
+          hasMore={hasNextPage}
+          onLoadMore={loadMore}
+        />
+      ) : (
+        <>
+          <h3>최근 기록</h3>
+          <RecentContent type="track" variant="select" />
+        </>
+      )}
     </div>
   )
 }
