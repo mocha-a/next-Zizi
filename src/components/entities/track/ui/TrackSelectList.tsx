@@ -1,9 +1,9 @@
 import React from 'react'
+import { useSelectedTrackStore } from '@/store/useSelectedTrackStore';
 import { SearchTrack } from '@/types/deezer/search';
 import InfiniteScroll from '@/components/common/InfiniteScroll';
 import TrackSkeleton from '@/components/loading/item/TrackSkeleton';
 import TrackSelectItem from './TrackSelectItem';
-import { useSelectedTrackStore } from '@/store/useSelectedTrackStore';
 
 interface Props {
   tracks: SearchTrack[];
@@ -22,13 +22,13 @@ const TrackSelectList = ({ tracks, loading, hasMore, onLoadMore }: Props) => {
         loading={loading}
         hasMore={hasMore}
       >
-        {/* 🔥 첫 로딩 (데이터 없을 때) */}
+        {/* 첫 로딩 (데이터 없을 때) */}
         {loading && !tracks?.length &&
           Array.from({ length: 10 }).map((_, i) => (
             <TrackSkeleton key={i} index={i} />
           ))}
 
-        {/* 🎵 트랙 리스트 */}
+        {/* 트랙 리스트 */}
         {tracks.map((track, index) => (
           <TrackSelectItem
             key={track.id}
@@ -39,7 +39,7 @@ const TrackSelectList = ({ tracks, loading, hasMore, onLoadMore }: Props) => {
           />
         ))}
 
-        {/* 🔄 무한스크롤 로딩 */}
+        {/* 무한스크롤 로딩 */}
         {loading && tracks?.length > 0 &&
           Array.from({ length: 3 }).map((_, i) => (
             <TrackSkeleton key={`more-${i}`} index={i} />

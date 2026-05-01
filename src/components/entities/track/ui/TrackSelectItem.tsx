@@ -2,9 +2,10 @@
 
 import React from 'react';
 import Image from 'next/image';
+import { SearchTrack } from '@/types/deezer/search';
 
 import '@/styles/track/trackSelectItem.scss';
-import { SearchTrack } from '@/types/deezer/search';
+import TagBtn from '@/components/common/TagBtn';
 
 interface Props {
   track: SearchTrack;
@@ -41,7 +42,7 @@ function TrackSelectItem({ track, isSelected, onToggle }: Props) {
 
       {/* 오른쪽 (선택 UI) */}
       <div className="trackitem-right">
-        <div className={`select-circle ${isSelected ? 'active' : ''}`} />
+        <TagBtn tagbtn='+' className={`${isSelected ? 'active' : ''}`}/>
       </div>
     </li>
   );

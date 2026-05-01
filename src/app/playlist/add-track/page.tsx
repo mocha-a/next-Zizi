@@ -1,5 +1,7 @@
 'use client';
 import React, { useState } from 'react'
+import { useRouter } from 'next/navigation';
+import { useSelectedTrackStore } from '@/store/useSelectedTrackStore';
 import { useInfiniteList } from '@/hooks/useInfiniteList';
 import { SearchTrack } from '@/types/deezer/search';
 import { typeSearch } from '@/lib/api/serach';
@@ -13,7 +15,10 @@ import '@/styles/playlist/NewPlaylist.scss';
 const LIMIT = 50;
 
 const Page = () => {
-  const [query, setQuery] = useState('');
+  const { selectedTracks } = useSelectedTrackStore();
+  const [ query, setQuery ] = useState('');
+
+  const router = useRouter();
 
   const {
     list: tracks,
@@ -33,9 +38,11 @@ const Page = () => {
     // TODO: 곡 선택 상태 관리 + 완료 버튼 연결 하자
     <div className="add-track new-playlist-page">
       <div className="new-playlist-header">
-        <Back />
+        <div className='new-playlist-back'><Back /></div>
         <p className='sub-title'>곡 추가하기</p>
-        <button className='sub-title'>완료</button>
+        <button className='add-track-btn submit' onClick={() => router.back()}>
+          ({selectedTracks.length}) 완료
+        </button>
       </div>
       <SearchBar placeholder="한 곡 담아볼까? –♡" onSearch={(q) => setQuery(q)}/>
 

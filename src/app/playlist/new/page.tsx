@@ -1,15 +1,25 @@
 'use client';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useSelectedTrackStore } from '@/store/useSelectedTrackStore';
 import Back from '@/components/icons/Back';
 import TextField from '@mui/material/TextField';
-import LongBtn from '@/components/common/LongBtn';
+import TagBtn from '@/components/common/TagBtn';
+
+
+import {
+  DragDropContext,
+  Droppable,
+  Draggable,
+} from '@hello-pangea/dnd';
 
 import '@/styles/playlist/NewPlaylist.scss';
+import DraggableTrackCard from '@/components/entities/track/ui/DraggableTrackCard';
 
 const Page = () => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
+  const { selectedTracks, setTracks, removeTrack } = useSelectedTrackStore();
 
   const router = useRouter();
 
@@ -20,8 +30,16 @@ const Page = () => {
       name,
       description,
     });
+  };
 
-    // TODO: 여기서 API 호출
+  const handleDragEnd = (result) => {
+    if (!result.destination) return;
+
+    const items = Array.from(selectedTracks);
+    const [moved] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, moved);
+
+    setTracks(items);
   };
 
   return (
@@ -36,48 +54,68 @@ const Page = () => {
         }}
       >
         <div className="new-playlist-header">
-          <Back />
+          <div className='new-playlist-back'><Back /></div>
           <p className='sub-title'>내 플리 만들기</p>
-          <button type="submit">저장</button>
+          <button className='submit' type="submit">저장</button>
         </div>
 
-        {/* 플레이리스트 이름 */}
         <TextField
           label="플리 이름"
           value={name}
           onChange={(e) => setName(e.target.value)}
           variant="standard"
-          className='textfield'
           placeholder='>>> waiting for title... 제목을 입력해줘'
           required
           fullWidth
-          sx={{
-            '& .MuiInputBase-input::placeholder': {
-              fontFamily: 'var(--font-Galmuri9)',
-            },
-          }}
         />
 
-        {/* 설명 */}
         <TextField
           label="설명"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           variant="standard"
-          className='textfield new'
           placeholder='>>> describe your vibe... 어떤 기분으로 모았어?'
           fullWidth
-          sx={{
-            '& .MuiInputBase-input::placeholder': {
-              fontFamily: 'var(--font-Galmuri9)',
-            },
-          }}
         />
-
-        {/* 곡 추가 버튼 */}
       </form>
 
-      <LongBtn label={`+ 곡 추가하기`} className='active' onClick={() => router.push('/playlist/add-track')}/>
+      <TagBtn
+        tagbtn={`+ 곡 추가하기`}
+        onClick={() => router.push('/playlist/add-track')}
+      />
+
+      {/* ⭐ 여기 핵심 */}
+      <DragDropContext onDragEnd={handleDragEnd}>
+        <Droppable droppableId="tracks">
+          {(provided) => (
+            <div
+              className='tracklist'
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+            >
+              {selectedTracks.map((track, index) => (
+                <Draggable
+                  key={track.id}
+                  draggableId={String(track.id)}
+                  index={index}
+                >
+                  {(provided) => (
+                    <DraggableTrackCard
+                      track={track}
+                      index={index}
+                      innerRef={provided.innerRef}
+                      draggableProps={provided.draggableProps}
+                      dragHandleProps={provided.dragHandleProps}
+                      onRemove={removeTrack}
+                    />
+                  )}
+                </Draggable>
+              ))}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
+      </DragDropContext>
     </div>
   );
 };

@@ -6,6 +6,10 @@ interface SelectedTrackStore {
   toggleTrack: (track: SearchTrack) => void;
   isSelected: (id: number) => boolean;
   clearTracks: () => void;
+
+  // 추가
+  setTracks: (tracks: SearchTrack[]) => void;
+  removeTrack: (id: number) => void;
 }
 
 export const useSelectedTrackStore = create<SelectedTrackStore>((set, get) => ({
@@ -26,4 +30,13 @@ export const useSelectedTrackStore = create<SelectedTrackStore>((set, get) => ({
   },
 
   clearTracks: () => set({ selectedTracks: [] }),
+
+  // 추가 (순서 변경용)
+  setTracks: (tracks) => set({ selectedTracks: tracks }),
+
+  // 추가 (삭제 버튼용)
+  removeTrack: (id) =>
+    set({
+      selectedTracks: get().selectedTracks.filter(t => t.id !== id),
+    }),
 }));
