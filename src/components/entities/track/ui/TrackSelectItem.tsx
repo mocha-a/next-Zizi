@@ -3,18 +3,19 @@
 import React from 'react';
 import Image from 'next/image';
 import { SearchTrack } from '@/types/deezer/search';
+import TagBtn from '@/components/common/TagBtn';
 
 import '@/styles/track/trackSelectItem.scss';
-import TagBtn from '@/components/common/TagBtn';
 
 interface Props {
   track: SearchTrack;
-  index: number;
   isSelected: boolean;
   onToggle: (track: SearchTrack) => void;
+  mode?: 'select' | 'new';
+  dragHandle?: any; 
 }
 
-function TrackSelectItem({ track, isSelected, onToggle }: Props) {
+function TrackSelectItem({ track, isSelected, onToggle, mode, dragHandle }: Props) {
   return (
     <li
       className={`select-track-item ${isSelected ? 'selected' : ''}`}
@@ -42,7 +43,20 @@ function TrackSelectItem({ track, isSelected, onToggle }: Props) {
 
       {/* 오른쪽 (선택 UI) */}
       <div className="trackitem-right">
-        <TagBtn tagbtn='+' className={`${isSelected ? 'active' : ''}`}/>
+        {mode === 'new' ? (
+          <div
+            {...dragHandle}
+            style={{
+              cursor: 'grab',
+              padding: '4px',
+              userSelect: 'none',
+            }}
+          >
+            ≡
+          </div>
+        ) : (
+          <TagBtn tagbtn="+" className={`${isSelected ? 'active' : ''}`} />
+        )}
       </div>
     </li>
   );

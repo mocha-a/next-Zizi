@@ -13,14 +13,14 @@ interface Props{
 }
 
 const RecentTrackCard = ({ track, index, variant = 'default' }: Props) => {
-  const { toggleTrack, isSelected } = useSelectedTrackStore();
+  const { toggleSelect, isSelected } = useSelectedTrackStore();
 
   const { data, isLoading } = useRecentDetail({
     type: track.type,
     targetId: track.targetId,
   });
 
-   if (isLoading || !data) {
+  if (isLoading || !data) {
     return (
       <ul className='tracklist recent'>
         <TrackSkeleton index={index} />
@@ -33,9 +33,8 @@ const RecentTrackCard = ({ track, index, variant = 'default' }: Props) => {
       {variant === 'select' ? (
         <TrackSelectItem
           track={data}
-          index={index}
           isSelected={isSelected(data.id)}
-          onToggle={toggleTrack}
+          onToggle={() => toggleSelect(data.id)} // 👈 수정
         />
       ) : (
         <TrackItem track={data} index={index} page="" />
@@ -44,4 +43,4 @@ const RecentTrackCard = ({ track, index, variant = 'default' }: Props) => {
   )
 }
 
-export default RecentTrackCard
+export default RecentTrackCard;

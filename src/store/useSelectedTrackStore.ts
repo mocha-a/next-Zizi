@@ -2,41 +2,46 @@ import { create } from 'zustand';
 import { SearchTrack } from '@/types/deezer/search';
 
 interface SelectedTrackStore {
-  selectedTracks: SearchTrack[];
-  toggleTrack: (track: SearchTrack) => void;
-  isSelected: (id: number) => boolean;
-  clearTracks: () => void;
+  tracks: SearchTrack[];            // 👉 실제 리스트 데이터
+  selectedIds: number[];            // 👉 선택 상태
 
-  // 추가
+  toggleSelect: (id: number) => void;
+  isSelected: (id: number) => boolean;
+
   setTracks: (tracks: SearchTrack[]) => void;
-  removeTrack: (id: number) => void;
+
+  removeTracks: () => void;         // 👉 선택된 것들 삭제
+  clearSelection: () => void;
 }
 
 export const useSelectedTrackStore = create<SelectedTrackStore>((set, get) => ({
-  selectedTracks: [],
+  tracks: [],
+  selectedIds: [],
 
-  toggleTrack: (track) => {
-    const exists = get().selectedTracks.some(t => t.id === track.id);
+  toggleSelect: (id) => {
+    const { selectedIds } = get();
 
     set({
-      selectedTracks: exists
-        ? get().selectedTracks.filter(t => t.id !== track.id)
-        : [...get().selectedTracks, track],
+      selectedIds: selectedIds.includes(id)
+        ? selectedIds.filter(v => v !== id)
+        : [...selectedIds, id],
     });
   },
 
   isSelected: (id) => {
-    return get().selectedTracks.some(t => t.id === id);
+    return get().selectedIds.includes(id);
   },
 
-  clearTracks: () => set({ selectedTracks: [] }),
+  setTracks: (tracks) => set({ tracks }),
 
-  // 추가 (순서 변경용)
-  setTracks: (tracks) => set({ selectedTracks: tracks }),
+  removeTracks: () => {
+    const { tracks, selectedIds } = get();
 
-  // 추가 (삭제 버튼용)
-  removeTrack: (id) =>
     set({
-      selectedTracks: get().selectedTracks.filter(t => t.id !== id),
-    }),
+      tracks: tracks.filter(t => !selectedIds.includes(t.id)),
+      selectedIds: [], // 👉 삭제 후 선택 초기화
+    });
+  },
+
+  clearSelection: () => set({ selectedIds: [] }),
 }));

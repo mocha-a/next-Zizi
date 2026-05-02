@@ -15,13 +15,13 @@ import '@/styles/playlist/NewPlaylist.scss';
 const LIMIT = 50;
 
 const Page = () => {
-  const { selectedTracks } = useSelectedTrackStore();
+  const { tracks } = useSelectedTrackStore();
   const [ query, setQuery ] = useState('');
 
   const router = useRouter();
 
   const {
-    list: tracks,
+    list: track,
     loadMore,
     hasNextPage,
     isLoading,
@@ -41,7 +41,7 @@ const Page = () => {
         <div className='new-playlist-back'><Back /></div>
         <p className='sub-title'>곡 추가하기</p>
         <button className='add-track-btn submit' onClick={() => router.back()}>
-          ({selectedTracks.length}) 완료
+          ({tracks.length}) 완료
         </button>
       </div>
       <SearchBar placeholder="한 곡 담아볼까? –♡" onSearch={(q) => setQuery(q)}/>
@@ -49,7 +49,7 @@ const Page = () => {
       {query ? (
         // 검색했을 때
         <TrackSelectList
-          tracks={tracks}
+          tracks={track}
           loading={isLoading || isFetchingNextPage}
           hasMore={hasNextPage}
           onLoadMore={loadMore}

@@ -19,7 +19,14 @@ import DraggableTrackCard from '@/components/entities/track/ui/DraggableTrackCar
 const Page = () => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
-  const { selectedTracks, setTracks, removeTrack } = useSelectedTrackStore();
+  const {
+    tracks,
+    selectedIds,
+    toggleSelect,
+    isSelected,
+    setTracks,
+    removeTracks
+  } = useSelectedTrackStore();
 
   const router = useRouter();
 
@@ -35,7 +42,7 @@ const Page = () => {
   const handleDragEnd = (result) => {
     if (!result.destination) return;
 
-    const items = Array.from(selectedTracks);
+    const items = Array.from(tracks);
     const [moved] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, moved);
 
@@ -93,7 +100,7 @@ const Page = () => {
               ref={provided.innerRef}
               {...provided.droppableProps}
             >
-              {selectedTracks.map((track, index) => (
+              {tracks.map((track, index) => (
                 <Draggable
                   key={track.id}
                   draggableId={String(track.id)}
@@ -102,11 +109,11 @@ const Page = () => {
                   {(provided) => (
                     <DraggableTrackCard
                       track={track}
-                      index={index}
                       innerRef={provided.innerRef}
                       draggableProps={provided.draggableProps}
                       dragHandleProps={provided.dragHandleProps}
-                      onRemove={removeTrack}
+                      isSelected={isSelected(track.id)}
+                      onToggle={() => toggleSelect(track.id)}
                     />
                   )}
                 </Draggable>
@@ -116,6 +123,12 @@ const Page = () => {
           )}
         </Droppable>
       </DragDropContext>
+
+      <TagBtn
+        tagbtn={`삭제 (${selectedIds.length})`}
+        onClick={removeTracks}
+        disabled={selectedIds.length === 0}
+      />
     </div>
   );
 };
