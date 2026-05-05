@@ -29,13 +29,12 @@ const TrackSelectList = ({ tracks, loading, hasMore, onLoadMore }: Props) => {
           ))}
 
         {/* 트랙 리스트 */}
-        {tracks.map((track, index) => (
+        {tracks.map((track) => (
           <TrackSelectItem
             key={track.id}
             track={track}
-            index={index}
             isSelected={isSelected(track.id)}
-            onToggle={() => toggleSelect(track.id)}
+            onToggle={() => toggleSelect(track)}
           />
         ))}
 

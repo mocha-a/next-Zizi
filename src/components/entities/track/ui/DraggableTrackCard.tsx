@@ -1,28 +1,29 @@
 'use client';
+import { DraggableProvided } from '@hello-pangea/dnd';
 import { SearchTrack } from '@/types/deezer/search';
 import TrackSelectItem from './TrackSelectItem';
 
 interface Props {
   track: SearchTrack;
-  dragHandleProps?: any;
-  draggableProps?: any;
+  draggable?: DraggableProvided['draggableProps'];
+  dragHandle?: DraggableProvided['dragHandleProps'];
   isSelected: boolean;
   onToggle: () => void;
   innerRef?: (element: HTMLElement | null) => void;
 }
 
-const DraggableTrackCard = ({ track, dragHandleProps, draggableProps, innerRef, isSelected, onToggle }: Props) => {
+const DraggableTrackCard = ({ track, draggable, dragHandle, innerRef, isSelected, onToggle }: Props) => {
   return (
     <div
       ref={innerRef}
-      {...draggableProps}
+      {...draggable}
     >
       <TrackSelectItem
         track={track}
         isSelected={isSelected}
         onToggle={onToggle}
         mode="new"
-        dragHandle={dragHandleProps}
+        dragHandle={dragHandle}
       />
     </div>
   );

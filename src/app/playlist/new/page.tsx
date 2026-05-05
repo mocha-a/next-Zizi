@@ -2,30 +2,25 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSelectedTrackStore } from '@/store/useSelectedTrackStore';
-import Back from '@/components/icons/Back';
+import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import TextField from '@mui/material/TextField';
+import Back from '@/components/icons/Back';
 import TagBtn from '@/components/common/TagBtn';
-
-
-import {
-  DragDropContext,
-  Droppable,
-  Draggable,
-} from '@hello-pangea/dnd';
-
-import '@/styles/playlist/NewPlaylist.scss';
 import DraggableTrackCard from '@/components/entities/track/ui/DraggableTrackCard';
 
+import '@/styles/playlist/NewPlaylist.scss';
+
 const Page = () => {
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
+  const [ name, setName ] = useState('');
+  const [ description, setDescription ] = useState('');
+
   const {
-    tracks,
-    selectedIds,
+    selectedTracks,
     toggleSelect,
     isSelected,
-    setTracks,
-    removeTracks
+    removeTrack,
+    clearSelection,
+    reorderTracks
   } = useSelectedTrackStore();
 
   const router = useRouter();
@@ -36,17 +31,14 @@ const Page = () => {
     console.log({
       name,
       description,
+      tracks: selectedTracks, // 👉 여기 중요
     });
   };
 
   const handleDragEnd = (result) => {
     if (!result.destination) return;
 
-    const items = Array.from(tracks);
-    const [moved] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, moved);
-
-    setTracks(items);
+    reorderTracks(result.source.index, result.destination.index);
   };
 
   return (
@@ -61,7 +53,9 @@ const Page = () => {
         }}
       >
         <div className="new-playlist-header">
-          <div className='new-playlist-back'><Back /></div>
+          <div className='new-playlist-back'>
+            <Back onBack={clearSelection} />
+          </div>
           <p className='sub-title'>내 플리 만들기</p>
           <button className='submit' type="submit">저장</button>
         </div>
@@ -99,7 +93,7 @@ const Page = () => {
               ref={provided.innerRef}
               {...provided.droppableProps}
             >
-              {tracks.map((track, index) => (
+              {selectedTracks.map((track, index) => (
                 <Draggable
                   key={track.id}
                   draggableId={String(track.id)}
@@ -109,12 +103,13 @@ const Page = () => {
                     <DraggableTrackCard
                       track={track}
                       innerRef={provided.innerRef}
-                      draggableProps={provided.draggableProps}
-                      dragHandleProps={provided.dragHandleProps}
+                      draggable={provided.draggableProps}
+                      dragHandle={provided.dragHandleProps}
                       isSelected={isSelected(track.id)}
-                      onToggle={() => toggleSelect(track.id)}
+                      onToggle={() => toggleSelect(track)}
                     />
                   )}
+                  
                 </Draggable>
               ))}
               {provided.placeholder}
@@ -124,9 +119,9 @@ const Page = () => {
       </DragDropContext>
 
       <TagBtn
-        tagbtn={`삭제 (${selectedIds.length})`}
-        onClick={removeTracks}
-        disabled={selectedIds.length === 0}
+        tagbtn={`전체 삭제 (${selectedTracks.length})`}
+        onClick={clearSelection}
+        disabled={selectedTracks.length === 0}
       />
     </div>
   );

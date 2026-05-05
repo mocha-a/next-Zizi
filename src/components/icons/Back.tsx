@@ -2,12 +2,17 @@
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 
-function Back({ className }: { className?: string }) {
+interface Props {
+  className?: string;
+  onBack?: () => void;
+}
+
+function Back({ className, onBack }: Props) {
   const router = useRouter();
 
   const goBack = () => {
-    router.back(); // 이전 페이지로 이동
-    // 특정 페이지로 이동 원할 시 router.push('/page-name')
+    onBack?.();
+    router.back();
   }
 
   return (

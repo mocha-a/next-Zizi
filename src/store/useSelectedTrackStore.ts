@@ -2,10 +2,10 @@ import { create } from 'zustand';
 import { SearchTrack } from '@/types/deezer/search';
 
 interface SelectedTrackStore {
-  tracks: SearchTrack[];              // 👉 전체 리스트 (검색 결과 등)
-  selectedTracks: SearchTrack[];      // 👉 선택 + 순서 관리 리스트
+  tracks: SearchTrack[];                       // 전체 리스트
+  selectedTracks: SearchTrack[];               // 선택 리스트
 
-  toggleSelect: (track: SearchTrack) => void;
+  toggleSelect: (track: SearchTrack) => void;  // 선택 / 해제 토글 함수
   isSelected: (id: number) => boolean;
 
   setTracks: (tracks: SearchTrack[]) => void;
@@ -21,6 +21,7 @@ export const useSelectedTrackStore = create<SelectedTrackStore>((set, get) => ({
   selectedTracks: [],
 
   toggleSelect: (track) => {
+    console.log('clicked track id:', track);
     const { selectedTracks } = get();
 
     const exists = selectedTracks.find(t => t.id === track.id);
@@ -49,6 +50,7 @@ export const useSelectedTrackStore = create<SelectedTrackStore>((set, get) => ({
   clearSelection: () => set({ selectedTracks: [] }),
 
   reorderTracks: (startIndex, endIndex) => {
+    
     const { selectedTracks } = get();
     const newList = [...selectedTracks];
 

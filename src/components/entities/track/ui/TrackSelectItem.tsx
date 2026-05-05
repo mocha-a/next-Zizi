@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
+import { DraggableProvided } from '@hello-pangea/dnd';
 import { SearchTrack } from '@/types/deezer/search';
 import TagBtn from '@/components/common/TagBtn';
 
@@ -11,8 +12,8 @@ interface Props {
   track: SearchTrack;
   isSelected: boolean;
   onToggle: (track: SearchTrack) => void;
+  dragHandle?: DraggableProvided['dragHandleProps'];
   mode?: 'select' | 'new';
-  dragHandle?: any; 
 }
 
 function TrackSelectItem({ track, isSelected, onToggle, mode, dragHandle }: Props) {
