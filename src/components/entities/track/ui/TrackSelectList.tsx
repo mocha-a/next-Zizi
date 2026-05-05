@@ -13,7 +13,7 @@ interface Props {
 }
 
 const TrackSelectList = ({ tracks, loading, hasMore, onLoadMore }: Props) => {
-  const { toggleTrack, isSelected } = useSelectedTrackStore();
+  const { toggleSelect, isSelected } = useSelectedTrackStore();
 
   return (
     <div className="trackTab-container tracklist">
@@ -35,7 +35,7 @@ const TrackSelectList = ({ tracks, loading, hasMore, onLoadMore }: Props) => {
             track={track}
             index={index}
             isSelected={isSelected(track.id)}
-            onToggle={toggleTrack}
+            onToggle={() => toggleSelect(track.id)}
           />
         ))}
 

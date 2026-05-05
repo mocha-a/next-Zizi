@@ -34,7 +34,7 @@ const RecentTrackCard = ({ track, index, variant = 'default' }: Props) => {
         <TrackSelectItem
           track={data}
           isSelected={isSelected(data.id)}
-          onToggle={() => toggleSelect(data.id)} // 👈 수정
+          onToggle={() => toggleSelect(data.id)}
         />
       ) : (
         <TrackItem track={data} index={index} page="" />

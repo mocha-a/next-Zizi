@@ -91,7 +91,6 @@ const Page = () => {
         onClick={() => router.push('/playlist/add-track')}
       />
 
-      {/* ⭐ 여기 핵심 */}
       <DragDropContext onDragEnd={handleDragEnd}>
         <Droppable droppableId="tracks">
           {(provided) => (

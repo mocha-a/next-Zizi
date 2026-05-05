@@ -2,46 +2,59 @@ import { create } from 'zustand';
 import { SearchTrack } from '@/types/deezer/search';
 
 interface SelectedTrackStore {
-  tracks: SearchTrack[];            // 👉 실제 리스트 데이터
-  selectedIds: number[];            // 👉 선택 상태
+  tracks: SearchTrack[];              // 👉 전체 리스트 (검색 결과 등)
+  selectedTracks: SearchTrack[];      // 👉 선택 + 순서 관리 리스트
 
-  toggleSelect: (id: number) => void;
+  toggleSelect: (track: SearchTrack) => void;
   isSelected: (id: number) => boolean;
 
   setTracks: (tracks: SearchTrack[]) => void;
 
-  removeTracks: () => void;         // 👉 선택된 것들 삭제
+  removeTrack: (id: number) => void;  // 👉 선택된 리스트에서 개별 삭제
   clearSelection: () => void;
+
+  reorderTracks: (startIndex: number, endIndex: number) => void; // 👉 드래그용
 }
 
 export const useSelectedTrackStore = create<SelectedTrackStore>((set, get) => ({
   tracks: [],
-  selectedIds: [],
+  selectedTracks: [],
 
-  toggleSelect: (id) => {
-    const { selectedIds } = get();
+  toggleSelect: (track) => {
+    const { selectedTracks } = get();
+
+    const exists = selectedTracks.find(t => t.id === track.id);
 
     set({
-      selectedIds: selectedIds.includes(id)
-        ? selectedIds.filter(v => v !== id)
-        : [...selectedIds, id],
+      selectedTracks: exists
+        ? selectedTracks.filter(t => t.id !== track.id)
+        : [...selectedTracks, track],
     });
   },
 
   isSelected: (id) => {
-    return get().selectedIds.includes(id);
+    return get().selectedTracks.some(t => t.id === id);
   },
 
   setTracks: (tracks) => set({ tracks }),
 
-  removeTracks: () => {
-    const { tracks, selectedIds } = get();
+  removeTrack: (id) => {
+    const { selectedTracks } = get();
 
     set({
-      tracks: tracks.filter(t => !selectedIds.includes(t.id)),
-      selectedIds: [], // 👉 삭제 후 선택 초기화
+      selectedTracks: selectedTracks.filter(t => t.id !== id),
     });
   },
 
-  clearSelection: () => set({ selectedIds: [] }),
+  clearSelection: () => set({ selectedTracks: [] }),
+
+  reorderTracks: (startIndex, endIndex) => {
+    const { selectedTracks } = get();
+    const newList = [...selectedTracks];
+
+    const [removed] = newList.splice(startIndex, 1);
+    newList.splice(endIndex, 0, removed);
+
+    set({ selectedTracks: newList });
+  },
 }));

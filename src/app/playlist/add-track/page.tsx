@@ -19,7 +19,7 @@ const Page = () => {
   const [ query, setQuery ] = useState('');
 
   const router = useRouter();
-
+  console.log(tracks)
   const {
     list: track,
     loadMore,
@@ -35,13 +35,12 @@ const Page = () => {
   });
 
   return (
-    // TODO: 곡 선택 상태 관리 + 완료 버튼 연결 하자
     <div className="add-track new-playlist-page">
       <div className="new-playlist-header">
         <div className='new-playlist-back'><Back /></div>
         <p className='sub-title'>곡 추가하기</p>
         <button className='add-track-btn submit' onClick={() => router.back()}>
-          ({tracks.length}) 완료
+          ({track.length}) 완료
         </button>
       </div>
       <SearchBar placeholder="한 곡 담아볼까? –♡" onSearch={(q) => setQuery(q)}/>
