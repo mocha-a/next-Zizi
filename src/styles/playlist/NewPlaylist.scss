@@ -3,8 +3,20 @@
 
 // 플레이리스트 추가
 .new-playlist-page{
-  @include publicWidth;
+  .new-playlist-form{
+    @include publicWidth;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 400px;
+    
+    input::placeholder{
+      font-family: var(--font-Galmuri9);
+      font-size: 13px;
+    }
 
+  }
+  
   .new-playlist-header {
     @include flex($align: center);
 
@@ -24,6 +36,20 @@
 
     .back{
       width: 16px; height: 16px;
+    }
+  }
+  .new-playlist-btn{
+    margin: 20px 18px;
+  }
+
+  .new-playlist-tracks{
+    li{
+      margin: 0;
+      padding: 10px 18px;
+    }
+
+    .selected{
+      background-color: #E9F7FF;
     }
   }
 }

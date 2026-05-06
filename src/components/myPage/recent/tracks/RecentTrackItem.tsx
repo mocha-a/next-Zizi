@@ -4,7 +4,7 @@ import { RecentView } from '@/types/recent';
 import TrackItem from '@/components/common/TrackItem';
 import TrackSkeleton from '@/components/loading/item/TrackSkeleton';
 import TrackSelectItem from '@/components/entities/track/ui/TrackSelectItem';
-import { useSelectedTrackStore } from '@/store/useSelectedTrackStore';
+import { useTrackStore } from '@/store/useSelectedTrackStore';
 
 interface Props{
   track: RecentView;
@@ -13,7 +13,8 @@ interface Props{
 }
 
 const RecentTrackCard = ({ track, index, variant = 'default' }: Props) => {
-  const { toggleSelect, isSelected } = useSelectedTrackStore();
+  const toggleSelect = useTrackStore(state => state.toggleSelect);
+  const selectedIds = useTrackStore(state => state.selectedIds);
 
   const { data, isLoading } = useRecentDetail({
     type: track.type,
@@ -33,7 +34,7 @@ const RecentTrackCard = ({ track, index, variant = 'default' }: Props) => {
       {variant === 'select' ? (
         <TrackSelectItem
           track={data}
-          isSelected={isSelected(data.id)}
+          isSelected={selectedIds.includes(data.id)}
           onToggle={() => toggleSelect(data)}
         />
       ) : (

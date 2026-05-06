@@ -1,8 +1,8 @@
 'use client';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useSelectedTrackStore } from '@/store/useSelectedTrackStore';
-import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
+import { useTrackStore } from '@/store/useSelectedTrackStore';
+import { DragDropContext, Droppable, Draggable, DropResult } from '@hello-pangea/dnd';
 import TextField from '@mui/material/TextField';
 import Back from '@/components/icons/Back';
 import TagBtn from '@/components/common/TagBtn';
@@ -14,14 +14,15 @@ const Page = () => {
   const [ name, setName ] = useState('');
   const [ description, setDescription ] = useState('');
 
-  const {
-    selectedTracks,
-    toggleSelect,
-    isSelected,
-    removeTrack,
-    clearSelection,
-    reorderTracks
-  } = useSelectedTrackStore();
+  const tracks = useTrackStore(state => state.tracks);
+  const orderIds = useTrackStore(state => state.orderIds);
+  const selectedIds = useTrackStore(state => state.selectedIds);
+
+  const toggleSelect = useTrackStore(state => state.toggleSelect);
+  const clearSelection = useTrackStore(state => state.clearSelection);
+  const reorder = useTrackStore(state => state.reorder);
+
+  const playlist = orderIds.map(id => tracks[id]);
 
   const router = useRouter();
 
@@ -31,26 +32,21 @@ const Page = () => {
     console.log({
       name,
       description,
-      tracks: selectedTracks, // 👉 여기 중요
+      tracks: playlist, // 👉 여기 중요
     });
   };
 
-  const handleDragEnd = (result) => {
+  const handleDragEnd = (result: DropResult) => {
     if (!result.destination) return;
 
-    reorderTracks(result.source.index, result.destination.index);
+    reorder(result.source.index, result.destination.index);
   };
 
   return (
     <div className='new-playlist-page'>
       <form
+        className='new-playlist-form'
         onSubmit={handleSubmit}
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '16px',
-          maxWidth: '400px',
-        }}
       >
         <div className="new-playlist-header">
           <div className='new-playlist-back'>
@@ -80,20 +76,26 @@ const Page = () => {
         />
       </form>
 
-      <TagBtn
-        tagbtn={`+ 곡 추가하기`}
-        onClick={() => router.push('/playlist/add-track')}
-      />
+      <div className='new-playlist-btn'>
+        <TagBtn
+          tagbtn={`+ 곡 추가하기`}
+          onClick={() => router.push('/playlist/add-track')}
+        />
+        <TagBtn
+          tagbtn={`삭제 (${selectedIds.length})`}
+          onClick={clearSelection}
+        />
+      </div>
 
       <DragDropContext onDragEnd={handleDragEnd}>
         <Droppable droppableId="tracks">
           {(provided) => (
             <div
-              className='tracklist'
+              className='new-playlist-tracks tracklist'
               ref={provided.innerRef}
               {...provided.droppableProps}
             >
-              {selectedTracks.map((track, index) => (
+              {playlist.map((track, index) => (
                 <Draggable
                   key={track.id}
                   draggableId={String(track.id)}
@@ -105,11 +107,10 @@ const Page = () => {
                       innerRef={provided.innerRef}
                       draggable={provided.draggableProps}
                       dragHandle={provided.dragHandleProps}
-                      isSelected={isSelected(track.id)}
+                      isSelected={selectedIds.includes(track.id)}
                       onToggle={() => toggleSelect(track)}
                     />
                   )}
-                  
                 </Draggable>
               ))}
               {provided.placeholder}
@@ -118,11 +119,7 @@ const Page = () => {
         </Droppable>
       </DragDropContext>
 
-      <TagBtn
-        tagbtn={`전체 삭제 (${selectedTracks.length})`}
-        onClick={clearSelection}
-        disabled={selectedTracks.length === 0}
-      />
+
     </div>
   );
 };

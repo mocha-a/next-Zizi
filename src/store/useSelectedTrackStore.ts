@@ -1,62 +1,69 @@
 import { create } from 'zustand';
 import { SearchTrack } from '@/types/deezer/search';
 
-interface SelectedTrackStore {
-  tracks: SearchTrack[];                       // 전체 리스트
-  selectedTracks: SearchTrack[];               // 선택 리스트
+interface Store {
+  tracks: Record<number, SearchTrack>;
+  selectedIds: number[];
+  orderIds: number[];
 
-  toggleSelect: (track: SearchTrack) => void;  // 선택 / 해제 토글 함수
-  isSelected: (id: number) => boolean;
-
-  setTracks: (tracks: SearchTrack[]) => void;
-
-  removeTrack: (id: number) => void;  // 👉 선택된 리스트에서 개별 삭제
+  toggleSelect: (track: SearchTrack) => void;
   clearSelection: () => void;
 
-  reorderTracks: (startIndex: number, endIndex: number) => void; // 👉 드래그용
+  addSelectedToPlaylist: () => void;
+  removeFromPlaylist: () => void;
+
+  reorder: (start: number, end: number) => void;
 }
 
-export const useSelectedTrackStore = create<SelectedTrackStore>((set, get) => ({
-  tracks: [],
-  selectedTracks: [],
+export const useTrackStore = create<Store>((set, get) => ({
+  tracks: {},
+  selectedIds: [],
+  orderIds: [],
 
   toggleSelect: (track) => {
-    console.log('clicked track id:', track);
-    const { selectedTracks } = get();
-
-    const exists = selectedTracks.find(t => t.id === track.id);
+    const { selectedIds, tracks } = get();
+    const exists = selectedIds.includes(track.id);
 
     set({
-      selectedTracks: exists
-        ? selectedTracks.filter(t => t.id !== track.id)
-        : [...selectedTracks, track],
+      tracks: tracks[track.id]
+        ? tracks
+        : { ...tracks, [track.id]: track },
+
+      selectedIds: exists
+        ? selectedIds.filter(id => id !== track.id)
+        : [...selectedIds, track.id],
     });
   },
 
-  isSelected: (id) => {
-    return get().selectedTracks.some(t => t.id === id);
-  },
+  clearSelection: () => set({ selectedIds: [] }),
 
-  setTracks: (tracks) => set({ tracks }),
+  addSelectedToPlaylist: () => {
+    const { selectedIds, orderIds } = get();
 
-  removeTrack: (id) => {
-    const { selectedTracks } = get();
+    const newIds = selectedIds.filter(id => !orderIds.includes(id));
 
     set({
-      selectedTracks: selectedTracks.filter(t => t.id !== id),
+      orderIds: [...orderIds, ...newIds],
+      selectedIds: [],
     });
   },
 
-  clearSelection: () => set({ selectedTracks: [] }),
+  removeFromPlaylist: () => {
+    const { selectedIds, orderIds } = get();
 
-  reorderTracks: (startIndex, endIndex) => {
-    
-    const { selectedTracks } = get();
-    const newList = [...selectedTracks];
+    set({
+      orderIds: orderIds.filter(id => !selectedIds.includes(id)),
+      selectedIds: [],
+    });
+  },
 
-    const [removed] = newList.splice(startIndex, 1);
-    newList.splice(endIndex, 0, removed);
+  reorder: (start, end) => {
+    const { orderIds } = get();
+    const newList = [...orderIds];
 
-    set({ selectedTracks: newList });
+    const [removed] = newList.splice(start, 1);
+    newList.splice(end, 0, removed);
+
+    set({ orderIds: newList });
   },
 }));

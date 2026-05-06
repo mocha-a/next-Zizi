@@ -1,6 +1,7 @@
 import React from 'react'
-import { useSelectedTrackStore } from '@/store/useSelectedTrackStore';
+
 import { SearchTrack } from '@/types/deezer/search';
+import { useTrackStore } from '@/store/useSelectedTrackStore';
 import InfiniteScroll from '@/components/common/InfiniteScroll';
 import TrackSkeleton from '@/components/loading/item/TrackSkeleton';
 import TrackSelectItem from './TrackSelectItem';
@@ -13,7 +14,8 @@ interface Props {
 }
 
 const TrackSelectList = ({ tracks, loading, hasMore, onLoadMore }: Props) => {
-  const { toggleSelect, isSelected } = useSelectedTrackStore();
+  const toggleSelect = useTrackStore(state => state.toggleSelect);
+  const selectedIds = useTrackStore(state => state.selectedIds);
 
   return (
     <div className="trackTab-container tracklist">
@@ -33,8 +35,8 @@ const TrackSelectList = ({ tracks, loading, hasMore, onLoadMore }: Props) => {
           <TrackSelectItem
             key={track.id}
             track={track}
-            isSelected={isSelected(track.id)}
-            onToggle={() => toggleSelect(track)}
+            isSelected={selectedIds.includes(track.id)}
+            onToggle={toggleSelect}
           />
         ))}
 
