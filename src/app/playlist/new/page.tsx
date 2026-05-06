@@ -1,16 +1,24 @@
 'use client';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 import { useTrackStore } from '@/store/useSelectedTrackStore';
-import { DragDropContext, Droppable, Draggable, DropResult } from '@hello-pangea/dnd';
-import TextField from '@mui/material/TextField';
-import Back from '@/components/icons/Back';
-import TagBtn from '@/components/common/TagBtn';
-import DraggableTrackCard from '@/components/entities/track/ui/DraggableTrackCard';
+import { useUserProfile } from '@/hooks/useUserProfile';
+import { DropResult } from '@hello-pangea/dnd';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+
+import NewPlaylistForm from '@/components/entities/playlist/ui/NewPlaylistForm';
+import NewPlaylistActions from '@/components/entities/playlist/ui/NewPlaylistActions';
+import NewPlaylistTrackList from '@/components/entities/playlist/ui/NewPlaylistTrackList';
 
 import '@/styles/playlist/NewPlaylist.scss';
+import { createPlaylist } from '@/lib/api/myPlaylist';
 
 const Page = () => {
+  const { data: session } = useSession();
+  const { data: user } = useUserProfile(session);
+  const userId = user?.id;
+
   const [ name, setName ] = useState('');
   const [ description, setDescription ] = useState('');
 
@@ -26,13 +34,30 @@ const Page = () => {
 
   const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const queryClient = useQueryClient();
 
-    console.log({
-      name,
+  const { mutate, isPending } = useMutation({
+    mutationFn: createPlaylist,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['playlists'] });
+      router.push('/mypage?tab=myplaylist');
+    },
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+  e.preventDefault();
+
+  if (!userId) return;
+
+  const trackIds = playlist.map(track => ({
+    id: track.id,
+  }));
+
+    mutate({
+      title: name,
       description,
-      tracks: playlist, // 👉 여기 중요
+      userId,
+      tracks: trackIds,
     });
   };
 
@@ -44,82 +69,28 @@ const Page = () => {
 
   return (
     <div className='new-playlist-page'>
-      <form
-        className='new-playlist-form'
+      <NewPlaylistForm
+        name={name}
+        description={description}
+        isPending={isPending}
+        onChangeName={setName}
+        onChangeDescription={setDescription}
         onSubmit={handleSubmit}
-      >
-        <div className="new-playlist-header">
-          <div className='new-playlist-back'>
-            <Back onBack={clearSelection} />
-          </div>
-          <p className='sub-title'>내 플리 만들기</p>
-          <button className='submit' type="submit">저장</button>
-        </div>
+        onBack={clearSelection}
+      />
 
-        <TextField
-          label="플리 이름"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          variant="standard"
-          placeholder='>>> waiting for title... 제목을 입력해줘'
-          required
-          fullWidth
-        />
+      <NewPlaylistActions
+        selectedCount={selectedIds.length}
+        onAddTrack={() => router.push('/playlist/add-track')}
+        onDelete={clearSelection}
+      />
 
-        <TextField
-          label="설명"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          variant="standard"
-          placeholder='>>> describe your vibe... 어떤 기분으로 모았어?'
-          fullWidth
-        />
-      </form>
-
-      <div className='new-playlist-btn'>
-        <TagBtn
-          tagbtn={`+ 곡 추가하기`}
-          onClick={() => router.push('/playlist/add-track')}
-        />
-        <TagBtn
-          tagbtn={`삭제 (${selectedIds.length})`}
-          onClick={clearSelection}
-        />
-      </div>
-
-      <DragDropContext onDragEnd={handleDragEnd}>
-        <Droppable droppableId="tracks">
-          {(provided) => (
-            <div
-              className='new-playlist-tracks tracklist'
-              ref={provided.innerRef}
-              {...provided.droppableProps}
-            >
-              {playlist.map((track, index) => (
-                <Draggable
-                  key={track.id}
-                  draggableId={String(track.id)}
-                  index={index}
-                >
-                  {(provided) => (
-                    <DraggableTrackCard
-                      track={track}
-                      innerRef={provided.innerRef}
-                      draggable={provided.draggableProps}
-                      dragHandle={provided.dragHandleProps}
-                      isSelected={selectedIds.includes(track.id)}
-                      onToggle={() => toggleSelect(track)}
-                    />
-                  )}
-                </Draggable>
-              ))}
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
-
-
+      <NewPlaylistTrackList
+        playlist={playlist}
+        selectedIds={selectedIds}
+        onToggle={toggleSelect}
+        onDragEnd={handleDragEnd}
+      />
     </div>
   );
 };

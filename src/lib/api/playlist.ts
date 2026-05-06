@@ -29,4 +29,3 @@ export const getFlow = async (creatorId: number) => {
 
   return res.data.data;
 };
-
