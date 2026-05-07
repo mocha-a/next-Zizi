@@ -9,7 +9,7 @@ import { useUserProfile } from '@/hooks/useUserProfile';
 import LogoutButton from '@/components/auth/LogoutButton';
 import PageTitle from '@/components/common/PageTitle';
 import TabsContainer from '@/components/common/TabsContainer';
-import MyPlaylistsSection from '@/components/myPage/MyPlaylistsSection';
+import MyPlaylistsSection from '@/components/myPage/myplaylist/MyPlaylistsSection';
 import RecentSection from '@/components/myPage/recent/RecentSection';
 import CdImage from '@/components/myPage/CdImage';
 

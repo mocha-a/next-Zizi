@@ -1,3 +1,5 @@
+import { User } from "../userBadge";
+
 export interface MyPlaylist {
   id: number;
   userId: string;
@@ -8,9 +10,7 @@ export interface MyPlaylist {
   createdAt: string;
   updatedAt: string;
 
-  user: {
-    name: string;
-  };
+  user: User;
 
   tracks: {
     id: number;

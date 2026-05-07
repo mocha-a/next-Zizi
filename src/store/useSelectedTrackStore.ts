@@ -13,6 +13,7 @@ interface Store {
   removeFromPlaylist: () => void;
 
   reorder: (start: number, end: number) => void;
+  reset: () => void;
 }
 
 export const useTrackStore = create<Store>((set, get) => ({
@@ -66,4 +67,11 @@ export const useTrackStore = create<Store>((set, get) => ({
 
     set({ orderIds: newList });
   },
+
+  reset: () =>
+    set({
+      tracks: {},
+      selectedIds: [],
+      orderIds: [],
+    }),
 }));

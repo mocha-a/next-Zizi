@@ -7,8 +7,19 @@ import prisma from "@/lib/prisma";
 // 내 플리 저장
 export async function POST(req: Request) {
   try {
+    const session = await getServerSession(authOptions);
+
+    if (!session?.user?.id) {
+      return NextResponse.json(
+        { message: "Unauthorized" },
+        { status: 401 }
+      );
+    }
+
+    const userId = session.user.id;
+
     const body = await req.json();
-    const { title, description, userId, thumbnails, tracks } = body;
+    const { title, description, thumbnails, tracks } = body;
 
     if (!title || !tracks || tracks.length === 0) {
       return NextResponse.json(
@@ -17,14 +28,12 @@ export async function POST(req: Request) {
       );
     }
 
-    // Playlist + PlaylistTrack 한 번에 생성
     const playlist = await prisma.playlist.create({
       data: {
         title,
         description,
         userId,
         thumbnails,
-
         tracks: {
           create: tracks.map((track: Track, index: number) => ({
             trackId: String(track.id),
@@ -32,6 +41,7 @@ export async function POST(req: Request) {
           })),
         },
       },
+      
       include: {
         tracks: true,
       },

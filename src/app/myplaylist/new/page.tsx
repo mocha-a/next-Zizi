@@ -12,7 +12,7 @@ import NewPlaylistForm from '@/components/entities/playlist/ui/NewPlaylistForm';
 import NewPlaylistActions from '@/components/entities/playlist/ui/NewPlaylistActions';
 import NewPlaylistTrackList from '@/components/entities/playlist/ui/NewPlaylistTrackList';
 
-import '@/styles/playlist/NewPlaylist.scss';
+import '@/styles/myplaylist/NewPlaylist.scss';
 
 const Page = () => {
   const { data: session } = useSession();
@@ -39,7 +39,8 @@ const Page = () => {
   const { mutate, isPending } = useMutation({
     mutationFn: createPlaylist,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['playlists'] });
+      useTrackStore.getState().reset();
+      queryClient.invalidateQueries({ queryKey: ['myplaylist'] });
       router.push('/mypage?tab=myplaylist');
     },
   });

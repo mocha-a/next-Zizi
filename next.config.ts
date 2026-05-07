@@ -7,6 +7,10 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "cdn-images.dzcdn.net", // Deezer
       },
+      {
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com", // Google OAuth 이미지
+      },
     ],
   },
   webpack(config) {

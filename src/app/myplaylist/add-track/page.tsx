@@ -10,7 +10,7 @@ import SearchBar from '@/components/search/ui/SearchBar';
 import TrackSelectList from '@/components/entities/track/ui/TrackSelectList';
 import RecentContent from '@/components/myPage/recent/RecentContent';
 
-import '@/styles/playlist/NewPlaylist.scss';
+import '@/styles/myplaylist/NewPlaylist.scss';
 
 const LIMIT = 50;
 

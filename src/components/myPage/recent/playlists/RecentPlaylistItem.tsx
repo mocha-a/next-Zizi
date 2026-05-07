@@ -31,7 +31,7 @@ const RecentPlaylistCard = ({ playlist }: Props) => {
         id={data.id}
         picture={data.picture_medium}
         title={data.title}
-        user={data.creator.name}
+        user={data.creator?.name}
         tracks={data.nb_tracks}
         onClick={() => router.push(`/playlist/${data.id}`)}
       />

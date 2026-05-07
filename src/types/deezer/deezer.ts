@@ -1,4 +1,5 @@
 import { SearchArtist, SearchTrack, SearchAlbum, SearchPlaylist } from '@/types/deezer/search';
+import { Creator } from '../userBadge';
 
 // ======================================================
 // artist
@@ -40,12 +41,6 @@ export interface Album extends SearchAlbum{
 // ======================================================
 // playlist
 // ======================================================
-export interface Creator {
-  id: number;
-  name: string;
-  picture_medium?: string;
-  country?: string;
-}
 
 export interface Playlist extends SearchPlaylist{
   description: string;     //플레이리스트 설명

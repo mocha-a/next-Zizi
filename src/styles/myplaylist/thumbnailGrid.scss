@@ -1,0 +1,62 @@
+@use '../variables'as *;
+@use '../mixins'as *;
+
+.collage {
+  width: 200px;
+  height: 200px;
+  position: relative;
+  overflow: hidden;
+}
+
+.collage-2 {
+  .img {
+    object-fit: cover;
+  }
+
+  .left {
+    clip-path: polygon(0 0, 100% 0, 0 100%);
+  }
+
+  .right {
+    clip-path: polygon(100% 0, 100% 100%, 0 100%);
+  }
+}
+
+.collage-3 {
+  display: flex;
+}
+
+.big {
+  position: relative;
+  width: 60%;
+  height: 100%;
+}
+
+.small {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+}
+
+.small > div {
+  position: relative;
+  flex: 1;
+}
+
+.img {
+  object-fit: cover;
+}
+
+.collage-4 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+
+.cell {
+  position: relative;
+}
+
+.img {
+  object-fit: cover;
+}

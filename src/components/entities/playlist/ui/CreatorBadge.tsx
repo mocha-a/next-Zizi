@@ -1,25 +1,26 @@
-import { Creator } from '@/types/deezer/deezer';
 import Image from 'next/image';
 import React from 'react';
+import { BadgeUser } from '@/types/userBadge';
 
 import '@/styles/entitiesUI/creatorBadge.scss';
 
 interface Props {
-  creator: Creator | null | undefined;
+  creator: BadgeUser | null | undefined;
+  KRCode?: string;
 }
 
-const CreatorBadge = ({ creator }: Props) => {
+const CreatorBadge = ({ creator, KRCode }: Props) => {
   if (!creator) return null;
 
   const name = creator.name || '알 수 없는 사용자';
-  const countryCode = creator.country?.trim().toLowerCase();
+  const countryCode = (KRCode || creator.country)?.trim().toLowerCase();
 
   return (
     <div className="creator-badge">
       <div className="creator-profile-wrapper">
         <span className="creator-badge-img">
           <Image
-            src={creator.picture_medium || '/imgs/default.png'}
+            src={creator.image  || '/imgs/default.png'}
             alt={name}
             width={32}
             height={32}

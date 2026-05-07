@@ -23,8 +23,8 @@ export const getPlaylists = async () => {
 };
 
 // 내 플리 상세
-export const getMyPlaylist = async () => {
-  const res = await api.get('/myplaylist/${id}');
+export const getMyPlaylist = async (id: string) => {
+  const res = await api.get(`/myplaylist/${id}`);
 
   return res.data;
 };
