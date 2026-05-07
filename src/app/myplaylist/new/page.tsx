@@ -45,18 +45,23 @@ const Page = () => {
   });
 
   const handleSubmit = (e: React.FormEvent) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  if (!userId) return;
+    if (!userId) return;
 
-  const trackIds = playlist.map(track => ({
-    id: track.id,
-  }));
+    const trackIds = playlist.map(track => ({
+      id: track.id,
+    }));
+
+    const thumbnails = playlist
+    .slice(0, 4)
+    .map(track => track.album.cover_medium);
 
     mutate({
       title: name,
       description,
       userId,
+      thumbnails,
       tracks: trackIds,
     });
   };
@@ -81,7 +86,7 @@ const Page = () => {
 
       <NewPlaylistActions
         selectedCount={selectedIds.length}
-        onAddTrack={() => router.push('/playlist/add-track')}
+        onAddTrack={() => router.push('/myplaylist/add-track')}
         onDelete={clearSelection}
       />
 

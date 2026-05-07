@@ -17,6 +17,7 @@ interface Props {
 }
 
 function TrackSelectItem({ track, isSelected, onToggle, mode, dragHandle }: Props) {
+  console.log(track);
   return (
     <li
       className={`select-track-item ${isSelected ? 'selected' : ''}`}

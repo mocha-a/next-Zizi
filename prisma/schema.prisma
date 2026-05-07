@@ -110,6 +110,9 @@ model Playlist {
 
   title       String
   description String?
+
+  thumbnails  Json?
+  
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt 
 
