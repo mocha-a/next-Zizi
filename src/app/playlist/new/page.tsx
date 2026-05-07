@@ -2,17 +2,17 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
-import { useTrackStore } from '@/store/useSelectedTrackStore';
-import { useUserProfile } from '@/hooks/useUserProfile';
 import { DropResult } from '@hello-pangea/dnd';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useTrackStore } from '@/store/useSelectedTrackStore';
+import { useUserProfile } from '@/hooks/useUserProfile';
+import { createPlaylist } from '@/lib/api/myPlaylist';
 
 import NewPlaylistForm from '@/components/entities/playlist/ui/NewPlaylistForm';
 import NewPlaylistActions from '@/components/entities/playlist/ui/NewPlaylistActions';
 import NewPlaylistTrackList from '@/components/entities/playlist/ui/NewPlaylistTrackList';
 
 import '@/styles/playlist/NewPlaylist.scss';
-import { createPlaylist } from '@/lib/api/myPlaylist';
 
 const Page = () => {
   const { data: session } = useSession();
@@ -21,7 +21,7 @@ const Page = () => {
 
   const [ name, setName ] = useState('');
   const [ description, setDescription ] = useState('');
-
+  
   const tracks = useTrackStore(state => state.tracks);
   const orderIds = useTrackStore(state => state.orderIds);
   const selectedIds = useTrackStore(state => state.selectedIds);

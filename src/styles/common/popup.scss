@@ -1,0 +1,86 @@
+@use '../variables'as *;
+@use '../mixins'as *;
+
+.popup-box, .popup-box-burger{
+    position: fixed;
+    width: 100vw; height: 100vh;
+    left: 0; top: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+}
+.popup-box-burger{width: 768px !important;}
+
+.popup{
+    min-width: 320px;
+    background-color: white;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+}
+
+.popup{
+  padding: 30px;
+  .popup-cont{
+    @include flex;
+    flex-direction: column;
+    gap: 16px;
+    font-size: 14px;
+    .popup-icon{
+      font-size: 30px;
+    }
+
+    p{
+      font-family: var(--font-Galmuri9);
+      white-space: pre-line;
+      
+      span{
+        font-family: var(--font-Galmuri9);
+        display: block;
+        color: rgba(0, 0, 0, 0.3);
+        margin-top: 10px;
+      }
+    }
+  }
+    .popup-warningicon{
+        width: 28px;
+        >img{width: 100%;}
+    }
+    .popup-callicon{
+        width: 28px;
+        >img{width: 100%;}
+    }
+}
+
+.popup-btns-box{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 7px;
+
+  button{
+    flex: 1;
+  }
+}
+
+.popup-btns-box{
+    margin-top: 32px;
+}
+
+.btn1popup-btn, .btn2popup-btn{
+  font-family: var(--font-Galmuri9);
+  padding: 10px 17px;
+  border-radius: 7px;
+  border: 1px solid $blue;
+  font-size: 16px;
+  cursor: pointer;
+}
+.btn1popup-btn{
+    background-color: $blue;
+    color: white;
+}
+.btn2popup-btn{
+    background-color: white;
+    color: $blue;
+}
