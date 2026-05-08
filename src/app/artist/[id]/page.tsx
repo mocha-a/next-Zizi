@@ -7,9 +7,9 @@ import { useQuery } from '@tanstack/react-query';
 import { getArtist } from '@/lib/api/artist';
 import { Artist } from '@/types/deezer/deezer';
 
+import Back from '@/components/icons/Back';
 import Recent from '@/components/tracking/Recent';
 import TabsContainer from '@/components/common/TabsContainer';
-import DetailHeader from '@/components/common/DetailHeader';
 import ArtistAlbums from '@/components/entities/artist/container/ArtistAlbums';
 import ArtistTracks from '@/components/entities/artist/container/ArtistTrack';
 
@@ -54,7 +54,7 @@ const Page = () => {
           />
 
           <div className="artist-backBtn">
-            <DetailHeader />
+            <Back className ='detailHeader' />
           </div>
 
           <h1 className="artist-name">{artist.name}</h1>

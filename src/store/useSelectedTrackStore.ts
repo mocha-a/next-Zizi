@@ -6,6 +6,7 @@ interface Store {
   selectedIds: number[];
   orderIds: number[];
 
+  setTracks: (tracks: SearchTrack[]) => void;
   toggleSelect: (track: SearchTrack) => void;
   clearSelection: () => void;
 
@@ -20,6 +21,21 @@ export const useTrackStore = create<Store>((set, get) => ({
   tracks: {},
   selectedIds: [],
   orderIds: [],
+
+  setTracks: (tracks) => {
+    const trackMap = tracks.reduce((acc, track) => {
+      acc[track.id] = track;
+      return acc;
+    }, {} as Record<number, SearchTrack>);
+
+    const orderIds = tracks.map(track => track.id);
+
+    set({
+      tracks: trackMap,
+      orderIds,
+      selectedIds: [],
+    });
+  },
 
   toggleSelect: (track) => {
     const { selectedIds, tracks } = get();

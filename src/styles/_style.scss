@@ -10,7 +10,8 @@
 
 //디테일 헤더
 .detailHeader{
-    margin-bottom: 20px
+    @include flex($justify: space-between);
+    padding: 20px 0;
 }
 
 .title{

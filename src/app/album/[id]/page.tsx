@@ -9,8 +9,8 @@ import { getUniqueGenres } from '@/lib/genre';
 import { getAlbum } from '@/lib/api/album';
 import { Album } from '@/types/deezer/deezer';
 
+import Back from '@/components/icons/Back';
 import Recent from '@/components/tracking/Recent';
-import DetailHeader from '@/components/common/DetailHeader';
 import TabsContainer from '@/components/common/TabsContainer';
 import ArtistBadge from '@/components/entities/artist/ui/ArtistBadge';
 import SimilarAlbums from '@/components/entities/album/container/SimilarAlbums';
@@ -48,7 +48,7 @@ const Page = () => {
   return (
     <div className="album-detail">
       <Recent type="album" id={id} />
-      <DetailHeader />
+      <Back className ='detailHeader' />
       <div className='album-detail-img'>
         <Image
           src={album.cover_medium ?? '/imgs/default.png'}
