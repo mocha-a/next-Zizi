@@ -48,15 +48,15 @@ function page() {
         },
     ];
     
-  return (
-    <div className='join-container'>
-        <Back className='join'/>
+    return (
+        <div className='join-container'>
+            <Back className='join'/>
 
-        <p className='join-title'>회원가입</p>
+            <p className='join-title'>회원가입</p>
 
-        <JoinForm listData={data}/>
-    </div>
-  )
+            <JoinForm listData={data}/>
+        </div>
+    )
 }
 
 export default page
