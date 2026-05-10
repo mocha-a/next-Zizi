@@ -8,6 +8,7 @@ import { useTrackStore } from '@/store/useSelectedTrackStore';
 import { useUserProfile } from '@/hooks/useUserProfile';
 import { createPlaylist } from '@/lib/api/myPlaylist';
 import { MyPlaylist } from '@/types/user/myPlaylist';
+import { Track } from '@/types/deezer/deezer';
 
 import NewPlaylistForm from '@/components/entities/playlist/ui/NewPlaylistForm';
 import NewPlaylistActions from '@/components/entities/playlist/ui/NewPlaylistActions';
@@ -18,9 +19,10 @@ import '@/styles/myplaylist/NewPlaylist.scss';
 interface Props {
   mode?: 'create' | 'edit';
   myplaylistData?: MyPlaylist;
+  tracksData?: Track[];
 }
 
-const MyPlaylistEditor = ({ mode='create', myplaylistData } : Props) => {
+const MyPlaylistEditor = ({ mode='create', myplaylistData, tracksData } : Props) => {
   const { data: session } = useSession();
   const { data: user } = useUserProfile(session);
   const userId = user?.id;
@@ -52,10 +54,10 @@ const MyPlaylistEditor = ({ mode='create', myplaylistData } : Props) => {
   });
 
   useEffect(() => {
-  if (mode === 'edit' && myplaylistData) {
-    useTrackStore.getState().setTracks();
-  }
-}, [mode, myplaylistData]);
+    if (mode !== 'edit' || !tracksData?.length) return;
+
+    useTrackStore.getState().setTracks(tracksData);
+  }, [mode, tracksData]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

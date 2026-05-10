@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react'
+import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { MyPlaylist } from '@/types/user/myPlaylist';
 import { mapUserToBadge } from '@/types/userBadge';
@@ -13,10 +14,9 @@ import Back from '@/components/icons/Back';
 import ReadMore from '@/components/entities/playlist/ui/ReadMore';
 import CreatorBadge from '@/components/entities/playlist/ui/CreatorBadge';
 import ThumbnailGrid from '@/components/myPage/myplaylist/ThumbnailGrid';
-
-import '@/styles/playlist/playlist.scss';
-import '@/styles/MyPlaylist/NewPlaylist.scss';
 import PlaylistTrackList from '@/components/entities/playlist/container/PlaylistTrackList';
+
+import '@/styles/MyPlaylist/NewPlaylist.scss';
 
 const Page = () => {
   const { id } = useParams() as { id: string };
@@ -28,18 +28,18 @@ const Page = () => {
   });
 
   const { data: tracks = [] } = useQuery({
-  queryKey: ['playlistTracks', myplaylist?.id],
-  queryFn: async () => {
-    if (!myplaylist) return [];
+    queryKey: ['playlistTracks', myplaylist?.id],
+    queryFn: async () => {
+      if (!myplaylist) return [];
 
-    return Promise.all(
-      myplaylist.tracks.map(track =>
-        getTrack(Number(track.trackId))
-      )
-    );
-  },
-  enabled: !!myplaylist,
-});
+      return Promise.all(
+        myplaylist.tracks.map(track =>
+          getTrack(Number(track.trackId))
+        )
+      );
+    },
+    enabled: !!myplaylist,
+  });
 
   // 업데이트
   const createdDate = myplaylist?.createdAt;
@@ -55,7 +55,7 @@ const Page = () => {
     (acc, cur) => acc + cur.duration,
     0
   );
-  console.log(tracks);
+
   if (isLoading) return <div>로딩중...</div>;
   if (!myplaylist) return <div>아티스트 없음</div>;
 
@@ -63,7 +63,9 @@ const Page = () => {
     <div className='playlist-detail'>
       <div className='playlist-hearder detailHeader'>
         <Back />
-        <p>편집</p>
+        <Link href={`/myplaylist/${id}/edit`} className='submit'>
+          편집
+        </Link>
       </div>
       <div className='playlist-detail-img'>
         <ThumbnailGrid thumbnails={myplaylist.thumbnails} />

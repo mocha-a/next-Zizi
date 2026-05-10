@@ -20,7 +20,9 @@ const NAV_ITEMS = [
   },
   {
     path: '/mypage',
-    match: (p: string) => p.startsWith('/mypage'),
+        match: (p: string) =>
+      ['/mypage', '/myplaylist']
+        .some((prefix) => p.startsWith(prefix)),
   },
 ];
 

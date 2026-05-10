@@ -63,11 +63,15 @@
 
   .playlist-detail-creator{ margin-bottom: 20px; }
 
+}
+
 // ======================================================
 // PlaylistTrackList.tsx
 // ======================================================
   .playlist-track{
     .playlist-track-summary{
+      font-family: var(--font-gmarketMedium);
+      font-size: 13px;
       text-align: right;
       margin: 10px 0 20px;
       span:last-of-type::before{
@@ -87,4 +91,3 @@
       }
     }
   }
-}

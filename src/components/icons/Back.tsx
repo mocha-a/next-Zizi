@@ -16,7 +16,7 @@ function Back({ className, onBack }: Props) {
   }
 
   return (
-    <button className={ `${className} back` } onClick={goBack}>
+    <button className={ `${className} back` } onClick={goBack} type="button">
       <Image
           src='/icons/back.svg'
           alt='뒤로가기버튼'
