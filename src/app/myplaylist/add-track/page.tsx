@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation';
 import { useTrackStore } from '@/store/useSelectedTrackStore';
 import { useInfiniteList } from '@/hooks/useInfiniteList';
@@ -10,7 +10,7 @@ import SearchBar from '@/components/search/ui/SearchBar';
 import TrackSelectList from '@/components/entities/track/ui/TrackSelectList';
 import RecentContent from '@/components/myPage/recent/RecentContent';
 
-import '@/styles/myplaylist/NewPlaylist.scss';
+import '@/styles/myPlaylist/newPlaylist.scss';
 
 const LIMIT = 50;
 

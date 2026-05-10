@@ -5,12 +5,13 @@ import { useQuery } from '@tanstack/react-query';
 import { useUserProfile } from '@/hooks/useUserProfile';
 import { getPlaylists } from '@/lib/api/myPlaylist';
 import { MyPlaylist } from '@/types/user/myPlaylist';
+import MediaSkeleton from '@/components/loading/item/MediaSkeleton';
+import ThumbnailGrid from './ThumbnailGrid';
 import TagBtn from '../../common/TagBtn';
 import Popup from '../../common/Popup';
 import PlaylistCard from '../../entities/playlist/ui/PlaylistCard';
 
-import '@/styles/myplaylist/NewPlaylist.scss';
-import MediaSkeleton from '@/components/loading/item/MediaSkeleton';
+import '@/styles/myPlaylist/newPlaylist.scss';
 
 const MyPlaylistsSection = () => {
   const { data: session } = useSession();
@@ -52,7 +53,9 @@ const MyPlaylistsSection = () => {
             <PlaylistCard
               key={playlist.id}
               id={playlist.id}
-              picture={playlist.thumbnails?.[0] || ''}
+              thumbnail={
+                <ThumbnailGrid thumbnails={playlist.thumbnails || []} className='small-thumbnail'/>
+              }
               title={playlist.title}
               user={playlist.user.name}
               tracks={playlist.tracks.length}

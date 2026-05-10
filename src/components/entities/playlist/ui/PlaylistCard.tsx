@@ -5,33 +5,40 @@ import '@/styles/entitiesUI/playlistCard.scss';
 
 interface Props {
   id: number;
-  picture: string;
+  picture?: string;
+  thumbnail?: React.ReactNode;
+
   title: string;
   user: string;
-  tracks: number
+  tracks: number;
   onClick?: () => void;
 }
 
-const PlaylistCard = ({ id, picture, title, user, tracks, onClick }: Props) => {
-
+const PlaylistCard = ({ id, picture, thumbnail, title, user, tracks, onClick }: Props) => {
   return (
-  <div key={id} className='playlist-box' onClick={onClick}>
-    <div className='playlist-image'>
-      {picture && (
-      <Image
-        src={picture}
-        alt={`${title} cover`}
-        width={90}
-        height={90}
-      />
-      )}
+    <div key={id} className="playlist-box" onClick={onClick}>
+      <div className="playlist-image">
+        {thumbnail ? (
+          thumbnail
+        ) : (
+          picture && (
+            <Image
+              src={picture}
+              alt={`${title} cover`}
+              width={90}
+              height={90}
+            />
+          )
+        )}
+      </div>
+
+      <div className="playlist-info">
+        <p>{title}</p>
+        <p>{user}</p>
+        <p>{`총 ${tracks} 곡`}</p>
+      </div>
     </div>
-    <div className='playlist-info'>
-      <p>{title}</p>
-      <p>{user}</p>
-      <p>{`총 ${tracks} 곡`}</p>
-    </div>
-  </div>
-)}
+  );
+};
 
 export default PlaylistCard;

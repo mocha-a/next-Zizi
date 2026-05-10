@@ -16,7 +16,7 @@ import CreatorBadge from '@/components/entities/playlist/ui/CreatorBadge';
 import ThumbnailGrid from '@/components/myPage/myplaylist/ThumbnailGrid';
 import PlaylistTrackList from '@/components/entities/playlist/container/PlaylistTrackList';
 
-import '@/styles/MyPlaylist/NewPlaylist.scss';
+import '@/styles/myPlaylist/newPlaylist.scss';
 
 const Page = () => {
   const { id } = useParams() as { id: string };
@@ -40,7 +40,7 @@ const Page = () => {
     },
     enabled: !!myplaylist,
   });
-
+  console.log(tracks);
   // 업데이트
   const createdDate = myplaylist?.createdAt;
   const addDate = myplaylist?.updatedAt;
@@ -68,7 +68,7 @@ const Page = () => {
         </Link>
       </div>
       <div className='playlist-detail-img'>
-        <ThumbnailGrid thumbnails={myplaylist.thumbnails} />
+        <ThumbnailGrid thumbnails={myplaylist.thumbnails} className='large-thumbnail' />
       </div>
       <p className='playlist-detail-fans-count'>
         나만의 주파수가 흐르는 중 -

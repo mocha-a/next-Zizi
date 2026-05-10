@@ -1,50 +1,19 @@
-@use '../variables'as *;
-@use '../mixins'as *;
+@use '../variables' as *;
+@use '../mixins' as *;
 
 .collage {
-  width: 200px;
-  height: 200px;
   position: relative;
   overflow: hidden;
 }
 
-.collage-2 {
-  .img {
-    object-fit: cover;
-  }
-
-  .left {
-    clip-path: polygon(0 0, 100% 0, 0 100%);
-  }
-
-  .right {
-    clip-path: polygon(100% 0, 100% 100%, 0 100%);
-  }
+.small-thumbnail {
+  width: 90px;
+  height: 90px;
 }
 
-.collage-3 {
-  display: flex;
-}
-
-.big {
-  position: relative;
-  width: 60%;
-  height: 100%;
-}
-
-.small {
-  width: 40%;
-  display: flex;
-  flex-direction: column;
-}
-
-.small > div {
-  position: relative;
-  flex: 1;
-}
-
-.img {
-  object-fit: cover;
+.large-thumbnail {
+  width: 200px;
+  height: 200px;
 }
 
 .collage-4 {
@@ -55,6 +24,8 @@
 
 .cell {
   position: relative;
+  width: 100%;
+  height: 100%;
 }
 
 .img {

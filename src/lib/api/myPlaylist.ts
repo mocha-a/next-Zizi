@@ -3,7 +3,7 @@ import { api } from "./axios";
 interface DTO {
   title: string;
   description?: string;
-  userId: string;
+  userId?: string;
   thumbnails: string[];
   tracks: { id: number }[];
 }
@@ -11,6 +11,13 @@ interface DTO {
 // 내 플리 저장
 export const createPlaylist = async (data: DTO) => {
   const res = await api.post('/myplaylist', data);
+
+  return res.data;
+};
+
+// 내 플리 수정
+export const updatePlaylist = async (id: number, data: DTO) => {
+  const res = await api.patch(`/myplaylist/${id}`, data);
 
   return res.data;
 };
