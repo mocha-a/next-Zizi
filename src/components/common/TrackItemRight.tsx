@@ -22,7 +22,13 @@ export default function TrackItemRight({ trackData }: PropsType) {
     
   return (
     <>
-      <button onClick={() => playTrack(trackData.id)}>
+      <button onClick={() => {
+        playTrack({
+          id: trackData.id,
+          title: trackData.title,
+          artist: trackData.artist.name
+        })
+      }}>
         <PlayBk className="icons-play" />
       </button>
       <button onClick={() => openDialog(trackData)}>
