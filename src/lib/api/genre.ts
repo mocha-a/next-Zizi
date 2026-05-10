@@ -4,7 +4,9 @@ import { api } from "./axios";
 
 export const getAllGenre = async () => { 
   try {
-    const res = await api.get('/deezer/genre');
+    const res = await api.get('/deezer/genre', {
+      timeout: 20000, // 20초로 연장
+    });
     const rawRes = res.data.data;
     
     const processedGenres = rawRes

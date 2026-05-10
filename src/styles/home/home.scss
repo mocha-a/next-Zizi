@@ -108,10 +108,34 @@
             position: absolute;
             bottom: 8px; right: 10px;
         }
+        >span{
+            color: $white;
+            font-size: 10px;
+            position: absolute;
+            bottom: 10px; left: 10px;
+        }
     
     }
-    .record-title{
-        @include GmarketMedium_black_13;
+    .record-info{
+        .record-title{
+            @include GmarketMedium_black_13;
+            margin-bottom: 6px;
+
+            display: -webkit-box;
+            -webkit-line-clamp: 2; // 최대 2줄
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        >span{
+            font-size: 10px;
+            
+            display: -webkit-box;
+            -webkit-line-clamp: 1; // 최대 2줄
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
     }
 }
 

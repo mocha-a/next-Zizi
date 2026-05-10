@@ -1,5 +1,9 @@
 'use client';
 
+import { useUserProfile } from "@/hooks/useUserProfile";
+import { getChart } from "@/lib/api/chart";
+import { useQuery } from "@tanstack/react-query";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 
 function Dashboard() {
@@ -13,6 +17,19 @@ function Dashboard() {
         '/imgs/423081851_65f3de3e_s.jpg',
         '/imgs/400106044_61775d1b_o.jpg',
     ];
+    const { data: session } = useSession();
+    const { data: user } = useUserProfile(session);
+
+    const { data: playlists, isLoading, error } = useQuery<any, Error>({
+        queryKey: ['playlists', 'playlists'],
+        queryFn: () => {
+            return getChart.getGlobalTracks('playlists');
+        },
+        staleTime: 1000 * 60 * 30,
+    });
+
+    console.log(playlists);
+    
 
     return (
     <>

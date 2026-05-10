@@ -5,7 +5,7 @@ export async function GET() {
   try {
     const { data } = await axios.get(
       'https://api.deezer.com/editorial/0/releases', {
-        params: {limit: 10,},
+        params: {limit: 15,}, // 데이터 누락 방지를 위해 표시할 데이터 보다 더 많이 호출
     });
 
     return NextResponse.json(data);
