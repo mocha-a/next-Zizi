@@ -12,34 +12,48 @@ interface GenreTypes {
 
 export function GetDailyGenre() {
     const today = new Date().toDateString();  // 오늘 날짜
-    const [dailyGenre, setDailyGenre] = useState<GenreTypes | null>(null);
 
-    const { data: genreList, isLoading } = useQuery({
+    const [dailyGenre, setDailyGenre] = useState<GenreTypes | null>(() => {
+        if (typeof window !== 'undefined') {
+            const saved = localStorage.getItem('dailyGenre');
+            const savedDate = localStorage.getItem('dailyGenreDate');
+            if ( saved && savedDate === today ) {
+                try {
+                    return JSON.parse(saved); // 저장된 값이 있으면 사용
+                } catch (e) {
+                    return null;
+                }
+            }
+        }
+        return null; // 저장된 게 없으면 null
+    });
+
+    // 기본 장르 설정 (API 실패 시 대비)
+    const DEFAULT_GENRE = { id: "132", name: "Pop" };
+
+    const { data: genreList, isLoading, error } = useQuery({
         queryKey: ['genres'],
         queryFn: getAllGenre,
         staleTime: 1000 * 60 * 60 * 24,
     });
 
     useEffect(()=>{
-        // 1. API 로딩 중이면 중단
-        if (!genreList || genreList.length === 0 || isLoading) return;
+        // 이미 초기값으로 dailyGenre가 설정되었다면 추가 로직 수행 안 함
+        if (dailyGenre) return; 
 
-        const saved = localStorage.getItem('dailyGenre');
-        const savedDate = localStorage.getItem('dailyGenreDate');
-
-        // 2. 오늘 날짜로 저장된 데이터가 있다면 그대로 사용
-        if ( saved && savedDate === today ) {
-            setDailyGenre(JSON.parse(saved));
-        } else {
-            // 3. 없다면 랜덤 추출
-            const rand = genreList[Math.floor(Math.random() * genreList.length)];
-            
-            // 4. 상태 업데이트 및 저장
+        // API에서 장르 리스트가 오면 그때 랜덤으로 뽑아서 세팅
+        if (genreList && genreList.length > 0) {
+        const rand = genreList[Math.floor(Math.random() * genreList.length)];
             setDailyGenre(rand);
             localStorage.setItem('dailyGenre', JSON.stringify(rand));
             localStorage.setItem('dailyGenreDate', today);
+        } 
+        else if (error) {
+        // API 에러 시 기본값 세팅
+        const fallback = { id: "132", name: "Pop" };
+        setDailyGenre(fallback);
         }
-    },[genreList, today]);
+    },[genreList, today, dailyGenre]);
 
     return { dailyGenre };
 }

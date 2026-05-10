@@ -41,7 +41,7 @@ function NewRelease() {
   });
 
   if (error) return <div>데이터 로딩 실패</div>;
-
+  
   // const [data, setData] = useState<Album[]>([]);
   // const [loading, setLoading] = useState(false);
   // const [error, setError] = useState<string | null>(null);
@@ -88,7 +88,7 @@ function NewRelease() {
             </SwiperSlide>
           ))
         ) : (
-          newRelease?.data.map((item) => (
+          newRelease?.data.slice(0, 10).map((item) => (
             <SwiperSlide
               key={item.id}
               onClick={() => router.push(`/album/${item.id}`)}
