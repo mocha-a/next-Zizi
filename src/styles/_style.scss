@@ -404,12 +404,21 @@ input:checked + .tagbtn{
     position: relative;
     
     // 닫기 버튼이 위젯에 가려지지 않게
-    button {
+    .close-btn {
       position: absolute;
       top: -25px;
       right: 0;
       width: 30px; height: 30px;
     //   color: white;
+    }
+
+    .youtube-btn{
+        display: block;
+        margin: 15px auto 0;
+        color: $white;
+        text-align: center;
+        font-size: 12px;
+        // text-decoration: underline;
     }
   }
 }
