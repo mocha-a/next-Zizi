@@ -8,18 +8,18 @@
 
 // ...
 @mixin ellipsis($lines: 1) {
-  overflow: hidden;
+    overflow: hidden;
 
-  @if $lines == 1 {
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  } @else {
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    
-    -webkit-line-clamp: $lines;
-    line-clamp: $lines;
-  }
+    @if $lines == 1 {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    } @else {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        
+        -webkit-line-clamp: $lines;
+        line-clamp: $lines;
+    }
 }
 
 // img
@@ -72,9 +72,9 @@
 
 // flex
 @mixin flex($justify: flex-start, $align: center) {
-  display: flex;
-  justify-content: $justify;
-  align-items: $align;
+    display: flex;
+    justify-content: $justify;
+    align-items: $align;
 }
 
 @mixin footer_before{

@@ -18,7 +18,7 @@ const TrackSelectList = ({ tracks, loading, hasMore, onLoadMore }: Props) => {
   const selectedIds = useTrackStore(state => state.selectedIds);
 
   return (
-    <div className="trackTab-container tracklist">
+    <div className="trackTab-container tracklist add-tracklist">
       <InfiniteScroll
         loadMore={onLoadMore}
         loading={loading}

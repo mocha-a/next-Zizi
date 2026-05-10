@@ -6,7 +6,18 @@ interface Store {
   selectedIds: number[];
   orderIds: number[];
 
+  title: string;
+  description: string;
+
+  hasInitialized: boolean;
+
+  setTitle: (v: string) => void;
+  setDescription: (v: string) => void;
+
+  setInitialized: (v: boolean) => void;
+
   setTracks: (tracks: Track[]) => void;
+
   toggleSelect: (track: Track) => void;
   clearSelection: () => void;
 
@@ -14,6 +25,7 @@ interface Store {
   removeFromPlaylist: () => void;
 
   reorder: (start: number, end: number) => void;
+
   reset: () => void;
 }
 
@@ -22,17 +34,25 @@ export const useTrackStore = create<Store>((set, get) => ({
   selectedIds: [],
   orderIds: [],
 
+  title: '',
+  description: '',
+
+  hasInitialized: false,
+
+  setTitle: (v) => set({ title: v }),
+  setDescription: (v) => set({ description: v }),
+
+  setInitialized: (v) => set({ hasInitialized: v }),
+
   setTracks: (tracks) => {
     const trackMap = tracks.reduce((acc, track) => {
       acc[track.id] = track;
       return acc;
     }, {} as Record<number, Track>);
 
-    const orderIds = tracks.map(track => track.id);
-
     set({
       tracks: trackMap,
-      orderIds,
+      orderIds: tracks.map(t => t.id),
       selectedIds: [],
     });
   },
@@ -89,5 +109,8 @@ export const useTrackStore = create<Store>((set, get) => ({
       tracks: {},
       selectedIds: [],
       orderIds: [],
+      title: '',
+      description: '',
+      hasInitialized: false,
     }),
 }));

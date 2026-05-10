@@ -1,11 +1,9 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useSession } from 'next-auth/react';
 import { DropResult } from '@hello-pangea/dnd';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTrackStore } from '@/store/useSelectedTrackStore';
-import { useUserProfile } from '@/hooks/useUserProfile';
 import { createPlaylist, updatePlaylist } from '@/lib/api/myPlaylist';
 import { MyPlaylist } from '@/types/user/myPlaylist';
 import { Track } from '@/types/deezer/deezer';
@@ -23,12 +21,11 @@ interface Props {
 }
 
 const MyPlaylistEditor = ({ mode='create', myplaylistData, tracksData } : Props) => {
-  const { data: session } = useSession();
-  const { data: user } = useUserProfile(session);
-  const userId = user?.id;
+  const title = useTrackStore(state => state.title);
+  const description = useTrackStore(state => state.description);
 
-  const [ name, setName ] = useState(myplaylistData?.title || '');
-  const [ description, setDescription ] = useState(myplaylistData?.description || '');
+  const setTitle = useTrackStore(state => state.setTitle);
+  const setDescription = useTrackStore(state => state.setDescription);
   
   const tracks = useTrackStore(state => state.tracks);
   const orderIds = useTrackStore(state => state.orderIds);
@@ -50,7 +47,13 @@ const MyPlaylistEditor = ({ mode='create', myplaylistData, tracksData } : Props)
 
     onSuccess: () => {
       useTrackStore.getState().reset();
-      queryClient.invalidateQueries({ queryKey: ['myplaylist']});
+      
+      queryClient.invalidateQueries({ queryKey: ['myplaylist'] });
+      
+      const id = myplaylistData?.id;
+      if (!id) return;
+
+      queryClient.invalidateQueries({ queryKey: ['myplaylist', id] });
 
       router.push('/mypage?tab=myplaylist');
     },
@@ -74,16 +77,31 @@ const MyPlaylistEditor = ({ mode='create', myplaylistData, tracksData } : Props)
     },
   });
 
+  const initEditor = () => {
+    const store = useTrackStore.getState();
+
+    if (store.hasInitialized) return;
+    if (!myplaylistData || !tracksData) return;
+
+    store.setTitle(myplaylistData.title);
+    store.setDescription(myplaylistData.description);
+    store.setTracks(tracksData);
+
+    store.setInitialized(true);
+  };
+
   useEffect(() => {
-    if (mode !== 'edit' || !tracksData?.length) return;
+    if (mode !== 'create') return;
 
-    const { orderIds } = useTrackStore.getState();
+    useTrackStore.getState().reset();
+  }, [mode]);
 
-    // 이미 store에 데이터 있으면 실행 안함
-    if (orderIds.length > 0) return;
+  useEffect(() => {
+    if (mode !== 'edit') return;
+    if (!myplaylistData || !tracksData) return;
 
-    useTrackStore.getState().setTracks(tracksData);
-  }, [mode, tracksData]);
+    initEditor();
+  }, [mode, myplaylistData, tracksData]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -97,7 +115,7 @@ const MyPlaylistEditor = ({ mode='create', myplaylistData, tracksData } : Props)
       .map(track => track.album.cover_medium);
 
     const payload = {
-      title: name,
+      title,
       description,
       thumbnails,
       tracks: trackIds,
@@ -126,13 +144,13 @@ const MyPlaylistEditor = ({ mode='create', myplaylistData, tracksData } : Props)
   return (
     <div className='new-playlist-page'>
       <NewPlaylistForm
-        name={name}
+        name={title}
         description={description}
         isPending={
           createMutation.isPending ||
           updateMutation.isPending
         }
-        onChangeName={setName}
+        onChangeName={setTitle}
         onChangeDescription={setDescription}
         onSubmit={handleSubmit}
         onBack={clearSelection}

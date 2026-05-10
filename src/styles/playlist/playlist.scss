@@ -3,6 +3,7 @@
 
 .playlist-detail{
   @include publicWidth;
+  padding-bottom: 60px;
 
   .playlist-detail-img{
     margin: 15px auto 30px;
