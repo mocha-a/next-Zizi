@@ -25,8 +25,6 @@ const MyPlaylistsSection = () => {
     staleTime: 0,
   });
 
-  console.log(myplaylist);
-
   const handleClick = () => {
     // 로그인 안된 상태
     if (!session) {
