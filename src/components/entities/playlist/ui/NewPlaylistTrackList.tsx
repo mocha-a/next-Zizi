@@ -16,7 +16,7 @@ const NewPlaylistTrackList = ({ playlist, selectedIds, onToggle, onDragEnd }: Pr
     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable droppableId="tracks">
         {(provided) => (
-          <div
+          <ul
             className='new-playlist-tracks tracklist'
             ref={provided.innerRef}
             {...provided.droppableProps}
@@ -40,7 +40,7 @@ const NewPlaylistTrackList = ({ playlist, selectedIds, onToggle, onDragEnd }: Pr
               </Draggable>
             ))}
             {provided.placeholder}
-          </div>
+          </ul>
         )}
       </Droppable>
     </DragDropContext>

@@ -4,16 +4,17 @@ import { useSession } from 'next-auth/react';
 import { useQuery } from '@tanstack/react-query';
 import { useUserProfile } from '@/hooks/useUserProfile';
 import { getPlaylists } from '@/lib/api/myPlaylist';
+import { usePlaylistEditStore } from '@/store/usePlaylistEditStore';
 import { MyPlaylist } from '@/types/user/myPlaylist';
 import MediaSkeleton from '@/components/loading/item/MediaSkeleton';
 import ThumbnailGrid from './ThumbnailGrid';
-import TagBtn from '../../common/TagBtn';
 import Popup from '../../common/Popup';
 import PlaylistCard from '../../entities/playlist/ui/PlaylistCard';
 
 import '@/styles/myPlaylist/newPlaylist.scss';
 
 const MyPlaylistsSection = () => {
+  const { isEditMode, selectedIds, toggleSelect, setEditMode } = usePlaylistEditStore();
   const { data: session } = useSession();
   const { data: user } = useUserProfile(session);
   const [ showPopup, setShowPopup ] = useState(false);
@@ -38,17 +39,22 @@ const MyPlaylistsSection = () => {
 
   return (
     <div>
-    <TagBtn tagbtn={`+ 플레이리스트 추가`} onClick={handleClick} />
+      <div className='myplaylist-btn'>
+        <div onClick={handleClick}> + 내 플리 추가</div>
+        <div className='submit' onClick={() => setEditMode(!isEditMode)}>
+          {isEditMode ? '완료' : '편집'}
+        </div>
+      </div>
 
     {isLoading ? (
-      <div className="playlistTab-container playlist-list">
+      <div className="playlist-list myplaylist-list">
         {Array.from({ length: 10 }).map((_, i) => (
           <MediaSkeleton key={`init-${i}`} />
         ))}
       </div>
     ) : (
       <>
-        <div className="playlist-list">
+        <ul className="playlist-list myplaylist-list">
           {myplaylist?.map((playlist) => (
             <PlaylistCard
               key={playlist.id}
@@ -59,10 +65,18 @@ const MyPlaylistsSection = () => {
               title={playlist.title}
               user={playlist.user.name}
               tracks={playlist.tracks.length}
-              onClick={() => router.push(`/myplaylist/${playlist.id}`)}
+              isSelected={selectedIds.includes(playlist.id)}
+              onClick={() => {
+                if (isEditMode) {
+                  toggleSelect(playlist.id);
+                  return;
+                }
+
+                router.push(`/myplaylist/${playlist.id}`);
+              }}
             />
           ))}
-        </div>
+        </ul>
 
         {showPopup && (
           <Popup

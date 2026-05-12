@@ -1,16 +1,17 @@
 "use client";
 import React, { useEffect } from 'react';
 import Image from 'next/image';
+import { useSession } from 'next-auth/react';
 import { useParams } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { useTabStore } from '@/store/tabStore';
 import { RECORD_TYPE_MAP } from '@/constants/metadata';
+import { recent } from '@/lib/recent';
 import { getUniqueGenres } from '@/lib/genre';
 import { getAlbum } from '@/lib/api/album';
 import { Album } from '@/types/deezer/deezer';
 
 import Back from '@/components/icons/Back';
-import Recent from '@/components/tracking/Recent';
 import TabsContainer from '@/components/common/TabsContainer';
 import ArtistBadge from '@/components/entities/artist/ui/ArtistBadge';
 import SimilarAlbums from '@/components/entities/album/container/SimilarAlbums';
@@ -20,6 +21,8 @@ import '@/styles/album/album.scss';
 
 const Page = () => {
   const { id } = useParams() as { id: string };
+  const { data: session } = useSession();
+
   const { tabValue, setTabValue } = useTabStore();
 
   const { data: album, isLoading } = useQuery<Album>({
@@ -38,6 +41,14 @@ const Page = () => {
     setTabValue(0);
   }, [setTabValue]);
 
+  useEffect(() => {
+    recent({
+      type: 'album',
+      id,
+      isLoggedIn: !!session,
+    });
+  }, [id, session]);
+
   console.log(album);
   // 장르
   const genres = getUniqueGenres(album?.genres.data);
@@ -47,7 +58,6 @@ const Page = () => {
 
   return (
     <div className="album-detail">
-      <Recent type="album" id={id} />
       <Back className ='detailHeader' />
       <div className='album-detail-img'>
         <Image

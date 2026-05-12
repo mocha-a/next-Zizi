@@ -85,3 +85,34 @@ export async function PATCH(req: Request, { params }: Props) {
     );
   }
 }
+
+// 내 플리 삭제
+export async function DELETE(req: Request, { params }: Props) {
+  try {
+    const playlistId = Number(params.id);
+
+    await prisma.playlistTrack.deleteMany({
+      where: {
+        playlistId,
+      },
+    });
+
+    await prisma.playlist.delete({
+      where: {
+        id: playlistId,
+      },
+    });
+
+    return NextResponse.json({
+      success: true,
+    });
+
+  } catch (error) {
+    console.error(error);
+
+    return NextResponse.json(
+      { error: '삭제 실패' },
+      { status: 500 }
+    );
+  }
+}

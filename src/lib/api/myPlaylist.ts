@@ -35,3 +35,10 @@ export const getMyPlaylist = async (id: string) => {
 
   return res.data;
 };
+
+// 내 플리 삭제
+export const deletePlaylist = async (id: string) => {
+  const res = await api.delete(`/myplaylist/${id}`);
+
+  return res.data;
+};

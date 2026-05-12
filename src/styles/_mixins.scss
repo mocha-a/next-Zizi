@@ -70,6 +70,15 @@
     }
 }
 
+@mixin selected-style {
+  background-color: #E9F7FF;
+}
+
+@mixin section-padding {
+  margin: 0;
+  padding: 10px 18px;
+}
+
 // flex
 @mixin flex($justify: flex-start, $align: center) {
     display: flex;

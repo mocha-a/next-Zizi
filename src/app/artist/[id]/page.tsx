@@ -1,14 +1,15 @@
 'use client';
 import React, { useEffect } from 'react';
 import Image from 'next/image';
+import { useSession } from 'next-auth/react';
 import { useParams } from 'next/navigation';
 import { useTabStore } from '@/store/tabStore';
 import { useQuery } from '@tanstack/react-query';
+import { recent } from '@/lib/recent';
 import { getArtist } from '@/lib/api/artist';
 import { Artist } from '@/types/deezer/deezer';
 
 import Back from '@/components/icons/Back';
-import Recent from '@/components/tracking/Recent';
 import TabsContainer from '@/components/common/TabsContainer';
 import ArtistAlbums from '@/components/entities/artist/container/ArtistAlbums';
 import ArtistTracks from '@/components/entities/artist/container/ArtistTrack';
@@ -18,6 +19,7 @@ import '@/styles/artist/artist.scss';
 const Page = () => {
   // URL에서 아티스트 id 추출
   const { id } = useParams() as { id: string };
+  const { data: session } = useSession();
 
   // 탭 상태
   const { tabValue, setTabValue } = useTabStore();
@@ -38,12 +40,19 @@ const Page = () => {
     setTabValue(0);
   }, [setTabValue]);
 
+  useEffect(() => {
+    recent({
+      type: 'artist',
+      id,
+      isLoggedIn: !!session,
+    });
+  }, [id, session]);
+
   if (isLoading) return <div>로딩중...</div>;
   if (!artist) return <div>아티스트 없음</div>;
 
   return (
     <div className="artist-detail">
-      <Recent type="artist" id={id} />
       <section className="artist-top">
         <div className="artist-img">
           <Image

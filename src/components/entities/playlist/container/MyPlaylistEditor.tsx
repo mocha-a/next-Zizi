@@ -5,7 +5,7 @@ import { DropResult } from '@hello-pangea/dnd';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTrackStore } from '@/store/useSelectedTrackStore';
 import { createPlaylist, updatePlaylist } from '@/lib/api/myPlaylist';
-import { MyPlaylist } from '@/types/user/myPlaylist';
+import { MyPlaylist, UpdatePlaylistParams } from '@/types/user/myPlaylist';
 import { Track } from '@/types/deezer/deezer';
 
 import NewPlaylistForm from '@/components/entities/playlist/ui/NewPlaylistForm';
@@ -60,13 +60,8 @@ const MyPlaylistEditor = ({ mode='create', myplaylistData, tracksData } : Props)
   });
 
   const updateMutation = useMutation({
-    mutationFn: ({
-      id,
-      data,
-    }: {
-      id: number;
-      data: any;
-    }) => updatePlaylist(id, data),
+    mutationFn: ({ id, data }: UpdatePlaylistParams) =>
+      updatePlaylist(id, data),
 
     onSuccess: () => {
       useTrackStore.getState().reset();

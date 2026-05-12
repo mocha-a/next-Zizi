@@ -11,12 +11,19 @@ interface Props {
   title: string;
   user: string;
   tracks: number;
+
+  isSelected?: boolean;
+
   onClick?: () => void;
 }
 
-const PlaylistCard = ({ id, picture, thumbnail, title, user, tracks, onClick }: Props) => {
+const PlaylistCard = ({ id, picture, thumbnail, title, user, tracks, isSelected, onClick }: Props) => {
   return (
-    <div key={id} className="playlist-box" onClick={onClick}>
+    <div
+      key={id}
+      className={` playlist-box ${isSelected ? 'selected' : ''}`}
+      onClick={onClick}
+    >
       <div className="playlist-image">
         {thumbnail ? (
           thumbnail
