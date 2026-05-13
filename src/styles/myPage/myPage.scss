@@ -43,10 +43,8 @@
       }
     }
   }
-
   .myPage-tabs{
     margin-top: 50px;
-    .search-tabs{pointer-events: none;}
   }
 }
 
@@ -54,15 +52,6 @@
   display: inline-flex;
   white-space: nowrap;
   margin-right: 10px;
-}
-
-.edit-mode {
-  opacity: 0.4;
-  pointer-events: none;
-}
-
-.selected{
-  @include selected-style;
 }
 
 .myplaylist-list{
@@ -77,4 +66,18 @@
   >li{
     @include section-padding;
   }
+}
+
+// 편집 모드
+.edit-mode {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.edit-tabs{
+  .search-tabs{pointer-events: none;}
+}
+
+.selected{
+  @include selected-style;
 }

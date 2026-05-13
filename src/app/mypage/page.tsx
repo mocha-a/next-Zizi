@@ -71,7 +71,7 @@ function Page() {
         </div>
       </div>
 
-      <div className='myPage-tabs'>
+      <div className={`myPage-tabs ${isEditMode ? 'edit-tabs' : ''}`}>
         <TabsContainer
           tabs={tabs}
           tabValue={tabIndex}

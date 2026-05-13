@@ -60,11 +60,15 @@ const MyPlaylistsSection = () => {
               key={playlist.id}
               id={playlist.id}
               thumbnail={
-                <ThumbnailGrid thumbnails={playlist.thumbnails || []} className='small-thumbnail'/>
+                <ThumbnailGrid
+                  thumbnails={playlist.thumbnails || []}
+                  className='small-thumbnail'
+                />
               }
               title={playlist.title}
               user={playlist.user.name}
               tracks={playlist.tracks.length}
+              isEditMode={isEditMode}
               isSelected={selectedIds.includes(playlist.id)}
               onClick={() => {
                 if (isEditMode) {
