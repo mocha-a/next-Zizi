@@ -39,7 +39,6 @@ const PlaylistList = ({ playlists, loading, hasMore, onLoadMore, onClick }: Prop
         {playlists.map((playlist) => (
           <PlaylistCard
             key={playlist.id}
-            id={playlist.id}
             picture={playlist.picture_medium}
             title={playlist.title}
             user={playlist.user.name}

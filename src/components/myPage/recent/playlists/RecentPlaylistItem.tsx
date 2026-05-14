@@ -2,7 +2,7 @@ import React from 'react'
 import { useRouter } from 'next/navigation';
 import { RecentView } from '@/types/recent';
 import { useRecentDetail } from '@/hooks/useRecentDetail';
-import PlaylistCard from '@/components/entities/playlist/ui/PlaylistCard';
+import PlaylistCard from '@/components/entities/playlist/ui/playlist/PlaylistCard';
 import MediaSkeleton from '@/components/loading/item/MediaSkeleton';
 
 interface Props{
@@ -27,8 +27,7 @@ const RecentPlaylistCard = ({ playlist }: Props) => {
   console.log(data);
   return (
     <div className='recent'>
-      <PlaylistCard 
-        id={data.id}
+      <PlaylistCard
         picture={data.picture_medium}
         title={data.title}
         user={data.creator?.name}

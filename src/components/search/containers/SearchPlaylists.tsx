@@ -11,7 +11,7 @@ import { PlaylistSortOptions, type PlaylistSortType } from '@/constants/sort';
 import SortBtn from '@/components/common/SortBtn';
 import SortSelect from '@/components/common/SortSelect';
 import BottomDialog from '@/components/common/Dialog';
-import PlaylistList from '@/components/entities/playlist/ui/PlaylistList';
+import PlaylistList from '@/components/entities/playlist/ui/playlist/PlaylistList';
 
 
 const LIMIT = 50;

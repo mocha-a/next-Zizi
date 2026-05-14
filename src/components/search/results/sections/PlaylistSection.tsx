@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { SearchPlaylist } from '@/types/deezer/search';
-import PlaylistCard from '@/components/entities/playlist/ui/PlaylistCard';
+import PlaylistCard from '@/components/entities/playlist/ui/playlist/PlaylistCard';
 import SectionHeader from '../../ui/SectionHeader';
 import MediaSkeleton from '@/components/loading/item/MediaSkeleton';
 
@@ -27,7 +27,6 @@ const PlaylistSection = ({ data, loading }: Props) => {
         data.map((playlist)=>
           <Link key={playlist.id} href={`/playlist/${playlist.id}`}>
             <PlaylistCard
-              id={playlist.id}
               picture={playlist.picture_medium}
               title={playlist.title}
               user={playlist.user.name}

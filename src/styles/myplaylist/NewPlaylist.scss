@@ -75,6 +75,7 @@
 
 .myplaylist-btn{
   @include publicWidth;
+  @include flex($justify: space-between);
 }
 
 .playlist-list{

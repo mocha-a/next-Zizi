@@ -8,9 +8,9 @@ import { createPlaylist, updatePlaylist } from '@/lib/api/myPlaylist';
 import { MyPlaylist, UpdatePlaylistParams } from '@/types/user/myPlaylist';
 import { Track } from '@/types/deezer/deezer';
 
-import NewPlaylistForm from '@/components/entities/playlist/ui/NewPlaylistForm';
-import NewPlaylistActions from '@/components/entities/playlist/ui/NewPlaylistActions';
-import NewPlaylistTrackList from '@/components/entities/playlist/ui/NewPlaylistTrackList';
+import NewPlaylistForm from '@/components/entities/playlist/ui/playlist/NewPlaylistForm';
+import NewPlaylistActions from '@/components/entities/playlist/ui/playlist/NewPlaylistActions';
+import PlaylistTrackListDnD from '@/components/entities/playlist/ui/track/PlaylistTrackListDnD';
 
 import '@/styles/myPlaylist/newPlaylist.scss';
 
@@ -32,9 +32,9 @@ const MyPlaylistEditor = ({ mode='create', myplaylistData, tracksData } : Props)
   const selectedIds = useTrackStore(state => state.selectedIds);
 
   const toggleSelect = useTrackStore(state => state.toggleSelect);
-  const clearSelection = useTrackStore(state => state.clearSelection);
   const removeFromPlaylist = useTrackStore(state => state.removeFromPlaylist);
   const reorder = useTrackStore(state => state.reorder);
+  const reset = useTrackStore(state => state.reset);
 
   const playlist = orderIds.map(id => tracks[id]);
 
@@ -84,12 +84,6 @@ const MyPlaylistEditor = ({ mode='create', myplaylistData, tracksData } : Props)
 
     store.setInitialized(true);
   };
-
-  useEffect(() => {
-    if (mode !== 'create') return;
-
-    useTrackStore.getState().reset();
-  }, [mode]);
 
   useEffect(() => {
     if (mode !== 'edit') return;
@@ -148,7 +142,7 @@ const MyPlaylistEditor = ({ mode='create', myplaylistData, tracksData } : Props)
         onChangeName={setTitle}
         onChangeDescription={setDescription}
         onSubmit={handleSubmit}
-        onBack={clearSelection}
+        onBack={reset}
       />
 
       <NewPlaylistActions
@@ -157,7 +151,7 @@ const MyPlaylistEditor = ({ mode='create', myplaylistData, tracksData } : Props)
         onDelete={removeFromPlaylist}
       />
 
-      <NewPlaylistTrackList
+      <PlaylistTrackListDnD
         playlist={playlist}
         selectedIds={selectedIds}
         onToggle={toggleSelect}

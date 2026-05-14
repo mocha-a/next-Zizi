@@ -11,8 +11,8 @@ import { getMyPlaylist } from '@/lib/api/myPlaylist';
 import { formatUpDate, myplaylistFormatDate } from '@/lib/format';
 
 import Back from '@/components/icons/Back';
-import ReadMore from '@/components/entities/playlist/ui/ReadMore';
-import CreatorBadge from '@/components/entities/playlist/ui/CreatorBadge';
+import ReadMore from '@/components/entities/playlist/ui/common/ReadMore';
+import CreatorBadge from '@/components/entities/playlist/ui/playlist/CreatorBadge';
 import ThumbnailGrid from '@/components/myPage/myplaylist/ThumbnailGrid';
 import PlaylistTrackList from '@/components/entities/playlist/container/PlaylistTrackList';
 

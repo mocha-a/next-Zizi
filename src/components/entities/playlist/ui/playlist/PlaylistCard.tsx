@@ -5,8 +5,6 @@ import { DraggableProvided } from '@hello-pangea/dnd';
 import '@/styles/entitiesUI/playlistCard.scss';
 
 interface Props {
-  id: number;
-
   picture?: string;
   thumbnail?: React.ReactNode;
 
@@ -22,10 +20,9 @@ interface Props {
   onClick?: () => void;
 }
 
-const PlaylistCard = ({ id, picture, thumbnail, title, user, tracks, isSelected, isEditMode, dragHandle, onClick }: Props) => {
+const PlaylistCard = ({ picture, thumbnail, title, user, tracks, isSelected, isEditMode, dragHandle, onClick }: Props) => {
   return (
     <div
-      key={id}
       className={`playlist-box ${isSelected ? 'selected' : ''}`}
       onClick={onClick}
     >

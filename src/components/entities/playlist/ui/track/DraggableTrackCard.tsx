@@ -3,7 +3,8 @@
 import { DraggableProvided } from '@hello-pangea/dnd';
 import { SearchTrack } from '@/types/deezer/search';
 
-import TrackSelectItem from './TrackSelectItem';
+import TrackSelectItem from '../../../track/ui/TrackSelectItem';
+import DraggableItem from '@/components/common/dnd/DraggableItem';
 
 interface Props {
   track: SearchTrack;
@@ -16,9 +17,9 @@ interface Props {
 
 const DraggableTrackCard = ({ track, draggable, dragHandle, innerRef, isSelected, onToggle }: Props) => {
   return (
-    <div 
-      ref={innerRef} 
-      {...draggable}
+    <DraggableItem
+      innerRef={innerRef}
+      draggable={draggable}
     >
       <TrackSelectItem
         track={track}
@@ -27,7 +28,7 @@ const DraggableTrackCard = ({ track, draggable, dragHandle, innerRef, isSelected
         mode="new"
         dragHandle={dragHandle}
       />
-    </div>
+    </DraggableItem>
   );
 };
 
