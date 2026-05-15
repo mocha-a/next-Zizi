@@ -15,7 +15,7 @@ import CreatorBadge from '@/components/entities/playlist/ui/playlist/CreatorBadg
 import PlaylistTrackList from '@/components/entities/playlist/container/PlaylistTrackList';
 import PlaylistFlow from '@/components/entities/playlist/container/PlaylistFlow';
 import TabsContainer from '@/components/common/TabsContainer';
-import ReadMore from '@/components/entities/playlist/ui/common/ReadMore';
+import ReadMore from '@/components/entities/playlist/ui/ReadMore';
 
 import '@/styles/playlist/playlist.scss';
 

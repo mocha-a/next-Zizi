@@ -4,22 +4,31 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
+import { useUIStore } from '@/store/useUIStore';
 import { useBottomNavigation } from '@/hooks/useBottomNavigation';
 import { HomeOn, HomeOff, ChartOn, ChartOff, SearchOn, SearchOff, MypageOn, MypageOff } from '@/components/icons';
 
 export default function SimpleBottomNavigation() {
   const { value, onChange } = useBottomNavigation();
+  const { hideBottomNav } = useUIStore();
 
   return (
-    <Box sx={{
-      position: 'fixed',
-      bottom: 0,
-      left: '50%',
-      transform: 'translateX(-50%)',
-      width: '390px',
-      boxShadow: '0 -4px 8px rgba(5, 140, 215, 0.2)',
-      zIndex: 100, // 필요 시 다른 요소보다 위로
-    }}>
+    <Box
+      sx={{
+        position: 'fixed',
+        bottom: 0,
+        left: '50%',
+        transform: hideBottomNav
+          ? 'translate(-50%, calc(100% + 10px))'
+          : 'translate(-50%, 0)',
+
+        transition: 'transform 0.25s ease',
+
+        width: '390px',
+        boxShadow: '0 -4px 8px rgba(5, 140, 215, 0.2)',
+        zIndex: 100,
+      }}
+    >
       <BottomNavigation
         showLabels
         value={value}

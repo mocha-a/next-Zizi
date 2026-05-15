@@ -22,6 +22,13 @@ export const updatePlaylist = async (id: number, data: DTO) => {
   return res.data;
 };
 
+// 내 플리 순서 변경
+export const updatePlaylistOrder = async ( playlists: { id: number; order: number; }[] ) => {
+  const res = await api.patch('/myplaylist', { playlists });
+
+  return res.data;
+};
+
 // mypage에서 내 플리 목록
 export const getPlaylists = async () => {
   const res = await api.get('/myplaylist');
@@ -37,8 +44,8 @@ export const getMyPlaylist = async (id: string) => {
 };
 
 // 내 플리 삭제
-export const deletePlaylist = async (id: string) => {
-  const res = await api.delete(`/myplaylist/${id}`);
+export const deletePlaylists = async (ids: number[]) => {
+  const res = await api.delete('/myplaylist', { data: { ids } });
 
   return res.data;
 };

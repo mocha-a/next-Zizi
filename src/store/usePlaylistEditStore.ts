@@ -8,6 +8,8 @@ interface PlaylistEditStore {
 
   toggleSelect: (id: number) => void;
 
+  setSelectedIds: (ids: number[]) => void;
+
   clearSelection: () => void;
 }
 
@@ -36,6 +38,11 @@ export const usePlaylistEditStore =
           : [...selectedIds, id],
       });
     },
+
+    setSelectedIds: (ids) =>
+      set({
+        selectedIds: ids,
+      }),
 
     clearSelection: () =>
       set({

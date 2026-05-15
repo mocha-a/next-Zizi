@@ -105,6 +105,7 @@ model Like {
 // ======================================================
 model Playlist {
   id          Int      @id @default(autoincrement())
+
   userId      String
   user        User     @relation(fields: [userId], references: [id])
 
@@ -112,7 +113,9 @@ model Playlist {
   description String?
 
   thumbnails  Json?
-  
+
+  order       Int      @default(0)
+
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt 
 

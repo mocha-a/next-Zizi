@@ -47,13 +47,7 @@ const MyPlaylistEditor = ({ mode='create', myplaylistData, tracksData } : Props)
 
     onSuccess: () => {
       useTrackStore.getState().reset();
-      
       queryClient.invalidateQueries({ queryKey: ['myplaylist'] });
-      
-      const id = myplaylistData?.id;
-      if (!id) return;
-
-      queryClient.invalidateQueries({ queryKey: ['myplaylist', id] });
 
       router.push('/mypage?tab=myplaylist');
     },
@@ -65,10 +59,9 @@ const MyPlaylistEditor = ({ mode='create', myplaylistData, tracksData } : Props)
 
     onSuccess: () => {
       useTrackStore.getState().reset();
-
       queryClient.invalidateQueries({ queryKey: ['myplaylist'] });
 
-      router.push('/mypage?tab=myplaylist');
+      router.back();
     },
   });
 

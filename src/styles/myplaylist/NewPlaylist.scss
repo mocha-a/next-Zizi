@@ -74,16 +74,18 @@
 }
 
 .myplaylist-btn{
-  @include publicWidth;
   @include flex($justify: space-between);
-}
-
-.playlist-list{
-  margin-top: 20px;
+  margin-bottom: 10px !important;
+  .action-btn{
+    @include flex($align: baseline);
+    cursor: pointer;
+    gap: 5px;
+  }
 }
 
 .playlist-hearder{
   .submit{
     font-size: 13px; color: $orange;
+    cursor: pointer;
   }
 }
