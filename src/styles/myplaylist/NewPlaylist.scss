@@ -17,7 +17,7 @@
   }
   
   .new-playlist-header {
-    @include flex($align: center);
+    @include flex;
 
     .new-playlist-back,
     .submit {
@@ -38,7 +38,16 @@
     }
   }
   .new-playlist-btn{
+    @include flex;
+    cursor: pointer;
+    gap: 5px;
+    font-size: 13px;
     margin: 20px 18px;
+    p{
+      color: $blue;
+      display: inline-flex;
+      height: 12px;
+    }
   }
 
   .new-playlist-tracks{
@@ -77,9 +86,13 @@
   @include flex($justify: space-between);
   margin-bottom: 10px !important;
   .action-btn{
-    @include flex($align: baseline);
+    @include flex;
     cursor: pointer;
     gap: 5px;
+  }
+  p{
+    display: inline-flex;
+    height: 12px;
   }
 }
 

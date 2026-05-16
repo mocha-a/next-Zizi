@@ -3,7 +3,7 @@ import React from 'react'
 
 const MediaSkeleton = () => {
   return (
-    <div className="album-box">
+    <div className="album-box playlist-box">
       <div className="album-image">
         <Skeleton variant="rectangular" width={90} height={90} />
       </div>

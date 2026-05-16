@@ -16,5 +16,9 @@
 }
 
 .playlist-drag-handle {
-  align-self: center;
+    align-self: center;
+    font-size: 20px;
+    padding: 4px;
+    user-select: none;
+    cursor: grab;
 }

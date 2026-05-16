@@ -127,13 +127,11 @@ const MyPlaylistsSection = () => {
         <div onClick={isEditMode ? handleSelectAll : handleClick} className='action-btn'>
           {isEditMode ? (
             <>
-              <Check />
-              {isAllSelected ? '전체 해제' : '전체 선택'}
+              <Check /> {isAllSelected ? '전체 해제' : '전체 선택'}
             </>
           ) : (
             <>
-              <Plus />
-              내 플리 추가
+              <Plus /> <p>내 플리 추가</p>
             </>
           )}
         </div>
@@ -142,7 +140,7 @@ const MyPlaylistsSection = () => {
         </div>
       </div>
 
-      {isLoading ? (
+      {isLoading ? (        
         <div className="playlist-list myplaylist-list">
           {Array.from({ length: 10 }).map((_, i) => (
             <MediaSkeleton key={`init-${i}`} />
@@ -183,12 +181,7 @@ const MyPlaylistsSection = () => {
       )}
 
       {selectedIds.length > 0 && (
-        <div
-          className='delete-bar'
-          onClick={() => setShowDeletePopup(true)}
-        >
-          <TrashButton />
-        </div>
+        <TrashButton setShowDeletePopup={setShowDeletePopup} count={selectedIds.length}/>
       )}
 
       {showLoginPopup && (

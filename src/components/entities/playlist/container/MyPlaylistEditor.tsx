@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { DropResult } from '@hello-pangea/dnd';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -9,10 +9,13 @@ import { MyPlaylist, UpdatePlaylistParams } from '@/types/user/myPlaylist';
 import { Track } from '@/types/deezer/deezer';
 
 import NewPlaylistForm from '@/components/entities/playlist/ui/playlist/NewPlaylistForm';
-import NewPlaylistActions from '@/components/entities/playlist/ui/playlist/NewPlaylistActions';
 import PlaylistTrackListDnD from '@/components/entities/playlist/ui/track/PlaylistTrackListDnD';
 
 import '@/styles/myPlaylist/newPlaylist.scss';
+import Popup from '@/components/common/Popup';
+import TrashButton from '@/components/common/TrashButton';
+import { useUIStore } from '@/store/useUIStore';
+import Plus from '@/components/icons/Plus';
 
 interface Props {
   mode?: 'create' | 'edit';
@@ -21,6 +24,9 @@ interface Props {
 }
 
 const MyPlaylistEditor = ({ mode='create', myplaylistData, tracksData } : Props) => {
+  const [ showDeletePopup, setShowDeletePopup ] = useState(false);
+  const { setHideBottomNav } = useUIStore();
+
   const title = useTrackStore(state => state.title);
   const description = useTrackStore(state => state.description);
 
@@ -41,6 +47,8 @@ const MyPlaylistEditor = ({ mode='create', myplaylistData, tracksData } : Props)
   const router = useRouter();
 
   const queryClient = useQueryClient();
+
+  console.log(selectedIds);
 
   const createMutation = useMutation({
     mutationFn: createPlaylist,
@@ -84,6 +92,14 @@ const MyPlaylistEditor = ({ mode='create', myplaylistData, tracksData } : Props)
 
     initEditor();
   }, [mode, myplaylistData, tracksData]);
+
+  useEffect(() => {
+    setHideBottomNav(selectedIds.length > 0);
+
+    return () => {
+      setHideBottomNav(false);
+    };
+  }, [selectedIds, setHideBottomNav]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -138,11 +154,11 @@ const MyPlaylistEditor = ({ mode='create', myplaylistData, tracksData } : Props)
         onBack={reset}
       />
 
-      <NewPlaylistActions
-        selectedCount={selectedIds.length}
-        onAddTrack={() => router.push('/myplaylist/add-track')}
-        onDelete={removeFromPlaylist}
-      />
+      <div 
+        className='new-playlist-btn' 
+        onClick={() => router.push('/myplaylist/add-track')}>
+        <Plus color='#058CD7'/> <p>곡 추가</p>
+      </div>
 
       <PlaylistTrackListDnD
         playlist={playlist}
@@ -150,6 +166,25 @@ const MyPlaylistEditor = ({ mode='create', myplaylistData, tracksData } : Props)
         onToggle={toggleSelect}
         onDragEnd={handleDragEnd}
       />
+
+      {selectedIds.length > 0 && (
+        <TrashButton setShowDeletePopup={setShowDeletePopup} count={selectedIds.length}/>
+      )}
+
+      {showDeletePopup && (
+        <Popup
+          showPopup={showDeletePopup}
+          setShowPopup={setShowDeletePopup}
+          type='delete'
+          onConfirm={() => {
+            removeFromPlaylist();
+            setShowDeletePopup(false);
+          }}
+          onCancel={() => {
+            setShowDeletePopup(false);
+          }}
+        />
+      )}
     </div>
   );
 }

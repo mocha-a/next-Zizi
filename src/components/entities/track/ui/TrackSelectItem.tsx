@@ -7,6 +7,8 @@ import { SearchTrack } from '@/types/deezer/search';
 import TagBtn from '@/components/common/TagBtn';
 
 import '@/styles/track/trackSelectItem.scss';
+import Plus from '@/components/icons/Plus';
+import Check from '@/components/icons/Check';
 
 interface Props {
   track: SearchTrack;
@@ -47,18 +49,15 @@ function TrackSelectItem({ track, isSelected, onToggle, mode, dragHandle }: Prop
       <div className="trackitem-right">
         {mode === 'new' ? (
           <div
+            className="track-drag-handle"
             {...dragHandle}
-            style={{
-              cursor: 'grab',
-              padding: '4px',
-              userSelect: 'none',
-            }}
           >
             ≡
           </div>
-        ) : (
-          <TagBtn tagbtn="+" className={`${isSelected ? 'active' : ''}`} />
-        )}
+        ) : isSelected ? (
+          <Check />
+        ) : <Plus />
+        }
       </div>
     </li>
   );
