@@ -5,7 +5,7 @@ interface Props {
   onClick: () => void;
 }
 
-const SelectAllButton = ({ isAllSelected, onClick }: Props) => {
+const SelectAllBtn = ({ isAllSelected, onClick }: Props) => {
   return (
     <div className='action-btn' onClick={onClick}>
       <Check />
@@ -16,4 +16,4 @@ const SelectAllButton = ({ isAllSelected, onClick }: Props) => {
   );
 };
 
-export default SelectAllButton;
+export default SelectAllBtn;

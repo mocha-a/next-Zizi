@@ -23,6 +23,7 @@ model User {
   emailVerified DateTime?
   image         String? 
 
+  nickname      String?
   birth         String?
   gender        String?
   password      String? // 로컬 회원가입 사용자만 가짐 (NULL 허용)

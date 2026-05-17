@@ -40,8 +40,8 @@ const Page = () => {
 
     // 탭 메뉴
   const tabs = [
-    { label: '최근 기록', content: <RecentContent type="track" variant="select" /> },
     { label: 'Zizi 추천', content: <Recommendation  /> },
+    { label: '최근 기록', content: <RecentContent type="track" variant="select" /> },
   ];
 
   return (

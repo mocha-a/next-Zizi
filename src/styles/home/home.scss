@@ -64,7 +64,7 @@
 .NewRelease-container{
     margin-top: 25px; margin-left: 18px;
     >h2{
-        @include GmarketMedium_black_20;
+        @include Galmuri9_20;
         margin: 20px 0;
         &::before{
             content: '🎧 ';
@@ -94,7 +94,7 @@
 .record-container{
     margin-top: 25px; margin-left: 18px;
     >h2{
-        @include GmarketMedium_black_20;
+        @include Galmuri9_20;
         margin: 20px 0;
         &::before{
             content: '💿 ';

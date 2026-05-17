@@ -25,7 +25,7 @@ const RecentTrackCard = ({ track, index, variant = 'default' }: Props) => {
 
   if (isLoading || !data) {
     return (
-      <TrackSkeleton index={index} />
+      <TrackSkeleton index={index} mode={variant === 'select' ? 'add' : 'default'} />
     );
   }
 
@@ -38,7 +38,7 @@ const RecentTrackCard = ({ track, index, variant = 'default' }: Props) => {
           onToggle={() => toggleSelect(data)}
         />
       ) : (
-        <TrackItem track={data} index={index} page="" />
+        <TrackItem track={data} index={index} />
       )}
     </>
   )

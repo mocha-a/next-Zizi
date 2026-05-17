@@ -16,11 +16,13 @@ const Recommendation = () => {
     staleTime: 1000 * 60 * 30,
   });
 
+  if (error) return <div>데이터 로딩 실패</div>;
+
   return (
     <ul className='chart-section-list-box tracklist'>
       {isLoading
         ? Array.from({ length: 20 }).map((_, i) => (
-            <TrackSkeleton key={i} index={i} />
+            <TrackSkeleton key={i} index={i} mode='add'/>
           ))
         : data?.map((track: Track) => (
             <TrackSelectItem

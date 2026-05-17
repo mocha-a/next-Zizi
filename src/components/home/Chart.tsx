@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { usePathname } from "next/navigation";
 // import { Track } from "@/pages/api/lastfm/lastfm";
 import TrackItem from "../common/TrackItem";

@@ -2,6 +2,8 @@
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { useMutation } from '@tanstack/react-query';
+import { postPopularSearch } from '@/lib/api/serach';
 
 interface Props {
   placeholder: string;
@@ -13,6 +15,10 @@ const SearchBar = ({ placeholder, onSearch }: Props) => {
   const searchParams = useSearchParams();
 
   const [value, setValue] = useState('');
+
+  const { mutate } = useMutation({
+    mutationFn: postPopularSearch,
+  });
 
   useEffect(() => {
     if (!searchParams) return;
@@ -30,6 +36,9 @@ const SearchBar = ({ placeholder, onSearch }: Props) => {
     e.preventDefault();
     const query = value.trim();
     if (!query) return;
+
+    // 인기 검색어 저장
+    mutate(query);
 
     if (onSearch) {
       onSearch(query);

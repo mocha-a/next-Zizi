@@ -6,7 +6,7 @@ import { Track } from '@/types/deezer/deezer';
 interface PropsType {
     track: Track;  // data
     index: number;
-    page: string;      // page에 따라 UI 변경
+    page?: string;      // page에 따라 UI 변경
 }
 
 function TrackItem({track, page = '', index}: PropsType) {

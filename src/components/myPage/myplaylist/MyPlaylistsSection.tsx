@@ -122,7 +122,7 @@ const MyPlaylistsSection = () => {
   };
 
   return (
-    <div>
+    <>
       <div className='myplaylist-btn'>
         <div onClick={isEditMode ? handleSelectAll : handleClick} className='action-btn'>
           {isEditMode ? (
@@ -211,7 +211,7 @@ const MyPlaylistsSection = () => {
           }}
         />
       )}
-    </div>
+    </>
   );
 };
 

@@ -1,13 +1,15 @@
 import React from 'react';
 import Skeleton from '@mui/material/Skeleton';
 import Image from 'next/image';
+import Plus from '@/components/icons/Plus';
 
 interface PropsType {
   index: number;
   page?: string;
+  mode?: 'default' | 'add';
 }
 
-const TrackSkeleton = ({ index, page = '' }: PropsType) => {
+const TrackSkeleton = ({ index, page = '', mode = 'default' }: PropsType) => {
   return (
     <li>
       {/* 좌측 이미지 섹션 */}
@@ -35,8 +37,35 @@ const TrackSkeleton = ({ index, page = '' }: PropsType) => {
 
       {/* 우측 */}
       <div className="trackitem-right skeleton">
-        <Image src="/icons/play-bk.svg" alt="재생" width={11} height={14} style={{width: "11px", height: "14px", opacity: 0.3}}/>
-        <Image src="/icons/dot3.svg" alt="더보기" width={4} height={18} style={{width: "4px", height: "18px", opacity: 0.3}}/>
+        {mode === 'add' ? (
+          <Plus color="rgba(26, 26, 26, 0.3)" />
+        ) : (
+          <>
+            <Image
+              src="/icons/play-bk.svg"
+              alt="재생"
+              width={11}
+              height={14}
+              style={{
+                width: '11px',
+                height: '14px',
+                opacity: 0.3,
+              }}
+            />
+
+            <Image
+              src="/icons/dot3.svg"
+              alt="더보기"
+              width={4}
+              height={18}
+              style={{
+                width: '4px',
+                height: '18px',
+                opacity: 0.3,
+              }}
+            />
+          </>
+        )}
       </div>
     </li>
   );

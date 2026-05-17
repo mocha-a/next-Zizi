@@ -28,3 +28,10 @@ export const typeSearch = async (
     next: data.next ?? null,
   };
 };
+
+// 인기 검색어 저장
+export const postPopularSearch = async (keyword: string) => {
+  const res = await api.post('/popular-search', { keyword });
+
+  return res.data;
+};
