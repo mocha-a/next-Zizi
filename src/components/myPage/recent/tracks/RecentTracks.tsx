@@ -9,7 +9,7 @@ interface Props{
 
 const RecentTracks = ({ items, variant = 'default' }: Props) => {
   return (
-    <ul className='tracklist'>
+    <ul className={`tracklist ${variant === 'default' ? 'recent' : ''}`}>
       {items.map((track, i) => (
         <RecentTrackItem key={track.id} track={track} index={i} variant={variant}/>
       ))}

@@ -6,8 +6,10 @@ import { useInfiniteList } from '@/hooks/useInfiniteList';
 import { SearchTrack } from '@/types/deezer/search';
 import { typeSearch } from '@/lib/api/serach';
 import Back from '@/components/icons/Back'
+import TabsContainer from '@/components/common/TabsContainer';
 import SearchBar from '@/components/search/ui/SearchBar';
 import TrackSelectList from '@/components/entities/track/ui/TrackSelectList';
+import Recommendation from '@/components/entities/track/container/Recommendation';
 import RecentContent from '@/components/myPage/recent/RecentContent';
 
 import '@/styles/myPlaylist/newPlaylist.scss';
@@ -16,6 +18,7 @@ const LIMIT = 50;
 
 const Page = () => {
   const [ query, setQuery ] = useState('');
+  const [ tabValue, setTabValue ] = useState(0);
   
   const addSelectedToPlaylist = useTrackStore(state => state.addSelectedToPlaylist);
   const selectedIds = useTrackStore(state => state.selectedIds);
@@ -34,6 +37,12 @@ const Page = () => {
     limit: LIMIT,
     enabled: !!query,
   });
+
+    // 탭 메뉴
+  const tabs = [
+    { label: '최근 기록', content: <RecentContent type="track" variant="select" /> },
+    { label: 'Zizi 추천', content: <Recommendation  /> },
+  ];
 
   return (
     <div className="add-track new-playlist-page">
@@ -61,8 +70,13 @@ const Page = () => {
         />
       ) : (
         <>
-          <h3>최근 기록</h3>
-          <RecentContent type="track" variant="select" />
+          <TabsContainer
+            tabs={tabs}
+            tabValue={tabValue}
+            setTabValue={setTabValue}
+            fullWidth
+            width
+          />
         </>
       )}
     </div>

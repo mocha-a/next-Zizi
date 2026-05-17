@@ -1,10 +1,9 @@
 "use client";
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import { useParams } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
-import { useTabStore } from '@/store/tabStore';
 import { recent } from '@/lib/recent';
 import { formatDate, formatUpDate } from '@/lib/format';
 import { getCreator, getPlaylist, getTranslate } from '@/lib/api/playlist';
@@ -22,7 +21,7 @@ import '@/styles/playlist/playlist.scss';
 const Page = () => {
   const { id } = useParams() as { id: string };
   const { data: session } = useSession();
-  const { tabValue, setTabValue } = useTabStore();
+  const [ tabValue, setTabValue ] = useState(0);
 
   // 플레이리스트 api
   const { data: playlist, isLoading: playlistLoading } = useQuery<Playlist>({
@@ -62,10 +61,6 @@ const Page = () => {
     { label: '곡', content: <PlaylistTrackList track={playlist?.tracks?.data ?? []} duration={playlist?.duration ?? 0} />},
     { label: '취향저격', content: <PlaylistFlow id={playlist?.creator?.id ?? 0}/> },
   ];
-
-  useEffect(() => {
-    setTabValue(0);
-  }, [setTabValue]);
 
   useEffect(() => {
     recent({

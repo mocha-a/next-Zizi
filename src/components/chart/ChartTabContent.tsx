@@ -28,7 +28,7 @@ function ChartTabContent({ tabType }: ChartTabContentProps) {
     tabType === 'top' ? '0' : genreList?.[0]?.id);
 
   // 3. 차트 데이터 가져오기 (API 호출)
-  const { data: chartData, isLoading, error } = useQuery<any, Error>({
+  const { data: chartData, isLoading, error } = useQuery<Track[], Error>({
     queryKey: ['chart', selectedTag],
     queryFn: () => {
       // 탭 타입에 따라 다른 API 호출
@@ -76,7 +76,7 @@ function ChartTabContent({ tabType }: ChartTabContentProps) {
           ? Array.from({ length: 20 }).map((_, i) => (
               <TrackSkeleton key={i} index={i} page="chart" />
             ))
-          : chartData?.data?.map((track: Track, i: number) => (
+          : chartData?.map((track: Track, i: number) => (
               <TrackItem
                 key={track.id || i}
                 track={track}

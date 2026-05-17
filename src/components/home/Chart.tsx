@@ -17,7 +17,7 @@ export default function TopTracksList() {
   // const [tracks, setTracks] = useState<Track[]>([]);
   const { open, track, closeDialog } = useTrackDialog();
 
-  const { data: chartData, isLoading, error } = useQuery<any, Error>({
+  const { data: chartData, isLoading, error } = useQuery<Track[], Error>({
     queryKey: ['chart'],
     queryFn: () => getChart.getGlobalTracks(),
     staleTime: 1000 * 60 * 30,
@@ -47,7 +47,7 @@ export default function TopTracksList() {
           ? Array.from({ length: 5 }).map((_, i) => (
               <TrackSkeleton key={i} index={i} page="home" />
             ))
-          : chartData?.data.slice(0, 5).map((track: Track, i: number) => (
+          : chartData?.slice(0, 5).map((track: Track, i: number) => (
               <TrackItem
                 key={track.id || i}
                 track={track}

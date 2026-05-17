@@ -9,13 +9,12 @@ export const getChart: ChartTypes = {
   // 1. 전 세계 트랙 차트만 가져오기
   getGlobalTracks: async (type = 'tracks') => {
     const res = await api.get('/deezer/chart', { params: { type } });
-    return res.data;
+    return res.data.data;
   },
 
   // 2. 특정 장르의 트랙 차트만 가져오기
   getGenreTracks: async (genreId: string) => {
     const res = await api.get(`/deezer/chart`, { params: { genreId } });
-    return res.data; // 필요한 tracks 데이터만 골라서 반환
+    return res.data.data; // 필요한 tracks 데이터만 골라서 반환
   }
 };
-

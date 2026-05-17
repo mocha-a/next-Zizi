@@ -1,10 +1,9 @@
 "use client";
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import { useParams } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
-import { useTabStore } from '@/store/tabStore';
 import { RECORD_TYPE_MAP } from '@/constants/metadata';
 import { recent } from '@/lib/recent';
 import { getUniqueGenres } from '@/lib/genre';
@@ -23,7 +22,7 @@ const Page = () => {
   const { id } = useParams() as { id: string };
   const { data: session } = useSession();
 
-  const { tabValue, setTabValue } = useTabStore();
+  const [ tabValue, setTabValue ] = useState(0);
 
   const { data: album, isLoading } = useQuery<Album>({
     queryKey: ['album', id],
@@ -36,10 +35,6 @@ const Page = () => {
     { label: '수록곡', content: <AlbumTrackList track={album?.tracks?.data ?? []} duration={album?.duration ?? 0} /> },
     { label: '비슷한 느낌', content: <SimilarAlbums id={id} genreId={album?.genre_id ?? 0} /> },
   ];
-
-  useEffect(() => {
-    setTabValue(0);
-  }, [setTabValue]);
 
   useEffect(() => {
     recent({

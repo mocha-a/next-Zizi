@@ -4,11 +4,10 @@ import React from 'react';
 import Image from 'next/image';
 import { DraggableProvided } from '@hello-pangea/dnd';
 import { SearchTrack } from '@/types/deezer/search';
-import TagBtn from '@/components/common/TagBtn';
-
-import '@/styles/track/trackSelectItem.scss';
 import Plus from '@/components/icons/Plus';
 import Check from '@/components/icons/Check';
+
+import '@/styles/track/trackSelectItem.scss';
 
 interface Props {
   track: SearchTrack;
@@ -54,9 +53,7 @@ function TrackSelectItem({ track, isSelected, onToggle, mode, dragHandle }: Prop
           >
             ≡
           </div>
-        ) : isSelected ? (
-          <Check />
-        ) : <Plus />
+        ) : isSelected ? ( <Check /> ) : <Plus />
         }
       </div>
     </li>

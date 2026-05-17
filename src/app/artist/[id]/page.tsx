@@ -1,9 +1,8 @@
 'use client';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import { useParams } from 'next/navigation';
-import { useTabStore } from '@/store/tabStore';
 import { useQuery } from '@tanstack/react-query';
 import { recent } from '@/lib/recent';
 import { getArtist } from '@/lib/api/artist';
@@ -22,7 +21,7 @@ const Page = () => {
   const { data: session } = useSession();
 
   // 탭 상태
-  const { tabValue, setTabValue } = useTabStore();
+  const [ tabValue, setTabValue ] = useState(0);
 
   const { data: artist, isLoading } = useQuery<Artist>({
     queryKey: ['artist', id],
@@ -35,10 +34,6 @@ const Page = () => {
     { label: '앨범', content: <ArtistAlbums id={id} artist={artist}/> },
     { label: '인기곡', content: <ArtistTracks id={id} /> }
   ];
-
-  useEffect(() => {
-    setTabValue(0);
-  }, [setTabValue]);
 
   useEffect(() => {
     recent({

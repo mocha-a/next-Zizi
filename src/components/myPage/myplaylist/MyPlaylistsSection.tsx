@@ -127,7 +127,7 @@ const MyPlaylistsSection = () => {
         <div onClick={isEditMode ? handleSelectAll : handleClick} className='action-btn'>
           {isEditMode ? (
             <>
-              <Check /> {isAllSelected ? '전체 해제' : '전체 선택'}
+              <Check /> {isAllSelected ? <p>전체 해제</p> : <p>전체 선택</p>}
             </>
           ) : (
             <>
