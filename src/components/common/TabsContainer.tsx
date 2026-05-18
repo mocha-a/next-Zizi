@@ -61,6 +61,7 @@ interface CustomTabProps {
 }
 
 const CustomTab = styled(Tab)<CustomTabProps>(({ mr }) => ({
+  textTransform: 'none',
   marginRight: mr || '0px',
   fontSize: '13px',
   fontFamily: 'var(--font-gmarketMedium)',

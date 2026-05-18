@@ -1,6 +1,6 @@
 import React from 'react'
 import { RecentView } from '@/types/recent';
-import RecentTrackItem from './RecentTrackItem';
+import RecentTrackCard from './RecentTrackCard';
 
 interface Props{
   items: RecentView[];
@@ -11,7 +11,7 @@ const RecentTracks = ({ items, variant = 'default' }: Props) => {
   return (
     <ul className={`tracklist ${variant === 'default' ? 'recent' : ''}`}>
       {items.map((track, i) => (
-        <RecentTrackItem key={track.id} track={track} index={i} variant={variant}/>
+        <RecentTrackCard key={track.id} track={track} index={i} variant={variant}/>
       ))}
     </ul>
   )

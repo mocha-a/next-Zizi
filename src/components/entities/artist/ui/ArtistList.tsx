@@ -31,11 +31,7 @@ const ArtistList = ({ artists, loading, hasMore, onLoadMore, onClick }: Props) =
 
   return (
     <div className="artistTab-container">
-      <InfiniteScroll
-        loadMore={onLoadMore}
-        loading={loading}
-        hasMore={hasMore}
-      >
+      <InfiniteScroll loadMore={onLoadMore} loading={loading} hasMore={hasMore} >
         {artists.map((artist) => (
           <ArtistCard
             key={artist.id}

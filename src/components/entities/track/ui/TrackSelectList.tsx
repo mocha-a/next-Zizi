@@ -19,11 +19,7 @@ const TrackSelectList = ({ tracks, loading, hasMore, onLoadMore }: Props) => {
 
   return (
     <div className="trackTab-container tracklist add-tracklist">
-      <InfiniteScroll
-        loadMore={onLoadMore}
-        loading={loading}
-        hasMore={hasMore}
-      >
+      <InfiniteScroll loadMore={onLoadMore} loading={loading} hasMore={hasMore} >
         {/* 첫 로딩 (데이터 없을 때) */}
         {loading && !tracks?.length &&
           Array.from({ length: 10 }).map((_, i) => (

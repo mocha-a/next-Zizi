@@ -19,24 +19,20 @@ const RecentArtistCard = ({ artist }: Props) => {
 
   if (isLoading || !data) {
     return (
-      <div className='recent'>
-        <ArtistSkeleton />
-      </div>
+      <ArtistSkeleton />
     ); 
   }
   
   return (
-    <div className='recent'>
-      <ArtistCard
-        key={data.id}
-        name={data.name}
-        imageUrl={data.picture_medium}
-        fan={data.nb_fan}
-        level={data.level}
-        showFans={true}
-        onClick={() => router.push(`/artist/${data.id}`)}
-      />
-    </div>
+    <ArtistCard
+      key={data.id}
+      name={data.name}
+      imageUrl={data.picture_medium}
+      fan={data.nb_fan}
+      level={data.level}
+      showFans={true}
+      onClick={() => router.push(`/artist/${data.id}`)}
+    />
   )
 }
 

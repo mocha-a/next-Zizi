@@ -19,25 +19,21 @@ const RecentAlbumCard = ({ album }: Props) => {
 
   if (isLoading || !data) {
     return (
-      <div className='recent'>
-        <MediaSkeleton />
-      </div>
+      <MediaSkeleton />
     ); 
   }
   
   return (
-    <div className='recent'>
-      <AlbumCard
-        id={data.id}
-        title={data.title}
-        cover={data.cover_medium}
-        release_date={data.release_date}
-        record_type={data.record_type}
-        nb_tracks={data.nb_tracks}
-        artist={data.artist}
-        onClick={() => router.push(`/album/${data.id}`)}
-      />
-    </div>
+    <AlbumCard
+      id={data.id}
+      title={data.title}
+      cover={data.cover_medium}
+      release_date={data.release_date}
+      record_type={data.record_type}
+      nb_tracks={data.nb_tracks}
+      artist={data.artist}
+      onClick={() => router.push(`/album/${data.id}`)}
+    />
   )
 }
 

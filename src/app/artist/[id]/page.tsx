@@ -14,6 +14,7 @@ import ArtistAlbums from '@/components/entities/artist/container/ArtistAlbums';
 import ArtistTracks from '@/components/entities/artist/container/ArtistTrack';
 
 import '@/styles/artist/artist.scss';
+import ArtistPageSkeleton from '@/components/loading/page/ArtistPageSkeleton';
 
 const Page = () => {
   // URL에서 아티스트 id 추출
@@ -43,36 +44,41 @@ const Page = () => {
     });
   }, [id, session]);
 
-  if (isLoading) return <div>로딩중...</div>;
-  if (!artist) return <div>아티스트 없음</div>;
-
   return (
     <div className="artist-detail">
-      <section className="artist-top">
-        <div className="artist-img">
-          <Image
-            src={artist.picture_xl ?? '/imgs/default.png'}
-            alt={artist?.name || 'artist image'}
-            fill
-            style={{ objectFit: 'cover' }}
-          />
+      {isLoading ? (
+        <ArtistPageSkeleton />
+      ) : !artist ? (
+        <div>아티스트 없음</div>
+      ) : (
+        <section className="artist-top">
+          <div className="artist-img">
+            <Image
+              src={artist.picture_xl ?? '/imgs/default.png'}
+              alt={artist?.name || 'artist image'}
+              fill
+              className='artist-cover fade-mask'
+              style={{ objectFit: 'cover' }}
+            />
 
-          <div className="artist-backBtn">
-            <Back className ='detailHeader' />
+            <div className="artist-backBtn">
+              <Back className ='detailHeader' />
+            </div>
+
+            <h1 className="artist-name">{artist.name}</h1>
           </div>
 
-          <h1 className="artist-name">{artist.name}</h1>
-        </div>
+          <div className="artist-info">
+            <p className="artist-nb_album">
+              {artist.nb_album.toLocaleString()}장의 앨범 발매
+            </p>
 
-        <div className="artist-info">
-          <p className="artist-nb_album">
-            {artist.nb_album.toLocaleString()}장의 앨범 발매
-          </p>
-          <p className="artist-followers">
-            {artist.nb_fan.toLocaleString()}명이 밤새 덕질 중...zZ
-          </p>
-        </div>
-      </section>
+            <p className="artist-followers">
+              {artist.nb_fan.toLocaleString()}명이 밤새 덕질 중...zZ
+            </p>
+          </div>
+        </section>
+      )}
 
       <div className="artist-down">
         <TabsContainer

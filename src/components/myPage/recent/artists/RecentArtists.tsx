@@ -1,6 +1,6 @@
 import React from 'react'
 import { RecentView } from '@/types/recent';
-import RecentArtistItem from './RecentArtistItem';
+import RecentArtistCard from './RecentArtistCard';
 
 interface Props{
   items: RecentView[];
@@ -8,11 +8,11 @@ interface Props{
 
 const RecentArtists = ({ items }: Props) => {
   return (
-    <>
+    <div className='recent'>
       {items.map(artist => (
-        <RecentArtistItem key={artist.id} artist={artist}/>
+        <RecentArtistCard key={artist.id} artist={artist}/>
       ))}
-    </>
+    </div>
   )
 }
 

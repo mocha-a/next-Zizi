@@ -19,22 +19,18 @@ const RecentPlaylistCard = ({ playlist }: Props) => {
 
   if (isLoading || !data) {
     return (
-      <div className='recent'>
-        <MediaSkeleton />
-      </div>
+      <MediaSkeleton />
     ); 
   }
   console.log(data);
   return (
-    <div className='recent'>
-      <PlaylistCard
-        picture={data.picture_medium}
-        title={data.title}
-        user={data.creator?.name}
-        tracks={data.nb_tracks}
-        onClick={() => router.push(`/playlist/${data.id}`)}
-      />
-    </div>
+    <PlaylistCard
+      picture={data.picture_medium}
+      title={data.title}
+      user={data.creator?.name}
+      tracks={data.nb_tracks}
+      onClick={() => router.push(`/playlist/${data.id}`)}
+    />
   )
 }
 

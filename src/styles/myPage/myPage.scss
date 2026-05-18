@@ -62,10 +62,8 @@
 
 // 최근기록 content
 .recent{
+  @include publicWidth;
   margin-top: 20px;
-  >li{
-    @include section-padding;
-  }
 }
 
 // 편집 모드
