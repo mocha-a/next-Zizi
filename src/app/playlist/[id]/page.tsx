@@ -17,6 +17,8 @@ import TabsContainer from '@/components/common/TabsContainer';
 import ReadMore from '@/components/entities/playlist/ui/ReadMore';
 
 import '@/styles/playlist/playlist.scss';
+import MediaPageSkeleton from '@/components/loading/page/MediaPageSkeleton';
+import Skeleton from '@mui/material/Skeleton';
 
 const Page = () => {
   const { id } = useParams() as { id: string };
@@ -70,38 +72,53 @@ const Page = () => {
     });
   }, [id, session]);
 
-  if (playlistLoading || creatorLoading || translateLoading) return <div>로딩중...</div>;
-  if (!playlist) return <div>아티스트 없음</div>;
-
   return (
     <div className='playlist-detail'>
       <Back className ='detailHeader' />
-      <div className='playlist-detail-img'>
-        <Image
-          src={playlist.picture_medium ?? '/imgs/default.png'}
-          alt={playlist.title}
-          width={200}
-          height={200}
-        />
-      </div>
-      <p className='playlist-detail-fans-count'>
-        {playlist.fans > 0
-          ? `${playlist.fans.toLocaleString()}명이 무한재생 중...`
-          : "무한재생 앨범으로 찜해봐 -!"}
-      </p>
-      <h2>{playlist.title}</h2>
-      {translated && (
-        <ReadMore description={translated} />
+      {playlistLoading || creatorLoading ? (
+        <MediaPageSkeleton />
+      ): !playlist ? (
+        <div>플레이리스트 없음</div>
+      ) : ( 
+        <>
+          <div className='playlist-detail-img'>
+            <Image
+              src={playlist.picture_medium ?? '/imgs/default.png'}
+              alt={playlist.title}
+              width={200}
+              height={200}
+            />
+          </div>
+          <p className='playlist-detail-fans-count'>
+            {playlist.fans > 0
+              ? `${playlist.fans.toLocaleString()}명이 무한재생 중...`
+              : "무한재생 앨범으로 찜해봐 -!"}
+          </p>
+          <h2>{playlist.title}</h2>
+
+          {description && (
+            translateLoading ? (
+              <div className='playlist-detail-description'>
+                <Skeleton variant="rectangular" width={230}/>
+              </div>
+            ) : (
+              translated && (
+                <ReadMore description={translated} />
+              )
+            )
+          )}
+
+          <div className='playlist-detail-info'>
+            <span>{formatDate(playlist?.creation_date)} </span>
+            {updatedText && (
+              <span className="playlist-updated"> {updatedText} 업데이트</span>
+            )}
+          </div>
+          <div className='playlist-detail-creator'>
+            <CreatorBadge creator={creator ?? []} />
+          </div>
+        </>
       )}
-      <div className='playlist-detail-info'>
-        <span>{formatDate(playlist.creation_date)} </span>
-        {updatedText && (
-          <span className="playlist-updated"> {updatedText} 업데이트</span>
-        )}
-      </div>
-      <div className='playlist-detail-creator'>
-        <CreatorBadge creator={creator ?? []} />
-      </div>
 
       <TabsContainer
         tabs={tabs}
