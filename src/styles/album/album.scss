@@ -3,6 +3,7 @@
 
 .album-detail{
     @include publicWidth;
+    
     .album-detail-img{
         margin: 15px auto 30px;
         width: 200px; height: 200px;

@@ -15,6 +15,7 @@ import TabsContainer from '@/components/common/TabsContainer';
 import ArtistBadge from '@/components/entities/artist/ui/ArtistBadge';
 import SimilarAlbums from '@/components/entities/album/container/SimilarAlbums';
 import AlbumTrackList from '@/components/entities/album/container/AlbumTrackList';
+import MediaPageSkeleton from '@/components/loading/page/MediaPageSkeleton';
 
 import '@/styles/album/album.scss';
 
@@ -32,7 +33,7 @@ const Page = () => {
 
   // 탭 메뉴
   const tabs = [
-    { label: '수록곡', content: <AlbumTrackList track={album?.tracks?.data ?? []} duration={album?.duration ?? 0} /> },
+    { label: '수록곡', content: <AlbumTrackList track={album?.tracks?.data ?? []} duration={album?.duration ?? 0} loading={isLoading}/> },
     { label: '비슷한 느낌', content: <SimilarAlbums id={id} genreId={album?.genre_id ?? 0} /> },
   ];
 
@@ -48,40 +49,46 @@ const Page = () => {
   // 장르
   const genres = getUniqueGenres(album?.genres.data);
 
-  if (isLoading) return <div>로딩중...</div>;
-  if (!album) return <div>아티스트 없음</div>;
-
   return (
     <div className="album-detail">
       <Back className ='detailHeader' />
-      <div className='album-detail-img'>
-        <Image
-          src={album.cover_medium ?? '/imgs/default.png'}
-          alt={album.title}
-          width={200}
-          height={200}
-        />
-      </div>
-      <p className='album-detail-fans-count'>
-        {album.fans > 0
-          ? `${album.fans.toLocaleString()}명이 무한재생 중...`
-          : "무한재생 앨범으로 찜해봐 -!"}
-      </p>
-      <h2>{album.title}</h2>
-      <div className='album-detail-info'>
-        <span>{album.release_date.replace(/-/g, ".")}</span>
-        <span>{RECORD_TYPE_MAP[album.record_type]}</span>
-        {genres.length > 0 && (
-          <span className="album-detail-genres">
-            {genres.map((genre, i) => (
-              <span key={i}>{genre}</span>
-            ))}
-          </span>
-        )}
-      </div>
-      <div className='album-detail-artist'>
-        <ArtistBadge contributors={album.contributors ?? []} />
-      </div>
+      {isLoading ? (
+        <MediaPageSkeleton />
+      ) : !album ?(
+        <div>아티스트 없음</div>
+      ) : (
+        <>
+          <div className='album-detail-img'>
+            <Image
+              src={album.cover_medium ?? '/imgs/default.png'}
+              alt={album.title}
+              width={200}
+              height={200}
+            />
+          </div>
+          <p className='album-detail-fans-count'>
+            {album.fans > 0
+              ? `${album.fans.toLocaleString()}명이 무한재생 중...`
+              : "무한재생 앨범으로 찜해봐 -!"}
+          </p>
+          <h2>{album.title}</h2>
+          <div className='album-detail-info'>
+            <span>{album.release_date.replace(/-/g, ".")}</span>
+            <span>{RECORD_TYPE_MAP[album.record_type]}</span>
+            {genres.length > 0 && (
+              <span className="album-detail-genres">
+                {genres.map((genre, i) => (
+                  <span key={i}>{genre}</span>
+                ))}
+              </span>
+            )}
+          </div>
+          <div className='album-detail-artist'>
+            <ArtistBadge contributors={album.contributors ?? []} />
+          </div>
+        </>
+      )}
+
       <TabsContainer
         tabs={tabs}
         tabValue={tabValue}

@@ -13,7 +13,7 @@ interface Props {
 const TrackSection = ({ data, loading }: Props) => {
   return (
     <div className='allReslts allReslts-track tracklist'>
-      <SectionHeader title="곡" targetIndex={2} type="track" />
+      <SectionHeader title="곡" type="track" />
 
       {/* 로딩 상태 */}
       {loading &&

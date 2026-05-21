@@ -20,7 +20,7 @@ interface Props {
 const ArtistSection = ({ data, loading }: Props) => {
   return (
     <div className='allReslts allReslts-artist'>
-      <SectionHeader title="아티스트" targetIndex={1} type="artist" />
+      <SectionHeader title="아티스트" type="artist" />
 
       <Swiper
         slidesPerView={3.35}
