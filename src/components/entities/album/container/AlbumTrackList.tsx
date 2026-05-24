@@ -2,7 +2,7 @@ import React from 'react';
 import AlbumTrackItem from '../ui/AlbumTrackItem'
 import { Track } from '@/types/deezer/deezer';
 import { formatDuration } from '@/lib/format';
-import TrackSkeleton from '@/components/loading/item/TrackSkeleton';
+import AlbumTrackSkeleton from '@/components/loading/item/AlbumTrackSkeleton';
 
 interface Props {
   track: Track[];
@@ -19,9 +19,9 @@ const AlbumTrackList = ({ track, duration, loading }: Props) => {
       </p>
 
       {loading ? (
-        <ul className="tracklist">
+        <ul className="album-track-list">
           {Array.from({ length: 8 }).map((_, i) => (
-            <TrackSkeleton
+            <AlbumTrackSkeleton
               key={i}
               index={i}
             />

@@ -4,7 +4,7 @@ import Back from '@/components/icons/Back';
 
 const ArtistPageSkeleton = () => {
   return (
-    <div className="artist-detail">
+    <>
       <section className="artist-top">
         <div className="artist-img">
           <Skeleton variant="rectangular" width="100%" height="100%" className='fade-mask'/>
@@ -14,16 +14,16 @@ const ArtistPageSkeleton = () => {
           </div>
 
           <h1 className="artist-name">
-            <Skeleton variant="text" width={180} height={58} />
+            <Skeleton variant="rectangular" width={120} height={35} />
           </h1>
         </div>
 
         <div className="artist-info">
-          <Skeleton variant="text"width={150} height={22} sx={{ margin: '12px 0 2px' }}/>
-          <Skeleton variant="text" width={200} height={22} />
+          <Skeleton variant="rectangular"width={150} height={22} sx={{ margin: '12px 0 2px' }}/>
+          <Skeleton variant="rectangular" width={200} height={22} />
         </div>
       </section>
-    </div>
+    </>
   )
 }
 

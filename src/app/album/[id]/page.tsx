@@ -55,7 +55,7 @@ const Page = () => {
       {isLoading ? (
         <MediaPageSkeleton />
       ) : !album ?(
-        <div>아티스트 없음</div>
+        <div>앨범 없음</div>
       ) : (
         <>
           <div className='album-detail-img'>

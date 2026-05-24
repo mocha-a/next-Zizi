@@ -21,7 +21,7 @@ const AlbumList = ({ albums, loading, hasMore, loadMore, onClick, artist }: Prop
     return (
       <div className="albumTab-container">
         {Array.from({ length: 10 }).map((_, i) => (
-          <MediaSkeleton key={`init-${i}`} />
+          <MediaSkeleton key={`init-${i}`} size={168}/>
         ))}
       </div>
     );

@@ -18,7 +18,7 @@ const MediaPageSkeleton = () => {
         <Skeleton variant="rectangular" width={180} height={15} sx={{ margin: '15px 0' }}/>
       </div>
 
-      <div className='playlist-detail-creator '>
+      <div className='playlist-detail-creator album-detail-artist'>
         <div className='creator-badge artist-badge'>
           <Skeleton variant="circular" width={32} height={32} />
           <Skeleton variant="rectangular" width={100} height={15} />

@@ -1,4 +1,5 @@
 import TrackItem from '@/components/common/TrackItem';
+import TrackSkeleton from '@/components/loading/item/TrackSkeleton';
 import { getFlow } from '@/lib/api/playlist';
 import { Track } from '@/types/deezer/deezer';
 import { useQuery } from '@tanstack/react-query';
@@ -16,22 +17,28 @@ const PlaylistFlow = ({ id }: Props) => {
     enabled: !!id
   });
 
-  if (isLoading) return <div>로딩중...</div>;
-  if (!flow) return <div>아티스트 없음</div>;
-
-  return (
+   return (
     <div className='playlist-flow'>
       <p>{`주인장’s 취향으로 꽉- 채운 추천 트랙.. ( ^_− ) ☆`}</p>
+
       <ul className="tracklist">
-        {flow?.map((track, i) => (
+        {isLoading &&
+          Array.from({ length: 5 }).map((_, i) => (
+            <TrackSkeleton key={i} index={i} /> ))
+        }
+
+        {!isLoading && flow?.map((track, i) => (
           <TrackItem
             key={track.id}
             track={track}
             index={i}
-            page={''}
           />
         ))}
       </ul>
+
+      {!isLoading && !flow?.length && (
+        <div>아티스트 없음</div>
+      )}
     </div>
   )
 }

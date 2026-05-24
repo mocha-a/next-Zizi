@@ -1,7 +1,8 @@
 import React from 'react';
 import Skeleton from '@mui/material/Skeleton';
-import Image from 'next/image';
 import Plus from '@/components/icons/Plus';
+import PlayBk from '@/components/icons/PlayBk';
+import Dot3 from '@/components/icons/Dot3';
 
 interface PropsType {
   index: number;
@@ -29,9 +30,11 @@ const TrackSkeleton = ({ index, page = '', mode = 'default' }: PropsType) => {
           <span className='trackitem-num-chart'>{index + 1}</span>
         )}
         
-        <div>
-          <Skeleton variant="text" width={120} height={20} />
-          <Skeleton variant="text" width={80} height={15} />
+        <div style={{ alignItems: 'center' }}>
+          <p>
+            <Skeleton variant="rectangular" width={120} height={15} />
+          </p>
+          <Skeleton variant="rectangular" width={80} height={13} />
         </div>
       </div>
 
@@ -41,29 +44,8 @@ const TrackSkeleton = ({ index, page = '', mode = 'default' }: PropsType) => {
           <Plus color="rgba(26, 26, 26, 0.3)" />
         ) : (
           <>
-            <Image
-              src="/icons/play-bk.svg"
-              alt="재생"
-              width={11}
-              height={14}
-              style={{
-                width: '11px',
-                height: '14px',
-                opacity: 0.3,
-              }}
-            />
-
-            <Image
-              src="/icons/dot3.svg"
-              alt="더보기"
-              width={4}
-              height={18}
-              style={{
-                width: '4px',
-                height: '18px',
-                opacity: 0.3,
-              }}
-            />
+            <PlayBk className="icons-play" opacity={0.3} />
+            <Dot3 className="icons-dot"  opacity={0.3} />
           </>
         )}
       </div>
