@@ -1,5 +1,5 @@
 export const genreIcons: Record<string, any> = {
-    "defalut": "💿",
+    // "defalut": "💿",
     "Pop": "🎤",
     "Hip-Hop": "😎",
     "Rock": "🎸",

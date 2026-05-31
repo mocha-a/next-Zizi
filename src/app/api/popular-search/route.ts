@@ -30,3 +30,15 @@ export async function POST(req: Request) {
 
   return NextResponse.json({ success: true });
 }
+
+// 인기검색어 조회
+export async function GET() {
+  const keywords = await prisma.popularSearch.findMany({
+    orderBy: {
+      count: 'desc',
+    },
+    take: 10,
+  });
+
+  return NextResponse.json(keywords);
+}

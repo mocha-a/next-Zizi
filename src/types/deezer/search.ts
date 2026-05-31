@@ -81,3 +81,14 @@ export interface SearchPlaylist {
   }
   type: "playlist";
 }
+
+// ======================================================
+// Popular
+// ======================================================
+export type PopularSearch = {
+  id: number;
+  keyword: string;
+  count: number;
+  createdAt: string;
+  updatedAt: string;
+};

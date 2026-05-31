@@ -35,3 +35,11 @@ export const postPopularSearch = async (keyword: string) => {
 
   return res.data;
 };
+
+// 인기 검색어 조회
+export const getPopularSearch = async () => {
+  const res = await api.get('/popular-search');
+  
+  return res.data;
+};
+

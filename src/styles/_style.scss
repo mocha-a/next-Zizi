@@ -292,9 +292,24 @@ input:checked + .tagbtn{
     padding: 22px;
     text-align: center;
 
-    .onboarding_icon{margin: 8px 0 25px;}
+    .onboarding_icon{margin: 8px 0 25px; color: #777;}
+    .onboarding_nickname{
+        input {
+            text-align: right;
+            padding-right: 10px;
+        }
+
+        input::placeholder {
+            text-align: right;
+            opacity: 0.5;
+        }
+    }
+    .onboarding_birth{
+        margin: 18px 0 15px;
+    }
 
     >h2{
+        font-family: var(--font-Galmuri9);
         font-size: 20px;
     }
     >span{
@@ -304,7 +319,7 @@ input:checked + .tagbtn{
         margin: 8px 0 30px;
     }
 
-    .onboarding_birth, .onboarding_gender, .onboarding_buttons{
+    .onboarding_nickname, .onboarding_birth, .onboarding_gender, .onboarding_buttons{
         display: flex;
         align-items: center;
         justify-content: space-between;

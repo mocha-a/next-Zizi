@@ -15,6 +15,7 @@ import RecentSection from '@/components/myPage/recent/RecentSection';
 import CdImage from '@/components/myPage/CdImage';
 
 import '@/styles/myPage/myPage.scss';
+import MeRoom from '@/components/myPage/MeRoom';
 
 function Page() {
   const { isEditMode } = usePlaylistEditStore();
@@ -25,13 +26,14 @@ function Page() {
   const searchParams = useSearchParams();
 
   const tabValue = searchParams.get('tab') ?? 'recent';
-  const tabMap = ['recent', 'myplaylist'];
+  const tabMap = ['recent', 'myplaylist', 'myroom'];
   const tabIndex = tabMap.indexOf(tabValue);
 
   // 탭 메뉴
   const tabs = [
     { label: '최근 기록', content: <RecentSection /> },
     { label: '내 플레이리스트', content: <MyPlaylistsSection /> },
+    { label: '내 프로필', content: <MeRoom /> },
   ];
 
   if (status === 'loading') return null;
@@ -47,7 +49,9 @@ function Page() {
           <div className='myPage-greeting'>
             {session ? (
               <div>
-                <span className='myPage-name'>{user?.name}</span> 님의
+                <span className='myPage-name'>
+                  {user?.nickname ?? user?.name}
+                </span> 님의
                 <p>
                   아침을 깨우는 <br />
                   상쾌한 비트 시작 -! ♬

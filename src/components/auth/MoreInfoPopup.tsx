@@ -10,15 +10,16 @@ import GenderSelect from './GenderSelect';
 export default function OnboardingPopup() {
   const [birth, setBirth] = useState('');
   const [gender, setGender] = useState<string | null>(null);
+  const [nickname, setNickname] = useState('');
 
   const router = useRouter();
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: (data: { birth: string; gender: string }) =>
+    mutationFn: (data: { birth: string; gender: string; nickname: string }) =>
       api.put('/user/profile', data),
 
-    onSuccess: () => {
+    onSuccess: (res) => {
       queryClient.invalidateQueries({
         queryKey: ['user'],
       });
@@ -27,23 +28,34 @@ export default function OnboardingPopup() {
   });
 
   const handleSubmit = () => {
-    if (!birth || !gender) {
+    if (mutation.isPending) return;
+    
+    if (!birth || !gender || !nickname) {
       alert('모든 항목을 입력해주세요.');
       return;
     }
 
-    mutation.mutate({ birth, gender });
+    mutation.mutate({ birth, gender, nickname });
   };
 
   return (
     <div className='onboarding_overlay'>
       <div className='onboarding_contents'>
-        <p className='onboarding_icon'>🎧</p>
-        <h2>나만의 음악을 만나볼까요?</h2>
+        <p className='onboarding_icon'>꒰ 🎧 ꒱</p>
+        <h2>Zi존이가 되기 위한 <br />Bonus 코스</h2>
         <span>
-          간단한 정보만 입력하면<br />
-          취향에 딱 맞는 음악을 추천해 드려요&nbsp; .❛ ᴗ ❛.
+          작은 데이터들을 모아 나를 표현해봐 - !&nbsp; .❛ ᴗ ❛.
         </span>
+
+        <label className='onboarding_nickname'>
+          닉네임
+          <input
+            type="text"
+            value={nickname}
+            placeholder="ex) ★CutiE_GiRl★"
+            onChange={(e) => setNickname(e.target.value)}
+          />
+        </label>
 
         <label className='onboarding_birth'>
           생년월일

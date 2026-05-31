@@ -13,13 +13,13 @@ export async function PUT(req: Request) {
         { status: 401 }
       );
     }
-
+    
     const body = await req.json();
-    const { birth, gender } = body;
+    const { nickname, birth, gender } = body;
 
     await prisma.user.update({
       where: { id: session.user.id },
-      data: { birth, gender },
+      data: { nickname, birth, gender },
     });
 
     return NextResponse.json(
@@ -52,6 +52,7 @@ export async function GET() {
         select: {
             id: true,
             name: true,
+            nickname: true,
             email: true,
             birth: true,
             gender: true,
