@@ -28,8 +28,8 @@ function Dashboard() {
         staleTime: 1000 * 60 * 30,
     });
 
-    console.log(playlists);
-    console.log(user);
+    // console.log(playlists);
+    // console.log(user);
 
     return (
     <>
