@@ -40,7 +40,6 @@ function Dashboard() {
 
     console.log(playlistsOfUser);
     
-
     return (
     <>
         <div className="myMusic-container">
