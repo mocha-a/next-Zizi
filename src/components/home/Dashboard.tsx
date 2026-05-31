@@ -29,7 +29,7 @@ function Dashboard() {
     });
 
     console.log(playlists);
-    
+    console.log(user);
 
     return (
     <>
