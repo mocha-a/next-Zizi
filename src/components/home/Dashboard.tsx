@@ -2,9 +2,12 @@
 
 import { useUserProfile } from "@/hooks/useUserProfile";
 import { getChart } from "@/lib/api/chart";
+import { getPlaylists } from "@/lib/api/myPlaylist";
+import { MyPlaylist } from "@/types/user/myPlaylist";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
+import ThumbnailGrid from "../myPage/myplaylist/ThumbnailGrid";
 
 function Dashboard() {
     const imageList = [
@@ -20,32 +23,45 @@ function Dashboard() {
     const { data: session } = useSession();
     const { data: user } = useUserProfile(session);
 
-    const { data: playlists, isLoading, error } = useQuery<any, Error>({
-        queryKey: ['playlists', 'playlists'],
+    const { data: playlistsOfApi, isLoading, error } = useQuery<any, Error>({
+        queryKey: ['playlistsOfApi', 'playlistsOfApi'],
         queryFn: () => {
             return getChart.getGlobalTracks('playlists');
         },
         staleTime: 1000 * 60 * 30,
     });
 
-    // console.log(playlists);
-    // console.log(user);
+    const { data: playlistsOfUser } = useQuery<MyPlaylist[]>({
+        queryKey: ['myplaylist', user?.id],
+        queryFn: () => getPlaylists(),
+        enabled: !!user?.id,
+        staleTime: 0,
+    });
+
+    console.log(playlistsOfUser);
+    
 
     return (
     <>
         <div className="myMusic-container">
             <div className="overlay" />
-            <div className="img-grid">
-                {imageList.map((src, i) => (
-                <div className="img-box" key={i}>
-                    <Image
-                    src={src}
-                    alt={`이미지 ${i + 1}`}
-                    fill
-                    sizes="(max-width: 100px) 100px, 100px"
-                    />
-                </div>
-                ))}
+            <div className={`img-grid ${user && playlistsOfUser?.length === 1 ? 'single-item' : ''}`}>
+                {user ? (
+                    playlistsOfUser?.slice(0, 2).map((item, index) => (
+                        <ThumbnailGrid key={index} thumbnails={item.thumbnails} className={'img-box large-thumbnail'} />
+                    ))
+                ) : (
+                    imageList.map((src, i) => (
+                        <div className="img-box" key={i}>
+                            <Image
+                            src={src}
+                            alt={`이미지 ${i + 1}`}
+                            fill
+                            sizes="(max-width: 100px) 100px, 100px"
+                            />
+                        </div>
+                    ))
+                )}
             </div>
             <div className="myMusic-text-absolute">
                 <div className="myMusic-text-content">

@@ -55,7 +55,7 @@ function Record() {
     
   return (
     <div className='record-container'>
-        <h2>{ session ? `${session.user.name}님_맞춤_레코드.dll` : '맞춤_레코드.dll'}</h2>
+        <h2>{ session ? `${session.user.name}님_맞춤_레코드.dll` : 'zi존이_맞춤_레코드.dll'}</h2>
         
         <Swiper
             slidesPerView={2.4}
