@@ -2,10 +2,14 @@
 @use '../mixins'as *;
 
 .myPage-container{
-  @include publicWidth;
+  .myPage-topSection, .search-tabs, .tagbtn-box, .myplaylist-btn{
+    @include publicWidth;
+  }
+
   .myPage-Header{
     @include flex($justify: space-between);
   }
+  
   .myPage-Hero{
     @include flex($justify: space-between, $align: flex-end);
     margin-bottom: 20px;
@@ -39,7 +43,6 @@
       }
     }
   }
-
   .myPage-tabs{
     margin-top: 50px;
   }
@@ -49,4 +52,30 @@
   display: inline-flex;
   white-space: nowrap;
   margin-right: 10px;
+}
+
+.myplaylist-list{
+  .playlist-box{
+    @include section-padding;
+  }
+}
+
+// 최근기록 content
+.recent{
+  @include publicWidth;
+  margin-top: 20px;
+}
+
+// 편집 모드
+.edit-mode {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.edit-tabs{
+  .search-tabs{pointer-events: none;}
+}
+
+.selected{
+  @include selected-style;
 }

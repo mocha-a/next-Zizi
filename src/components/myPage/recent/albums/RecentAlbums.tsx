@@ -1,6 +1,6 @@
 import React from 'react'
 import { RecentView } from '@/types/recent';
-import RecentAlbumItem from './RecentAlbumItem';
+import RecentAlbumCard from './RecentAlbumCard';
 
 interface Props{
   items: RecentView[];
@@ -8,11 +8,11 @@ interface Props{
 
 const RecentAlbums = ({ items }: Props) => {
   return (
-    <>
+    <div className='recent'>
       {items.map(album => (
-        <RecentAlbumItem key={album.id} album={album} />
+        <RecentAlbumCard key={album.id} album={album} />
       ))}
-    </>
+    </div>
   )
 }
 

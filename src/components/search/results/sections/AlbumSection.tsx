@@ -14,7 +14,7 @@ interface Props {
 const AlbumSection = ({ data, loading }: Props) => {
   return (
     <div className='allReslts allReslts-album'>
-      <SectionHeader title="앨범" targetIndex={3} type="album" />
+      <SectionHeader title="앨범" type="album" />
 
       {/* 로딩 상태 */}
       {loading &&

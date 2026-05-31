@@ -1,26 +1,29 @@
 "use client";
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image';
+import { useSession } from 'next-auth/react';
 import { useParams } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
-import { useTabStore } from '@/store/tabStore';
+import { recent } from '@/lib/recent';
 import { formatDate, formatUpDate } from '@/lib/format';
 import { getCreator, getPlaylist, getTranslate } from '@/lib/api/playlist';
 import { Playlist } from '@/types/deezer/deezer';
 
 import Back from '@/components/icons/Back';
-import Recent from '@/components/tracking/Recent';
-import CreatorBadge from '@/components/entities/playlist/ui/CreatorBadge';
+import CreatorBadge from '@/components/entities/playlist/ui/playlist/CreatorBadge';
 import PlaylistTrackList from '@/components/entities/playlist/container/PlaylistTrackList';
 import PlaylistFlow from '@/components/entities/playlist/container/PlaylistFlow';
 import TabsContainer from '@/components/common/TabsContainer';
 import ReadMore from '@/components/entities/playlist/ui/ReadMore';
 
 import '@/styles/playlist/playlist.scss';
+import MediaPageSkeleton from '@/components/loading/page/MediaPageSkeleton';
+import Skeleton from '@mui/material/Skeleton';
 
 const Page = () => {
   const { id } = useParams() as { id: string };
-  const { tabValue, setTabValue } = useTabStore();
+  const { data: session } = useSession();
+  const [ tabValue, setTabValue ] = useState(0);
 
   // 플레이리스트 api
   const { data: playlist, isLoading: playlistLoading } = useQuery<Playlist>({
@@ -62,42 +65,60 @@ const Page = () => {
   ];
 
   useEffect(() => {
-    setTabValue(0);
-  }, [setTabValue]);
-
-  if (playlistLoading || creatorLoading || translateLoading) return <div>로딩중...</div>;
-  if (!playlist) return <div>아티스트 없음</div>;
+    recent({
+      type: 'playlist',
+      id,
+      isLoggedIn: !!session,
+    });
+  }, [id, session]);
 
   return (
     <div className='playlist-detail'>
-      <Recent type="playlist" id={id} />
       <Back className ='detailHeader' />
-      <div className='playlist-detail-img'>
-        <Image
-          src={playlist.picture_medium ?? '/imgs/default.png'}
-          alt={playlist.title}
-          width={200}
-          height={200}
-        />
-      </div>
-      <p className='playlist-detail-fans-count'>
-        {playlist.fans > 0
-          ? `${playlist.fans.toLocaleString()}명이 무한재생 중...`
-          : "무한재생 앨범으로 찜해봐 -!"}
-      </p>
-      <h2>{playlist.title}</h2>
-      {translated && (
-        <ReadMore description={translated} />
+      {playlistLoading || creatorLoading ? (
+        <MediaPageSkeleton />
+      ): !playlist ? (
+        <div>플레이리스트 없음</div>
+      ) : ( 
+        <>
+          <div className='playlist-detail-img'>
+            <Image
+              src={playlist.picture_medium ?? '/imgs/default.png'}
+              alt={playlist.title}
+              width={200}
+              height={200}
+            />
+          </div>
+          <p className='playlist-detail-fans-count'>
+            {playlist.fans > 0
+              ? `${playlist.fans.toLocaleString()}명이 무한재생 중...`
+              : "무한재생 앨범으로 찜해봐 -!"}
+          </p>
+          <h2>{playlist.title}</h2>
+
+          {description && (
+            translateLoading ? (
+              <div className='playlist-detail-description'>
+                <Skeleton variant="rectangular" width={230}/>
+              </div>
+            ) : (
+              translated && (
+                <ReadMore description={translated} />
+              )
+            )
+          )}
+
+          <div className='playlist-detail-info'>
+            <span>{formatDate(playlist?.creation_date)} </span>
+            {updatedText && (
+              <span className="playlist-updated"> {updatedText} 업데이트</span>
+            )}
+          </div>
+          <div className='playlist-detail-creator'>
+            <CreatorBadge creator={creator ?? []} />
+          </div>
+        </>
       )}
-      <div className='playlist-detail-info'>
-        <span>{formatDate(playlist.creation_date)} </span>
-        {updatedText && (
-          <span className="playlist-updated"> {updatedText} 업데이트</span>
-        )}
-      </div>
-      <div className='playlist-detail-creator'>
-        <CreatorBadge creator={creator ?? []} />
-      </div>
 
       <TabsContainer
         tabs={tabs}

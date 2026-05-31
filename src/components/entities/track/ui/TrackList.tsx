@@ -15,18 +15,14 @@ interface Props {
 const TrackList = ({ tracks, loading, hasMore, onLoadMore }: Props) => {
   return (
     <div className="trackTab-container tracklist">
-      <InfiniteScroll
-        loadMore={onLoadMore}
-        loading={loading}
-        hasMore={hasMore}
-      >
+      <InfiniteScroll loadMore={onLoadMore} loading={loading} hasMore={hasMore} >
         {/* 처음 로딩 + 데이터 없음 */}
         {loading && !tracks?.length &&
           Array.from({ length: 10 }).map((_, i) => (
             <TrackSkeleton key={i} index={i}/>
           ))}
 
-        {tracks.map((track, index) => (
+        {tracks?.map((track, index) => (
           <TrackItem
             key={track.id}
             track={track}

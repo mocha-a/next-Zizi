@@ -37,6 +37,7 @@
         color: $white;
     }
 }
+
 .section-header{
     margin-bottom: 20px;
     cursor: pointer;
@@ -343,11 +344,6 @@ input:checked + .tagbtn{
     color: $fontgray;
 }
 
-// 최근기록 content
-.recent{
-    margin-top: 20px;
-}
-
 // cd
 .zizi-CD {
   position: relative;
@@ -420,5 +416,26 @@ input:checked + .tagbtn{
         font-size: 12px;
         // text-decoration: underline;
     }
+  }
+}
+
+.delete-bar {
+  background-color: $white;
+  width: 390px;
+  height: 50px;
+
+  position: fixed !important;
+  bottom: 0;
+
+  transition: transform 0.25s ease;
+  box-shadow: 0 -4px 8px rgba(5, 140, 215, 0.2);
+  z-index: 100;
+
+  @include flex($justify: center);
+
+  .trash {
+    width: 100%;
+    height: 100%;
+    font-size: 13px;
   }
 }

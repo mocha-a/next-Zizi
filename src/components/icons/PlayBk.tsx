@@ -1,8 +1,13 @@
 import Image from 'next/image'
 
-function PlayBk({ className }: { className?: string }) {
+interface Props{
+  className?: string;
+  opacity?: number;
+}
+
+function PlayBk({ className, opacity = 1 }: Props) {
   return (
-    <div className={ `${className} play-bk` }>
+    <div className={ `${className} play-bk` } style={{ opacity }}>
     <Image
         src='/icons/play-bk.svg'
         alt='재생버튼-black'

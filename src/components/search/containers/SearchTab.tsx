@@ -1,7 +1,7 @@
 'use client';
-import React, { useEffect } from 'react';
+
+import React from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useTabStore } from '@/store/tabStore';
 
 import TabsContainer from '@/components/common/TabsContainer';
 import Results from '../results/Results';
@@ -22,10 +22,11 @@ const indexToType = (index: number): TabType =>
 export default function SearchTabs() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { tabValue, setTabValue } = useTabStore();
 
   const query = searchParams?.get('query') ?? '';
   const type = searchParams?.get('type') ?? 'all';
+
+  const tabValue = typeToIndex(type);
 
   const tabs = [
     { label: '전체', content: <Results /> },
@@ -34,10 +35,6 @@ export default function SearchTabs() {
     { label: '앨범', content: <SearchAlbums /> },
     { label: '플레이리스트', content: <SearchPlaylists /> },
   ];
-
-  useEffect(() => {
-    setTabValue(typeToIndex(type));
-  }, [type, setTabValue]);
 
   const handleTabChange = (index: number) => {
     const nextType = indexToType(index);
@@ -58,7 +55,7 @@ export default function SearchTabs() {
       tabValue={tabValue}
       setTabValue={handleTabChange}
       fullWidth={false}
-      tabMarginRight="20px"
+      tabMarginRight='20px'
     />
   );
 }

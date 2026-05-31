@@ -31,15 +31,10 @@ const PlaylistList = ({ playlists, loading, hasMore, onLoadMore, onClick }: Prop
 
   return (
     <div className="playlistTab-container">
-      <InfiniteScroll
-        loadMore={onLoadMore}
-        loading={loading}
-        hasMore={hasMore}
-      >
+      <InfiniteScroll loadMore={onLoadMore} loading={loading} hasMore={hasMore} >
         {playlists.map((playlist) => (
           <PlaylistCard
             key={playlist.id}
-            id={playlist.id}
             picture={playlist.picture_medium}
             title={playlist.title}
             user={playlist.user.name}

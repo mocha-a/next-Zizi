@@ -20,3 +20,18 @@ export interface MyPlaylist {
     createdAt: string;
   }[];
 }
+
+// 플리 수정
+export interface UpdatePlaylist {
+  title: string;
+  description: string;
+  thumbnails: string[];
+  tracks: {
+    id: number;
+  }[];
+}
+
+export interface UpdatePlaylistParams {
+  id: number;
+  data: UpdatePlaylist;
+}

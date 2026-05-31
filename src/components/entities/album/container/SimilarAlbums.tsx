@@ -12,14 +12,11 @@ interface Props {
 function SimilarAlbums({ genreId, id }: Props) {
   const router = useRouter();
 
-  const { data: albums, isLoading } = useQuery({
+  const { data: albums = [], isLoading } = useQuery({
     queryKey: ['albums', 'similar', genreId, id],
     queryFn: () => getSimilarAlbums(Number(genreId), Number(id)),
     enabled: !!genreId,
   });
-
-  if (isLoading) return <div>로딩중...</div>;
-  if (!albums) return <div>데이터 없음</div>;
 
   return (
     <AlbumList

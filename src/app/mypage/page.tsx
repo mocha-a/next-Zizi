@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useUserProfile } from '@/hooks/useUserProfile';
+import { usePlaylistEditStore } from '@/store/usePlaylistEditStore';
 
 import LogoutButton from '@/components/auth/LogoutButton';
 import PageTitle from '@/components/common/PageTitle';
@@ -16,6 +17,7 @@ import CdImage from '@/components/myPage/CdImage';
 import '@/styles/myPage/myPage.scss';
 
 function Page() {
+  const { isEditMode } = usePlaylistEditStore();
   const { data: session, status } = useSession();
   const { data: user } = useUserProfile(session);
 
@@ -36,40 +38,40 @@ function Page() {
 
   return (
     <div className='myPage-container'>
-      <div className='myPage-Header'>
-        <PageTitle text="내 Zizi !" />
-        {session && <LogoutButton />}
-      </div>
-
-      <div className='myPage-Hero'>
-        <div className='myPage-greeting'>
-          {session ? (
-            <div>
-              <span className='myPage-name'>{user?.name}</span> 님의
-              <p>
-                아침을 깨우는 <br />
-                상쾌한 비트 시작 -! ♬
-              </p>
-            </div>
-          ) : (
-            <div className='guest-greeting'>
-              <p>Music is My Life..♬</p>
-              <p className='guest-prompt'>
-                지금{' '}
-                <Link href="/login" className="login-link">
-                  로그인
-                </Link>
-                하고 <br />
-                너만의 음악세상을 탐험해봐 !
-              </p>
-            </div>
-          )}
+      <div className={`myPage-topSection ${isEditMode ? 'edit-mode' : ''}`}>
+        <div className='myPage-Header'>
+          <PageTitle text="내 Zizi !" />
+          {session && <LogoutButton />}
         </div>
-
-        <CdImage />
+        <div className='myPage-Hero'>
+          <div className='myPage-greeting'>
+            {session ? (
+              <div>
+                <span className='myPage-name'>{user?.name}</span> 님의
+                <p>
+                  아침을 깨우는 <br />
+                  상쾌한 비트 시작 -! ♬
+                </p>
+              </div>
+            ) : (
+              <div className='guest-greeting'>
+                <p>Music is My Life..♬</p>
+                <p className='guest-prompt'>
+                  지금{' '}
+                  <Link href="/login" className="login-link">
+                    로그인
+                  </Link>
+                  하고 <br />
+                  너만의 음악세상을 탐험해봐 !
+                </p>
+              </div>
+            )}
+          </div>
+          <CdImage />
+        </div>
       </div>
 
-      <div className='myPage-tabs'>
+      <div className={`myPage-tabs ${isEditMode ? 'edit-tabs' : ''}`}>
         <TabsContainer
           tabs={tabs}
           tabValue={tabIndex}

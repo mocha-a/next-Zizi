@@ -1,8 +1,13 @@
 import Image from 'next/image'
 
-function Dot3({ className }: { className?: string }) {
+interface Props{
+  className?: string;
+  opacity?: number;
+}
+
+function Dot3({ className, opacity = 1 }: Props) {
   return (
-    <div className={ `${className} dot3` }>
+    <div className={ `${className} dot3` } style={{ opacity }}>
     <Image
         src='/icons/dot3.svg'
         alt='더보기'

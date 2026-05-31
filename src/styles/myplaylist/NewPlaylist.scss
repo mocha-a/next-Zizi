@@ -17,7 +17,7 @@
   }
   
   .new-playlist-header {
-    @include flex($align: center);
+    @include flex;
 
     .new-playlist-back,
     .submit {
@@ -38,17 +38,25 @@
     }
   }
   .new-playlist-btn{
+    @include flex;
+    cursor: pointer;
+    gap: 5px;
+    font-size: 13px;
     margin: 20px 18px;
+    p{
+      color: $blue;
+      display: inline-flex;
+      height: 12px;
+    }
   }
 
   .new-playlist-tracks{
     li{
-      margin: 0;
-      padding: 10px 18px;
+      @include section-padding;
     }
 
     .selected{
-      background-color: #E9F7FF;
+      @include selected-style;
     }
   }
 }
@@ -74,12 +82,23 @@
   }
 }
 
-.playlist-list{
-  margin-top: 20px;
+.myplaylist-btn{
+  @include flex($justify: space-between);
+  margin-bottom: 10px !important;
+  .action-btn{
+    @include flex;
+    cursor: pointer;
+    gap: 5px;
+  }
+  p{
+    display: inline-flex;
+    height: 12px;
+  }
 }
 
 .playlist-hearder{
   .submit{
     font-size: 13px; color: $orange;
+    cursor: pointer;
   }
 }

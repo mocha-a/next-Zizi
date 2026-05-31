@@ -21,7 +21,7 @@ const AlbumList = ({ albums, loading, hasMore, loadMore, onClick, artist }: Prop
     return (
       <div className="albumTab-container">
         {Array.from({ length: 10 }).map((_, i) => (
-          <MediaSkeleton key={`init-${i}`} />
+          <MediaSkeleton key={`init-${i}`} size={168}/>
         ))}
       </div>
     );
@@ -34,11 +34,7 @@ const AlbumList = ({ albums, loading, hasMore, loadMore, onClick, artist }: Prop
 
   return (
     <div className="albumTab-container">
-      <InfiniteScroll
-        loadMore={loadMore}
-        loading={loading}
-        hasMore={hasMore}
-      >
+      <InfiniteScroll loadMore={loadMore} loading={loading} hasMore={hasMore} >
         {/* 실제 데이터 */}
         {albums.map((album) => (
           <AlbumCard

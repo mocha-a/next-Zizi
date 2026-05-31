@@ -4,7 +4,8 @@ import React from 'react';
 import Image from 'next/image';
 import { DraggableProvided } from '@hello-pangea/dnd';
 import { SearchTrack } from '@/types/deezer/search';
-import TagBtn from '@/components/common/TagBtn';
+import Plus from '@/components/icons/Plus';
+import Check from '@/components/icons/Check';
 
 import '@/styles/track/trackSelectItem.scss';
 
@@ -47,18 +48,13 @@ function TrackSelectItem({ track, isSelected, onToggle, mode, dragHandle }: Prop
       <div className="trackitem-right">
         {mode === 'new' ? (
           <div
+            className="track-drag-handle"
             {...dragHandle}
-            style={{
-              cursor: 'grab',
-              padding: '4px',
-              userSelect: 'none',
-            }}
           >
             ≡
           </div>
-        ) : (
-          <TagBtn tagbtn="+" className={`${isSelected ? 'active' : ''}`} />
-        )}
+        ) : isSelected ? ( <Check /> ) : <Plus />
+        }
       </div>
     </li>
   );

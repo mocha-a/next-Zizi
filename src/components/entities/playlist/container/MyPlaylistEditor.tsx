@@ -1,18 +1,21 @@
 'use client';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { DropResult } from '@hello-pangea/dnd';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTrackStore } from '@/store/useSelectedTrackStore';
 import { createPlaylist, updatePlaylist } from '@/lib/api/myPlaylist';
-import { MyPlaylist } from '@/types/user/myPlaylist';
+import { MyPlaylist, UpdatePlaylistParams } from '@/types/user/myPlaylist';
 import { Track } from '@/types/deezer/deezer';
 
-import NewPlaylistForm from '@/components/entities/playlist/ui/NewPlaylistForm';
-import NewPlaylistActions from '@/components/entities/playlist/ui/NewPlaylistActions';
-import NewPlaylistTrackList from '@/components/entities/playlist/ui/NewPlaylistTrackList';
+import NewPlaylistForm from '@/components/entities/playlist/ui/playlist/NewPlaylistForm';
+import PlaylistTrackListDnD from '@/components/entities/playlist/ui/track/PlaylistTrackListDnD';
 
 import '@/styles/myPlaylist/newPlaylist.scss';
+import Popup from '@/components/common/Popup';
+import TrashButton from '@/components/common/TrashButton';
+import { useUIStore } from '@/store/useUIStore';
+import Plus from '@/components/icons/Plus';
 
 interface Props {
   mode?: 'create' | 'edit';
@@ -21,6 +24,9 @@ interface Props {
 }
 
 const MyPlaylistEditor = ({ mode='create', myplaylistData, tracksData } : Props) => {
+  const [ showDeletePopup, setShowDeletePopup ] = useState(false);
+  const { setHideBottomNav } = useUIStore();
+
   const title = useTrackStore(state => state.title);
   const description = useTrackStore(state => state.description);
 
@@ -32,9 +38,9 @@ const MyPlaylistEditor = ({ mode='create', myplaylistData, tracksData } : Props)
   const selectedIds = useTrackStore(state => state.selectedIds);
 
   const toggleSelect = useTrackStore(state => state.toggleSelect);
-  const clearSelection = useTrackStore(state => state.clearSelection);
   const removeFromPlaylist = useTrackStore(state => state.removeFromPlaylist);
   const reorder = useTrackStore(state => state.reorder);
+  const reset = useTrackStore(state => state.reset);
 
   const playlist = orderIds.map(id => tracks[id]);
 
@@ -42,38 +48,28 @@ const MyPlaylistEditor = ({ mode='create', myplaylistData, tracksData } : Props)
 
   const queryClient = useQueryClient();
 
+  console.log(selectedIds);
+
   const createMutation = useMutation({
     mutationFn: createPlaylist,
 
     onSuccess: () => {
       useTrackStore.getState().reset();
-      
       queryClient.invalidateQueries({ queryKey: ['myplaylist'] });
-      
-      const id = myplaylistData?.id;
-      if (!id) return;
-
-      queryClient.invalidateQueries({ queryKey: ['myplaylist', id] });
 
       router.push('/mypage?tab=myplaylist');
     },
   });
 
   const updateMutation = useMutation({
-    mutationFn: ({
-      id,
-      data,
-    }: {
-      id: number;
-      data: any;
-    }) => updatePlaylist(id, data),
+    mutationFn: ({ id, data }: UpdatePlaylistParams) =>
+      updatePlaylist(id, data),
 
     onSuccess: () => {
       useTrackStore.getState().reset();
-
       queryClient.invalidateQueries({ queryKey: ['myplaylist'] });
 
-      router.push('/mypage?tab=myplaylist');
+      router.back();
     },
   });
 
@@ -91,17 +87,19 @@ const MyPlaylistEditor = ({ mode='create', myplaylistData, tracksData } : Props)
   };
 
   useEffect(() => {
-    if (mode !== 'create') return;
-
-    useTrackStore.getState().reset();
-  }, [mode]);
-
-  useEffect(() => {
     if (mode !== 'edit') return;
     if (!myplaylistData || !tracksData) return;
 
     initEditor();
   }, [mode, myplaylistData, tracksData]);
+
+  useEffect(() => {
+    setHideBottomNav(selectedIds.length > 0);
+
+    return () => {
+      setHideBottomNav(false);
+    };
+  }, [selectedIds, setHideBottomNav]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -153,21 +151,40 @@ const MyPlaylistEditor = ({ mode='create', myplaylistData, tracksData } : Props)
         onChangeName={setTitle}
         onChangeDescription={setDescription}
         onSubmit={handleSubmit}
-        onBack={clearSelection}
+        onBack={reset}
       />
 
-      <NewPlaylistActions
-        selectedCount={selectedIds.length}
-        onAddTrack={() => router.push('/myplaylist/add-track')}
-        onDelete={removeFromPlaylist}
-      />
+      <div 
+        className='new-playlist-btn' 
+        onClick={() => router.push('/myplaylist/add-track')}>
+        <Plus color='#058CD7'/> <p>곡 추가</p>
+      </div>
 
-      <NewPlaylistTrackList
+      <PlaylistTrackListDnD
         playlist={playlist}
         selectedIds={selectedIds}
         onToggle={toggleSelect}
         onDragEnd={handleDragEnd}
       />
+
+      {selectedIds.length > 0 && (
+        <TrashButton setShowDeletePopup={setShowDeletePopup} count={selectedIds.length}/>
+      )}
+
+      {showDeletePopup && (
+        <Popup
+          showPopup={showDeletePopup}
+          setShowPopup={setShowDeletePopup}
+          type='delete'
+          onConfirm={() => {
+            removeFromPlaylist();
+            setShowDeletePopup(false);
+          }}
+          onCancel={() => {
+            setShowDeletePopup(false);
+          }}
+        />
+      )}
     </div>
   );
 }

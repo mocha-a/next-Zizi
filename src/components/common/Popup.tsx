@@ -29,9 +29,9 @@ function Popup({ showPopup, setShowPopup, type, onConfirm, onCancel, className='
     },
     delete: {
       txt: '정말 삭제하시겠습니까?',
-      btntxt1: '아니오',
-      btntxt2: '예',
-      icon: '⚠️'
+      btntxt1: 'CANCEL',
+      btntxt2: 'O K',
+      icon: '🗑️'
     },
     logout: {
       txt: '정말 로그아웃하시겠습니까?',

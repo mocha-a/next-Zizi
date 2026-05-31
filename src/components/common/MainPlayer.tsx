@@ -20,9 +20,9 @@ export default function MainPlayer() {
   return (
     <div className='main-player-wrapper'>
         <div className='player-inner'>
-            <button>
+            <div>
                 <Close onClick={closePlayer} className='close-btn'/>
-            </button>
+            </div>
 
             <DeezerPlayer trackId={trackId}/>
 

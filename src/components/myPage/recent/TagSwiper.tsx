@@ -20,14 +20,14 @@ function TagSwiper({ tagList, onChange }: Props) {
 
   return (
     <div className='tagbtn-box'>
-        {tagList.map((tag) => (
-            <button key={tag.id} onClick={() => handleClick(tag.id)}>
-              <TagBtn
-                tagbtn={tag.name}
-                className={`tagbtn ${selectedTag === tag.id ? 'active' : ''}`}
-              />
-            </button>
-        ))}
+      {tagList.map((tag) => (
+        <button key={tag.id} onClick={() => handleClick(tag.id)}>
+          <TagBtn
+            tagbtn={tag.name}
+            className={`tagbtn ${selectedTag === tag.id ? 'active' : ''}`}
+          />
+        </button>
+      ))}
     </div>
   );
 }

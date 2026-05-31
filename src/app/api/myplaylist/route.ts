@@ -28,12 +28,26 @@ export async function POST(req: Request) {
       );
     }
 
+    const lastPlaylist = await prisma.playlist.findFirst({
+      where: {
+        userId,
+      },
+      orderBy: {
+        order: 'desc',
+      },
+    });
+
     const playlist = await prisma.playlist.create({
       data: {
         title,
         description,
         userId,
         thumbnails,
+
+        order: lastPlaylist
+          ? lastPlaylist.order + 1
+          : 0,
+
         tracks: {
           create: tracks.map((track: Track, index: number) => ({
             trackId: String(track.id),
@@ -41,12 +55,11 @@ export async function POST(req: Request) {
           })),
         },
       },
-      
+
       include: {
         tracks: true,
       },
     });
-
     return NextResponse.json(playlist, { status: 201 });
 
   } catch (error) {
@@ -80,7 +93,7 @@ export async function GET() {
         tracks: true,
       },
       orderBy: {
-        createdAt: 'desc',
+        order: 'asc',
       },
     });
 
@@ -90,6 +103,112 @@ export async function GET() {
 
     return NextResponse.json(
       { message: '플레이리스트 조회 실패' },
+      { status: 500 }
+    );
+  }
+}
+
+// 내 플리 삭제
+export async function DELETE(req: Request) {
+  try {
+    const session = await getServerSession(authOptions);
+
+    if (!session?.user?.id) {
+      return NextResponse.json(
+        { message: 'Unauthorized' },
+        { status: 401 }
+      );
+    }
+
+    const userId = session.user.id;
+
+    const body = await req.json();
+    const ids: number[] = body.ids;
+
+    // 내 플리만 찾기
+    const playlists = await prisma.playlist.findMany({
+      where: {
+        id: { in: ids }, userId,
+      },
+      select: {
+        id: true,
+      },
+    });
+
+    const validIds = playlists.map((playlist) => playlist.id);
+
+    await prisma.playlistTrack.deleteMany({
+      where: {
+        playlistId: {
+          in: validIds,
+        },
+      },
+    });
+
+    await prisma.playlist.deleteMany({
+      where: {
+        id: { in: validIds }, userId,
+      },
+    });
+
+    return NextResponse.json({
+      success: true,
+    });
+
+  } catch (error) {
+    console.error(error);
+
+    return NextResponse.json(
+      { error: '삭제 실패' },
+      { status: 500 }
+    );
+  }
+}
+
+// 내 플리 순서 저장
+export async function PATCH(req: Request) {
+  try {
+    const session = await getServerSession(authOptions);
+
+    if (!session?.user?.id) {
+      return NextResponse.json(
+        { message: 'Unauthorized' },
+        { status: 401 }
+      );
+    }
+
+    const userId = session.user.id;
+
+    const body = await req.json();
+
+    const playlists: {
+      id: number;
+      order: number;
+    }[] = body.playlists;
+
+    await Promise.all(
+      playlists.map((playlist) =>
+        prisma.playlist.updateMany({
+          where: {
+            id: playlist.id,
+            userId,
+          },
+          data: {
+            order: playlist.order,
+          },
+        })
+      )
+    );
+
+    return NextResponse.json({
+      success: true,
+    });
+
+  } catch (error) {
+    console.error(error);
+
+    return NextResponse.json(
+      { error: '순서 저장 실패' },
       { status: 500 }
     );
   }

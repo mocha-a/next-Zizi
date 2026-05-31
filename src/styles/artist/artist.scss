@@ -65,14 +65,17 @@
     .artist-name {
         position: absolute;
         bottom: 0px;
-        left: 16px;
+        left: 18px;
         color: black;
         font-size: 30px;
     }
 
-    >img{
+    .artist-cover{
         background-color: #000000e6;
-        mask-image: linear-gradient(to bottom, rgba(255, 255, 255, 1) 80%, rgba(255, 255, 255, 0) 100%);
-        -webkit-mask-image: linear-gradient(to bottom, rgba(255, 255, 255, 1) 80%, rgba(255, 255, 255, 0) 100%);
     }
+}
+
+.fade-mask{
+    mask-image: linear-gradient( to bottom, rgba(255, 255, 255, 1) 80%,rgba(255, 255, 255, 0) 100%); 
+    -webkit-mask-image: linear-gradient(to bottom, rgba(255, 255, 255, 1) 80%,rgba(255, 255, 255, 0) 100%);
 }

@@ -6,6 +6,8 @@ import TrackSkeleton from '@/components/loading/item/TrackSkeleton';
 import TrackSelectItem from '@/components/entities/track/ui/TrackSelectItem';
 import { useTrackStore } from '@/store/useSelectedTrackStore';
 
+import '@/styles/myPage/myPage.scss';
+
 interface Props{
   track: RecentView;
   index: number;
@@ -23,14 +25,12 @@ const RecentTrackCard = ({ track, index, variant = 'default' }: Props) => {
 
   if (isLoading || !data) {
     return (
-      <ul className='tracklist recent'>
-        <TrackSkeleton index={index} />
-      </ul>
+      <TrackSkeleton index={index} mode={variant === 'select' ? 'add' : 'default'} />
     );
   }
 
   return (
-    <ul className='tracklist recent'>
+    <>
       {variant === 'select' ? (
         <TrackSelectItem
           track={data}
@@ -38,9 +38,9 @@ const RecentTrackCard = ({ track, index, variant = 'default' }: Props) => {
           onToggle={() => toggleSelect(data)}
         />
       ) : (
-        <TrackItem track={data} index={index} page="" />
+        <TrackItem track={data} index={index} />
       )}
-    </ul>
+    </>
   )
 }
 

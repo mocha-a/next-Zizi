@@ -25,13 +25,7 @@ export default function AlbumTrackItem({ track, index }: Props) {
       </div>
 
       <div className="album-track-right">
-        <TrackItemRight
-          trackData={{
-            title: track.title,
-            artist: { name: track.artist.name },
-            image: track.album.cover_medium
-          }}
-        />
+        <TrackItemRight trackData={track} />
       </div>
     </li>
   );
