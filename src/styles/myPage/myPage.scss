@@ -2,7 +2,7 @@
 @use '../mixins'as *;
 
 .myPage-container{
-  .myPage-topSection, .search-tabs, .tagbtn-box, .myplaylist-btn{
+  .myPage-topSection, .search-tabs, .tagbtn-box, .myplaylist-btn, .myRoom-container{
     @include publicWidth;
   }
 
@@ -66,7 +66,7 @@
   margin-top: 20px;
 }
 
-// 편집 모드
+// 내 플리 편집 모드
 .edit-mode {
   opacity: 0.4;
   pointer-events: none;
@@ -78,4 +78,9 @@
 
 .selected{
   @include selected-style;
+}
+
+// 내 프로필
+.myRoom-container{
+
 }

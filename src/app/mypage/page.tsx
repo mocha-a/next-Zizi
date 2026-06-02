@@ -15,7 +15,7 @@ import RecentSection from '@/components/myPage/recent/RecentSection';
 import CdImage from '@/components/myPage/CdImage';
 
 import '@/styles/myPage/myPage.scss';
-import MeRoom from '@/components/myPage/MeRoom';
+import MyRoom from '@/components/myPage/MyRoom';
 
 function Page() {
   const { isEditMode } = usePlaylistEditStore();
@@ -33,7 +33,7 @@ function Page() {
   const tabs = [
     { label: '최근 기록', content: <RecentSection /> },
     { label: '내 플레이리스트', content: <MyPlaylistsSection /> },
-    { label: '내 프로필', content: <MeRoom /> },
+    { label: '내 프로필', content: <MyRoom user={user} /> },
   ];
 
   if (status === 'loading') return null;
