@@ -7,7 +7,7 @@
 
 .myMusic-container{
     margin-top: 0; margin-bottom: 25px;
-    width: $publicWidth; height: 200px !important;
+    width: $publicWidth; height: 177px !important;
     position: relative;
     background-color: $orange;
     .overlay{
@@ -54,7 +54,7 @@
   
         .img-box {
             position: relative;
-            width: 100%;
+            width: 100%; height: 100%;
             aspect-ratio: 1 / 1; 
             overflow: hidden;
 
@@ -88,15 +88,20 @@
         position: absolute;
         width: calc(100% - 26px);
         left: 15px;
-        bottom: 5px;
+        bottom: 8px;
         z-index: 2;
         .myMusic-text-content{
             display: flex;
             justify-content: space-between;
             .myMusic-text{
-                @include GmarketMedium_white_20;
+                @include Galmuri9_18;
+                color: $white;
             }
         }
+    }
+    .dashboard-deco{
+        top: -15px !important;
+        z-index: 99;
     }
 }
 
