@@ -8,7 +8,7 @@ import { mapUserToBadge } from '@/types/userBadge';
 import { useQuery } from '@tanstack/react-query';
 import { getTrack } from '@/lib/api';
 import { getMyPlaylist } from '@/lib/api/myPlaylist';
-import { formatUpDate, myplaylistFormatDate } from '@/lib/format';
+import { formatUpDate, formatYYYYMMDD } from '@/lib/format';
 
 import Back from '@/components/icons/Back';
 import ReadMore from '@/components/entities/playlist/ui/ReadMore';
@@ -78,7 +78,7 @@ const Page = () => {
         <ReadMore description={myplaylist.description} />
       )}
       <div className='playlist-detail-info'>
-        <span>{myplaylistFormatDate(createdDate)} </span>
+        <span>{formatYYYYMMDD(createdDate)} </span>
         {updatedText && (
           <span className="playlist-updated"> {updatedText} 업데이트</span>
         )}

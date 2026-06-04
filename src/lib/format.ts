@@ -20,8 +20,8 @@ export function formatDuration(duration: number) {
     .padStart(2, "0")}초`;
 }
 
-// 생성 날짜 포맷 (내 플레이리스트)
-export function myplaylistFormatDate(date?: string) {
+// 생성 날짜 포맷
+export function formatYYYYMMDD(date?: string) {
   if (!date) return "";
 
   const d = new Date(date);
@@ -93,3 +93,18 @@ export const formatUpDate = (createdDate: string, addDate: string) => {
 
   return date(updated);
 };
+
+// 마지막 접속 날짜 포맷 (mypage)
+export function formatLastVisited(date?: string | null) {
+  if (!date) return '';
+
+  const d = new Date(date);
+
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth() + 1).padStart(2, '0');
+  const dd = String(d.getDate()).padStart(2, '0');
+  const hh = String(d.getHours()).padStart(2, '0');
+  const min = String(d.getMinutes()).padStart(2, '0');
+
+  return `${yyyy}.${mm}.${dd} ${hh}:${min}`;
+}

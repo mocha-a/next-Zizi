@@ -8,9 +8,9 @@ import ShortBtn from '../common/ShortBtn';
 import GenderSelect from './GenderSelect';
 
 export default function OnboardingPopup() {
-  const [birth, setBirth] = useState('');
-  const [gender, setGender] = useState<string | null>(null);
-  const [nickname, setNickname] = useState('');
+  const [ birth, setBirth ] = useState('');
+  const [ gender, setGender ] = useState<string | null>(null);
+  const [ nickname, setNickname ] = useState('');
 
   const router = useRouter();
   const queryClient = useQueryClient();

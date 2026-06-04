@@ -66,7 +66,7 @@
   margin-top: 20px;
 }
 
-// 내 플리 편집 모드
+// 편집 모드
 .edit-mode {
   opacity: 0.4;
   pointer-events: none;
@@ -76,18 +76,80 @@
   .search-tabs{pointer-events: none;}
 }
 
+.complete-btn {
+  color: $orange;
+}
+
 .selected{
   @include selected-style;
 }
 
 // 내 프로필
 .myRoom-container{
+  .myRoom-btn {
+    @include flex($justify: flex-end);
+    height: 24px;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+
   .myRoom-profile{
     @include flex;
-    gap: 10px;
-    >img{
+    gap: 18px;
+    
+    .myRoom-name{
+      font-family: var(--font-Galmuri9);
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .myRoom-lastVisited{
+      @include flex;
+      gap: 5px;
+    }
+
+    >p{
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      overflow: hidden;
+
+      >img{
+        width: 50px;
+        height: 50px;
+      }
+    }
+  }
+
+  .myRoom-label{
+    color: $fontgray;
+  }
+
+  .myRoom-item{
+    @include flex;
+    gap: 24px;
+    margin: 18px 0;
+
+    .myRoom-label{
       width: 80px;
-      height: 80px;
+      flex-shrink: 0;
+      
+    }
+
+    .myRoom-value{
+
+    }
+  }
+
+
+  .onboarding_gender{
+    margin: 15px 0 30px;
+
+    .gender-item-box{
+      @include flex;
+      gap: 5px;
+      >div >div{ cursor: default; }
     }
   }
 }
+

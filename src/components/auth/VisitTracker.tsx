@@ -5,6 +5,7 @@ import { useSession } from 'next-auth/react';
 import { useMutation } from '@tanstack/react-query';
 import { updateLastVisited } from '@/lib/api/user';
 
+// 마지막 접속
 export default function VisitTracker() {
   const { data: session } = useSession();
 

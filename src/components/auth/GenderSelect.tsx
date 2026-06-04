@@ -9,16 +9,21 @@ const GENDER_OPTIONS = [
 
 interface Props {
   value: string | null;
-  onChange: (value: string | null) => void;
+  onChange?: (value: string | null) => void;
+  readonly?: boolean;
 }
 
-function GenderSelect({ value, onChange }: Props) {
+function GenderSelect({ value, onChange, readonly }: Props) {
   return (
     <div className='gender-item-box'>
       {GENDER_OPTIONS.map((option) => (
         <div
           key={option.label}
-          onClick={() => onChange(option.value)}
+          onClick={() => {
+            if (!readonly) {
+              onChange?.(option.value);
+            }
+          }}
         >
           <TagBtn
             className={value === option.value ? 'active' : ''}
@@ -29,5 +34,4 @@ function GenderSelect({ value, onChange }: Props) {
     </div>
   );
 }
-
 export default GenderSelect;

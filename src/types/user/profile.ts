@@ -6,4 +6,6 @@ export interface UserProfile {
   image: string | null;
   birth: string | null;
   gender: string | null;
+  createdAt: string;
+  lastVisitedAt: string | null;
 }
