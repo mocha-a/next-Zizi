@@ -40,7 +40,7 @@ const Page = () => {
     },
     enabled: !!myplaylist,
   });
-  console.log(tracks);
+
   // 업데이트
   const createdDate = myplaylist?.createdAt;
   const addDate = myplaylist?.updatedAt;

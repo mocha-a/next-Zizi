@@ -82,5 +82,12 @@
 
 // 내 프로필
 .myRoom-container{
-
+  .myRoom-profile{
+    @include flex;
+    gap: 10px;
+    >img{
+      width: 80px;
+      height: 80px;
+    }
+  }
 }
