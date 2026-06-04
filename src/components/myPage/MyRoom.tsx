@@ -67,16 +67,36 @@ const MyRoom = ({ user }: Props) => {
   return (
     <div className='myRoom-container'>
       <div className='myRoom-btn'>
-        <div
-          className={`submit ${isEditMode ? 'complete-btn' : ''}`}
-          onClick={handleEditMode}
-        >
-          {mutation.isPending
-            ? '저장 중...'
-            : isEditMode
-            ? '완료'
-            : '편집'}
-        </div>
+        {!isEditMode ? (
+          <div className='submit' onClick={() => setEditMode(true)}>
+            편집
+          </div>
+        ) : (
+          <div style={{ display: 'flex', gap: '8px' }}>
+            {/* 취소 */}
+            <div
+              className='submit cancel-btn'
+              onClick={() => {
+                setEditMode(false);
+
+                // rollback
+                setNickname(user?.nickname ?? '');
+                setBirth(user?.birth ?? '');
+                setGender(user?.gender ?? null);
+              }}
+            >
+              취소
+            </div>
+
+            {/* 완료 */}
+            <div
+              className='submit complete-btn'
+              onClick={handleEditMode}
+            >
+              {mutation.isPending ? '저장 중...' : '완료'}
+            </div>
+          </div>
+        )}
       </div>
 
       <div className={`myRoom-profile ${isEditMode ? 'edit-mode' : ''}`}>

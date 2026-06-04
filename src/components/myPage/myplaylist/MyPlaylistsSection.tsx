@@ -124,20 +124,45 @@ const MyPlaylistsSection = () => {
   return (
     <>
       <div className='myplaylist-btn'>
-        <div onClick={isEditMode ? handleSelectAll : handleClick} className='action-btn'>
-          {isEditMode ? (
-            <>
-              <Check /> {isAllSelected ? <p>전체 해제</p> : <p>전체 선택</p>}
-            </>
-          ) : (
-            <>
+        {!isEditMode ? (
+          <>
+            <div onClick={handleClick} className='action-btn'>
               <Plus /> <p>내 플리 추가</p>
-            </>
-          )}
-        </div>
-        <div className='submit' onClick={handleEditMode}>
-          {isEditMode ? '완료' : '편집'}
-        </div>
+            </div>
+
+            <div className='submit' onClick={() => setEditMode(true)}>
+              편집
+            </div>
+          </>
+        ) : (
+          <>
+            <div className='action-btn' onClick={handleSelectAll}>
+              <Check />
+              <p>{isAllSelected ? '전체 해제' : '전체 선택'}</p>
+            </div>
+
+            <div style={{ display: 'flex', gap: '8px' }}>
+              {/* 취소 */}
+              <div
+                className='submit cancel-btn'
+                onClick={() => {
+                  setEditMode(false);
+
+                  // rollback (선택 초기화 + DnD 원복)
+                  setSelectedIds([]);
+                  setLocalList(myplaylist ?? []);
+                }}
+              >
+                취소
+              </div>
+
+              {/* 완료 */}
+              <div className='submit complete-btn' onClick={handleEditMode}>
+                완료
+              </div>
+            </div>
+          </>
+        )}
       </div>
 
       {isLoading ? (        
