@@ -32,7 +32,7 @@ function Page() {
   // 탭 메뉴
   const tabs = [
     { label: '최근 기록', content: <RecentSection /> },
-    { label: '내 플레이리스트', content: <MyPlaylistsSection /> },
+    { label: '내 플리', content: <MyPlaylistsSection /> },
     { label: '내 프로필', content: <MyRoom user={user} /> },
   ];
 

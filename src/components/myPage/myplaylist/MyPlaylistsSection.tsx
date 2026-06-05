@@ -126,24 +126,24 @@ const MyPlaylistsSection = () => {
       <div className='myplaylist-btn'>
         {!isEditMode ? (
           <>
-            <div onClick={handleClick} className='action-btn'>
+            <button onClick={handleClick} className='action-btn'>
               <Plus /> <p>내 플리 추가</p>
-            </div>
+            </button>
 
-            <div className='submit' onClick={() => setEditMode(true)}>
+            <button className='submit' onClick={() => setEditMode(true)}>
               편집
-            </div>
+            </button>
           </>
         ) : (
           <>
-            <div className='action-btn' onClick={handleSelectAll}>
+            <button className='action-btn' onClick={handleSelectAll}>
               <Check />
               <p>{isAllSelected ? '전체 해제' : '전체 선택'}</p>
-            </div>
+            </button>
 
-            <div style={{ display: 'flex', gap: '8px' }}>
+            <div className='edit-actions'>
               {/* 취소 */}
-              <div
+              <button
                 className='submit cancel-btn'
                 onClick={() => {
                   setEditMode(false);
@@ -154,12 +154,16 @@ const MyPlaylistsSection = () => {
                 }}
               >
                 취소
-              </div>
+              </button>
 
               {/* 완료 */}
-              <div className='submit complete-btn' onClick={handleEditMode}>
-                완료
-              </div>
+              <button
+                className='submit complete-btn'
+                onClick={handleEditMode}
+                disabled={orderMutation.isPending}
+              >
+                {orderMutation.isPending ? '저장 중...' : '완료'}
+              </button>
             </div>
           </>
         )}

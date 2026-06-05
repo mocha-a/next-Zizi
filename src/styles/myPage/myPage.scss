@@ -76,8 +76,18 @@
   .search-tabs{pointer-events: none;}
 }
 
-.complete-btn {
-  color: $blue;
+
+.edit-actions{
+  @include flex;
+  gap: 8px;
+
+  .cancel-btn::after{
+    content: '·';
+    margin-left: 8px;
+  }
+  .complete-btn {
+    color: $blue;
+  }
 }
 
 .selected{
@@ -133,7 +143,6 @@
     .myRoom-label{
       width: 80px;
       flex-shrink: 0;
-      
     }
 
     .myRoom-value{
@@ -141,6 +150,10 @@
     }
   }
 
+  .birth{
+    margin: 18px 0 15px;
+  }
+  
 
   .onboarding_gender{
     margin: 15px 0 30px;

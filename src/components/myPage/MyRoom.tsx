@@ -64,6 +64,7 @@ const MyRoom = ({ user }: Props) => {
     });
   };
 
+  console.log('user', user);
   return (
     <div className='myRoom-container'>
       <div className='myRoom-btn'>
@@ -72,9 +73,9 @@ const MyRoom = ({ user }: Props) => {
             편집
           </div>
         ) : (
-          <div style={{ display: 'flex', gap: '8px' }}>
+          <div className='edit-actions'>
             {/* 취소 */}
-            <div
+            <button
               className='submit cancel-btn'
               onClick={() => {
                 setEditMode(false);
@@ -86,15 +87,16 @@ const MyRoom = ({ user }: Props) => {
               }}
             >
               취소
-            </div>
+            </button>
 
             {/* 완료 */}
-            <div
+            <button
               className='submit complete-btn'
               onClick={handleEditMode}
+              disabled={mutation.isPending}
             >
               {mutation.isPending ? '저장 중...' : '완료'}
-            </div>
+            </button>
           </div>
         )}
       </div>
@@ -127,6 +129,13 @@ const MyRoom = ({ user }: Props) => {
           <p className='myRoom-value'>{user?.email}</p>
         </div>
 
+        <div className={`myRoom-item ${isEditMode ? 'edit-mode' : ''}`} >
+          <p className='myRoom-label'>📅 가입일</p>
+          <p className='myRoom-value'>
+            {formatYYYYMMDD(user?.createdAt)}
+          </p>
+        </div>
+
         <div className='myRoom-item'>
           <p className='myRoom-label'>📛 닉네임</p>
 
@@ -140,7 +149,7 @@ const MyRoom = ({ user }: Props) => {
           )}
         </div>
 
-        <div className='myRoom-item'>
+        <div className='myRoom-item birth'>
           <p className='myRoom-label'>🎂 생년월일</p>
 
           {isEditMode ? (
