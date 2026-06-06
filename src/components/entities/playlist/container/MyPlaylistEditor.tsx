@@ -46,7 +46,7 @@ const MyPlaylistEditor = ({ mode='create', myplaylistData, tracksData } : Props)
 
   const queryClient = useQueryClient();
 
-  console.log(selectedIds);
+  // console.log(selectedIds);
 
   const createMutation = useMutation({
     mutationFn: createPlaylist,
