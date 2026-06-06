@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { getPopularSearch } from '@/lib/api/serach';
 import { PopularSearch } from '@/types/deezer/search';
+import TrendingSkeleton from '@/components/loading/item/TrendingSkeleton';
 
 
 const TrendingSearches = () => {
@@ -19,23 +20,25 @@ const TrendingSearches = () => {
     router.push(`/search?query=${encodeURIComponent(query)}`);
   };
 
-  if (isLoading) return <div>로딩중...</div>;
-
   return (
     <div className='trendingSearches-contanier'>
       <h3>인기 검색어 top 10.exe</h3>
       <ul>
-        {top?.map((item, i) => (
-          <li key={i} className="trending">
-            <b className="num">{i + 1}</b>
-            <button
-              className="keyword"
-              onClick={() => handleClick(item.keyword)}
-            >
-              {item.keyword}
-            </button>
-          </li>
-        ))}
+        {isLoading
+          ? Array.from({ length: 10 }).map((_, i) => (
+              <TrendingSkeleton key={i} i={i} />
+            ))
+          : top?.map((item, i) => (
+              <li key={i} className="trending">
+                <b className="num">{i + 1}</b>
+                <button
+                  className="keyword"
+                  onClick={() => handleClick(item.keyword)}
+                >
+                  {item.keyword}
+                </button>
+              </li>
+            ))}
       </ul>
     </div>
   )
