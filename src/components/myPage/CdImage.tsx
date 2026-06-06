@@ -22,6 +22,7 @@ const CdImage = () => {
         width={120}
         height={102}
         className='CDcase-image'
+        priority
       />
       <Image
         src='/imgs/myPage/CD.png'

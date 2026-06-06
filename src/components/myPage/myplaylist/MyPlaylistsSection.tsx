@@ -78,9 +78,7 @@ const MyPlaylistsSection = () => {
     if (!result.destination) return;
 
     const items = Array.from(localList);
-
     const [removed] = items.splice(result.source.index, 1);
-
     items.splice(result.destination.index, 0, removed);
 
     setLocalList(items);

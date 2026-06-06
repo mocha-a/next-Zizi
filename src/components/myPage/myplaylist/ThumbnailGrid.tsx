@@ -22,6 +22,7 @@ const ThumbnailGrid = ({ thumbnails, className }: Props) => {
           src={thumbnails[0]}
           alt="thumbnail"
           fill
+          sizes={className?.includes('large-thumbnail') ? '200px' : '90px'}
           className="img"
         />
       </div>
@@ -33,7 +34,13 @@ const ThumbnailGrid = ({ thumbnails, className }: Props) => {
     <div className={`collage collage-4 ${className || ''}`}>
       {thumbnails.slice(0, 4).map((src, i) => (
         <div key={i} className="cell">
-          <Image src={src} alt="thumbnail" fill className="img" />
+          <Image 
+            src={src} 
+            alt="thumbnail" 
+            fill 
+            sizes="(max-width: 768px) 50vw, 25vw" 
+            className="img" 
+          />
         </div>
       ))}
     </div>

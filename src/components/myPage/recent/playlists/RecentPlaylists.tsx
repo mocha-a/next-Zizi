@@ -1,12 +1,24 @@
 import React from 'react'
-import { RecentView } from '@/types/recent';
+import { RecentPlaylist } from '@/types/recent';
 import RecentPlaylistCard from './RecentPlaylistCard';
+import MediaSkeleton from '@/components/loading/item/MediaSkeleton';
 
 interface Props{
-  items: RecentView[];
+  items: RecentPlaylist[];
+  isLoading?: boolean;
 }
 
-const RecentPlaylists = ({ items }: Props) => {
+const RecentPlaylists = ({ items, isLoading }: Props) => {
+  if (isLoading) {
+    return (
+      <div className='recent'>
+        {Array.from({ length: 10 }).map((_, i) => (
+          <MediaSkeleton key={i} />
+        ))}
+      </div>
+    );
+  }
+
   return (
     <div className='recent'>
       {items.map(playlist => (

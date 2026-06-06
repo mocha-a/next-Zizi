@@ -1,12 +1,24 @@
 import React from 'react'
-import { RecentView } from '@/types/recent';
+import { RecentArtist } from '@/types/recent';
 import RecentArtistCard from './RecentArtistCard';
+import ArtistSkeleton from '@/components/loading/item/ArtistSkeleton';
 
 interface Props{
-  items: RecentView[];
+  items: RecentArtist[];
+  isLoading?: boolean;
 }
 
-const RecentArtists = ({ items }: Props) => {
+const RecentArtists = ({ items, isLoading }: Props) => {
+  if (isLoading) {
+    return (
+      <div className='recent'>
+        {Array.from({ length: 10 }).map((_, i) => (
+          <ArtistSkeleton key={i} />
+        ))}
+      </div>
+    );
+  }
+
   return (
     <div className='recent'>
       {items.map(artist => (

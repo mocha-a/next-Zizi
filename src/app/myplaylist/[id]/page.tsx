@@ -7,7 +7,6 @@ import { useParams } from 'next/navigation';
 import { MyPlaylist } from '@/types/user/myPlaylist';
 import { mapUserToBadge } from '@/types/userBadge';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { getTrack } from '@/lib/api';
 import { deletePlaylists, getMyPlaylist } from '@/lib/api/myPlaylist';
 import { formatUpDate, formatYYYYMMDD } from '@/lib/format';
 
@@ -29,6 +28,8 @@ const Page = () => {
 
   const [ showDeletePopup, setShowDeletePopup ] = useState(false);
 
+  const numericId = Number(id);
+
   const deleteMutation = useMutation({
     mutationFn: deletePlaylists,
     onSuccess: async () => {
@@ -40,27 +41,15 @@ const Page = () => {
     }
   });
 
+  // 내 플리 가져오기
   const { data: myplaylist, isLoading } = useQuery<MyPlaylist>({
-    queryKey: ['myplaylist', Number(id)],
+    queryKey: ['myplaylist', numericId],
     queryFn: () => getMyPlaylist(id),
     enabled: !!id,
   });
-
-  const trackIds = myplaylist?.tracks?.map(track => track.trackId).join(',');
-
-  const { data: tracks = [] } = useQuery({
-    queryKey: ['playlistTracks', myplaylist?.id, trackIds],
-    queryFn: async () => {
-      if (!myplaylist) return [];
-
-      return Promise.all(
-        myplaylist.tracks.map(track =>
-          getTrack(Number(track.trackId))
-        )
-      );
-    },
-    enabled: !!myplaylist,
-  });
+  
+  // 내 플리 트랙
+  const tracks = myplaylist?.tracks ?? [];
 
   // 업데이트
   const createdDate = myplaylist?.createdAt;
@@ -76,7 +65,7 @@ const Page = () => {
     (acc, cur) => acc + cur.duration,
     0
   );
-console.log(myplaylist?.tracks);
+console.log(myplaylist);
   return (
     <div className='playlist-detail'>
       <div className='playlist-header detailHeader'>

@@ -1,37 +1,24 @@
 import React from 'react'
 import { useRouter } from 'next/navigation';
-import { RecentView } from '@/types/recent';
-import { useRecentDetail } from '@/hooks/useRecentDetail';
+import { RecentArtist } from '@/types/recent';
 import ArtistCard from '@/components/entities/artist/ui/ArtistCard';
-import ArtistSkeleton from '@/components/loading/item/ArtistSkeleton';
 
 interface Props{
-  artist: RecentView;
+  artist: RecentArtist;
 }
 
 const RecentArtistCard = ({ artist }: Props) => {
   const router = useRouter();
-
-  const { data, isLoading } = useRecentDetail({
-    type: artist.type,
-    targetId: artist.targetId,
-  });
-
-  if (isLoading || !data) {
-    return (
-      <ArtistSkeleton />
-    ); 
-  }
   
   return (
     <ArtistCard
-      key={data.id}
-      name={data.name}
-      imageUrl={data.picture_medium}
-      fan={data.nb_fan}
-      level={data.level}
+      key={artist.id}
+      name={artist.name}
+      imageUrl={artist.picture_medium}
+      fan={artist.nb_fan}
+      level={artist.level}
       showFans={true}
-      onClick={() => router.push(`/artist/${data.id}`)}
+      onClick={() => router.push(`/artist/${artist.id}`)}
     />
   )
 }

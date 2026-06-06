@@ -18,11 +18,41 @@ export async function GET(_req: Request, { params }: Props) {
       },
     });
 
-    return NextResponse.json(playlist);
+    if (!playlist) {
+      return NextResponse.json(
+        { message: '플레이리스트 없음' },
+        { status: 404 }
+      );
+    }
+
+    // Deezer API로 트랙 상세 정보 
+    // lib/api/track.ts에 있는 getTrack()함수를 사용하려고 했으나, 서버에서는 /api 경로 불가로 직접 호출
+    const getTrack = async (id: number) => {
+      const res = await fetch(`https://api.deezer.com/track/${id}`);
+      return res.json();
+    };
+
+    // 서버에서 deezer api 호출하여 트랙 정보 병합
+    const tracksWithDetail = await Promise.all(
+      playlist.tracks.map(async (track) => {
+        const detail = await getTrack(Number(track.trackId));
+
+        return {
+          ...detail,
+          trackId: track.trackId,
+          order: track.order,
+        };
+      })
+    );
+
+    return NextResponse.json({
+      ...playlist,
+      tracks: tracksWithDetail,
+    });
 
   } catch (error) {
     console.error(error);
-    
+
     return NextResponse.json(
       { message: '조회 실패' },
       { status: 500 }

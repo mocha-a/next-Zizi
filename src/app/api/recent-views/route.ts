@@ -7,6 +7,40 @@ import prisma from "@/lib/prisma";
 //type의 타입을 typeMap의 key로 정의
 type TypeKey = keyof typeof typeMap; 
 
+export const getRecentDetail = async ( type: TypeKey, targetId: string ) => {
+  let endpoint = '';
+
+  switch (type) {
+    case 'track':
+      endpoint = `https://api.deezer.com/track/${targetId}`;
+      break;
+
+    case 'album':
+      endpoint = `https://api.deezer.com/album/${targetId}`;
+      break;
+
+    case 'artist':
+      endpoint = `https://api.deezer.com/artist/${targetId}`;
+      break;
+
+    case 'playlist':
+      endpoint = `https://api.deezer.com/playlist/${targetId}`;
+      break;
+
+    default:
+      throw new Error(`지원하지 않는 타입: ${type}`);
+  }
+
+  const res = await fetch(endpoint);
+
+  if (!res.ok) {
+    throw new Error(`${type} 조회 실패`);
+  }
+
+  return res.json();
+};
+
+
 // 최근 기록 db저장
 export async function PUT(req: Request) {
   try {
@@ -91,7 +125,25 @@ export async function GET(req: Request) {
       take: 20, // 최근 20개만
     });
 
-    return NextResponse.json(result, { status: 200 });
+    const recentWithDetail = await Promise.all(
+      result.map(async (item) => {
+        const detail = await getRecentDetail(
+          type,
+          item.targetId
+        );
+
+        return {
+          ...detail,
+          recentId: item.id,
+          viewedAt: item.viewedAt,
+        };
+      })
+    );
+
+    return NextResponse.json(
+      recentWithDetail,
+      { status: 200 }
+    );
   } catch (error) {
     console.error(error);
 

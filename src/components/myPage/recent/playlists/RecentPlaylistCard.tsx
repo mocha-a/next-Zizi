@@ -1,35 +1,22 @@
 import React from 'react'
 import { useRouter } from 'next/navigation';
-import { RecentView } from '@/types/recent';
-import { useRecentDetail } from '@/hooks/useRecentDetail';
+import { RecentPlaylist } from '@/types/recent';
 import PlaylistCard from '@/components/entities/playlist/ui/playlist/PlaylistCard';
-import MediaSkeleton from '@/components/loading/item/MediaSkeleton';
 
 interface Props{
-  playlist: RecentView;
+  playlist: RecentPlaylist;
 }
 
 const RecentPlaylistCard = ({ playlist }: Props) => {
   const router = useRouter();
 
-  const { data, isLoading } = useRecentDetail({
-    type: playlist.type,
-    targetId: playlist.targetId,
-  });
-
-  if (isLoading || !data) {
-    return (
-      <MediaSkeleton />
-    ); 
-  }
-  console.log(data);
   return (
     <PlaylistCard
-      picture={data.picture_medium}
-      title={data.title}
-      user={data.creator?.name}
-      tracks={data.nb_tracks}
-      onClick={() => router.push(`/playlist/${data.id}`)}
+      picture={playlist.picture_medium}
+      title={playlist.title}
+      user={playlist.creator?.name}
+      tracks={playlist.nb_tracks}
+      onClick={() => router.push(`/playlist/${playlist.id}`)}
     />
   )
 }

@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useUserProfile } from '@/hooks/useUserProfile';
 import { getRecentViews } from '@/lib/api/recent';
 import { CategoryType } from '@/types/deezer/search';
-import { RecentView } from '@/types/recent';
+import { RecentAlbum, RecentArtist, RecentPlaylist, RecentTrack } from '@/types/recent';
 import { RecentAlbums, RecentTracks, RecentArtists, RecentPlaylists } from '@/components/myPage/recent';
 
 interface Props{
@@ -16,7 +16,7 @@ const RecentContent = ({ type, variant = 'default' }: Props) => {
   const { data: session } = useSession();
   const { data: user } = useUserProfile(session);
 
-  const { data = [] } = useQuery<RecentView[]>({
+  const { data = [], isLoading } = useQuery<RecentTrack[] | RecentAlbum[] | RecentArtist[] | RecentPlaylist[]>({
     queryKey: ['recent', user?.id, type],
     queryFn: () => getRecentViews(type),
     enabled: !!user?.id,
@@ -25,13 +25,13 @@ const RecentContent = ({ type, variant = 'default' }: Props) => {
   
   switch (type) {
     case 'track':
-      return <RecentTracks items={data} variant={variant} />;
+      return <RecentTracks items={data as RecentTrack[]} variant={variant} isLoading={isLoading}/>;
     case 'album':
-      return <RecentAlbums items={data} />;
+      return <RecentAlbums items={data as RecentAlbum[]} isLoading={isLoading}/>;
     case 'artist':
-      return <RecentArtists items={data} />;
+      return <RecentArtists items={data as RecentArtist[]} isLoading={isLoading}/>;
     case 'playlist':
-      return <RecentPlaylists items={data} />;
+      return <RecentPlaylists items={data as RecentPlaylist[]} isLoading={isLoading}/>;
     default:
       return null;
   }

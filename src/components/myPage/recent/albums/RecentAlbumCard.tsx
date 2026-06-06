@@ -1,38 +1,25 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
-import { RecentView } from '@/types/recent';
-import { useRecentDetail } from '@/hooks/useRecentDetail';
+import { RecentAlbum } from '@/types/recent';
 import AlbumCard from '@/components/entities/album/ui/AlbumCard';
-import MediaSkeleton from '@/components/loading/item/MediaSkeleton';
 
 interface Props{
-  album: RecentView;
+  album: RecentAlbum;
 }
 
 const RecentAlbumCard = ({ album }: Props) => {
   const router = useRouter();
-
-  const { data, isLoading } = useRecentDetail({
-    type: album.type,
-    targetId: album.targetId,
-  });
-
-  if (isLoading || !data) {
-    return (
-      <MediaSkeleton />
-    ); 
-  }
   
   return (
     <AlbumCard
-      id={data.id}
-      title={data.title}
-      cover={data.cover_medium}
-      release_date={data.release_date}
-      record_type={data.record_type}
-      nb_tracks={data.nb_tracks}
-      artist={data.artist}
-      onClick={() => router.push(`/album/${data.id}`)}
+      id={album.id}
+      title={album.title}
+      cover={album.cover_medium}
+      release_date={album.release_date}
+      record_type={album.record_type}
+      nb_tracks={album.nb_tracks}
+      artist={album.artist}
+      onClick={() => router.push(`/album/${album.id}`)}
     />
   )
 }

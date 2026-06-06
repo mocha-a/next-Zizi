@@ -1,4 +1,10 @@
+import { Track } from "../deezer/deezer";
 import { User } from "../userBadge";
+
+export interface myPlaylistTrack extends Track {
+  trackId: string;
+  order: number;
+}
 
 export interface MyPlaylist {
   id: number;
@@ -12,13 +18,7 @@ export interface MyPlaylist {
 
   user: User;
 
-  tracks: {
-    id: number;
-    playlistId: number;
-    trackId: string;
-    order: number;
-    createdAt: string;
-  }[];
+  tracks: myPlaylistTrack[];
 }
 
 // 플리 수정

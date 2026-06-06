@@ -62,8 +62,14 @@ const MyPlaylistEditor = ({ mode='create', myplaylistData, tracksData } : Props)
       updatePlaylist(id, data),
 
     onSuccess: async (_, variables) => {
+      const id = Number(variables.id);
+
       await queryClient.invalidateQueries({
-        queryKey: ['myplaylist', variables.id]
+        queryKey: ['myplaylist', id]
+      });
+
+      await queryClient.invalidateQueries({
+        queryKey: ['playlistTracks', id]
       });
 
       router.push(`/myplaylist/${variables.id}`);
