@@ -23,6 +23,7 @@
       // 로그인 후
       // ===========
       .myPage-name{
+        font-family: var(--font-Galmuri9), var(--font-emoji);
         color: $orange;
       }
 
@@ -76,7 +77,11 @@
   .search-tabs{pointer-events: none;}
 }
 
+.submit{
+  font-size: 13px;
+}
 
+// 편집 모드 버튼
 .edit-actions{
   @include flex;
   gap: 8px;
@@ -86,7 +91,7 @@
     margin-left: 8px;
   }
   .complete-btn {
-    color: $blue;
+    color: $orange;
   }
 }
 
@@ -135,6 +140,7 @@
     color: $fontgray;
   }
 
+  // 이메일, 가입일, 닉네임, 생년월일
   .myRoom-item{
     @include flex;
     gap: 24px;
@@ -144,23 +150,22 @@
       width: 80px;
       flex-shrink: 0;
     }
-
-    .myRoom-value{
-
-    }
   }
 
   .birth{
     margin: 18px 0 15px;
   }
   
-
+  // 성별
   .onboarding_gender{
     margin: 15px 0 30px;
 
     .gender-item-box{
       @include flex;
       gap: 5px;
+    }
+
+    .readonly{
       >div >div{ cursor: default; }
     }
   }

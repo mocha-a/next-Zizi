@@ -15,6 +15,7 @@ export interface Creator {
 export interface User {
   id: string;
   name: string;
+  nickname?: string;
   image?: string;
 }
 
@@ -24,6 +25,7 @@ export interface User {
 export interface BadgeUser {
   id: string;
   name: string;
+  nickname?: string;
   image?: string;
   country?: string;
 }
@@ -41,5 +43,6 @@ export const mapCreatorToBadge = (c: Creator): BadgeUser => ({
 export const mapUserToBadge = (u: User): BadgeUser => ({
   id: u.id,
   name: u.name,
+  nickname: u.nickname,
   image: u.image,
 });

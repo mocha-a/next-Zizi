@@ -23,6 +23,12 @@ const galmuri9 = localFont({
   display: 'swap',
 });
 
+const emoji = localFont({
+  src: './fonts/Mona12ColorEmoji.woff2',
+  variable: '--font-emoji',
+  display: 'swap',
+});
+
 const gmarketBold = localFont({
   src: './fonts/GmarketSansTTFBold.woff2',
   variable: '--font-gmarketBold',
@@ -49,6 +55,7 @@ export default function RootLayout({
     <html lang="en" className={`
       ${decoshadow.variable}
       ${galmuri9.variable}
+      ${emoji.variable}
       ${gmarketBold.variable}
       ${gmarketMedium.variable}`}>
       <body

@@ -12,7 +12,7 @@ interface Props {
 const CreatorBadge = ({ creator, KRCode }: Props) => {
   if (!creator) return null;
 
-  const name = creator.name || '알 수 없는 사용자';
+  const name = creator.nickname || creator.name || '알 수 없는 사용자';
   const countryCode = (KRCode || creator.country)?.trim().toLowerCase();
 
   return (

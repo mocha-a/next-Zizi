@@ -29,6 +29,8 @@ function Page() {
   const tabMap = ['recent', 'myplaylist', 'myroom'];
   const tabIndex = tabMap.indexOf(tabValue);
 
+  const name = user?.nickname || user?.name || 'zi존이';
+
   // 탭 메뉴
   const tabs = [
     { label: '최근 기록', content: <RecentSection /> },
@@ -50,7 +52,7 @@ function Page() {
             {session ? (
               <div>
                 <span className='myPage-name'>
-                  {user?.nickname ?? user?.name}
+                  {name}
                 </span> 님의
                 <p>
                   아침을 깨우는 <br />

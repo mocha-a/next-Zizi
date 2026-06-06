@@ -11,11 +11,12 @@ interface Props {
   value: string | null;
   onChange?: (value: string | null) => void;
   readonly?: boolean;
+  className?: string;
 }
 
-function GenderSelect({ value, onChange, readonly }: Props) {
+function GenderSelect({ value, onChange, readonly, className }: Props) {
   return (
-    <div className='gender-item-box'>
+    <div className={`gender-item-box ${className ?? ''}`}>
       {GENDER_OPTIONS.map((option) => (
         <div
           key={option.label}

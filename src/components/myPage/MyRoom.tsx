@@ -64,7 +64,6 @@ const MyRoom = ({ user }: Props) => {
     });
   };
 
-  console.log('user', user);
   return (
     <div className='myRoom-container'>
       <div className='myRoom-btn'>
@@ -172,6 +171,7 @@ const MyRoom = ({ user }: Props) => {
             value={isEditMode ? gender : user?.gender ?? null}
             onChange={setGender}
             readonly={!isEditMode}
+            className={isEditMode ? 'editable' : 'readonly'}
           />
         </div>
       </div>

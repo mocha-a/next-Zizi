@@ -35,7 +35,6 @@ const MyPlaylistsSection = () => {
   const [ localList, setLocalList ] = useState<MyPlaylist[]>([]);
 
   const [ showLoginPopup, setShowLoginPopup ] = useState(false);
-  const [ showDeletePopup, setShowDeletePopup ] = useState(false);
 
   // 내 플리 삭제
   const deleteMutation = useMutation({
@@ -96,18 +95,34 @@ const MyPlaylistsSection = () => {
     router.push('/myplaylist/new');
   };
 
-  const handleEditMode = () => {
-    // 편집 종료 시 저장
+  const handleEditMode = async () => {
     if (isEditMode) {
+      const deletedIds =
+        myplaylist
+          ?.filter(item => !localList.some(local => local.id === item.id))
+          .map(item => item.id) ?? [];
+
       const reordered = localList.map((item, index) => ({
         id: item.id,
         order: index,
       }));
 
-      orderMutation.mutate(reordered);
+      try {
+        if (deletedIds.length > 0) {
+          await deleteMutation.mutateAsync(deletedIds);
+        }
+
+        await orderMutation.mutateAsync(reordered);
+
+        setEditMode(false);
+        return;
+      } catch (error) {
+        console.error(error);
+        return;
+      }
     }
 
-    setEditMode(!isEditMode);
+    setEditMode(true);
   };
 
   const isAllSelected =
@@ -119,6 +134,15 @@ const MyPlaylistsSection = () => {
     } else {
       setSelectedIds(localList.map((item) => item.id));
     }
+  };
+
+  // 내 플리 삭제
+  const handleDelete = () => {
+    setLocalList(prev =>
+      prev.filter(item => !selectedIds.includes(item.id))
+    );
+
+    setSelectedIds([]);
   };
 
   return (
@@ -198,7 +222,7 @@ const MyPlaylistsSection = () => {
                 />
               }
               title={playlist.title}
-              user={playlist.user.name}
+              user={playlist.user?.nickname || playlist.user?.name}
               tracks={playlist.tracks.length}
               isEditMode={false}
               onClick={() => {
@@ -210,7 +234,7 @@ const MyPlaylistsSection = () => {
       )}
 
       {selectedIds.length > 0 && (
-        <TrashButton setShowDeletePopup={setShowDeletePopup} count={selectedIds.length}/>
+        <TrashButton onDelete={handleDelete} count={selectedIds.length}/>
       )}
 
       {showLoginPopup && (
@@ -226,20 +250,6 @@ const MyPlaylistsSection = () => {
         />
       )}
 
-      {showDeletePopup && (
-        <Popup
-          showPopup={showDeletePopup}
-          setShowPopup={setShowDeletePopup}
-          type='delete'
-          onConfirm={() => {
-            deleteMutation.mutate(selectedIds);
-            setShowDeletePopup(false);
-          }}
-          onCancel={() => {
-            setShowDeletePopup(false);
-          }}
-        />
-      )}
     </>
   );
 };

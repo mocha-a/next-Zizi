@@ -15,6 +15,7 @@ import ReadMore from '@/components/entities/playlist/ui/ReadMore';
 import CreatorBadge from '@/components/entities/playlist/ui/playlist/CreatorBadge';
 import ThumbnailGrid from '@/components/myPage/myplaylist/ThumbnailGrid';
 import PlaylistTrackList from '@/components/entities/playlist/container/PlaylistTrackList';
+import MediaPageSkeleton from '@/components/loading/page/MediaPageSkeleton';
 
 import '@/styles/myPlaylist/newPlaylist.scss';
 
@@ -56,9 +57,6 @@ const Page = () => {
     0
   );
 
-  if (isLoading) return <div>로딩중...</div>;
-  if (!myplaylist) return <div>아티스트 없음</div>;
-
   return (
     <div className='playlist-detail'>
       <div className='playlist-hearder detailHeader'>
@@ -67,30 +65,37 @@ const Page = () => {
           편집
         </Link>
       </div>
-      <div className='playlist-detail-img'>
-        <ThumbnailGrid thumbnails={myplaylist.thumbnails} className='large-thumbnail' />
-      </div>
-      <p className='playlist-detail-fans-count'>
-        나만의 주파수가 흐르는 중 -
-      </p>
-      <h2>{myplaylist.title}</h2>
-      {myplaylist.description && (
-        <ReadMore description={myplaylist.description} />
-      )}
-      <div className='playlist-detail-info'>
-        <span>{formatYYYYMMDD(createdDate)} </span>
-        {updatedText && (
-          <span className="playlist-updated"> {updatedText} 업데이트</span>
+      {isLoading ? (
+        <MediaPageSkeleton/>
+      ): !myplaylist ? (
+        <div>플레이리스트 없음</div>
+      ): (
+      <>
+        <div className='playlist-detail-img'>
+          <ThumbnailGrid thumbnails={myplaylist.thumbnails} className='large-thumbnail' />
+        </div>
+        <p className='playlist-detail-fans-count'>
+          나만의 주파수가 흐르는 중 -
+        </p>
+        <h2>{myplaylist.title}</h2>
+        {myplaylist.description && (
+          <ReadMore description={myplaylist.description} />
         )}
-      </div>
-      <div className='playlist-detail-creator'>
-        <CreatorBadge
-          creator={myplaylist.user ? mapUserToBadge(myplaylist.user) : null}
-          KRCode="kr"
-        />
-      </div>
-
-      <PlaylistTrackList track={tracks} duration={Duration}/>
+        <div className='playlist-detail-info'>
+          <span>{formatYYYYMMDD(createdDate)} </span>
+          {updatedText && (
+            <span className="playlist-updated"> {updatedText} 업데이트</span>
+          )}
+        </div>
+        <div className='playlist-detail-creator'>
+          <CreatorBadge
+            creator={myplaylist.user ? mapUserToBadge(myplaylist.user) : null}
+            KRCode="kr"
+          />
+        </div>
+      </>
+      )}
+      <PlaylistTrackList track={tracks} duration={Duration} isLoading={isLoading} />
     </div>
   )
 }
