@@ -147,7 +147,7 @@ const MyPlaylistEditor = ({ mode='create', myplaylistData, tracksData } : Props)
         onChangeName={setTitle}
         onChangeDescription={setDescription}
         onSubmit={handleSubmit}
-        onBack={reset}
+        onBack={()=>{reset(); router.back();}}
       />
 
       <div 

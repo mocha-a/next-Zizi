@@ -11,8 +11,11 @@ function Back({ className, onBack }: Props) {
   const router = useRouter();
 
   const goBack = () => {
-    onBack?.();
-    router.back();
+    if(onBack) {
+      onBack();
+    } else {
+      router.back();
+    }
   }
 
   return (
