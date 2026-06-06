@@ -41,21 +41,18 @@ export async function PATCH(req: Request, { params }: Props) {
 
     // 플레이리스트 정보 수정
     await prisma.playlist.update({
-      where: {
-        id: playlistId,
-      },
+      where: { id: playlistId },
       data: {
         title,
         description,
         thumbnails,
+        updatedAt: new Date(),
       },
     });
 
     // 기존 곡 삭제
     await prisma.playlistTrack.deleteMany({
-      where: {
-        playlistId,
-      },
+      where: { playlistId },
     });
 
     // 새 곡 다시 저장

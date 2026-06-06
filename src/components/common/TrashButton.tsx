@@ -3,10 +3,10 @@ import Badge from '@mui/material/Badge';
 
 interface Props {
   count: number;
-  setShowDeletePopup: React.Dispatch<React.SetStateAction<boolean>>;
+  onDelete: () => void;
 }
 
-const TrashButton = ({ setShowDeletePopup, count }: Props) => {
+const TrashButton = ({ onDelete, count }: Props) => {
   return (
     <Badge 
       badgeContent={count}
@@ -25,9 +25,13 @@ const TrashButton = ({ setShowDeletePopup, count }: Props) => {
         },
       }}
     >
-      <div onClick={() => setShowDeletePopup(true)} >
-        <div className='trash'>🗑️ 삭제</div>
-      </div>
+      <button
+        type='button'
+        className='trash'
+        onClick={onDelete}
+      >
+        🗑️ 삭제
+      </button>
     </Badge>
   )
 }

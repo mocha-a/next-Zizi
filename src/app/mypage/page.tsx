@@ -10,12 +10,12 @@ import { usePlaylistEditStore } from '@/store/usePlaylistEditStore';
 import LogoutButton from '@/components/auth/LogoutButton';
 import PageTitle from '@/components/common/PageTitle';
 import TabsContainer from '@/components/common/TabsContainer';
+import MyRoom from '@/components/myPage/MyRoom';
+import CdImage from '@/components/myPage/CdImage';
 import MyPlaylistsSection from '@/components/myPage/myplaylist/MyPlaylistsSection';
 import RecentSection from '@/components/myPage/recent/RecentSection';
-import CdImage from '@/components/myPage/CdImage';
 
 import '@/styles/myPage/myPage.scss';
-import MeRoom from '@/components/myPage/MeRoom';
 
 function Page() {
   const { isEditMode } = usePlaylistEditStore();
@@ -29,11 +29,13 @@ function Page() {
   const tabMap = ['recent', 'myplaylist', 'myroom'];
   const tabIndex = tabMap.indexOf(tabValue);
 
+  const name = user?.nickname || user?.name || 'zi존이';
+
   // 탭 메뉴
   const tabs = [
     { label: '최근 기록', content: <RecentSection /> },
-    { label: '내 플레이리스트', content: <MyPlaylistsSection /> },
-    { label: '내 프로필', content: <MeRoom /> },
+    { label: '내 플리', content: <MyPlaylistsSection /> },
+    { label: '내 프로필', content: <MyRoom user={user} /> },
   ];
 
   if (status === 'loading') return null;
@@ -50,7 +52,7 @@ function Page() {
             {session ? (
               <div>
                 <span className='myPage-name'>
-                  {user?.nickname ?? user?.name}
+                  {name}
                 </span> 님의
                 <p>
                   아침을 깨우는 <br />

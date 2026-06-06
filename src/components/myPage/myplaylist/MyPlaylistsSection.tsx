@@ -35,7 +35,6 @@ const MyPlaylistsSection = () => {
   const [ localList, setLocalList ] = useState<MyPlaylist[]>([]);
 
   const [ showLoginPopup, setShowLoginPopup ] = useState(false);
-  const [ showDeletePopup, setShowDeletePopup ] = useState(false);
 
   // 내 플리 삭제
   const deleteMutation = useMutation({
@@ -96,18 +95,34 @@ const MyPlaylistsSection = () => {
     router.push('/myplaylist/new');
   };
 
-  const handleEditMode = () => {
-    // 편집 종료 시 저장
+  const handleEditMode = async () => {
     if (isEditMode) {
+      const deletedIds =
+        myplaylist
+          ?.filter(item => !localList.some(local => local.id === item.id))
+          .map(item => item.id) ?? [];
+
       const reordered = localList.map((item, index) => ({
         id: item.id,
         order: index,
       }));
 
-      orderMutation.mutate(reordered);
+      try {
+        if (deletedIds.length > 0) {
+          await deleteMutation.mutateAsync(deletedIds);
+        }
+
+        await orderMutation.mutateAsync(reordered);
+
+        setEditMode(false);
+        return;
+      } catch (error) {
+        console.error(error);
+        return;
+      }
     }
 
-    setEditMode(!isEditMode);
+    setEditMode(true);
   };
 
   const isAllSelected =
@@ -121,23 +136,61 @@ const MyPlaylistsSection = () => {
     }
   };
 
+  // 내 플리 삭제
+  const handleDelete = () => {
+    setLocalList(prev =>
+      prev.filter(item => !selectedIds.includes(item.id))
+    );
+
+    setSelectedIds([]);
+  };
+
   return (
     <>
       <div className='myplaylist-btn'>
-        <div onClick={isEditMode ? handleSelectAll : handleClick} className='action-btn'>
-          {isEditMode ? (
-            <>
-              <Check /> {isAllSelected ? <p>전체 해제</p> : <p>전체 선택</p>}
-            </>
-          ) : (
-            <>
+        {!isEditMode ? (
+          <>
+            <button onClick={handleClick} className='action-btn'>
               <Plus /> <p>내 플리 추가</p>
-            </>
-          )}
-        </div>
-        <div className='submit' onClick={handleEditMode}>
-          {isEditMode ? '완료' : '편집'}
-        </div>
+            </button>
+
+            <button className='submit' onClick={() => setEditMode(true)}>
+              편집
+            </button>
+          </>
+        ) : (
+          <>
+            <button className='action-btn' onClick={handleSelectAll}>
+              <Check />
+              <p>{isAllSelected ? '전체 해제' : '전체 선택'}</p>
+            </button>
+
+            <div className='edit-actions'>
+              {/* 취소 */}
+              <button
+                className='submit cancel-btn'
+                onClick={() => {
+                  setEditMode(false);
+
+                  // rollback (선택 초기화 + DnD 원복)
+                  setSelectedIds([]);
+                  setLocalList(myplaylist ?? []);
+                }}
+              >
+                취소
+              </button>
+
+              {/* 완료 */}
+              <button
+                className='submit complete-btn'
+                onClick={handleEditMode}
+                disabled={orderMutation.isPending}
+              >
+                {orderMutation.isPending ? '저장 중...' : '완료'}
+              </button>
+            </div>
+          </>
+        )}
       </div>
 
       {isLoading ? (        
@@ -169,7 +222,7 @@ const MyPlaylistsSection = () => {
                 />
               }
               title={playlist.title}
-              user={playlist.user.name}
+              user={playlist.user?.nickname || playlist.user?.name}
               tracks={playlist.tracks.length}
               isEditMode={false}
               onClick={() => {
@@ -181,7 +234,7 @@ const MyPlaylistsSection = () => {
       )}
 
       {selectedIds.length > 0 && (
-        <TrashButton setShowDeletePopup={setShowDeletePopup} count={selectedIds.length}/>
+        <TrashButton onDelete={handleDelete} count={selectedIds.length}/>
       )}
 
       {showLoginPopup && (
@@ -197,20 +250,6 @@ const MyPlaylistsSection = () => {
         />
       )}
 
-      {showDeletePopup && (
-        <Popup
-          showPopup={showDeletePopup}
-          setShowPopup={setShowDeletePopup}
-          type='delete'
-          onConfirm={() => {
-            deleteMutation.mutate(selectedIds);
-            setShowDeletePopup(false);
-          }}
-          onCancel={() => {
-            setShowDeletePopup(false);
-          }}
-        />
-      )}
     </>
   );
 };

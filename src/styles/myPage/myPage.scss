@@ -2,7 +2,7 @@
 @use '../mixins'as *;
 
 .myPage-container{
-  .myPage-topSection, .search-tabs, .tagbtn-box, .myplaylist-btn{
+  .myPage-topSection, .search-tabs, .tagbtn-box, .myplaylist-btn, .myRoom-container{
     @include publicWidth;
   }
 
@@ -23,6 +23,7 @@
       // 로그인 후
       // ===========
       .myPage-name{
+        font-family: var(--font-Galmuri9), var(--font-emoji);
         color: $orange;
       }
 
@@ -76,6 +77,97 @@
   .search-tabs{pointer-events: none;}
 }
 
+.submit{
+  font-size: 13px;
+}
+
+// 편집 모드 버튼
+.edit-actions{
+  @include flex;
+  gap: 8px;
+
+  .cancel-btn::after{
+    content: '·';
+    margin-left: 8px;
+  }
+  .complete-btn {
+    color: $orange;
+  }
+}
+
 .selected{
   @include selected-style;
 }
+
+// 내 프로필
+.myRoom-container{
+  .myRoom-btn {
+    @include flex($justify: flex-end);
+    height: 24px;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+
+  .myRoom-profile{
+    @include flex;
+    gap: 18px;
+    
+    .myRoom-name{
+      font-family: var(--font-Galmuri9);
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .myRoom-lastVisited{
+      @include flex;
+      gap: 5px;
+    }
+
+    >p{
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      overflow: hidden;
+
+      >img{
+        width: 50px;
+        height: 50px;
+      }
+    }
+  }
+
+  .myRoom-label{
+    color: $fontgray;
+  }
+
+  // 이메일, 가입일, 닉네임, 생년월일
+  .myRoom-item{
+    @include flex;
+    gap: 24px;
+    margin: 18px 0;
+
+    .myRoom-label{
+      width: 80px;
+      flex-shrink: 0;
+    }
+  }
+
+  .birth{
+    margin: 18px 0 15px;
+  }
+  
+  // 성별
+  .onboarding_gender{
+    margin: 15px 0 30px;
+
+    .gender-item-box{
+      @include flex;
+      gap: 5px;
+    }
+
+    .readonly{
+      >div >div{ cursor: default; }
+    }
+  }
+}
+

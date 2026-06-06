@@ -9,6 +9,7 @@ import MainPlayer from "@/components/common/MainPlayer";
 
 import 'flag-icons/css/flag-icons.min.css';
 import '@/styles/_style.scss';
+import VisitTracker from "@/components/auth/VisitTracker";
 
 const decoshadow = localFont({
   src: './fonts/Cafe24Decoshadow.woff2',
@@ -19,6 +20,12 @@ const decoshadow = localFont({
 const galmuri9 = localFont({
   src: './fonts/Galmuri9.woff2',
   variable: '--font-Galmuri9',
+  display: 'swap',
+});
+
+const emoji = localFont({
+  src: './fonts/Mona12ColorEmoji.woff2',
+  variable: '--font-emoji',
   display: 'swap',
 });
 
@@ -48,13 +55,15 @@ export default function RootLayout({
     <html lang="en" className={`
       ${decoshadow.variable}
       ${galmuri9.variable}
+      ${emoji.variable}
       ${gmarketBold.variable}
       ${gmarketMedium.variable}`}>
       <body
         className={'antialiased'}
       >
         <ReactQueryProvider>              {/* 서버 데이터 관리 */}
-          <NextAuthProvider>              {/* 인증 상태 관리 */}
+          <NextAuthProvider>              {/* 인증 상태 관리 */}  
+            <VisitTracker />              {/* 마지막 접속 */}  
             <SessionGate>                 {/* 사용자 상태 체크 (추가 정보 필요 시 팝업 띄우고, 아니면 children 렌더링) */}
               {/* 1. 메인 콘텐츠 */}
               {children}

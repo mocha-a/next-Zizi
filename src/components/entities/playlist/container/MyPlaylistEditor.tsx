@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { DropResult } from '@hello-pangea/dnd';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -12,7 +12,6 @@ import NewPlaylistForm from '@/components/entities/playlist/ui/playlist/NewPlayl
 import PlaylistTrackListDnD from '@/components/entities/playlist/ui/track/PlaylistTrackListDnD';
 
 import '@/styles/myPlaylist/newPlaylist.scss';
-import Popup from '@/components/common/Popup';
 import TrashButton from '@/components/common/TrashButton';
 import { useUIStore } from '@/store/useUIStore';
 import Plus from '@/components/icons/Plus';
@@ -24,7 +23,6 @@ interface Props {
 }
 
 const MyPlaylistEditor = ({ mode='create', myplaylistData, tracksData } : Props) => {
-  const [ showDeletePopup, setShowDeletePopup ] = useState(false);
   const { setHideBottomNav } = useUIStore();
 
   const title = useTrackStore(state => state.title);
@@ -168,21 +166,9 @@ const MyPlaylistEditor = ({ mode='create', myplaylistData, tracksData } : Props)
       />
 
       {selectedIds.length > 0 && (
-        <TrashButton setShowDeletePopup={setShowDeletePopup} count={selectedIds.length}/>
-      )}
-
-      {showDeletePopup && (
-        <Popup
-          showPopup={showDeletePopup}
-          setShowPopup={setShowDeletePopup}
-          type='delete'
-          onConfirm={() => {
-            removeFromPlaylist();
-            setShowDeletePopup(false);
-          }}
-          onCancel={() => {
-            setShowDeletePopup(false);
-          }}
+        <TrashButton
+          count={selectedIds.length}
+          onDelete={removeFromPlaylist}
         />
       )}
     </div>

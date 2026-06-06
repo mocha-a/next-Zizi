@@ -29,6 +29,7 @@ model User {
   password      String? // 로컬 회원가입 사용자만 가짐 (NULL 허용)
 
   createdAt     DateTime @default(now())
+  lastVisitedAt DateTime?
   
   accounts      Account[]
   sessions      Session[]
@@ -118,7 +119,7 @@ model Playlist {
   order       Int      @default(0)
 
   createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt 
+  updatedAt   DateTime
 
   tracks      PlaylistTrack[]
 }
