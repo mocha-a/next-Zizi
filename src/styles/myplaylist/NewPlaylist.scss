@@ -96,9 +96,20 @@
   }
 }
 
-.playlist-hearder{
-  .submit{
-    font-size: 13px; color: $orange;
-    cursor: pointer;
+.playlist-header{
+  .playlist-header-actions{
+    button{
+      font-size: 13px;
+    }
+
+    button::after{
+      content: "·";
+      margin: 0 8px;
+    }
+
+    .submit{
+      font-size: 13px; color: $orange;
+    }
   }
+
 }

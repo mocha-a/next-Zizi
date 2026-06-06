@@ -47,7 +47,7 @@ export async function POST(req: Request) {
         order: lastPlaylist
           ? lastPlaylist.order + 1
           : 0,
-
+        updatedAt: new Date(),
         tracks: {
           create: tracks.map((track: Track, index: number) => ({
             trackId: String(track.id),

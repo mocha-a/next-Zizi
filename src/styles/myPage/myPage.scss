@@ -141,14 +141,17 @@
   }
 
   // 이메일, 가입일, 닉네임, 생년월일
-  .myRoom-item{
-    @include flex;
-    gap: 24px;
-    margin: 18px 0;
-
-    .myRoom-label{
-      width: 80px;
-      flex-shrink: 0;
+  .myRoom-info{
+    margin-top: 30px;
+    .myRoom-item{
+      @include flex;
+      gap: 24px;
+      margin: 18px 0;
+  
+      .myRoom-label{
+        width: 80px;
+        flex-shrink: 0;
+      }
     }
   }
 

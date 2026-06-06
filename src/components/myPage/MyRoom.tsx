@@ -9,6 +9,7 @@ import { formatLastVisited, formatYYYYMMDD } from '@/lib/format';
 
 import GenderSelect from '../auth/GenderSelect';
 import { api } from '@/lib/api/axios';
+import OnboardingPopup from '../auth/MoreInfoPopup';
 
 interface Props {
   user: UserProfile | undefined;

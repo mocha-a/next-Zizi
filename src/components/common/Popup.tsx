@@ -7,6 +7,8 @@ interface Props {
   onConfirm?: () => void;
   onCancel?: () => void;
   className?: string;
+  isLoading?: boolean;
+  loadingText?: string;
 }
 
 interface PopupContent {
@@ -17,7 +19,7 @@ interface PopupContent {
   icon: React.ReactNode;
 }
 
-function Popup({ showPopup, setShowPopup, type, onConfirm, onCancel, className='' }: Props) {
+function Popup({ showPopup, setShowPopup, type, onConfirm, onCancel, className='', isLoading, loadingText }: Props) {
 
   // type별 팝업 내용
    const popupContent: Record< Props['type'], PopupContent > = {
@@ -83,10 +85,12 @@ function Popup({ showPopup, setShowPopup, type, onConfirm, onCancel, className='
           </button>
           <button
             className='btn1popup-btn'
+            disabled={isLoading}
             onClick={() => {
-              if (onConfirm) onConfirm(); // callback 실행
-          }}>
-            {popupContent[type]?.btntxt2}
+              if (onConfirm) onConfirm();
+            }}
+          >
+            {isLoading ? loadingText : popupContent[type]?.btntxt2}
           </button>
         </div>
 

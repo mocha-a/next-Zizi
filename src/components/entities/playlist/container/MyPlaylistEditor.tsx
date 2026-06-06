@@ -46,8 +46,6 @@ const MyPlaylistEditor = ({ mode='create', myplaylistData, tracksData } : Props)
 
   const queryClient = useQueryClient();
 
-  // console.log(selectedIds);
-
   const createMutation = useMutation({
     mutationFn: createPlaylist,
 
@@ -63,12 +61,13 @@ const MyPlaylistEditor = ({ mode='create', myplaylistData, tracksData } : Props)
     mutationFn: ({ id, data }: UpdatePlaylistParams) =>
       updatePlaylist(id, data),
 
-    onSuccess: () => {
-      useTrackStore.getState().reset();
-      queryClient.invalidateQueries({ queryKey: ['myplaylist'] });
+    onSuccess: async (_, variables) => {
+      await queryClient.invalidateQueries({
+        queryKey: ['myplaylist', variables.id]
+      });
 
-      router.back();
-    },
+      router.push(`/myplaylist/${variables.id}`);
+    }
   });
 
   const initEditor = () => {
@@ -85,10 +84,9 @@ const MyPlaylistEditor = ({ mode='create', myplaylistData, tracksData } : Props)
   };
 
   useEffect(() => {
-    if (mode !== 'edit') return;
-    if (!myplaylistData || !tracksData) return;
-
-    initEditor();
+    if (mode === 'edit' && myplaylistData && tracksData) {
+      initEditor();
+    }
   }, [mode, myplaylistData, tracksData]);
 
   useEffect(() => {
@@ -136,7 +134,7 @@ const MyPlaylistEditor = ({ mode='create', myplaylistData, tracksData } : Props)
 
     reorder(result.source.index, result.destination.index);
   };
-
+  console.log(playlist);
   return (
     <div className='new-playlist-page'>
       <NewPlaylistForm

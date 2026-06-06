@@ -193,7 +193,7 @@ const MyPlaylistsSection = () => {
         )}
       </div>
 
-      {isLoading ? (        
+      {isLoading ? (
         <div className="playlist-list myplaylist-list">
           {Array.from({ length: 10 }).map((_, i) => (
             <MediaSkeleton key={`init-${i}`} />

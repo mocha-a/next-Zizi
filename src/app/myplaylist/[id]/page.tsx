@@ -1,13 +1,14 @@
 'use client';
 
-import React from 'react'
+import React, { useState } from 'react'
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { MyPlaylist } from '@/types/user/myPlaylist';
 import { mapUserToBadge } from '@/types/userBadge';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { getTrack } from '@/lib/api';
-import { getMyPlaylist } from '@/lib/api/myPlaylist';
+import { deletePlaylists, getMyPlaylist } from '@/lib/api/myPlaylist';
 import { formatUpDate, formatYYYYMMDD } from '@/lib/format';
 
 import Back from '@/components/icons/Back';
@@ -18,18 +19,37 @@ import PlaylistTrackList from '@/components/entities/playlist/container/Playlist
 import MediaPageSkeleton from '@/components/loading/page/MediaPageSkeleton';
 
 import '@/styles/myPlaylist/newPlaylist.scss';
+import Popup from '@/components/common/Popup';
 
 const Page = () => {
+  const queryClient = useQueryClient();
+  const router = useRouter();
+
   const { id } = useParams() as { id: string };
 
+  const [ showDeletePopup, setShowDeletePopup ] = useState(false);
+
+  const deleteMutation = useMutation({
+    mutationFn: deletePlaylists,
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: ['myplaylists']
+      });
+
+      router.push('/mypage?tab=myplaylist');
+    }
+  });
+
   const { data: myplaylist, isLoading } = useQuery<MyPlaylist>({
-    queryKey: ['myplaylist', id],
+    queryKey: ['myplaylist', Number(id)],
     queryFn: () => getMyPlaylist(id),
     enabled: !!id,
   });
 
+  const trackIds = myplaylist?.tracks?.map(track => track.trackId).join(',');
+
   const { data: tracks = [] } = useQuery({
-    queryKey: ['playlistTracks', myplaylist?.id],
+    queryKey: ['playlistTracks', myplaylist?.id, trackIds],
     queryFn: async () => {
       if (!myplaylist) return [];
 
@@ -56,14 +76,19 @@ const Page = () => {
     (acc, cur) => acc + cur.duration,
     0
   );
-
+console.log(myplaylist?.tracks);
   return (
     <div className='playlist-detail'>
-      <div className='playlist-hearder detailHeader'>
+      <div className='playlist-header detailHeader'>
         <Back />
-        <Link href={`/myplaylist/${id}/edit`} className='submit'>
-          편집
-        </Link>
+        <div className='playlist-header-actions'>
+          <button onClick={() => setShowDeletePopup(true)}>
+            삭제
+          </button>
+          <Link href={`/myplaylist/${id}/edit`} className='submit'>
+            편집
+          </Link>
+        </div>
       </div>
       {isLoading ? (
         <MediaPageSkeleton/>
@@ -96,6 +121,23 @@ const Page = () => {
       </>
       )}
       <PlaylistTrackList track={tracks} duration={Duration} isLoading={isLoading} />
+
+
+      {showDeletePopup && (
+        <Popup
+          showPopup={showDeletePopup}
+          setShowPopup={setShowDeletePopup}
+          type={"delete"}
+          onConfirm={() => {
+            deleteMutation.mutate([Number(id)]); 
+          }}
+          onCancel={() => {
+            setShowDeletePopup(false);
+          }}
+          isLoading={deleteMutation.isPending}
+          loadingText= "삭제 중..."
+        />
+      )}
     </div>
   )
 }
