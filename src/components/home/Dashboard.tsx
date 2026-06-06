@@ -81,7 +81,7 @@ function Dashboard() {
                 <div className="myMusic-text-absolute">
                     <div className="myMusic-text-content">
                         <h2 className="myMusic-text">
-                            {user ? 'MY뮤직.exe' : ('WELCOME-곡.exe')}
+                            {user ? 'MY뮤직.exe' : ('WELCOME-디스크.exe')}
                         </h2>
                         <div>
                             <Image
