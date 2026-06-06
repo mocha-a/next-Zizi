@@ -1,24 +1,24 @@
 'use client';
 
 import React, { useState } from 'react'
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useParams } from 'next/navigation';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { MyPlaylist } from '@/types/user/myPlaylist';
 import { mapUserToBadge } from '@/types/userBadge';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { deletePlaylists, getMyPlaylist } from '@/lib/api/myPlaylist';
 import { formatUpDate, formatYYYYMMDD } from '@/lib/format';
+import { deletePlaylists, getMyPlaylist } from '@/lib/api/myPlaylist';
 
 import Back from '@/components/icons/Back';
+import Popup from '@/components/common/Popup';
 import ReadMore from '@/components/entities/playlist/ui/ReadMore';
 import CreatorBadge from '@/components/entities/playlist/ui/playlist/CreatorBadge';
-import ThumbnailGrid from '@/components/myPage/myplaylist/ThumbnailGrid';
 import PlaylistTrackList from '@/components/entities/playlist/container/PlaylistTrackList';
 import MediaPageSkeleton from '@/components/loading/page/MediaPageSkeleton';
+import ThumbnailGrid from '@/components/myPage/myplaylist/ThumbnailGrid';
 
 import '@/styles/myPlaylist/newPlaylist.scss';
-import Popup from '@/components/common/Popup';
 
 const Page = () => {
   const queryClient = useQueryClient();
@@ -47,7 +47,7 @@ const Page = () => {
     queryFn: () => getMyPlaylist(id),
     enabled: !!id,
   });
-  
+
   // 내 플리 트랙
   const tracks = myplaylist?.tracks ?? [];
 

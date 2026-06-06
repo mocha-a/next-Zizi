@@ -8,8 +8,8 @@ const ArtistSkeleton = () => {
         <Skeleton variant="circular" width={98} height={98} />
       </div>
       <div className='artist-box-info'>
-        <Skeleton variant="text" sx={{ fontSize: '0.8125rem', width: '50%', marginBottom: '6px' }} />
-        <Skeleton variant="text" sx={{ fontSize: '0.8125rem', width: '50%' }} />
+        <Skeleton variant="rectangular" width="50%" height={15} sx={{ marginBottom: '6px' }} />
+        <Skeleton variant="rectangular" width="20%" height={15}  />
       </div>
     </div>
   )
