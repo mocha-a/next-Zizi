@@ -45,7 +45,7 @@ const Page = () => {
     });
   }, [id, session]);
 
-  console.log(album);
+  // console.log(album);
   // 장르
   const genres = getUniqueGenres(album?.genres.data);
 
