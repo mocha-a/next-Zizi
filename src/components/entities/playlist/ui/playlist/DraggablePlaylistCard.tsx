@@ -32,7 +32,7 @@ const DraggablePlaylistCard = ({ playlist, draggable, dragHandle, innerRef, isSe
           />
         }
         title={playlist.title}
-        user={playlist.user.name}
+        user={playlist.user.nickname || playlist.user.name}
         tracks={playlist.tracks.length}
         isEditMode={isEditMode}
         isSelected={isSelected}

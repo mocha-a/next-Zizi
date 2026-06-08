@@ -6,10 +6,9 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { usePlaylistEditStore } from '@/store/usePlaylistEditStore';
 import { UserProfile } from '@/types/user/profile';
 import { formatLastVisited, formatYYYYMMDD } from '@/lib/format';
+import { api } from '@/lib/api/axios';
 
 import GenderSelect from '../auth/GenderSelect';
-import { api } from '@/lib/api/axios';
-import OnboardingPopup from '../auth/MoreInfoPopup';
 
 interface Props {
   user: UserProfile | undefined;

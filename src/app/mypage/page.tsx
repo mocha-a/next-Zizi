@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -16,11 +16,14 @@ import MyPlaylistsSection from '@/components/myPage/myplaylist/MyPlaylistsSectio
 import RecentSection from '@/components/myPage/recent/RecentSection';
 
 import '@/styles/myPage/myPage.scss';
+import Popup from '@/components/common/Popup';
 
 function Page() {
   const { isEditMode } = usePlaylistEditStore();
   const { data: session, status } = useSession();
   const { data: user } = useUserProfile(session);
+
+  const [ showLoginPopup, setShowLoginPopup ] = useState(false);
 
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -82,12 +85,36 @@ function Page() {
           tabs={tabs}
           tabValue={tabIndex}
           setTabValue={(index: number) => {
-            router.push(`/mypage?tab=${tabMap[index]}`);
+            const targetTab = tabMap[index];
+
+            if (
+              !session &&
+              (targetTab === 'myplaylist' || targetTab === 'myroom')
+            ) {
+              setShowLoginPopup(true);
+              return;
+            }
+
+            router.push(`/mypage?tab=${targetTab}`);
           }}
           fullWidth
           width
         />
       </div>
+
+
+      {showLoginPopup && (
+        <Popup
+          showPopup={showLoginPopup}
+          setShowPopup={setShowLoginPopup}
+          type={"login"}
+          onConfirm={() => router.push(`/login`)}
+          onCancel={() => {
+            router.push(`/mypage?tab=recent`);
+            setShowLoginPopup(false);
+          }}
+        />
+      )}
     </div>
   );
 }

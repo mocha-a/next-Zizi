@@ -51,6 +51,7 @@
   }
 
   .new-playlist-tracks{
+    padding-bottom: 60px;
     li{
       @include section-padding;
     }
