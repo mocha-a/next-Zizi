@@ -9,6 +9,7 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import ThumbnailGrid from "../myPage/myplaylist/ThumbnailGrid";
 import Link from "next/link";
+import Skeleton from "@mui/material/Skeleton";
 
 function Dashboard() {
     // const imageList = [
@@ -49,7 +50,15 @@ function Dashboard() {
         ? `/mypage?tab=myplaylist`
         : `/playlist/${firstApiPlaylist?.id}`;
 
-    if (isLoading || error) return;
+    if (isLoading) {
+        return (
+            <Skeleton variant="rectangular" width={354} height={177} sx={{ margin: '0 auto 25px' }} />
+        );
+    }
+
+    if (error) {
+        return null;
+    }
     
     return (
     <>

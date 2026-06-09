@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -23,7 +23,7 @@ function Page() {
   const { data: session, status } = useSession();
   const { data: user } = useUserProfile(session);
 
-  const [ showLoginPopup, setShowLoginPopup ] = useState(false);
+  const [popupType, setPopupType] = useState<'loginPlaylist' | 'loginMyRoom' | null>(null);
 
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -87,11 +87,13 @@ function Page() {
           setTabValue={(index: number) => {
             const targetTab = tabMap[index];
 
-            if (
-              !session &&
-              (targetTab === 'myplaylist' || targetTab === 'myroom')
-            ) {
-              setShowLoginPopup(true);
+            if (!session && targetTab === 'myplaylist') {
+              setPopupType('loginPlaylist');
+              return;
+            }
+
+            if (!session && targetTab === 'myroom') {
+              setPopupType('loginMyRoom');
               return;
             }
 
@@ -102,16 +104,13 @@ function Page() {
         />
       </div>
 
-
-      {showLoginPopup && (
+      {popupType && (
         <Popup
-          showPopup={showLoginPopup}
-          setShowPopup={setShowLoginPopup}
-          type={"login"}
-          onConfirm={() => router.push(`/login`)}
+          type={popupType}
+          onClose={() => setPopupType(null)}
+          onConfirm={() => router.push('/login')}
           onCancel={() => {
-            router.push(`/mypage?tab=recent`);
-            setShowLoginPopup(false);
+            router.push('/mypage?tab=recent');
           }}
         />
       )}

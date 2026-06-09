@@ -114,17 +114,13 @@ console.log(myplaylist);
 
       {showDeletePopup && (
         <Popup
-          showPopup={showDeletePopup}
-          setShowPopup={setShowDeletePopup}
-          type={"delete"}
+          type="delete"
+          onClose={() => setShowDeletePopup(false)}
           onConfirm={() => {
-            deleteMutation.mutate([Number(id)]); 
-          }}
-          onCancel={() => {
-            setShowDeletePopup(false);
+            deleteMutation.mutate([Number(id)]);
           }}
           isLoading={deleteMutation.isPending}
-          loadingText= "삭제 중..."
+          loadingText="삭제 중..."
         />
       )}
     </div>

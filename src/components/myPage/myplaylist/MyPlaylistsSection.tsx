@@ -16,10 +16,10 @@ import PlaylistListDnD from '@/components/entities/playlist/ui/playlist/Playlist
 import Check from '@/components/icons/Check';
 import Plus from '@/components/icons/Plus';
 import ThumbnailGrid from './ThumbnailGrid';
-import Popup from '../../common/Popup';
 import PlaylistCard from '../../entities/playlist/ui/playlist/PlaylistCard';
 
 import '@/styles/myPlaylist/newPlaylist.scss';
+import Link from 'next/link';
 
 const MyPlaylistsSection = () => {
   const { isEditMode, selectedIds, toggleSelect, setEditMode, setSelectedIds } = usePlaylistEditStore();
@@ -33,8 +33,6 @@ const MyPlaylistsSection = () => {
 
   // DnD 상태
   const [ localList, setLocalList ] = useState<MyPlaylist[]>([]);
-
-  const [ showLoginPopup, setShowLoginPopup ] = useState(false);
 
   // 내 플리 삭제
   const deleteMutation = useMutation({
@@ -82,15 +80,6 @@ const MyPlaylistsSection = () => {
     items.splice(result.destination.index, 0, removed);
 
     setLocalList(items);
-  };
-
-  const handleClick = () => {
-    if (!session) {
-      setShowLoginPopup(true);
-      return;
-    }
-
-    router.push('/myplaylist/new');
   };
 
   const handleEditMode = async () => {
@@ -148,9 +137,10 @@ const MyPlaylistsSection = () => {
       <div className='myplaylist-btn'>
         {!isEditMode ? (
           <>
-            <button onClick={handleClick} className='action-btn'>
-              <Plus /> <p>내 플리 추가</p>
-            </button>
+            <Link href="/myplaylist/new" className="action-btn">
+              <Plus />
+              <p>내 플리 추가</p>
+            </Link>
 
             <button className='submit' onClick={() => setEditMode(true)}>
               편집
@@ -234,20 +224,6 @@ const MyPlaylistsSection = () => {
       {selectedIds.length > 0 && (
         <TrashButton onDelete={handleDelete} count={selectedIds.length}/>
       )}
-
-      {showLoginPopup && (
-        <Popup
-          showPopup={showLoginPopup}
-          setShowPopup={setShowLoginPopup}
-          type={"login"}
-          onConfirm={() => router.push(`/login`)}
-          onCancel={() => {
-            router.back();
-            setShowLoginPopup(false);
-          }}
-        />
-      )}
-
     </>
   );
 };

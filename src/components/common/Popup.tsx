@@ -1,9 +1,8 @@
 import '@/styles/common/popup.scss';
 
 interface Props {
-  showPopup: boolean;
-  setShowPopup: React.Dispatch<React.SetStateAction<boolean>>;
-  type: 'login' | 'delete' | 'logout' | 'exit';
+  onClose: () => void;
+  type: 'login' | 'loginPlaylist' | 'loginMyRoom' | 'delete' | 'logout' | 'exit';
   onConfirm?: () => void;
   onCancel?: () => void;
   className?: string;
@@ -19,10 +18,24 @@ interface PopupContent {
   icon: React.ReactNode;
 }
 
-function Popup({ showPopup, setShowPopup, type, onConfirm, onCancel, className='', isLoading, loadingText }: Props) {
+function Popup({ onClose, type, onConfirm, onCancel, className='', isLoading, loadingText }: Props) {
 
   // type별 팝업 내용
    const popupContent: Record< Props['type'], PopupContent > = {
+    loginPlaylist: {
+      txt: '로그인하고 나만의 플리 만들기 - !',
+      btntxt1: 'CANCEL',
+      btntxt2: 'O K',
+      icon: '🔓'
+    },
+
+    loginMyRoom: {
+      txt: '로그인하고 MY ROOM 입장하기 - !',
+      btntxt1: 'CANCEL',
+      btntxt2: 'O K',
+      icon: '🏠'
+    },
+
     login: {
       txt: `로그인하고 나만의 플리 만들기 - ! `,
       btntxt1: 'CANCEL',
@@ -55,12 +68,9 @@ function Popup({ showPopup, setShowPopup, type, onConfirm, onCancel, className='
     const target = e.target as HTMLElement;
 
     if(target.classList.contains('popup-box')) {
-      setShowPopup(false);
+      onClose();
     }
   }
-
-  // 팝업이 닫혀있으면 랜더링 하지 않음.
-  if (!showPopup) return null;
 
   return (
     <div className={className ? className : 'popup-box'} onClick={closePopup}>
@@ -78,9 +88,10 @@ function Popup({ showPopup, setShowPopup, type, onConfirm, onCancel, className='
           <button 
             className='btn2popup-btn' 
             onClick={() => {
-              setShowPopup(false);
-              if (onCancel) onCancel();
-            }}>
+              onClose();
+              onCancel?.();
+            }}
+          >
             {popupContent[type]?.btntxt1}
           </button>
           <button
