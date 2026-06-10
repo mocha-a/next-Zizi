@@ -51,7 +51,6 @@
   }
 
   .new-playlist-tracks{
-    padding-bottom: 60px;
     li{
       @include section-padding;
     }
@@ -77,9 +76,6 @@
     >input::placeholder{
       font-family: var(--font-Galmuri9);
     }
-  }
-  .add-tracklist{
-    padding-bottom: 60px;
   }
 }
 

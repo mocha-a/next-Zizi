@@ -245,8 +245,6 @@ input:checked + .tagbtn{
 
 // footer
 .footer-container{
-    padding-bottom: $paddingForNavbar;
-
     .footer-icons{
         @include flex($justify: center, $align: center);
         gap: 16px;
