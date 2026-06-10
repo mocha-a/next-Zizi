@@ -14,7 +14,7 @@ export default function LoginButtons() {
             {/* 카카오 로그인 */}
             <button onClick={() => handleLogin('kakao')}>
                 <Image
-                    src={'/imgs/login_kakao.png'}
+                    src={'/icons/login_kakao.svg'}
                     alt='login-kakao'
                     width={60}
                     height={60}
@@ -24,7 +24,7 @@ export default function LoginButtons() {
             {/* 구글 로그인 */}
             <button onClick={() => handleLogin('google')}>
                 <Image
-                    src={'/imgs/login_google.png'}
+                    src={'/icons/login_google.svg'}
                     alt='login-google'
                     width={60}
                     height={60}
@@ -34,7 +34,7 @@ export default function LoginButtons() {
             {/* 네이버 로그인 */}
             <button onClick={() => handleLogin('naver')}>
                 <Image
-                    src={'/imgs/login_naver.png'}
+                    src={'/icons/login_naver.svg'}
                     alt='login-naver'
                     width={60}
                     height={60}
