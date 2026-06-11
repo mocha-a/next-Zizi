@@ -9,6 +9,7 @@ import { formatLastVisited, formatYYYYMMDD } from '@/lib/format';
 import { api } from '@/lib/api/axios';
 
 import GenderSelect from '../auth/GenderSelect';
+import OnboardingPopup from '../auth/MoreInfoPopup';
 
 interface Props {
   user: UserProfile | undefined;
@@ -66,6 +67,7 @@ const MyRoom = ({ user }: Props) => {
 
   return (
     <div className='myRoom-container'>
+      {/* <OnboardingPopup /> */}
       <div className='myRoom-btn'>
         {!isEditMode ? (
           <div className='submit' onClick={() => setEditMode(true)}>
@@ -103,7 +105,7 @@ const MyRoom = ({ user }: Props) => {
       <div className={`myRoom-profile ${isEditMode ? 'edit-mode' : ''}`}>
         <p>
           <Image
-            src={user?.image || '/default.png'}
+            src={user?.image || '/imgs/default.png'}
             alt="Profile Image"
             width={50}
             height={50}

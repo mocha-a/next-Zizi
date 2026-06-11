@@ -9,3 +9,13 @@ export interface UserProfile {
   createdAt: string;
   lastVisitedAt: string | null;
 }
+
+export interface JoinData {
+  name: string;
+  username: string;
+  password: string;
+  email: string;
+  nickname?: string;
+  birth?: string;
+  gender?: string;
+}

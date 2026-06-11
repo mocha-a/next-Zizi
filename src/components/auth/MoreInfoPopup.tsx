@@ -19,7 +19,7 @@ export default function OnboardingPopup() {
     mutationFn: (data: { birth: string; gender: string; nickname: string }) =>
       api.put('/user/profile', data),
 
-    onSuccess: (res) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ['user'],
       });
@@ -42,7 +42,7 @@ export default function OnboardingPopup() {
     <div className='onboarding_overlay'>
       <div className='onboarding_contents'>
         <p className='onboarding_icon'>꒰ 🎧 ꒱</p>
-        <h2>Zi존이가 되기 위한 <br />Bonus 코스</h2>
+        <h2>zi존이가 되기 위한 <br />Bonus 코스</h2>
         <span>
           작은 데이터들을 모아 나를 표현해봐 - !&nbsp; .❛ ᴗ ❛.
         </span>
@@ -52,7 +52,7 @@ export default function OnboardingPopup() {
           <input
             type="text"
             value={nickname}
-            placeholder="ex) ★CutiE_GiRl★"
+            placeholder="ex) 🎧 zi존_뮤직 🎧"
             onChange={(e) => setNickname(e.target.value)}
           />
         </label>

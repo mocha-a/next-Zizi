@@ -80,9 +80,12 @@ input:checked + .tagbtn{
 
         input {
             padding: 10px 0;
+
             &::placeholder {
-                color: $lightgray;
-                opacity: 1; // MUI 기본 opacity 0.5라 명시적으로 지정해주는 게 좋아
+                font-family: var(--font-Galmuri9);
+                font-size: 12px;
+                color: $gray;
+                opacity: 1;
             }
         }
 
@@ -102,6 +105,7 @@ input:checked + .tagbtn{
         }
 
         // error 시 border
+        &.Mui-error::before,
         &.Mui-error::after{
             border-color: $orange;
         }
@@ -111,19 +115,30 @@ input:checked + .tagbtn{
     .MuiInputLabel-root {
         font-family: var(--font-gmarketMedium) !important;
         font-size: 14px !important;
-        color: $lightgray;
+        color: $black;
 
         // focus 시 label
         &.Mui-focused {
             color: $blue;
         }
-    
+
         // error 시 label
         &.Mui-error {
             color: $orange;
         }
+
+        // 필수 입력 *
+        .MuiFormLabel-asterisk {
+            color: $orange;
+        }
     }
 
+    // 에러 메세지
+    .MuiFormHelperText-root.Mui-error {
+        color: $orange;
+        font-family: var(--font-gmarketMedium);
+        font-size: 12px;
+    }
 }
 
 // longbtn
@@ -300,8 +315,9 @@ input:checked + .tagbtn{
         }
 
         input::placeholder {
+            font-family: var(--font-Galmuri9);
             text-align: right;
-            opacity: 0.5;
+            opacity: 1;
         }
     }
     .onboarding_birth{

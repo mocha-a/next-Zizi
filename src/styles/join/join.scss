@@ -14,24 +14,24 @@
 
 .join-container{
     width: $publicWidth;
-    min-height: 100vh;
-    margin: 0 auto 50px;
+    // min-height: 100vh;
+    margin: 0 auto;
 
     .join-title{margin-bottom: 16px;}
 
     .join-content-box{
         .join-gender-box{
-            margin-top: 10px;
             p{
                 font-size: 15px;
+                margin: 10px 0;
             }
             .join-tagbtn{
-                margin: 7px 7px 16px 0;
+                margin: 7px 10px 16px 0;
             }
         }
         .info{
             display: block;
-            color: $lightgray;
+            color: $orange;
             text-align: right;
             font-size: 12px;
         }
@@ -43,7 +43,7 @@
         gap: 8px;
         margin: 30px 0 15px;
         font-size: 12px;
-        color: $lightgray;
+        color: $black;
 
         button{
             text-decoration: underline;

@@ -23,6 +23,8 @@ model User {
   emailVerified DateTime?
   image         String? 
 
+  username      String? @unique
+
   nickname      String?
   birth         String?
   gender        String?

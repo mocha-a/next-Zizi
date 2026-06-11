@@ -22,9 +22,7 @@ interface FormTextFieldsProps {
 }
 
 
-export const FormTextFielFieldDatas = ({ 
-  listData, formData, errors, onChange
-}: FormTextFieldsProps) => {
+export const FormTextFielFieldDatas = ({ listData, formData, errors, onChange }: FormTextFieldsProps) => {
 
   const [showPw/* , setShowPw */] = useState(false);
 
@@ -58,8 +56,6 @@ export const FormTextFielFieldDatas = ({
             error={!!errors[item.type]}
             helperText={errors[item.type]}
 
-            sx={inputStyle}
-
             // 비밀번호 눈 아이콘
             // InputProps={item.type.includes('password') ? {
             //   endAdornment: (
@@ -75,18 +71,4 @@ export const FormTextFielFieldDatas = ({
       )}
     </>
   )
-}
-
-// 스타일 분리
-const inputStyle = {
-  '& .MuiInputBase-input': {
-    fontFamily: 'var(--font-gmarketMedium)',
-  },
-  '& .MuiFormLabel-root': {
-    fontFamily: 'var(--font-gmarketMedium)',
-  },
-  '& .MuiFormHelperText-root': {
-    fontFamily: 'var(--font-gmarketMedium)',
-    fontSize: '12px',
-  }
 }

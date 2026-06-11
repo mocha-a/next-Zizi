@@ -15,8 +15,8 @@ function page() {
         },
         {
             label: '아이디',
-            type: 'id',
-            placeholder: '영문•숫자 조합해 4~16자 입력',
+            type: 'username',
+            placeholder: '영문 · 숫자를 조합해 4~16자로 입력해줘',
             required: true
         },
         {
@@ -28,13 +28,19 @@ function page() {
         {
             label: '비밀번호',
             type: 'password',
-            placeholder: '영문•숫자•특수문자 모두 포함해 8자 이상 입력',
+            placeholder: '영문 · 숫자 · 특수문자를 포함해 8자 이상 입력해줘',
             required: true
         },
         {
             label: '비밀번호 확인',
             type: 'password-check',
             required: true
+        },
+        {
+            label: '닉네임',
+            type: 'nickname',
+            placeholder: "ex) 🎧 zi존_뮤직 🎧",
+            required: false
         },
         {
             type: 'date',

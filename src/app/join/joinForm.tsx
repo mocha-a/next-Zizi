@@ -1,12 +1,18 @@
 'use client';
 
 import React, { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation';
+import { signIn, useSession } from "next-auth/react";
+import { useMutation } from '@tanstack/react-query';
+import { JoinField } from '@/types/join';
+import { join } from '@/lib/api/user';
 import { FormTextFielFieldDatas } from '@/components/common/FormTextFields'
 import LongBtn from '@/components/common/LongBtn';
 import Agree from '@/components/join/Agree';
-import { JoinField } from '@/types/join';
 
 function JoinForm({ listData }: { listData: JoinField[] }) {
+    const router = useRouter();
+    const { update } = useSession();
     const [formData, setFormData] = useState<Record<string, string>>({});
     const [errors, setErrors] = useState<Record<string, string>>({});
     const [isAgree, setIsAgree] = useState(false); // 약관 동의
@@ -30,24 +36,24 @@ function JoinForm({ listData }: { listData: JoinField[] }) {
         let error = "";
 
         switch (type) {
-            case 'id':
+            case 'username':
                 const idReg = /^[a-zA-Z0-9]{4,16}$/;
-                if (!idReg.test(value)) error = "영문 · 숫자를 조합하여 4~16자로 입력해주세요.";
+                if (!idReg.test(value)) error = "✨ 영문 · 숫자를 조합해 4~16자로 입력해줘";
                 break;
 
             case 'password':
                 const pwReg = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,}$/;
-                if (!pwReg.test(value)) error = "영문 · 숫자 · 특수문자를 모두 포함하여 8자 이상 입력해주세요.";
+                if (!pwReg.test(value)) error = "🔒 영문 · 숫자 · 특수문자를 포함해 8자 이상 입력해줘";
                 break;
 
             case 'password-check':
                 // formdata['password']와 현재 입력값(value) 비교
-                if (value !== originalPassword) error = "비밀번호가 일치하지 않습니다.";
+                if (value !== originalPassword) error = "🔑 비밀번호를 한 번 더 확인해줘";
                 break;
 
             case 'email':
                 const emailReg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailReg.test(value)) error = "올바른 이메일 형식이 아닙니다.";
+                if (!emailReg.test(value)) error = "📧 이메일 형식으로 입력해줘";
                 break;
         }
 
@@ -55,6 +61,11 @@ function JoinForm({ listData }: { listData: JoinField[] }) {
     };
 
     const handleFormChange = (type: string, value: string) => {
+        // 아이디, 이메일은 공백 제거
+        if (type === 'username' || type === 'email') {
+            value = value.replace(/\s/g, '');
+        }
+
         // formdata에 { id: 'user1', email: 'test@..' } 형태로 저장.
         const newFormData = { ...formData, [type]: value };
         setFormData(newFormData);
@@ -70,16 +81,39 @@ function JoinForm({ listData }: { listData: JoinField[] }) {
         }
     };
 
-    const handleSubmit = async () => {
-        if (!isComplete) return;
-        console.log("입력 데이터:", formData);
+    const { mutate, isPending } = useMutation({
+        mutationFn: join,
 
-        // DB 저장
-        // const res = await fetch('/api/auth/join', {
-        //     method: 'POST',
-        //     body: JSON.stringify(formData)
-        // });
-    }
+        onSuccess: async () => {
+            const res = await signIn("credentials", {
+                username: formData.username,
+                password: formData.password,
+                redirect: false,
+            });
+
+            if (res?.ok) {
+                router.push("/");
+        }
+        },
+
+        onError: (error) => {
+            console.error(error);
+        }
+    });
+
+    const handleSubmit = () => {
+        if (!isComplete) return;
+
+        mutate({
+            name: formData.name,
+            username: formData.username,
+            password: formData.password,
+            email: formData.email,
+            nickname: formData.nickname,
+            birth: formData.birth,
+            gender: formData.gender,
+        });
+    };
 
     if (!listData) return;
 
@@ -92,7 +126,7 @@ function JoinForm({ listData }: { listData: JoinField[] }) {
             onChange={handleFormChange}
         />
 
-        <span className='info'>*표시는 필수 입력 항목입니다.</span>
+        <span className='info'>* 표시는 필수 입력 항목입니다.</span>
 
         <Agree isAgree={isAgree} onAgreeChange={() => setIsAgree(!isAgree)}/>
 
