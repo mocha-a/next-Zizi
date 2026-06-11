@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
-import bcrypt from 'bcryptjs';
+import bcrypt from 'bcryptjs'; // 비밀번호 암호화 + 비교
 
 // 로그인
 export async function POST(req: NextRequest) {

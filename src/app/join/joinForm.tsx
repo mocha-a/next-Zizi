@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation';
-import { signIn, useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import { useMutation } from '@tanstack/react-query';
 import { JoinField } from '@/types/join';
 import { join } from '@/lib/api/user';
@@ -12,7 +12,6 @@ import Agree from '@/components/join/Agree';
 
 function JoinForm({ listData }: { listData: JoinField[] }) {
     const router = useRouter();
-    const { update } = useSession();
     const [formData, setFormData] = useState<Record<string, string>>({});
     const [errors, setErrors] = useState<Record<string, string>>({});
     const [isAgree, setIsAgree] = useState(false); // 약관 동의
@@ -131,8 +130,8 @@ function JoinForm({ listData }: { listData: JoinField[] }) {
         <Agree isAgree={isAgree} onAgreeChange={() => setIsAgree(!isAgree)}/>
 
         <LongBtn 
-            label='회원가입' 
-            className={`join ${isComplete ? 'active' : ''}`}
+            label={isPending ? '가입 중...' : '회원가입'}
+            className={`join ${isComplete && !isPending ? 'active' : ''}`}
             onClick={handleSubmit}
         />
     </div>

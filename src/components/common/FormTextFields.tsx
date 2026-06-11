@@ -3,9 +3,7 @@
 import React, { useState } from 'react'
 import TextField from '@mui/material/TextField';
 import TagBtn from './TagBtn';
-
-type Gender = '남성' | '여성' | '기타';
-const GENDER_OPTIONS: Gender[] = ['남성', '여성', '기타'];
+import { GENDER_OPTIONS } from '@/types/user/profile';
 
 type FieldData = {
   label?: string,
@@ -23,7 +21,6 @@ interface FormTextFieldsProps {
 
 
 export const FormTextFielFieldDatas = ({ listData, formData, errors, onChange }: FormTextFieldsProps) => {
-
   const [showPw/* , setShowPw */] = useState(false);
 
   return (
@@ -34,9 +31,9 @@ export const FormTextFielFieldDatas = ({ listData, formData, errors, onChange }:
             <p>성별</p>
             {GENDER_OPTIONS.map(g => 
               <TagBtn 
-                key={g} tagbtn={g} 
-                className={`join-tagbtn ${formData.gender === g ? 'active' : ''}`}
-                onClick={() => onChange('gender', g)}
+                key={g.value} tagbtn={g.label}
+                className={`join-tagbtn ${formData.gender === g.value ? 'active' : ''}`}
+                onClick={() => onChange('gender', g.value)}
               />
             )}
           </div>

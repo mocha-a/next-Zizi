@@ -1,11 +1,5 @@
 import TagBtn from '@/components/common/TagBtn';
-
-const GENDER_OPTIONS = [
-  { label: '여성', value: 'female'},
-  { label: '남성', value: 'male'},
-  { label: '기타', value: 'etc'},
-//   { label: '선택 안 함', value: null}
-];
+import { GENDER_OPTIONS } from '@/types/user/profile';
 
 interface Props {
   value: string | null;

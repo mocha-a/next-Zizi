@@ -19,3 +19,9 @@ export interface JoinData {
   birth?: string;
   gender?: string;
 }
+
+export const GENDER_OPTIONS = [
+  { label: '여성', value: 'female' },
+  { label: '남성', value: 'male' },
+  { label: '기타', value: 'etc' },
+] as const;
