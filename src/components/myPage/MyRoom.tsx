@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { usePlaylistEditStore } from '@/store/usePlaylistEditStore';
+import { useSnackbarStore } from '@/store/useSnackbarStore';
 import { UserProfile } from '@/types/user/profile';
 import { formatLastVisited, formatYYYYMMDD } from '@/lib/format';
 import { api } from '@/lib/api/axios';
@@ -16,6 +17,7 @@ interface Props {
 const MyRoom = ({ user }: Props) => {
   const queryClient = useQueryClient();
   const { isEditMode, setEditMode } = usePlaylistEditStore();
+  const { show } = useSnackbarStore();
 
   const [ nickname, setNickname ] = useState('');
   const [ birth, setBirth ] = useState('');
@@ -42,6 +44,7 @@ const MyRoom = ({ user }: Props) => {
       });
 
       setEditMode(false);
+      show('프로필 저장 완료 -!');
     },
   });
 
@@ -62,6 +65,12 @@ const MyRoom = ({ user }: Props) => {
       gender,
     });
   };
+
+  const Empty = () => (
+    <span className="empty-state">입력 대기중...</span>
+  );
+
+  console.log(user)
 
   return (
     <div className='myRoom-container'>
@@ -123,6 +132,12 @@ const MyRoom = ({ user }: Props) => {
       </div>
 
       <div className='myRoom-info'>
+        {user?.username && (
+          <div className={`myRoom-item ${isEditMode ? 'edit-mode' : ''}`}>
+            <p className="myRoom-label">🔖 아이디</p>
+            <p className="myRoom-value">{user.username}</p>
+          </div>
+        )}
         <div className={`myRoom-item ${isEditMode ? 'edit-mode' : ''}`} >
           <p className='myRoom-label'>📧 이메일</p>
           <p className='myRoom-value'>{user?.email}</p>
@@ -144,7 +159,9 @@ const MyRoom = ({ user }: Props) => {
               onChange={(e) => setNickname(e.target.value)}
             />
           ) : (
-            <p className='myRoom-value'>{user?.nickname}</p>
+            <p className='myRoom-value'>
+              {user?.nickname ? user.nickname : <Empty />}
+            </p>
           )}
         </div>
 
@@ -158,9 +175,9 @@ const MyRoom = ({ user }: Props) => {
               onChange={(e) => setBirth(e.target.value)}
             />
           ) : (
-            <p className='myRoom-value'>
-              {formatYYYYMMDD(user?.birth ?? undefined)}
-            </p>
+          <p className='myRoom-value'>
+            {user?.birth ? formatYYYYMMDD(user.birth) : <Empty />}
+          </p>
           )}
         </div>
 

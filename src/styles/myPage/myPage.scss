@@ -42,6 +42,13 @@
           }
         }
       }
+
+    }
+    
+    .myPage-cdWrapper {
+      width: 120px;
+      height: 102px;
+      flex-shrink: 0;
     }
   }
   .myPage-tabs{
@@ -151,6 +158,10 @@
       .myRoom-label{
         width: 80px;
         flex-shrink: 0;
+      }
+
+      .empty-state {
+        color: $gray;
       }
     }
   }

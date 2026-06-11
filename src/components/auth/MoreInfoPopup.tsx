@@ -70,17 +70,6 @@ export default function OnboardingPopup() {
           <span>성별</span>
           <GenderSelect value={gender} onChange={setGender}/>
         </div>
-        {/* <label className='onboarding_gender'>
-          성별
-          <select
-            value={gender}
-            onChange={(e) => setGender(e.target.value as any)}
-          >
-            <option value="">선택</option>
-            <option value="여성">여성</option>
-            <option value="남성">남성</option>
-          </select>
-        </label> */}
 
         <div className='onboarding_buttons'>
           <ShortBtn label="다음에 할게요" active={false} onClick={() => { router.push('/'); }}/>

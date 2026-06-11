@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
@@ -19,7 +20,6 @@ import ThumbnailGrid from './ThumbnailGrid';
 import PlaylistCard from '../../entities/playlist/ui/playlist/PlaylistCard';
 
 import '@/styles/myPlaylist/newPlaylist.scss';
-import Link from 'next/link';
 
 const MyPlaylistsSection = () => {
   const { isEditMode, selectedIds, toggleSelect, setEditMode, setSelectedIds } = usePlaylistEditStore();

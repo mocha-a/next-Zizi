@@ -3,18 +3,18 @@ import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { DropResult } from '@hello-pangea/dnd';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useUIStore } from '@/store/useUIStore';
 import { useTrackStore } from '@/store/useSelectedTrackStore';
 import { createPlaylist, updatePlaylist } from '@/lib/api/myPlaylist';
 import { MyPlaylist, UpdatePlaylistParams } from '@/types/user/myPlaylist';
 import { Track } from '@/types/deezer/deezer';
 
+import Plus from '@/components/icons/Plus';
+import TrashButton from '@/components/common/TrashButton';
 import NewPlaylistForm from '@/components/entities/playlist/ui/playlist/NewPlaylistForm';
 import PlaylistTrackListDnD from '@/components/entities/playlist/ui/track/PlaylistTrackListDnD';
 
 import '@/styles/myPlaylist/newPlaylist.scss';
-import TrashButton from '@/components/common/TrashButton';
-import { useUIStore } from '@/store/useUIStore';
-import Plus from '@/components/icons/Plus';
 
 interface Props {
   mode?: 'create' | 'edit';

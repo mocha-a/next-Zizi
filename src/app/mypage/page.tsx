@@ -76,7 +76,9 @@ function Page() {
               </div>
             )}
           </div>
-          <CdImage />
+          <div className="myPage-cdWrapper">
+            <CdImage />
+          </div>
         </div>
       </div>
 

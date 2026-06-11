@@ -10,6 +10,7 @@ import MainPlayer from "@/components/common/MainPlayer";
 import 'flag-icons/css/flag-icons.min.css';
 import '@/styles/_style.scss';
 import VisitTracker from "@/components/auth/VisitTracker";
+import AppSnackbar from "@/components/common/AppSnackbar";
 
 const decoshadow = localFont({
   src: './fonts/Cafe24Decoshadow.woff2',
@@ -65,6 +66,7 @@ export default function RootLayout({
           <NextAuthProvider>              {/* 인증 상태 관리 */}  
             <VisitTracker />              {/* 마지막 접속 */}  
             <SessionGate>                 {/* 사용자 상태 체크 (추가 정보 필요 시 팝업 띄우고, 아니면 children 렌더링) */}
+              <AppSnackbar />
               {/* 1. 메인 콘텐츠 */}
               {children}
 
