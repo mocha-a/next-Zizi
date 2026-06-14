@@ -2,13 +2,16 @@
 
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { signOut } from 'next-auth/react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { usePlaylistEditStore } from '@/store/usePlaylistEditStore';
 import { useSnackbarStore } from '@/store/useSnackbarStore';
 import { UserProfile } from '@/types/user/profile';
 import { formatLastVisited, formatYYYYMMDD } from '@/lib/format';
 import { api } from '@/lib/api/axios';
+import { deleteUser } from '@/lib/api/user';
 import GenderSelect from '../auth/GenderSelect';
+import Popup from '../common/Popup';
 
 interface Props {
   user: UserProfile | undefined;
@@ -17,8 +20,9 @@ interface Props {
 const MyRoom = ({ user }: Props) => {
   const queryClient = useQueryClient();
   const { isEditMode, setEditMode } = usePlaylistEditStore();
-  const { show } = useSnackbarStore();
+  const show = useSnackbarStore(state => state.show);
 
+  const [showWithdrawPopup, setShowWithdrawPopup] = useState(false);
   const [ nickname, setNickname ] = useState('');
   const [ birth, setBirth ] = useState('');
   const [ gender, setGender ] = useState<string | null>(null);
@@ -46,6 +50,18 @@ const MyRoom = ({ user }: Props) => {
       setEditMode(false);
       show('프로필 저장 완료 -!');
     },
+  });
+
+  const withdrawMutation = useMutation({
+    mutationFn: deleteUser,
+
+    onSuccess: async () => {
+    setShowWithdrawPopup(false);
+
+    await signOut({
+        callbackUrl: '/',
+      });
+    }
   });
 
   const handleEditMode = () => {
@@ -192,6 +208,28 @@ const MyRoom = ({ user }: Props) => {
           />
         </div>
       </div>
+
+      <div className="withdraw-wrap">
+        <button
+          className="withdraw-btn"
+          onClick={() => setShowWithdrawPopup(true)}
+        >
+          회원탈퇴
+        </button>
+      </div>
+
+
+      {showWithdrawPopup && (
+        <Popup
+          type="withdraw"
+          onClose={() => setShowWithdrawPopup(false)}
+          onConfirm={() => {
+            withdrawMutation.mutate();
+          }}
+          isLoading={withdrawMutation.isPending}
+          loadingText="BYE..."
+        />
+      )}
     </div>
   );
 };

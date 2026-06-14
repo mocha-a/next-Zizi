@@ -6,6 +6,7 @@ import LongBtn from '@/components/common/LongBtn'
 import LoginButtons from '@/components/Login/LoginButton'
 
 import '../../styles/login/login.scss'
+import { signIn } from 'next-auth/react'
 
 function Page() {
   const [formData, setFormData] = useState<Record<string, string>>({})
@@ -17,6 +18,21 @@ function Page() {
       [type]: value
     }))
   }
+
+  const handleLogin = async () => {
+    const result = await signIn('credentials', {
+      username: formData.id,
+      password: formData.password,
+      redirect: false,
+    });
+
+    if (result?.error) {
+      console.log('로그인 실패');
+      return;
+    }
+
+    console.log('로그인 성공');
+  };
 
   const data = [
     {
@@ -50,7 +66,7 @@ function Page() {
       />
 
       {/* 로그인 버튼 */}
-      <LongBtn label={'로그인'} className='login' />
+      <LongBtn label={'로그인'} className='login' onClick={handleLogin} />
 
       {/* 회원가입 버튼 */}
       <Link href="/join">

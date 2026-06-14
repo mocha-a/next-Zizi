@@ -17,26 +17,26 @@ enum TargetType {
 
 // User 모델 정의 (모든 가입 유형을 포함)
 model User {
-  id            String   @id @default(uuid()) // Primary Key (UUID 사용 권장)
+  id            String    @id @default(uuid()) // Primary Key (UUID 사용 권장)
   name          String?
-  email         String?  @unique // ❗ 모든 사용자의 고유 식별자 (로컬/소셜 공통)
+  email         String?   @unique // ❗ 모든 사용자의 고유 식별자 (로컬/소셜 공통)
   emailVerified DateTime?
-  image         String? 
+  image         String?
 
-  username      String? @unique
+  username String? @unique
 
-  nickname      String?
-  birth         String?
-  gender        String?
-  password      String? // 로컬 회원가입 사용자만 가짐 (NULL 허용)
+  nickname String?
+  birth    String?
+  gender   String?
+  password String? // 로컬 회원가입 사용자만 가짐 (NULL 허용)
 
-  createdAt     DateTime @default(now())
+  createdAt     DateTime  @default(now())
   lastVisitedAt DateTime?
-  
-  accounts      Account[]
-  sessions      Session[]
-  likes         Like[]
-  playlists     Playlist[]
+
+  accounts    Account[]
+  sessions    Session[]
+  playlists   Playlist[]
+  recentViews RecentView[]
 }
 
 model Account {
@@ -90,40 +90,25 @@ model PopularSearch {
 }
 
 // ======================================================
-// 좋아요
-// ======================================================
-model Like {
-  id        Int      @id @default(autoincrement())
-  userId    String
-  user      User     @relation(fields: [userId], references: [id])
-  targetId  String
-  type      TargetType
-  createdAt DateTime @default(now())
-
-  @@unique([userId, targetId, type])  //데이터 중복 방지
-  @@index([userId])
-}
-
-// ======================================================
 // 나의 플레이리스트
 // ======================================================
 model Playlist {
-  id          Int      @id @default(autoincrement())
+  id Int @id @default(autoincrement())
 
-  userId      String
-  user        User     @relation(fields: [userId], references: [id])
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   title       String
   description String?
 
-  thumbnails  Json?
+  thumbnails Json?
 
-  order       Int      @default(0)
+  order Int @default(0)
 
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime
 
-  tracks      PlaylistTrack[]
+  tracks PlaylistTrack[]
 }
 
 // ======================================================
@@ -132,12 +117,12 @@ model Playlist {
 model PlaylistTrack {
   id         Int      @id @default(autoincrement())
   playlistId Int
-  playlist   Playlist @relation(fields: [playlistId], references: [id])
+  playlist   Playlist @relation(fields: [playlistId], references: [id], onDelete: Cascade)
 
-  trackId    String   // Deezer 트랙 ID
-  order      Int?     // 순서
+  trackId String // Deezer 트랙 ID
+  order   Int? // 순서
 
-  createdAt  DateTime @default(now())
+  createdAt DateTime @default(now())
 
   @@index([playlistId])
   @@map("playlist_tracks")
@@ -147,11 +132,13 @@ model PlaylistTrack {
 // 최근 기록
 // ======================================================
 model RecentView {
-  id        Int        @id @default(autoincrement())
-  userId    String
+  id Int @id @default(autoincrement())
 
-  targetId  String
-  type      TargetType
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  targetId String
+  type     TargetType
 
   viewedAt DateTime @updatedAt
 

@@ -19,10 +19,12 @@ import PlaylistCard from '../../entities/playlist/ui/playlist/PlaylistCard';
 
 import '@/styles/myPlaylist/newPlaylist.scss';
 import AddPlaylistButton from '@/components/common/AddPlaylistButton';
+import { useSnackbarStore } from '@/store/useSnackbarStore';
 
 const MyPlaylistsSection = () => {
   const { isEditMode, selectedIds, toggleSelect, setEditMode, setSelectedIds } = usePlaylistEditStore();
   const { setHideBottomNav } = useUIStore();
+  const show = useSnackbarStore(state => state.show);
 
   const { data: session } = useSession();
   const { data: user } = useUserProfile(session);
@@ -99,6 +101,7 @@ const MyPlaylistsSection = () => {
         }
 
         await orderMutation.mutateAsync(reordered);
+        show('내 플리 수정 완료 - !');
 
         setEditMode(false);
         return;
@@ -137,7 +140,6 @@ const MyPlaylistsSection = () => {
         {!isEditMode ? (
           <>
             <AddPlaylistButton />
-
             <button className='submit' onClick={() => setEditMode(true)}>
               편집
             </button>

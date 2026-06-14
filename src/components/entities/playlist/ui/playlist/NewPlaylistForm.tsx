@@ -31,10 +31,10 @@ const NewPlaylistForm = ({ name, description, isPending, onChangeName, onChangeD
         value={name}
         onChange={(e) => onChangeName(e.target.value)}
         variant="standard"
+        className='textfield'
         placeholder='>>> waiting for title... 제목을 입력해줘'
         required
         fullWidth
-        sx={inputStyle}
       />
 
       <TextField
@@ -42,27 +42,12 @@ const NewPlaylistForm = ({ name, description, isPending, onChangeName, onChangeD
         value={description}
         onChange={(e) => onChangeDescription(e.target.value)}
         variant="standard"
+        className='textfield'
         placeholder='>>> describe your vibe... 어떤 기분으로 모았어?'
         fullWidth
-        sx={inputStyle}
       />
     </form>
   );
 };
 
 export default NewPlaylistForm;
-
-// 스타일 분리
-const inputStyle = {
-  '& .MuiInputBase-input': {
-    fontFamily: 'var(--font-gmarketMedium)',
-    fontSize: '16px',
-  },
-  '& .MuiFormLabel-root': {
-    fontFamily: 'var(--font-gmarketMedium)',
-    fontSize: '16px',
-  },
-  '& .MuiFormLabel-root.MuiInputLabel-shrink': {
-    fontSize: '14px',
-  },
-};

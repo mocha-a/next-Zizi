@@ -1,18 +1,12 @@
+import { SearchTrack } from '@/types/deezer/search';
 import { create } from 'zustand';
 
-export interface Song {
-  id: string;
-  title: string;
-  artist: string;
-  imageUrl?: string;
-}
-
 interface PlaylistStore {
-  selectedSongs: Song[];
+  selectedSongs: SearchTrack[];
 
-  setSelectedSongs: (songs: Song[]) => void;
+  setSelectedSongs: (songs: SearchTrack[]) => void;
 
-  addSong: (song: Song) => void;
+  addSong: (song: SearchTrack) => void;
 
   removeSong: (songId: string) => void;
 
@@ -43,7 +37,7 @@ export const usePlaylistStore = create<PlaylistStore>((set) => ({
   removeSong: (songId) =>
     set((state) => ({
       selectedSongs: state.selectedSongs.filter(
-        (song) => song.id !== songId
+        (song) => song.id !== Number(songId)
       ),
     })),
 

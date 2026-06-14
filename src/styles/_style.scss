@@ -115,7 +115,7 @@ input:checked + .tagbtn{
     .MuiInputLabel-root {
         font-family: var(--font-gmarketMedium) !important;
         font-size: 14px !important;
-        color: $black;
+        color: $fontgray;
 
         // focus 시 label
         &.Mui-focused {
