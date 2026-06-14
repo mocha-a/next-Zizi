@@ -12,16 +12,6 @@ import Link from "next/link";
 import Skeleton from "@mui/material/Skeleton";
 
 function Dashboard() {
-    // const imageList = [
-    //     '/imgs/415330480_64a747db_s.jpg',
-    //     '/imgs/426181497_667b8267_s.jpg',
-    //     '/imgs/426178480_6674c90f_s.jpg',
-    //     '/imgs/413139838_643f8487_s.jpg',
-    //     '/imgs/404302018_5e17e201.jpg',
-    //     '/imgs/407897323_6346225e_s.jpg',
-    //     '/imgs/423081851_65f3de3e_s.jpg',
-    //     '/imgs/400106044_61775d1b_o.jpg',
-    // ];
     const { data: session } = useSession();
     const { data: user } = useUserProfile(session);
 
