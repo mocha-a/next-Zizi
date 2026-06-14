@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
@@ -15,7 +14,6 @@ import TrashButton from '@/components/common/TrashButton';
 import MediaSkeleton from '@/components/loading/item/MediaSkeleton';
 import PlaylistListDnD from '@/components/entities/playlist/ui/playlist/PlaylistListDnD';
 import Check from '@/components/icons/Check';
-import Plus from '@/components/icons/Plus';
 import ThumbnailGrid from './ThumbnailGrid';
 import PlaylistCard from '../../entities/playlist/ui/playlist/PlaylistCard';
 
