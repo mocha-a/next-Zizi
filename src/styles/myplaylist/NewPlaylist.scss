@@ -82,11 +82,6 @@
 .myplaylist-btn{
   @include flex($justify: space-between);
   margin-bottom: 10px !important;
-  .action-btn{
-    @include flex;
-    cursor: pointer;
-    gap: 5px;
-  }
   p{
     display: inline-flex;
     height: 12px;

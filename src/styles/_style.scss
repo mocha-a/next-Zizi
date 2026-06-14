@@ -599,3 +599,10 @@ input:checked + .tagbtn{
   width: 100%;
   text-align: center;
 }
+
+// 내 플리 만들기 버튼
+.action-btn{
+    @include flex;
+    cursor: pointer;
+    gap: 5px;
+}

@@ -20,6 +20,7 @@ import ThumbnailGrid from './ThumbnailGrid';
 import PlaylistCard from '../../entities/playlist/ui/playlist/PlaylistCard';
 
 import '@/styles/myPlaylist/newPlaylist.scss';
+import AddPlaylistButton from '@/components/common/AddPlaylistButton';
 
 const MyPlaylistsSection = () => {
   const { isEditMode, selectedIds, toggleSelect, setEditMode, setSelectedIds } = usePlaylistEditStore();
@@ -137,10 +138,7 @@ const MyPlaylistsSection = () => {
       <div className='myplaylist-btn'>
         {!isEditMode ? (
           <>
-            <Link href="/myplaylist/new" className="action-btn">
-              <Plus />
-              <p>내 플리 추가</p>
-            </Link>
+            <AddPlaylistButton />
 
             <button className='submit' onClick={() => setEditMode(true)}>
               편집

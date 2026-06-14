@@ -13,6 +13,9 @@ import Plus from "../icons/Plus";
 import TagBtn from "./TagBtn";
 import PlaylistSwiplerinDialog from "./PlaylistSwiperinDialog";
 import TextField from "@mui/material/TextField";
+import { usePlaylistStore } from "@/store/usePlaylistStore";
+import Popup from "./Popup";
+import AddPlaylistButton from "./AddPlaylistButton";
 
 interface Types {
   trackData: Track;  // data
@@ -27,6 +30,9 @@ export default function TrackDialogContent({ trackData }: Types) {
     { Itemid: 'album', label: '앨범 정보', path: `/album/${trackData.album?.id}`, hideOn: '/album'},
   ]
   const [step, setStep] = useState<DialogStep>('default');
+  const [showLoginPopup, setShowLoginPopup] = useState(false);
+  const addSong = usePlaylistStore((state) => state.addSong);
+
   const router = useRouter();
   const pathname = usePathname();
 
@@ -39,9 +45,22 @@ export default function TrackDialogContent({ trackData }: Types) {
     window.open(url, '_blank', 'noopener,noreferrer');
   };
 
-  const handleSelectTrack = () => {
+  const handleSelectTrack = ( e: React.MouseEvent<HTMLAnchorElement> ) => {
+    if (!session) {
+      e.preventDefault();
 
+      setShowLoginPopup(true); // 로그아웃 상태일때 내플리추가 버튼 추가시 로그인 팝업 뜨게 했어요 !
+      return;
+    }
+
+    // addSong(song); << 여기에 곡정보를 넣어주시면 돼요 ! 주스탠드 입니다
   };
+
+  // AddPlaylistButton 따로 뺀 컴포넌트에요 !
+  // 페이지 넘어가면 또 useSelectedTrackStore.ts 여기가 선택한 곡들을 관리하는 주스탠드인데
+  // props로 보낸 곡을 useSelectedTrackStore 여기 목록에다가 넣어야 돼요 !!
+
+  // <AddPlaylistButton onClick={handleSelectTrack} />
 
   const { data: playlistsOfUser } = useQuery<MyPlaylist[]>({
     queryKey: ['myplaylist', user?.id],
@@ -113,6 +132,14 @@ export default function TrackDialogContent({ trackData }: Types) {
             <TagBtn tagbtn="완료" className="complete-btn-in-dialog"/>
           </div>
         </div>
+      )}
+
+      {showLoginPopup && (
+        <Popup
+          type="loginPlaylist"
+          onClose={() => setShowLoginPopup(false)}
+          onConfirm={() => router.push('/login')}
+        />
       )}
     </div>
   );
