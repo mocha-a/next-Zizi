@@ -25,7 +25,7 @@ export default function PlaylistSwiplerinDialog({ myListItem }: PlaylistSwiperPr
   };
 
   // 한 페이지에 보일 데이터 개수 설정
-  const ITEMS_PER_PAGE = 4;
+  const ITEMS_PER_PAGE = 3;
   const pages = chunkArray(myListItem, ITEMS_PER_PAGE);
 
   return (

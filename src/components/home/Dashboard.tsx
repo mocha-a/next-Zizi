@@ -15,7 +15,7 @@ function Dashboard() {
     const { data: session } = useSession();
     const { data: user } = useUserProfile(session);
 
-    const { data: playlistsOfApi, isLoading, error } = useQuery<any, Error>({
+    const { data: playlistsOfApi, isLoading : isApiLoading, error : isApiError } = useQuery<any, Error>({
         queryKey: ['playlistsOfApi', 'playlistsOfApi'],
         queryFn: () => {
             return getChart.getGlobalTracks('playlists');
@@ -23,7 +23,7 @@ function Dashboard() {
         staleTime: 1000 * 60 * 30,
     });
 
-    const { data: playlistsOfUser } = useQuery<MyPlaylist[]>({
+    const { data: playlistsOfUser, isLoading : isUserLoading, error : isUserError } = useQuery<MyPlaylist[]>({
         queryKey: ['myplaylist', user?.id],
         queryFn: () => getPlaylists(),
         enabled: !!user?.id,
@@ -40,15 +40,13 @@ function Dashboard() {
         ? `/mypage?tab=myplaylist`
         : `/playlist/${firstApiPlaylist?.id}`;
 
-    if (isLoading) {
+    if (isApiLoading || isUserLoading) {
         return (
             <Skeleton variant="rectangular" width={354} height={177} sx={{ margin: '0 auto 25px' }} />
         );
     }
 
-    if (error) {
-        return null;
-    }
+    if (isApiError || isUserError) { return null; }
     
     return (
     <>

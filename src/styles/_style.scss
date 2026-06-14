@@ -423,6 +423,32 @@ input:checked + .tagbtn{
         .complete-btn-in-dialog{
             margin-top: 18px;
         }
+
+        .swiper-container {
+            width: 100%;
+            
+            .swiper {
+                padding-bottom: 20px !important; 
+                // overflow: visible !important;
+            }
+
+            .swiper-pagination-bullets {
+                bottom: 0px !important; 
+                
+                // // 만약 정 중앙이 아니라 약간 왼쪽/오른쪽으로 치우친다면 아래 속성으로 잡아줍니다.
+                // left: 50% !important;
+                // transform: translateX(-50%) !important;
+                // width: 100% !important;
+            }
+
+            .swiper-pagination-bullet {
+                // background: #ccc !important; // 기본 점 색상
+                
+                &-active {
+                    background: $blue !important; // 활성화된 점 색상
+                }
+            }
+        }
     }
     .content3-in-dialog{
         height: 100%;

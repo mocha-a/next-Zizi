@@ -9,9 +9,10 @@
 
 .myMusic-container{
     margin-top: 0; margin-bottom: 25px;
-    width: $publicWidth; height: 177px !important;
+    width: 100%; height: 195px !important;
     position: relative;
     background-color: $orange;
+
     .overlay{
         position: absolute;
         top: 0; left: 0; right: 0; bottom: 0;
@@ -60,8 +61,7 @@
             aspect-ratio: 1 / 1; 
             overflow: hidden;
 
-            // 3. ⭐ 내부 <ThumbnailGrid> 컴포넌트 강제 제어
-            // 부모 박스(1:1 비율) 크기에 맞춰 꽉 차게 늘리고 동그랗게 깎습니다.
+            // 3. 내부 <ThumbnailGrid> 컴포넌트 강제 제어
             .large-thumbnail,
             div[class*="ThumbnailGrid"] {
                 display: grid !important; // 내부의 곡 수에 따른 분할 구조는 유지
@@ -78,13 +78,6 @@
                 }
             }
         }
-
-        // .default-placeholder {
-        //     > img{
-        //         padding: 10px;
-        //         object-fit: contain !important;
-        //     }
-        // }
     }
     .myMusic-text-absolute{
         position: absolute;
