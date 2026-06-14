@@ -18,6 +18,7 @@ import Popup from "./Popup";
 import AddPlaylistButton from "./AddPlaylistButton";
 import { useTrackStore } from "@/store/useSelectedTrackStore";
 import { useTrackDialog } from "@/store/useTrackDialog";
+import { useSnackbarStore } from "@/store/useSnackbarStore";
 
 interface Types {
   trackData: Track;  // data
@@ -33,9 +34,9 @@ export default function TrackDialogContent({ trackData }: Types) {
   ]
   const [step, setStep] = useState<DialogStep>('default');
   const [showLoginPopup, setShowLoginPopup] = useState(false);
-  const [showSelectPopup, setShowSelectPopup] = useState(false);
   const [selectedPlaylistId, setSelectedPlaylistId] = useState<number | null>(null);
   const [newPlaylistName, setNewPlaylistName] = useState('');
+  const show = useSnackbarStore(state => state.show);
   const addSong = usePlaylistStore(state => state.addSong);
   const setTitle = useTrackStore(state => state.setTitle);
   const toggleSelect = useTrackStore((state) => state.toggleSelect);
@@ -81,7 +82,7 @@ export default function TrackDialogContent({ trackData }: Types) {
     // 확인 필요
     if (step === 'add') {
       if (!selectedPlaylistId) {
-        setShowSelectPopup(true);
+        show('⚠️ 원하는 플리를 선택해주세요!');
         return;
       }
       addSong(trackData);
@@ -186,14 +187,6 @@ export default function TrackDialogContent({ trackData }: Types) {
           type="loginPlaylist"
           onClose={() => setShowLoginPopup(false)}
           onConfirm={() => router.push('/login')}
-        />
-      )}
-
-      {showSelectPopup && (
-        <Popup
-          type="noSelect"
-          onClose={() => setShowSelectPopup(false)}
-          onConfirm={() => console.log('ok')}
         />
       )}
     </div>
