@@ -7,7 +7,7 @@ import { useSession } from "next-auth/react";
 import { useUserProfile } from "@/hooks/useUserProfile";
 import { MyPlaylist } from "@/types/user/myPlaylist";
 import { useQuery } from "@tanstack/react-query";
-import { getPlaylists } from "@/lib/api/myPlaylist";
+import { getPlaylists, updatePlaylist } from "@/lib/api/myPlaylist";
 import Back from "../icons/Back";
 import Plus from "../icons/Plus";
 import TagBtn from "./TagBtn";
@@ -16,6 +16,8 @@ import TextField from "@mui/material/TextField";
 import { usePlaylistStore } from "@/store/usePlaylistStore";
 import Popup from "./Popup";
 import AddPlaylistButton from "./AddPlaylistButton";
+import { useTrackStore } from "@/store/useSelectedTrackStore";
+import { useTrackDialog } from "@/store/useTrackDialog";
 
 interface Types {
   trackData: Track;  // data
@@ -31,8 +33,16 @@ export default function TrackDialogContent({ trackData }: Types) {
   ]
   const [step, setStep] = useState<DialogStep>('default');
   const [showLoginPopup, setShowLoginPopup] = useState(false);
-  const addSong = usePlaylistStore((state) => state.addSong);
+  const [showSelectPopup, setShowSelectPopup] = useState(false);
+  const [selectedPlaylistId, setSelectedPlaylistId] = useState<number | null>(null);
+  const [newPlaylistName, setNewPlaylistName] = useState('');
+  const addSong = usePlaylistStore(state => state.addSong);
+  const setTitle = useTrackStore(state => state.setTitle);
+  const toggleSelect = useTrackStore((state) => state.toggleSelect);
+  const addSelectedToPlaylist = useTrackStore((state) => state.addSelectedToPlaylist);
 
+  const closeDialog = useTrackDialog((s) => s.closeDialog);
+  
   const router = useRouter();
   const pathname = usePathname();
 
@@ -45,22 +55,50 @@ export default function TrackDialogContent({ trackData }: Types) {
     window.open(url, '_blank', 'noopener,noreferrer');
   };
 
-  const handleSelectTrack = ( e: React.MouseEvent<HTMLAnchorElement> ) => {
+  const handleStep1to2 = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (!session) {
       e.preventDefault();
-
-      setShowLoginPopup(true); // 로그아웃 상태일때 내플리추가 버튼 추가시 로그인 팝업 뜨게 했어요 !
+      setShowLoginPopup(true);
       return;
     }
 
-    // addSong(song); << 여기에 곡정보를 넣어주시면 돼요 ! 주스탠드 입니다
+    setStep('add');
   };
 
-  // AddPlaylistButton 따로 뺀 컴포넌트에요 !
-  // 페이지 넘어가면 또 useSelectedTrackStore.ts 여기가 선택한 곡들을 관리하는 주스탠드인데
-  // props로 보낸 곡을 useSelectedTrackStore 여기 목록에다가 넣어야 돼요 !!
+  const handleSelectTrack = () => {
+    if (step === 'new') {
+      setTitle(newPlaylistName);
+      
+      toggleSelect(trackData); 
 
-  // <AddPlaylistButton onClick={handleSelectTrack} />
+      addSelectedToPlaylist();
+
+      closeDialog();
+
+      router.push('/myplaylist/new');
+    };
+    
+    // 확인 필요
+    if (step === 'add') {
+      if (!selectedPlaylistId) {
+        setShowSelectPopup(true);
+        return;
+      }
+      addSong(trackData);
+
+      // toggleSelect(trackData); 
+
+      // addSelectedToPlaylist();
+
+      closeDialog();
+
+      router.push(`/myplaylist/${selectedPlaylistId}/edit`);
+    };
+
+
+    // console.log(newPlaylistName);
+    // console.log(trackData);
+  };
 
   const { data: playlistsOfUser } = useQuery<MyPlaylist[]>({
     queryKey: ['myplaylist', user?.id],
@@ -68,6 +106,9 @@ export default function TrackDialogContent({ trackData }: Types) {
     enabled: !!user?.id,
     staleTime: 0,
   });
+
+  console.log(selectedPlaylistId);
+  
   
   return (
     <div className="track-dialog-content">
@@ -85,7 +126,9 @@ export default function TrackDialogContent({ trackData }: Types) {
             유튜브에서 즐기기 ♩
           </button>
           <hr/>
-          <button onClick={() => setStep('add')}>내 플레이리스트에 담기</button>
+          <button onClick={handleStep1to2}>
+            내 플레이리스트에 담기
+          </button>
           {/* <button>좋아요</button> */}
         </div>
       )}
@@ -98,6 +141,7 @@ export default function TrackDialogContent({ trackData }: Types) {
           </div>
           <div className="new-btn-box">
             <Plus color="#058CD7"/>
+            {/* <AddPlaylistButton onClick={handleSelectTrack} /> */}
             <button className="new-btn-in-dialog" onClick={() => setStep('new')}>
               새 플레이리스트
             </button>
@@ -105,9 +149,12 @@ export default function TrackDialogContent({ trackData }: Types) {
           <p className="og-txt-in-dialog">
             {user?.nickname ? user.nickname : user?.name} 님이 생성한 플리에요 !
           </p>
-          <PlaylistSwiplerinDialog myListItem={playlistsOfUser}/>
+          <PlaylistSwiplerinDialog 
+            myListItem={playlistsOfUser}
+            selectedId={selectedPlaylistId}
+            onSelect={setSelectedPlaylistId}/>
           <div className="complete-btn-box-in-dialog">
-            <TagBtn tagbtn="선택" className="complete-btn-in-dialog"/>
+            <TagBtn tagbtn="선택" className="complete-btn-in-dialog" onClick={() => handleSelectTrack()}/>
           </div>
         </div>
       )}
@@ -120,8 +167,8 @@ export default function TrackDialogContent({ trackData }: Types) {
           <h3>나만의 플리 이름을 지어볼까?</h3>
           <TextField
             label="플리 이름"
-            value={name}
-            // onChange={(e) => onChangeName(e.target.value)}
+            value={newPlaylistName}
+            onChange={(e) => setNewPlaylistName(e.target.value)}
             variant="standard"
             placeholder='>>> waiting for title... 제목을 입력해줘'
             required
@@ -129,7 +176,7 @@ export default function TrackDialogContent({ trackData }: Types) {
             sx={inputStyle}
           />
           <div className="complete-btn-box-in-dialog">
-            <TagBtn tagbtn="완료" className="complete-btn-in-dialog"/>
+            <TagBtn tagbtn="완료" className="complete-btn-in-dialog" onClick={() => handleSelectTrack()}/>
           </div>
         </div>
       )}
@@ -139,6 +186,14 @@ export default function TrackDialogContent({ trackData }: Types) {
           type="loginPlaylist"
           onClose={() => setShowLoginPopup(false)}
           onConfirm={() => router.push('/login')}
+        />
+      )}
+
+      {showSelectPopup && (
+        <Popup
+          type="noSelect"
+          onClose={() => setShowSelectPopup(false)}
+          onConfirm={() => console.log('ok')}
         />
       )}
     </div>

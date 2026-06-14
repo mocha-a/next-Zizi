@@ -2,7 +2,7 @@ import '@/styles/common/popup.scss';
 
 interface Props {
   onClose: () => void;
-  type: 'login' | 'loginPlaylist' | 'loginMyRoom' | 'delete' | 'logout' | 'exit';
+  type: 'login' | 'loginPlaylist' | 'loginMyRoom' | 'delete' | 'logout' | 'exit' | 'noSelect';
   onConfirm?: () => void;
   onCancel?: () => void;
   className?: string;
@@ -13,7 +13,7 @@ interface Props {
 interface PopupContent {
   txt: string;
   subtxt?: string;
-  btntxt1: string;
+  btntxt1?: string;
   btntxt2: string;
   icon: React.ReactNode;
 }
@@ -59,6 +59,11 @@ function Popup({ onClose, type, onConfirm, onCancel, className='', isLoading, lo
       subtxt: '변경사항은 저장되지 않습니다.',
       btntxt1: '아니오',
       btntxt2: '예',
+      icon: '⚠️'
+    },
+    noSelect: {
+      txt: '플레이리스트를 선택해주세요!',
+      btntxt2: '확인',
       icon: '⚠️'
     }
   }

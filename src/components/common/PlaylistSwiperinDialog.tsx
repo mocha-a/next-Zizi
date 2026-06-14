@@ -10,9 +10,11 @@ import 'swiper/css/pagination';
 
 interface PlaylistSwiperProps {
   myListItem?: MyPlaylist[];
+  selectedId: number | null;
+  onSelect: (id: number) => void;
 }
 
-export default function PlaylistSwiplerinDialog({ myListItem }: PlaylistSwiperProps) {
+export default function PlaylistSwiplerinDialog({ myListItem, selectedId, onSelect }: PlaylistSwiperProps) {
   // 1. API 데이터를 원하는 개수(예: 4개)씩 쪼개는 함수
   const chunkArray = (array: Array<MyPlaylist> | undefined, chunkSize: number) => {
     const result: Array<Array<MyPlaylist>> = [];
@@ -21,7 +23,7 @@ export default function PlaylistSwiplerinDialog({ myListItem }: PlaylistSwiperPr
     for (let i = 0; i < array.length; i += chunkSize) {
       result.push(array.slice(i, i + chunkSize));
     }
-    return result; // [[1,2,3,4], [5,6,7,8], [9,10,11,12]] 형태가 됨
+    return result; // [[1,2,3], [4,5,6], [7,8,9]] 형태가 됨
   };
 
   // 한 페이지에 보일 데이터 개수 설정
@@ -40,10 +42,17 @@ export default function PlaylistSwiplerinDialog({ myListItem }: PlaylistSwiperPr
                 <SwiperSlide key={pageIdx}>
                     <div className='page-wrapper' style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                         {pageItem?.map((item) => (
-                            <button key={item.id} className="playlist-item-in-dialog">
+                            <button key={item.id} className={`${item.id === selectedId ? 'selected': ''} playlist-item-in-dialog`}
+                                    onClick={() => onSelect(item.id)}
+                            >
                                 <ThumbnailGrid thumbnails={item.thumbnails} className="playlist-thumb-in-dialog"/>
                                 <span className="playlist-title-in-dialog">{item.title}</span>
                             </button>
+                        ))}
+
+                        {pageItem?.length < 3 && 
+                            Array.from({ length: 3 - pageItem?.length }).map((_, i) => (
+                                <div key={`empty-${i}`} className="playlist-item-in-dialog empty-slot" style={{ visibility: 'hidden', height: '최고 높이값' }}></div>
                         ))}
                     </div>
                 </SwiperSlide>
