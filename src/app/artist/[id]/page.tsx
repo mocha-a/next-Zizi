@@ -37,12 +37,15 @@ const Page = () => {
   ];
 
   useEffect(() => {
+    if (!id) return;
+    if (!session?.user?.id) return;
+    
     recent({
       type: 'artist',
       id,
       isLoggedIn: !!session,
     });
-  }, [id, session]);
+  }, [id, session?.user?.id]);
 
   return (
     <div className="artist-detail">

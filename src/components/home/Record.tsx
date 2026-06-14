@@ -52,7 +52,7 @@ function Record() {
         },
         enabled: !!genre, // genre가 존재하고, 빈 문자열이 아닐 때만 true가 됨
     });
-    
+    console.log(session)
   return (
     <div className='record-container'>
         <h2>{ session ? `${session.user.name}님_맞춤_레코드.dll` : 'zi존이_맞춤_레코드.dll'}</h2>

@@ -2,7 +2,7 @@ import '@/styles/common/popup.scss';
 
 interface Props {
   onClose: () => void;
-  type: 'login' | 'loginPlaylist' | 'loginMyRoom' | 'delete' | 'logout' | 'exit';
+  type: 'login' | 'loginPlaylist' | 'loginMyRoom' | 'delete' | 'logout' | 'exit' | 'withdraw';
   onConfirm?: () => void;
   onCancel?: () => void;
   className?: string;
@@ -60,6 +60,13 @@ function Popup({ onClose, type, onConfirm, onCancel, className='', isLoading, lo
       btntxt1: '아니오',
       btntxt2: '예',
       icon: '⚠️'
+    },
+    withdraw: {
+      txt: '정말 탈퇴할 생각이야 ?',
+      subtxt: '내 플리와 활동 기록은 영원히 안녕이야..(இᯅஇ)',
+      btntxt1: 'STAY',
+      btntxt2: 'BYE',
+      icon: '💔'
     }
   }
 
@@ -80,7 +87,7 @@ function Popup({ onClose, type, onConfirm, onCancel, className='', isLoading, lo
           <p className='popup-icon'>{popupContent[type]?.icon}</p>
           <p>
             {popupContent[type]?.txt}
-            <span>{popupContent[type]?.subtxt}</span>
+            <span className='popup-subtxt'>{popupContent[type]?.subtxt}</span>
           </p>
         </div>
 

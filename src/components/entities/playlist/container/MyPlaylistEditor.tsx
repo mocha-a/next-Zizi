@@ -15,6 +15,7 @@ import NewPlaylistForm from '@/components/entities/playlist/ui/playlist/NewPlayl
 import PlaylistTrackListDnD from '@/components/entities/playlist/ui/track/PlaylistTrackListDnD';
 
 import '@/styles/myPlaylist/newPlaylist.scss';
+import { useSnackbarStore } from '@/store/useSnackbarStore';
 
 interface Props {
   mode?: 'create' | 'edit';
@@ -40,6 +41,8 @@ const MyPlaylistEditor = ({ mode='create', myplaylistData, tracksData } : Props)
   const reorder = useTrackStore(state => state.reorder);
   const reset = useTrackStore(state => state.reset);
 
+  const show = useSnackbarStore(state => state.show);
+
   const playlist = orderIds.map(id => tracks[id]);
 
   const router = useRouter();
@@ -50,6 +53,7 @@ const MyPlaylistEditor = ({ mode='create', myplaylistData, tracksData } : Props)
     mutationFn: createPlaylist,
 
     onSuccess: () => {
+      show('내 플리 생성 완료 - !');
       useTrackStore.getState().reset();
       queryClient.invalidateQueries({ queryKey: ['myplaylist'] });
 
@@ -62,6 +66,7 @@ const MyPlaylistEditor = ({ mode='create', myplaylistData, tracksData } : Props)
       updatePlaylist(id, data),
 
     onSuccess: async (_, variables) => {
+      show('내 플리 수정 완료 - !');
       const id = Number(variables.id);
 
       await queryClient.invalidateQueries({

@@ -37,8 +37,9 @@
       
       span{
         font-family: var(--font-Galmuri9);
+        font-size: 11px;
         display: block;
-        color: rgba(0, 0, 0, 0.3);
+        color: $gray;
         margin-top: 10px;
       }
     }

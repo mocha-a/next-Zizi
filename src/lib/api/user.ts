@@ -14,3 +14,20 @@ export const join = async (data: JoinData) => {
 
   return res.data;
 };
+
+// 회원탈퇴
+export const deleteUser = async () => {
+  const res = await api.delete('/user');
+
+  return res.data;
+};
+
+// 아이디, 이메일 중복 체크
+export const checkDuplicate = async (
+  type: 'username' | 'email',
+  value: string
+) => {
+  const res = await api.post('/auth/check-duplicate', { type, value });
+
+  return res.data;
+};

@@ -1,13 +1,6 @@
 import { create } from 'zustand';
 import { SearchTrack } from '@/types/deezer/search';
 
-// export interface Song {
-//   id: string;
-//   title: string;
-//   artist: string;
-//   imageUrl?: string;
-// }
-
 interface PlaylistStore {
   selectedSongs: SearchTrack[];
 

@@ -38,12 +38,15 @@ const Page = () => {
   ];
 
   useEffect(() => {
+    if (!id) return;
+    if (!session?.user?.id) return;
+    
     recent({
       type: 'album',
       id,
       isLoggedIn: !!session,
     });
-  }, [id, session]);
+  }, [id, session?.user?.id]);
 
   // console.log(album);
   // 장르

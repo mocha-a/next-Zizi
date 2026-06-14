@@ -5,13 +5,15 @@ import { useRouter } from 'next/navigation';
 import { signIn } from "next-auth/react";
 import { useMutation } from '@tanstack/react-query';
 import { JoinField } from '@/types/join';
-import { join } from '@/lib/api/user';
+import { checkDuplicate, join } from '@/lib/api/user';
 import { FormTextFielFieldDatas } from '@/components/common/FormTextFields'
 import LongBtn from '@/components/common/LongBtn';
 import Agree from '@/components/join/Agree';
 
 function JoinForm({ listData }: { listData: JoinField[] }) {
   const router = useRouter();
+  const [emailChecked, setEmailChecked] = useState(false);
+  const [emailAvailable, setEmailAvailable] = useState<boolean | null>(null);
   const [formData, setFormData] = useState<Record<string, string>>({});
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isAgree, setIsAgree] = useState(false); // 약관 동의
@@ -27,7 +29,12 @@ function JoinForm({ listData }: { listData: JoinField[] }) {
 
     // 성별이 필수라면 성별 체크 (선택사항이면 제외)
     // 약관 동의(isAgree)가 되었는지 확인
-    setIsComplete(allInputsFilled && isAgree);
+    const allValid =
+      allInputsFilled &&
+      isAgree;
+
+    setIsComplete(allValid);
+
   }, [formData, errors, isAgree, listData]);
   
   // 유효성 검사
@@ -60,9 +67,19 @@ function JoinForm({ listData }: { listData: JoinField[] }) {
   };
 
   const handleFormChange = (type: string, value: string) => {
+      if (type === 'email') {
+        setEmailChecked(false);
+        setEmailAvailable(null);
+      }
+
       // 아이디, 이메일은 공백 제거
       if (type === 'username' || type === 'email') {
           value = value.replace(/\s/g, '');
+      }
+
+      // 아이디 영어+숫자만 허용
+      if (type === 'username') {
+        value = value.replace(/[^a-zA-Z0-9]/g, '');
       }
 
       // formdata에 { id: 'user1', email: 'test@..' } 형태로 저장.
@@ -100,18 +117,53 @@ function JoinForm({ listData }: { listData: JoinField[] }) {
     }
   });
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!isComplete) return;
 
-    mutate({
-      name: formData.name,
-      username: formData.username,
-      password: formData.password,
-      email: formData.email,
-      nickname: formData.nickname,
-      birth: formData.birth,
-      gender: formData.gender,
-    });
+    try {
+      const newErrors: Record<string, string> = {};
+
+      const usernameCheck = await checkDuplicate(
+        'username',
+        formData.username
+      );
+
+      if (!usernameCheck.available) {
+        newErrors.username = '이미 사용 중인 아이디야 !';
+      }
+
+      const emailCheck = await checkDuplicate(
+        'email',
+        formData.email
+      );
+
+      if (!emailCheck.available) {
+        newErrors.email = '이미 사용 중인 이메일이야 !';
+      }
+
+      // 한 번에 반영
+      if (Object.keys(newErrors).length > 0) {
+        setErrors(prev => ({
+          ...prev,
+          ...newErrors,
+        }));
+        return;
+      }
+
+      // 3️⃣ 통과 → 회원가입
+      mutate({
+        name: formData.name,
+        username: formData.username,
+        password: formData.password,
+        email: formData.email,
+        nickname: formData.nickname,
+        birth: formData.birth,
+        gender: formData.gender,
+      });
+
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   if (!listData) return;
@@ -129,10 +181,11 @@ function JoinForm({ listData }: { listData: JoinField[] }) {
 
       <Agree isAgree={isAgree} onAgreeChange={() => setIsAgree(!isAgree)}/>
 
-      <LongBtn 
+      <LongBtn
         label={isPending ? '가입 중...' : '회원가입'}
         className={`join ${isComplete && !isPending ? 'active' : ''}`}
         onClick={handleSubmit}
+        disabled={!isComplete || isPending}
       />
     </div>
   )

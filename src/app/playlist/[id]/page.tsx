@@ -65,12 +65,15 @@ const Page = () => {
   ];
 
   useEffect(() => {
+    if (!id) return;
+    if (!session?.user?.id) return;
+    
     recent({
       type: 'playlist',
       id,
       isLoggedIn: !!session,
     });
-  }, [id, session]);
+  }, [id, session?.user?.id]);
 
   return (
     <div className='playlist-detail'>
