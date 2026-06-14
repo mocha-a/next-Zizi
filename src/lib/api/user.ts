@@ -21,3 +21,13 @@ export const deleteUser = async () => {
 
   return res.data;
 };
+
+// 아이디, 이메일 중복 체크
+export const checkDuplicate = async (
+  type: 'username' | 'email',
+  value: string
+) => {
+  const res = await api.post('/auth/check-duplicate', { type, value });
+
+  return res.data;
+};
