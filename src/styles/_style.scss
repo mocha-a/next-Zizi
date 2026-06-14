@@ -359,6 +359,13 @@ input:checked + .tagbtn{
 // dialog - track
 .track-dialog-content{
     padding: 20px;
+    width: 300px;
+
+    .complete-btn-box-in-dialog{
+        text-align: center;
+
+        .complete-btn-in-dialog{margin-right: 0 !important;}
+    }
 
     .content1-in-dialog{
         button{
@@ -366,15 +373,8 @@ input:checked + .tagbtn{
             margin: 20px auto;
             cursor: pointer;
         }
-        hr{
-            width: 100%;
-        }
+        hr{width: 100%;}
     }
-    // .back-btn-in-dialog{
-    //     position: absolute;
-    //     display: block;
-    //     top: 20px; left: 20px;
-    // }
     .content2-in-dialog{
         .title2-in-dialog{
             display: flex;
@@ -384,31 +384,60 @@ input:checked + .tagbtn{
 
             h3{
                 font-size: 18px;
-                padding: 0 20px;
+                padding: 0 25px 0 15px;
             }
         }
 
         .new-btn-box{
             margin: 28px 0;
-            text-align: center;
+            @include flex;
+            cursor: pointer;
+            gap: 5px;
+            font-size: 13px;
+            button{
+                color: $blue;
+                display: inline-flex;
+                height: 12px;
+            }
         }
         .og-txt-in-dialog{
-            margin-top: 18px;
+            margin: 18px 0;
             font-size: 13px;
         }
 
         .playlist-item-in-dialog{
-            margin: 15px 0;
+            // margin: 15px 0;
             display: flex;
             // justify-content: space-between;
             align-items: center;
             gap: 10px;
+
+            // &:last-of-type{margin-bottom: 0 !important;}
         }
         .playlist-thumb-in-dialog{
             width: 40px; height: 40px;
         }
         .playlist-title-in-dialog{
             font-size: 13px;
+        }
+        .complete-btn-in-dialog{
+            margin-top: 18px;
+        }
+    }
+    .content3-in-dialog{
+        height: 100%;
+
+        h3{
+            font-size: 18px;
+            text-align: center;
+            margin: 28px 0 8px;
+        }
+        input::placeholder{
+            font-family: var(--font-Galmuri9);
+            font-size: 13px;
+        }
+        .complete-btn-in-dialog{
+            margin-top: 28px;
         }
     }
 }
