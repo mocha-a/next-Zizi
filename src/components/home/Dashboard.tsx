@@ -42,7 +42,7 @@ function Dashboard() {
 
     if (isApiLoading || isUserLoading) {
         return (
-            <Skeleton variant="rectangular" width={354} height={177} sx={{ margin: '0 auto 25px' }} />
+            <Skeleton variant="rectangular" width={390} height={177} sx={{ margin: '0 auto 25px' }} />
         );
     }
 
