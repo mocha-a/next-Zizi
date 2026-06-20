@@ -32,9 +32,14 @@
     border-radius: 85px;
     cursor: pointer;
 
-    &.active, &:hover{
+    &.active,
+    &:not(.readonly):hover {
         background-color: $blue;
         color: $white;
+    }
+
+    &.readonly {
+        cursor: default;
     }
 }
 

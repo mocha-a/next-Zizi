@@ -86,8 +86,6 @@ const MyRoom = ({ user }: Props) => {
     <span className="empty-state">입력 대기중...</span>
   );
 
-  console.log(user)
-
   return (
     <div className='myRoom-container'>
       {/* <OnboardingPopup /> */}

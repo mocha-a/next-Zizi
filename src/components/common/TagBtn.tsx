@@ -2,14 +2,18 @@ interface PropsType {
   tagbtn: React.ReactNode;
   className?: string;
   onClick?: () => void;
+  readonly?: boolean;
 }
 
-const TagBtn =({ tagbtn, className, onClick }: PropsType) => {
+const TagBtn = ({ tagbtn, className, onClick, readonly = false }: PropsType) => {
   return (
-    <div className={`tagbtn ${className}`} onClick={onClick}>
+    <div
+      className={`tagbtn ${readonly ? 'readonly' : ''} ${className ?? ''}`}
+      onClick={onClick}
+    >
       {tagbtn}
     </div>
-  )
-}
+  );
+};
 
-export default TagBtn
+export default TagBtn;

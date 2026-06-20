@@ -21,6 +21,7 @@ function GenderSelect({ value, onChange, readonly, className }: Props) {
           }}
         >
           <TagBtn
+            readonly={readonly}
             className={value === option.value ? 'active' : ''}
             tagbtn={option.label}
           />
