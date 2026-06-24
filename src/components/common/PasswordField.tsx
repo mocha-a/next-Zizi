@@ -34,7 +34,7 @@ const PasswordField = ({ label, value, error, required, placeholder, className, 
       helperText={error}
       onChange={(e) => onChange(e.target.value)}
       slotProps={{
-        input: {
+        input: { //(input)의 (position="end" = 끝)에 (endAdornment = 추가요소)를 넣어줘
           endAdornment: (
             <InputAdornment position="end">
               <IconButton

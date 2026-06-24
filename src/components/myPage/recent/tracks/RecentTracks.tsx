@@ -2,6 +2,8 @@ import React from 'react'
 import { RecentTrack } from '@/types/recent';
 import RecentTrackCard from './RecentTrackCard';
 import TrackSkeleton from '@/components/loading/item/TrackSkeleton';
+import EmptyState from '@/components/common/EmptyState';
+import CDcase from '@/components/icons/CDcase';
 
 interface Props{
   items: RecentTrack[];
@@ -17,6 +19,16 @@ const RecentTracks = ({ items, variant = 'default', isLoading }: Props) => {
           <TrackSkeleton key={i} index={i} />
         ))}
       </ul>
+    );
+  }
+
+  if (items.length === 0) {
+    return (
+      <EmptyState
+        image={<CDcase />}
+        title="텅 - ❗"
+        description="첫 번째 플레이를 기다리는 중..."
+      />
     );
   }
 

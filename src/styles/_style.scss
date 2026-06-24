@@ -613,3 +613,21 @@ input:checked + .tagbtn{
     cursor: pointer;
     gap: 5px;
 }
+
+.empty-state{
+    @include flex();
+    flex-direction: column;
+    padding-top: 60px;
+    img{ width: 120px; }
+    .empty-state__title{
+        margin: 20px 0 12px;
+        font-family: var(--font-Galmuri9);
+        font-size: 20px;
+    }
+    .empty-state__description{
+        text-align: center;
+        white-space: pre-line;
+        font-size: 12px;
+        color: $gray;
+    }
+}
