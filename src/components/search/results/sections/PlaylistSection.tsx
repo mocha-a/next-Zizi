@@ -4,27 +4,25 @@ import { SearchPlaylist } from '@/types/deezer/search';
 import PlaylistCard from '@/components/entities/playlist/ui/playlist/PlaylistCard';
 import SectionHeader from '../../ui/SectionHeader';
 import MediaSkeleton from '@/components/loading/item/MediaSkeleton';
+import EmptyState from '@/components/common/EmptyState';
 
 interface Props {
   data: SearchPlaylist[];
   loading: boolean;
+  query: string
 }
 
-const PlaylistSection = ({ data, loading }: Props) => {
+const PlaylistSection = ({ data, loading, query }: Props) => {
   return (
     <div className='allReslts allReslts-playlist'>
-      <SectionHeader title="플레이리스트" type="playlist"/>
+      <SectionHeader title="플레이리스트" type="playlist" />
 
-      {/* 로딩 상태 */}
-      {loading &&
+      {loading ? (
         Array.from({ length: 5 }).map((_, i) => (
-          <MediaSkeleton key={`album-skeleton-${i}`} />
+          <MediaSkeleton key={`playlist-skeleton-${i}`} />
         ))
-      }
-
-      {/* 실제 데이터 */}
-      {!loading &&
-        data.map((playlist)=>
+      ) : data.length > 0 ? (
+        data.map((playlist) => (
           <Link key={playlist.id} href={`/playlist/${playlist.id}`}>
             <PlaylistCard
               picture={playlist.picture_medium}
@@ -33,9 +31,17 @@ const PlaylistSection = ({ data, loading }: Props) => {
               tracks={playlist.nb_tracks}
             />
           </Link>
-        )}
+        ))
+      ) : (
+        <EmptyState
+          title="📋"
+          keyword={query}
+          description={`와 \n 일치하는 플레이리스트가 없어 இᯅஇ`}
+          className="search-results"
+        />
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default PlaylistSection
+export default PlaylistSection;

@@ -9,7 +9,7 @@ const TrendingSkeleton = ({ i }: Props) => {
   return (
     <li className="trending">
       <b className="num">{i + 1}</b>
-      <Skeleton variant="rectangular" width="50%" height={16} className="keyword" />
+      <Skeleton variant="rounded" width="50%" height={16} className="keyword" />
     </li>
   )
 }

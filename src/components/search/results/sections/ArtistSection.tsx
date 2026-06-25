@@ -11,34 +11,32 @@ import ArtistSkeleton from '@/components/loading/item/ArtistSkeleton';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
+import EmptyState from '@/components/common/EmptyState';
 
 interface Props {
   data: SearchArtist[];
   loading: boolean;
+  query: string
 }
 
-const ArtistSection = ({ data, loading }: Props) => {
+const ArtistSection = ({ data, loading, query }: Props) => {
   return (
     <div className='allReslts allReslts-artist'>
       <SectionHeader title="아티스트" type="artist" />
 
-      <Swiper
-        slidesPerView={3.35}
-        className="mySwiper artist-container"
-      >
-        {/* 로딩 상태 */}
-        {loading &&
-          Array.from({ length: 5 }).map((_, i) => (
-            <SwiperSlide key={`artist-skeleton-${i}`} style={{ width: '110px' }}>
-              <ArtistSkeleton />
+      {/* 로딩 상태 */}
+      {loading ? (
+        <Swiper slidesPerView={3.35} className="mySwiper artist-container">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <SwiperSlide key={i}>
+              <ArtistSkeleton showSubText={false}/>
             </SwiperSlide>
-          ))
-        }
-
-        {/* 실제 데이터 */}
-        {!loading &&
-          data.map((artist) => (
-            <SwiperSlide key={artist.id} style={{ width: '110px' }}>
+          ))}
+        </Swiper>
+      ) : data.length > 0 ? ( 
+        <Swiper slidesPerView={3.35} className="mySwiper artist-container">
+          {data.map((artist) => (
+            <SwiperSlide key={artist.id}>
               <Link href={`/artist/${artist.id}`}>
                 <ArtistCard
                   name={artist.name}
@@ -47,11 +45,20 @@ const ArtistSection = ({ data, loading }: Props) => {
                 />
               </Link>
             </SwiperSlide>
-          ))
-        }
-      </Swiper>
+          ))}
+        </Swiper>
+      ) : (
+        <EmptyState
+          title="🎤"
+          keyword={query}
+          description={`와 \n 일치하는 아티스트가 없어 இᯅஇ`}
+          className='search-results'
+        />
+      )}
     </div>
   );
 };
 
 export default ArtistSection;
+
+

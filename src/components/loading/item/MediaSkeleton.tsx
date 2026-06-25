@@ -14,15 +14,15 @@ const MediaSkeleton = ({ size = 90 }: Props) => {
 
       <div className="album-info">
         <div className="album-name">
-          <Skeleton variant="rectangular" width="80%" height={15} />
+          <Skeleton variant="rounded" width="80%" height={15} />
         </div>
 
         <div className="album-artist-name">
-          <Skeleton variant="rectangular" width="50%" height={12} />
+          <Skeleton variant="rounded" width="50%" height={12} />
         </div>
 
         <div className="album-details">
-          <Skeleton variant="rectangular" width="60%" height={12} />
+          <Skeleton variant="rounded" width="60%" height={12} />
         </div>
       </div>
     </div>

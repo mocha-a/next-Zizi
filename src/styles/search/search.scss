@@ -77,5 +77,24 @@
                 padding-right: 18px;
             }
         }
+
+
+        .search-results{
+            flex-direction: row;
+            padding: 0;
+            gap: 8px;
+            .empty-state__title{
+                margin: 0 0 12px;
+            }
+            .empty-state__description{
+                text-align: left;
+                .empty-state__keyword {
+                    color: $black;
+                    background: rgba($blue, 0.1);
+                    padding: 4px;
+                    border-radius: 4px;
+                }
+            }
+        }
     }
 }
