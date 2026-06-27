@@ -10,7 +10,7 @@ import EmptyState from '@/components/common/EmptyState';
 interface Props {
   data: SearchAlbum[];
   loading: boolean;
-  query: string
+  query: string;
 }
 
 const AlbumSection = ({ data, loading, query }: Props) => {

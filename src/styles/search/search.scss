@@ -88,12 +88,17 @@
             }
             .empty-state__description{
                 text-align: left;
-                .empty-state__keyword {
-                    color: $black;
-                    background: rgba($blue, 0.1);
-                    padding: 4px;
-                    border-radius: 4px;
-                }
+            }
+        }
+    }
+
+    .search-results{
+        .empty-state__description{
+            .empty-state__keyword {
+                color: $black;
+                background: rgba($blue, 0.1);
+                padding: 4px;
+                border-radius: 4px;
             }
         }
     }
