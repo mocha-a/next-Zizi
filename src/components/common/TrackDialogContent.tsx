@@ -5,8 +5,8 @@ import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
 import { useUserProfile } from "@/hooks/useUserProfile";
-import { MyPlaylist } from "@/types/user/myPlaylist";
-import { useQuery } from "@tanstack/react-query";
+import { MyPlaylist, UpdatePlaylistParams } from "@/types/user/myPlaylist";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { getPlaylists, updatePlaylist } from "@/lib/api/myPlaylist";
 import Back from "../icons/Back";
 import Plus from "../icons/Plus";
@@ -15,10 +15,10 @@ import PlaylistSwiplerinDialog from "./PlaylistSwiperinDialog";
 import TextField from "@mui/material/TextField";
 import { usePlaylistStore } from "@/store/usePlaylistStore";
 import Popup from "./Popup";
-import AddPlaylistButton from "./AddPlaylistButton";
 import { useTrackStore } from "@/store/useSelectedTrackStore";
 import { useTrackDialog } from "@/store/useTrackDialog";
 import { useSnackbarStore } from "@/store/useSnackbarStore";
+import { queryClient } from "@/lib/react-query/queryClient";
 
 interface Types {
   trackData: Track;  // data
@@ -37,7 +37,7 @@ export default function TrackDialogContent({ trackData }: Types) {
   const [selectedPlaylistId, setSelectedPlaylistId] = useState<number | null>(null);
   const [newPlaylistName, setNewPlaylistName] = useState('');
   const show = useSnackbarStore(state => state.show);
-  const addSong = usePlaylistStore(state => state.addSong);
+  // const addSong = usePlaylistStore(state => state.addSong);
   const setTitle = useTrackStore(state => state.setTitle);
   const toggleSelect = useTrackStore((state) => state.toggleSelect);
   const addSelectedToPlaylist = useTrackStore((state) => state.addSelectedToPlaylist);
@@ -66,39 +66,95 @@ export default function TrackDialogContent({ trackData }: Types) {
     setStep('add');
   };
 
+  const updateMutation = useMutation({
+    mutationFn: ({ id, data }: UpdatePlaylistParams) =>
+      updatePlaylist(id, data),
+
+    onSuccess: async (_, variables) => {
+      show('내 플리에 추가 완료 - !');
+      const id = Number(variables.id);
+
+      await queryClient.invalidateQueries({
+        queryKey: ['myplaylist', user?.id] // user 전체 플리 목록 갱신
+      });
+      await queryClient.invalidateQueries({
+        queryKey: ['myplaylist', id]
+      });
+      await queryClient.invalidateQueries({
+        queryKey: ['playlistTracks', id]
+      });
+    },
+    onError: () => {
+      show('⚠️ 추가 중 오류 발생 ! ㅜㅜ');
+    }
+  });
+
   const handleSelectTrack = () => {
+
+    // 새 플레이리스트에 추가
     if (step === 'new') {
       setTitle(newPlaylistName);
-      
       toggleSelect(trackData); 
-
       addSelectedToPlaylist();
-
       closeDialog();
-
       router.push('/myplaylist/new');
+      return;
     };
     
-    // 확인 필요
+    // 기존 플레이리스트에 추가 (서버에 바로 저장)
     if (step === 'add') {
       if (!selectedPlaylistId) {
-        show('⚠️ 원하는 플리를 선택해주세요!');
+        show('⚠️ 원하는 플리를 선택해주세요 !');
         return;
       }
-      addSong(trackData);
+      
+      // 현재 사용자가 선택한 플레이리스트의 상세 데이터 찾기
+      const targetId = Number(selectedPlaylistId);
+      const targetPlaylist = playlistsOfUser?.find(pl => Number(pl.id) === targetId);
 
-      // toggleSelect(trackData); 
+      if (!targetPlaylist) {
+        show('⚠️ 선택하신 플리를 찾을 수 없어요 !');
+        return;
+      }
 
-      // addSelectedToPlaylist();
+      // 기존 플리 곡 id 목록 추출
+      const existingTrackIds = (targetPlaylist.tracks || []).map((track: any) => ({
+        id: Number(track.trackId),
+      }));
+
+      // 현재 선택한 track
+      const currentTrackId = Number(trackData.id);
+
+      // 중복 검사
+      const isDuplicate = existingTrackIds.some((track: any) => track.id === currentTrackId);
+      if (isDuplicate) {
+        show('⚠️ 이미 플레이리스트에 있는 곡입니다!');
+        closeDialog();
+        return;
+      }
+
+      // 기존 곡 목록에 선택한 곡 추가
+      const updatedTracks = [...existingTrackIds, { id: currentTrackId }];
+
+      // 썸네일
+      const updatedThumbnails = [...targetPlaylist.thumbnails, trackData.album.cover_medium];
+
+      // 서버에 보낼 Payload 구성
+      const payload = {
+        title: targetPlaylist.title,
+        description: targetPlaylist.description,
+        thumbnails: updatedThumbnails,
+        tracks: updatedTracks,
+      };
+
+      // 서버 mutation 실행
+      updateMutation.mutate({
+        id: targetId,
+        data: payload,
+      })
 
       closeDialog();
-
-      router.push(`/myplaylist/${selectedPlaylistId}/edit`);
     };
-
-
-    // console.log(newPlaylistName);
-    // console.log(trackData);
   };
 
   const { data: playlistsOfUser } = useQuery<MyPlaylist[]>({
@@ -107,8 +163,6 @@ export default function TrackDialogContent({ trackData }: Types) {
     enabled: !!user?.id,
     staleTime: 0,
   });
-
-  console.log(selectedPlaylistId);
   
   
   return (

@@ -40,7 +40,7 @@ export default function PlaylistSwiplerinDialog({ myListItem, selectedId, onSele
         >
             {pages.map((pageItem, pageIdx) => (
                 <SwiperSlide key={pageIdx}>
-                    <div className='page-wrapper' style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                    <div className='page-wrapper' style={{ display: 'flex', flexDirection: 'column'}}>
                         {pageItem?.map((item) => (
                             <button key={item.id} className={`${item.id === selectedId ? 'selected': ''} playlist-item-in-dialog`}
                                     onClick={() => onSelect(item.id)}
