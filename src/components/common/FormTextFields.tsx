@@ -1,8 +1,6 @@
 import React from 'react'
 import TextField from '@mui/material/TextField';
-import TagBtn from './TagBtn';
 import PasswordField from './PasswordField';
-import { GENDER_OPTIONS } from '@/types/user/profile';
 import GenderSelect from '../auth/GenderSelect';
 
 type FieldData = {
