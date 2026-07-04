@@ -89,6 +89,7 @@ const SearchPlaylists = () => {
       </BottomDialog>
 
       <PlaylistList
+        query={query}
         playlists={sortedPlaylists}
         loading={isLoading || isFetchingNextPage}
         hasMore={hasNextPage}

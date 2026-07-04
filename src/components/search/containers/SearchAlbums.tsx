@@ -79,6 +79,7 @@ const SearchAlbums = () => {
       </BottomDialog>
 
       <AlbumList
+       query={query}
         albums={sortedAlbums}
         loading={isLoading || isFetchingNextPage}
         hasMore={hasNextPage}

@@ -22,10 +22,10 @@ const Results = () => {
 
   return (
     <div className='allReslts-container'>
-      <ArtistSection data={allData?.artists ?? []} loading={isLoading} />
-      <TrackSection data={allData?.tracks ?? []} loading={isLoading} />
-      <AlbumSection data={allData?.albums ?? []} loading={isLoading} />
-      <PlaylistSection data={allData?.playlists ?? []} loading={isLoading} />
+      <ArtistSection data={allData?.artists ?? []} loading={isLoading} query={query}/>
+      <TrackSection data={allData?.tracks ?? []} loading={isLoading} query={query}/>
+      <AlbumSection data={allData?.albums ?? []} loading={isLoading} query={query}/>
+      <PlaylistSection data={allData?.playlists ?? []} loading={isLoading} query={query}/>
     </div>
   );
 };

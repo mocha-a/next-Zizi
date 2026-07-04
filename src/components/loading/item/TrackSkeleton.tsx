@@ -32,9 +32,9 @@ const TrackSkeleton = ({ index, page = '', mode = 'default' }: PropsType) => {
         
         <div style={{ alignItems: 'center' }}>
           <p>
-            <Skeleton variant="rectangular" width={120} height={15} />
+            <Skeleton variant="rounded" width={120} height={15} />
           </p>
-          <Skeleton variant="rectangular" width={80} height={13} />
+          <Skeleton variant="rounded" width={80} height={13} />
         </div>
       </div>
 

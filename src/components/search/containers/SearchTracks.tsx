@@ -35,7 +35,6 @@ const SearchTracks = () => {
     enabled: !!query,
   }); 
 
-  console.log(tracks);
   const sortedTracks = (() => {
     if (!sortType) return tracks;
 
@@ -79,6 +78,7 @@ const SearchTracks = () => {
       </BottomDialog>
 
       <TrackList
+        query={query}
         tracks={sortedTracks}
         loading={isLoading || isFetchingNextPage}
         hasMore={hasNextPage}

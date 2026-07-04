@@ -1,10 +1,12 @@
 'use client';
 import InfiniteScroll from '@/components/common/InfiniteScroll';
 import ArtistSkeleton from '@/components/loading/item/ArtistSkeleton';
+import EmptyState from '@/components/common/EmptyState';
 import { Artist } from '@/types/deezer/deezer';
 import ArtistCard from './ArtistCard';
 
 interface Props {
+  query: string;
   artists: Artist[];
   loading: boolean;
   hasMore: boolean;
@@ -12,7 +14,7 @@ interface Props {
   onClick: (id: number) => void;
 }
 
-const ArtistList = ({ artists, loading, hasMore, onLoadMore, onClick }: Props) => {
+const ArtistList = ({ query, artists, loading, hasMore, onLoadMore, onClick }: Props) => {
 
   if (!artists.length && loading) {
     return (
@@ -26,7 +28,12 @@ const ArtistList = ({ artists, loading, hasMore, onLoadMore, onClick }: Props) =
 
   // 검색 결과 없음
   if (!artists.length && !hasMore) {
-    return <div>검색 결과 없음</div>;
+    return <EmptyState
+              title="🎤"
+              keyword={query}
+              description={`와 \n 일치하는 아티스트가 없어 இᯅஇ`}
+              className='search-results'
+            />
   }
 
   return (

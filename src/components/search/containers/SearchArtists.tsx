@@ -97,6 +97,7 @@ const SearchArtists = () => {
       </BottomDialog>
 
       <ArtistList
+        query={query}
         artists={artistsWithLevel}
         loading={isLoading || isFetchingNextPage}
         hasMore={hasNextPage}
