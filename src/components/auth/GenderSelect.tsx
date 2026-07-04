@@ -6,16 +6,21 @@ interface Props {
   onChange?: (value: string | null) => void;
   readonly?: boolean;
   className?: string;
+  allowClear?: boolean;
 }
 
-function GenderSelect({ value, onChange, readonly, className }: Props) {
+function GenderSelect({ value, onChange, readonly, className, allowClear = false }: Props) {
   return (
     <div className={`gender-item-box ${className ?? ''}`}>
       {GENDER_OPTIONS.map((option) => (
         <div
           key={option.label}
           onClick={() => {
-            if (!readonly) {
+            if (readonly) return;
+
+            if (allowClear && value === option.value) {
+              onChange?.(null);
+            } else {
               onChange?.(option.value);
             }
           }}

@@ -18,7 +18,7 @@ function EmptyState({ className, image, title = '텅!', description, keyword }: 
       </p>
 
       <p className="empty-state__description">
-        <span className="empty-state__keyword"> &#39;{keyword}&#39;</span>
+        {keyword && <span className="empty-state__keyword"> &#39;{keyword}&#39;</span> }
         {description}
       </p>
     </div>

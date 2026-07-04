@@ -37,9 +37,9 @@ const MyRoom = ({ user }: Props) => {
 
   const mutation = useMutation({
     mutationFn: (data: {
-      nickname: string;
-      birth: string;
-      gender: string;
+      nickname?: string;
+      birth?: string;
+      gender?: string | null;
     }) => api.put('/user/profile', data),
 
     onSuccess: () => {
@@ -70,20 +70,29 @@ const MyRoom = ({ user }: Props) => {
       return;
     }
 
-    if (!nickname || !birth || !gender) {
-      alert('모든 항목을 입력해주세요.');
-      return;
+    const data: {
+      nickname?: string;
+      birth?: string;
+      gender?: string | null;
+    } = {};
+
+    if (nickname !== (user?.nickname ?? '')) {
+      data.nickname = nickname;
     }
 
-    mutation.mutate({
-      nickname,
-      birth,
-      gender,
-    });
+    if (birth !== (user?.birth ?? '')) {
+      data.birth = birth;
+    }
+
+    if (gender !== (user?.gender ?? null)) {
+      data.gender = gender;
+    }
+
+    mutation.mutate(data);
   };
 
   const Empty = () => (
-    <span className="empty-state">입력 대기중...</span>
+    <span className="input-placeholder">입력 대기중...</span>
   );
 
   return (
@@ -199,6 +208,7 @@ const MyRoom = ({ user }: Props) => {
           <p className='myRoom-label'>👤 성별</p>
 
           <GenderSelect
+            allowClear
             value={isEditMode ? gender : user?.gender ?? null}
             onChange={setGender}
             readonly={!isEditMode}

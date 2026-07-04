@@ -3,6 +3,7 @@ import TextField from '@mui/material/TextField';
 import TagBtn from './TagBtn';
 import PasswordField from './PasswordField';
 import { GENDER_OPTIONS } from '@/types/user/profile';
+import GenderSelect from '../auth/GenderSelect';
 
 type FieldData = {
   label?: string,
@@ -23,17 +24,17 @@ export const FormTextFielFieldDatas = ({ listData, formData, errors, onChange }:
     <>
       {listData.map((item, i) =>
         item.type === 'gender' ? (
-          <div className='join-gender-box' key={i}>
+          <div className="join-gender-box" key={i}>
             <p>성별</p>
-
-            {GENDER_OPTIONS.map(g =>
-              <TagBtn
-                key={g.value}
-                tagbtn={g.label}
-                className={`join-tagbtn ${formData.gender === g.value ? 'active' : ''}`}
-                onClick={() => onChange('gender', g.value)}
-              />
-            )}
+            <GenderSelect
+              value={formData.gender}
+              onChange={(value) => {
+                if (value !== null) {
+                  onChange('gender', value);
+                }
+              }}
+              className="join-tagbtn"
+            />
           </div>
         ) : item.type.includes('password') ? (
           <PasswordField
