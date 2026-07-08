@@ -22,9 +22,9 @@
       // ===========
       // 로그인 후
       // ===========
-      .myPage-name{
+      .myPage-name{ color: $orange; }
+      .myPage-name, .myPage-emoji{
         font-family: var(--font-Galmuri9), var(--font-emoji);
-        color: $orange;
       }
 
       // ===========

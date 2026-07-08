@@ -1,6 +1,6 @@
 import { GREETINGS_BY_TIME } from "@/constants/greetings";
 
-export function getGreeting(name: string) {
+export function getGreeting() {
   const hour = Number(
     new Intl.DateTimeFormat('ko-KR', {
       hour: 'numeric',
@@ -15,10 +15,10 @@ export function getGreeting(name: string) {
 
   const randomIndex = Math.floor(Math.random() * group.texts.length);
 
-  const text = group.texts[randomIndex](name);
+  const greeting = group.texts[randomIndex];
 
   return {
     id: group.id,
-    lines: text.split('\n'),
+    lines: greeting.lines,
   };
 }

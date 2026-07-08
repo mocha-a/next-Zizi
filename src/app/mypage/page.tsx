@@ -1,11 +1,12 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useUserProfile } from '@/hooks/useUserProfile';
 import { usePlaylistEditStore } from '@/store/usePlaylistEditStore';
+import { getGreeting } from '@/lib/getGreeting';
 
 import LogoutButton from '@/components/auth/LogoutButton';
 import PageTitle from '@/components/common/PageTitle';
@@ -41,6 +42,8 @@ function Page() {
     { label: '내 프로필', content: <MyRoom user={user} /> },
   ];
 
+  const greeting = useMemo(() => getGreeting(), []);
+
   if (status === 'loading') return null;
 
   return (
@@ -54,12 +57,19 @@ function Page() {
           <div className='myPage-greeting'>
             {session ? (
               <div>
-                <span className='myPage-name'>
-                  {name}
-                </span> 님의
                 <p>
-                  아침을 깨우는 <br />
-                  상쾌한 비트 시작 -! ♬
+                  {greeting.lines.map((line, index) => (
+                    <span key={index}>
+                      {line.map((segment, i) =>
+                        segment.isName ? (
+                          <span key={i} className='myPage-name'> {name} </span>
+                        ) : (
+                          <span key={i} className='myPage-emoji'> {segment.text} </span>
+                        )
+                      )}
+                      <br />
+                    </span>
+                  ))}
                 </p>
               </div>
             ) : (
