@@ -33,7 +33,7 @@ const Page = () => {
   // 탭 정의
   const tabs = [
     { label: '앨범', content: <ArtistAlbums id={id} artist={artist}/> },
-    { label: '인기곡', content: <ArtistTracks id={id} /> }
+    { label: '인기곡', content: <ArtistTracks id={id} name={artist?.name || ''} /> }
   ];
 
   useEffect(() => {
@@ -46,7 +46,7 @@ const Page = () => {
       isLoggedIn: !!session,
     });
   }, [id, session?.user?.id]);
-
+  console.log(artist);
   return (
     <div className="artist-detail">
       {isLoading ? (
