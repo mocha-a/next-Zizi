@@ -32,9 +32,12 @@ const ArtistTracks = ({ id, name }: Props) => {
         ) ?? []);
 
   return (
-    <div>
+    <div className="artistTrack-contauiner">
       {topTracks.length === 0 &&
-        <p>인기곡 정보를 제공하지 않아, 우리 아티스트의 곡을 만나봐! ( ^_- ) ☆</p>
+        <div className='artistTrack-info'>
+          <p className='quote'>어떤 곡이든 다 명곡이니까,</p>
+          <p>{name}의 전체 트랙을 지금 바로 만나보자 ! (｡•̀ᴗ-)✧</p>
+        </div>
       }
       <TrackList
         tracks={tracks}

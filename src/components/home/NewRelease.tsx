@@ -39,7 +39,7 @@ function NewRelease() {
     queryFn: () => getNewRelease(),
     staleTime: 1000 * 60 * 30,
   });
-
+console.log(newRelease)
   if (error) return <div>데이터 로딩 실패</div>;
   
   // const [data, setData] = useState<Album[]>([]);
