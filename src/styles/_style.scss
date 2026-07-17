@@ -134,7 +134,7 @@ input:checked + .tagbtn{
 
         // 필수 입력 *
         .MuiFormLabel-asterisk {
-            color: $orange;
+            color: currentColor;
         }
     }
 

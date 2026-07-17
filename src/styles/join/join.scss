@@ -28,6 +28,10 @@
             .join-tagbtn{
                 margin: 7px 10px 16px 0;
             }
+            .gender-item-box{
+                @include flex;
+                
+            }
         }
         .info{
             display: block;
