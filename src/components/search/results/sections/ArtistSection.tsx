@@ -29,7 +29,7 @@ const ArtistSection = ({ data, loading, query }: Props) => {
         <Swiper slidesPerView={3.35} className="mySwiper artist-container">
           {Array.from({ length: 5 }).map((_, i) => (
             <SwiperSlide key={i}>
-              <ArtistSkeleton showSubText={false}/>
+              <ArtistSkeleton showSubText={false} width="100%" />
             </SwiperSlide>
           ))}
         </Swiper>

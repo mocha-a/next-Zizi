@@ -2,7 +2,7 @@
 
 export interface JoinField {
     label?: string;
-    type: 'name' | 'username' | 'email' | 'password' | 'password-check' | 'nickname' | 'date' | 'gender';
+    type: 'name' | 'username' | 'email' | 'password' | 'password-check' | 'security-question' | 'security-answer' | 'nickname' | 'date' | 'gender';
     placeholder?: string;
     required: boolean;
 }
