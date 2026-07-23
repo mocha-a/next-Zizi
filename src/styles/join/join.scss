@@ -30,7 +30,7 @@
             }
             .gender-item-box{
                 @include flex;
-                
+                gap: 10px;
             }
         }
         .info{
