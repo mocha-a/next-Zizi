@@ -1,31 +1,19 @@
 'use client';
 
 import Image from "next/image";
-// import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Grid, Pagination } from 'swiper/modules';
+import { useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
+import { Album } from "@/types/deezer/deezer";
+import { getNewRelease } from "@/lib/api/new";
+import HomeMediaSkeleton from "../loading/item/HomeMediaSkeleton";
+import Play from "../icons/Play";
 
 import 'swiper/css';
 import 'swiper/css/grid';
 import 'swiper/css/pagination';
 
-import Play from "../icons/Play";
-import HomeMediaSkeleton from "../loading/item/HomeMediaSkeleton";
-import { Album } from "@/types/deezer/deezer";
-import { useQuery } from "@tanstack/react-query";
-import { getNewRelease } from "@/lib/api/new";
-import { useRouter } from "next/navigation";
-
-// type Album = {
-//   id: string;
-//   name: string;
-//   images: {
-//     url: string;
-//   }[];
-//   artists: {
-//     name: string;
-//   }[];
-// };
 
 interface newType {
   data: Album[];
@@ -41,31 +29,6 @@ function NewRelease() {
   });
 
   if (error) return <div>데이터 로딩 실패</div>;
-  
-  // const [data, setData] = useState<Album[]>([]);
-  // const [loading, setLoading] = useState(false);
-  // const [error, setError] = useState<string | null>(null);
-
-  // useEffect(() => {
-  //   setLoading(true);
-  //   setError(null);
-
-  //   fetch('/api/spotify/spotify-new-releases')
-  //     .then(res => {
-  //       if (!res.ok) throw new Error('Failed to fetch new releases');
-  //       return res.json();
-  //     })
-  //     .then(data => {
-  //       // Spotify API의 데이터 구조에 맞게 파싱
-  //       // data.albums.items 가 앨범 배열임
-  //       setData(data.albums.items);
-  //     })
-  //     .catch(err => setError(err.message))
-  //     .finally(() => setLoading(false));
-  // }, []);
-
-  // if (loading) return <p>로딩 중...</p>;
-  // if (error) return <p>에러: {error}</p>;
 
   return (
     <div className='NewRelease-container'>
