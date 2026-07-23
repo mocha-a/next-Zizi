@@ -4,8 +4,10 @@ import type { Album } from '@/types/deezer/deezer';
 import InfiniteScroll from '@/components/common/InfiniteScroll';
 import MediaSkeleton from '@/components/loading/item/MediaSkeleton';
 import AlbumCard from './AlbumCard';
+import EmptyState from '@/components/common/EmptyState';
 
 interface Props {
+  query: string;
   albums: Album[];
   artist?: SearchArtist;
   loading: boolean;
@@ -14,7 +16,7 @@ interface Props {
   onClick: (id: number) => void;
 }
 
-const AlbumList = ({ albums, loading, hasMore, loadMore, onClick, artist }: Props) => {
+const AlbumList = ({ query, albums, loading, hasMore, loadMore, onClick, artist }: Props) => {
 
   // 초기 로딩
   if (!albums.length && loading) {
@@ -29,7 +31,12 @@ const AlbumList = ({ albums, loading, hasMore, loadMore, onClick, artist }: Prop
 
   // 결과 없음
   if (!albums.length && !hasMore) {
-    return <div>검색 결과 없음</div>;
+    return <EmptyState
+              title="💿"
+              keyword={query}
+              description={`와 \n 일치하는 앨범이 없어 இᯅஇ`}
+              className='search-results'
+            />
   }
 
   return (
