@@ -17,7 +17,7 @@ function Dashboard() {
 
     const { data: playlistsOfApi, isLoading : isApiLoading, error : isApiError } = useQuery<any, Error>({
         queryKey: ['playlistsOfApi', 'playlistsOfApi'],
-        queryFn: () =>  getChart.getGlobalTracks('playlists'),
+        queryFn: () =>  getChart.getGlobalTracks({ type: 'playlists' }),
         staleTime: 1000 * 60 * 30,
     });
 

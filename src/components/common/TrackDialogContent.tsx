@@ -13,12 +13,12 @@ import Plus from "../icons/Plus";
 import TagBtn from "./TagBtn";
 import PlaylistSwiplerinDialog from "./PlaylistSwiperinDialog";
 import TextField from "@mui/material/TextField";
-import { usePlaylistStore } from "@/store/usePlaylistStore";
 import Popup from "./Popup";
 import { useTrackStore } from "@/store/useSelectedTrackStore";
 import { useTrackDialog } from "@/store/useTrackDialog";
 import { useSnackbarStore } from "@/store/useSnackbarStore";
 import { queryClient } from "@/lib/react-query/queryClient";
+import EmptyState from "./EmptyState";
 
 interface Types {
   trackData: Track;  // data
@@ -37,7 +37,6 @@ export default function TrackDialogContent({ trackData }: Types) {
   const [selectedPlaylistId, setSelectedPlaylistId] = useState<number | null>(null);
   const [newPlaylistName, setNewPlaylistName] = useState('');
   const show = useSnackbarStore(state => state.show);
-  // const addSong = usePlaylistStore(state => state.addSong);
   const setTitle = useTrackStore(state => state.setTitle);
   const toggleSelect = useTrackStore((state) => state.toggleSelect);
   const addSelectedToPlaylist = useTrackStore((state) => state.addSelectedToPlaylist);
@@ -65,6 +64,13 @@ export default function TrackDialogContent({ trackData }: Types) {
 
     setStep('add');
   };
+
+  const { data: playlistsOfUser } = useQuery<MyPlaylist[]>({
+    queryKey: ['myplaylist', user?.id],
+    queryFn: () => getPlaylists(),
+    enabled: !!user?.id,
+    staleTime: 0,
+  });
 
   const updateMutation = useMutation({
     mutationFn: ({ id, data }: UpdatePlaylistParams) =>
@@ -156,14 +162,6 @@ export default function TrackDialogContent({ trackData }: Types) {
       closeDialog();
     };
   };
-
-  const { data: playlistsOfUser } = useQuery<MyPlaylist[]>({
-    queryKey: ['myplaylist', user?.id],
-    queryFn: () => getPlaylists(),
-    enabled: !!user?.id,
-    staleTime: 0,
-  });
-  
   
   return (
     <div className="track-dialog-content">
@@ -201,16 +199,23 @@ export default function TrackDialogContent({ trackData }: Types) {
               새 플레이리스트
             </button>
           </div>
-          <p className="og-txt-in-dialog">
-            {user?.nickname ? user.nickname : user?.name} 님이 생성한 플리에요 !
-          </p>
-          <PlaylistSwiplerinDialog 
-            myListItem={playlistsOfUser}
-            selectedId={selectedPlaylistId}
-            onSelect={setSelectedPlaylistId}/>
-          <div className="complete-btn-box-in-dialog">
-            <TagBtn tagbtn="선택" className="complete-btn-in-dialog" onClick={() => handleSelectTrack()}/>
-          </div>
+          {playlistsOfUser?.length != 0 ? (
+            // 사용자가 저장한 플레이리스트가 있을 때만 표시
+            <>
+              <p className="og-txt-in-dialog">
+                {user?.nickname ? user.nickname : user?.name} 님이 생성한 플리에요 !
+              </p>
+              <PlaylistSwiplerinDialog 
+                myListItem={playlistsOfUser}
+                selectedId={selectedPlaylistId}
+                onSelect={setSelectedPlaylistId}/>
+              <div className="complete-btn-box-in-dialog">
+                <TagBtn tagbtn="선택" className="complete-btn-in-dialog" onClick={() => handleSelectTrack()}/>
+              </div>
+            </>
+          ) : (
+            <EmptyState className="empty-in-dialog" title="텅 - ❗" description="아직 생성한 플리가 없어요 (T_T)"/>
+          )}
         </div>
       )}
       

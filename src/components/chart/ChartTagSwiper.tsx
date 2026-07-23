@@ -30,8 +30,8 @@ function ChartTagSwiper({tagList, selectedTag, setSelectedTag}: TagSwiperProps) 
             >
                 {tagList.map((tag) => (
                     <SwiperSlide key={tag.id}>
-                        <button onClick={() => {setSelectedTag(tag.id)}}>
-                            <TagBtn tagbtn={tag.name} className={`chart-tagbtn ${selectedTag === tag.id ? 'active' : ''}`}/>
+                        <button onClick={() => {setSelectedTag(String(tag.id))}}>
+                            <TagBtn tagbtn={tag.name} className={`chart-tagbtn ${String(selectedTag) === String(tag.id) ? 'active' : ''}`}/>
                         </button>
                     </SwiperSlide>
                 ))}
