@@ -20,6 +20,8 @@ import PlaylistCard from '../../entities/playlist/ui/playlist/PlaylistCard';
 import '@/styles/myPlaylist/newPlaylist.scss';
 import AddPlaylistButton from '@/components/common/AddPlaylistButton';
 import { useSnackbarStore } from '@/store/useSnackbarStore';
+import EmptyState from '@/components/common/EmptyState';
+import CDcase from '@/components/icons/CDcase';
 
 const MyPlaylistsSection = () => {
   const { isEditMode, selectedIds, toggleSelect, setEditMode, setSelectedIds } = usePlaylistEditStore();
@@ -185,7 +187,14 @@ const MyPlaylistsSection = () => {
             <MediaSkeleton key={`init-${i}`} />
           ))}
         </div>
-      ) : isEditMode ? (
+        
+      ) : localList.length === 0 ? (
+        <EmptyState
+          image={<CDcase />}
+          title="텅 - ❗"
+          description="온전히 너의 취향으로 가득 채워봐 ⋆｡°"
+        />
+        ) : isEditMode ? (
         // 편집모드
         <ul className="playlist-list myplaylist-list">
           <PlaylistListDnD
