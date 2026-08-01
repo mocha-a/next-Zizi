@@ -65,7 +65,7 @@ const Page = () => {
     (acc, cur) => acc + cur.duration,
     0
   );
-console.log(myplaylist);
+// console.log(myplaylist);
   return (
     <div className='playlist-detail'>
       <div className='playlist-header detailHeader'>

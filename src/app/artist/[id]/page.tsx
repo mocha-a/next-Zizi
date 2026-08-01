@@ -46,7 +46,7 @@ const Page = () => {
       isLoggedIn: !!session,
     });
   }, [id, session?.user?.id]);
-  console.log(artist);
+  // console.log(artist);
   return (
     <div className="artist-detail">
       {isLoading ? (

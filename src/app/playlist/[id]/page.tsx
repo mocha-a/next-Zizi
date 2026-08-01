@@ -31,7 +31,7 @@ const Page = () => {
     queryFn: () => getPlaylist(Number(id)),
     enabled: !!id,
   });
-  console.log(playlist);
+  // console.log(playlist);
 
   // 플레이리스트 제작자 api
   const creatorId = playlist?.creator?.id;

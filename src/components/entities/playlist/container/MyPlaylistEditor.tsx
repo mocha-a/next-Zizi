@@ -145,7 +145,7 @@ const MyPlaylistEditor = ({ mode='create', myplaylistData, tracksData } : Props)
 
     reorder(result.source.index, result.destination.index);
   };
-  console.log(playlist);
+  // console.log(playlist);
   return (
     <div className='new-playlist-page'>
       <NewPlaylistForm
