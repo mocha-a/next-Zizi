@@ -2,6 +2,7 @@ import React from 'react'
 import Image from "next/image";
 import TrackItemRight from './TrackItemRight';
 import { Track } from '@/types/deezer/deezer';
+import { useRouter } from 'next/navigation';
 
 interface PropsType {
     track: Track;  // data
@@ -10,6 +11,7 @@ interface PropsType {
 }
 
 function TrackItem({track, page = '', index}: PropsType) {
+    const router = useRouter();
 
   return (
     <li>
@@ -20,7 +22,7 @@ function TrackItem({track, page = '', index}: PropsType) {
                 <span className='trackitem-num-home'>{index + 1}</span>
             )}
 
-            <div className='trackitem-image'>
+            <div className='trackitem-image' onClick={() => router.push(`/album/${track.album?.id}`)}>
                 <Image
                 src={track?.album?.cover_medium || "/default.png"}
                 alt="album"
@@ -39,7 +41,7 @@ function TrackItem({track, page = '', index}: PropsType) {
             
             <div>
                 <p>{track?.title}</p>
-                <span>{track?.artist?.name}</span>
+                <span onClick={() => router.push(`/artist/${track?.artist?.id}`)}>{track?.artist?.name}</span>
             </div>
         </div>
 
