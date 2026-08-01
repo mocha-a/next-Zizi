@@ -37,6 +37,17 @@ function page() {
             required: true
         },
         {
+            label: '비밀번호 찾기 질문',
+            type: 'security-question',
+            required: true,
+        },
+        {
+            label: '답변',
+            type: 'security-answer',
+            placeholder: '질문의 답을 입력해주세요.',
+            required: true,
+        },
+        {
             label: '닉네임',
             type: 'nickname',
             placeholder: "ex) 🎧 zi존_뮤직 🎧",
