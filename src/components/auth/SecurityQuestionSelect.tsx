@@ -36,8 +36,8 @@ const SecurityQuestionSelect = ({ value, onChange }: Props) => {
       }}
     >
       {SECURITY_QUESTIONS.map((question) => (
-        <MenuItem key={question} value={question} >
-          {question}
+        <MenuItem key={question.id} value={question.id}>
+          {question.label}
         </MenuItem>
       ))}
     </TextField>

@@ -61,6 +61,10 @@ function JoinForm({ listData }: { listData: JoinField[] }) {
         const emailReg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailReg.test(value)) error = "📧 이메일 형식으로 입력해줘";
         break;
+
+      case 'security-answer':
+        if (!value.trim()) error = '💬 답변을 입력해줘';
+        break;
     }
 
     return error;
@@ -159,6 +163,8 @@ function JoinForm({ listData }: { listData: JoinField[] }) {
         nickname: formData.nickname,
         birth: formData.birth,
         gender: formData.gender,
+        securityQuestion: formData.securityQuestion,
+        securityAnswer: formData.securityAnswer,
       });
 
     } catch (err) {

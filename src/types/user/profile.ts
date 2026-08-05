@@ -19,6 +19,8 @@ export interface JoinData {
   nickname?: string;
   birth?: string;
   gender?: string;
+  securityQuestion: string;
+  securityAnswer: string;
 }
 
 export const GENDER_OPTIONS = [

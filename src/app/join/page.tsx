@@ -38,13 +38,13 @@ function page() {
         },
         {
             label: '비밀번호 찾기 질문',
-            type: 'security-question',
+            type: 'securityQuestion',
             required: true,
         },
         {
             label: '답변',
-            type: 'security-answer',
-            placeholder: '질문의 답을 입력해주세요.',
+            type: 'securityAnswer',
+            placeholder: '질문의 답을 입력해줘',
             required: true,
         },
         {

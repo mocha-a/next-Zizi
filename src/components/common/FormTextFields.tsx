@@ -45,7 +45,7 @@ export const FormTextFielFieldDatas = ({
           );
         }
 
-        if (item.type === 'security-question') {
+        if (item.type === 'securityQuestion') {
           return (
             <SecurityQuestionSelect
               key={i}

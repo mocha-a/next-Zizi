@@ -7,10 +7,10 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
 
-    const { name, username, password, email, nickname, birth, gender } = body;
+    const { name, username, password, email, nickname, birth, gender, securityQuestion, securityAnswer } = body;
 
     // 필수값 체크
-    if (!username || !password || !email) {
+    if (!username || !password || !email || !securityQuestion || !securityAnswer) {
       return NextResponse.json(
         { message: '필수값이 누락되었습니다.' },
         { status: 400 }
@@ -44,6 +44,9 @@ export async function POST(req: NextRequest) {
     // 비밀번호 암호화
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    // 비밀번호 찾기 질문 답변 암호화
+    const hashedSecurityAnswer = await bcrypt.hash(securityAnswer, 10);
+
     // 회원 생성
     const user = await prisma.user.create({
       data: {
@@ -54,6 +57,8 @@ export async function POST(req: NextRequest) {
         nickname,
         birth,
         gender,
+        securityQuestion,
+        securityAnswer: hashedSecurityAnswer,
       },
     });
 
