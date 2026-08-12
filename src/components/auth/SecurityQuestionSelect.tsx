@@ -5,8 +5,6 @@ import Drop from '../icons/Drop';
 
 interface Props {
   value?: string;
-  error?: string;
-  required?: boolean;
   onChange: (value: string) => void;
 }
 

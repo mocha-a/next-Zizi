@@ -50,8 +50,6 @@ export const FormTextFielFieldDatas = ({
             <SecurityQuestionSelect
               key={i}
               value={formData.securityQuestion}
-              error={errors.securityQuestion}
-              required={item.required}
               onChange={(value) => onChange('securityQuestion', value)}
             />
           );

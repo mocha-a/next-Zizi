@@ -8,10 +8,13 @@ import LongBtn from '@/components/common/LongBtn'
 import LoginButtons from '@/components/Login/LoginButton'
 
 import '../../styles/login/login.scss'
+import BottomDialog from '@/components/common/Dialog';
+import PasswordFind from '@/components/Login/PasswordFind';
 
 function Page() {
   const router = useRouter();
   const [formData, setFormData] = useState<Record<string, string>>({})
+  const [passwordFindOpen, setPasswordFindOpen] = useState(false)
   const [errors] = useState<Record<string, string>>({})
 
   const handleChange = (type: string, value: string) => {
@@ -78,16 +81,35 @@ function Page() {
         disabled={!isValid}
       />
 
-      {/* 회원가입 버튼 */}
-      <Link href="/join">
-        <button className='login-join-btn'>회원가입</button>
-      </Link>
+      {/* 회원가입 / 비밀번호 찾기 */}
+      <div className="login-link-container">
+        <Link href="/join">
+          <button className="login-join-btn">
+            회원가입
+          </button>
+        </Link>
+
+        <button
+          className="password-find-btn"
+          onClick={() => setPasswordFindOpen(true)}
+        >
+          비밀번호 찾기
+        </button>
+      </div>
 
       {/* 소셜 로그인 */}
       <div className='login-social-container'>
         <span>소셜 로그인</span>
         <LoginButtons />
       </div>
+
+      {/* 비밀번호 찾기 */}
+      <BottomDialog
+        open={passwordFindOpen}
+        onClose={() => setPasswordFindOpen(false)}
+      >
+        <PasswordFind />
+      </BottomDialog>
     </div>
   )
 }

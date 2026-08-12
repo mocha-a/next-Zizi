@@ -31,3 +31,14 @@ export const checkDuplicate = async (
 
   return res.data;
 };
+
+// 비밀번호 찾기 본인 확인
+export const verifyPassword = async (data: {
+  username: string;
+  securityQuestion: string;
+  securityAnswer: string;
+}) => {
+  const res = await api.post('/auth/password/verify', data);
+
+  return res.data;
+};
