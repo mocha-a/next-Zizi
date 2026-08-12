@@ -12,8 +12,6 @@ import Agree from '@/components/join/Agree';
 
 function JoinForm({ listData }: { listData: JoinField[] }) {
   const router = useRouter();
-  const [emailChecked, setEmailChecked] = useState(false);
-  const [emailAvailable, setEmailAvailable] = useState<boolean | null>(null);
   const [formData, setFormData] = useState<Record<string, string>>({});
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isAgree, setIsAgree] = useState(false); // 약관 동의
@@ -71,11 +69,6 @@ function JoinForm({ listData }: { listData: JoinField[] }) {
   };
 
   const handleFormChange = (type: string, value: string) => {
-      if (type === 'email') {
-        setEmailChecked(false);
-        setEmailAvailable(null);
-      }
-
       // 아이디, 이메일은 공백 제거
       if (type === 'username' || type === 'email') {
           value = value.replace(/\s/g, '');

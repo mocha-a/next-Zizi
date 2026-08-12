@@ -15,6 +15,7 @@ function Page() {
   const router = useRouter();
   const [formData, setFormData] = useState<Record<string, string>>({})
   const [passwordFindOpen, setPasswordFindOpen] = useState(false)
+  const [passwordFindStep, setPasswordFindStep] = useState<'verify' | 'reset'>('verify');
   const [errors] = useState<Record<string, string>>({})
 
   const handleChange = (type: string, value: string) => {
@@ -83,11 +84,11 @@ function Page() {
 
       {/* 회원가입 / 비밀번호 찾기 */}
       <div className="login-link-container">
-        <Link href="/join">
-          <button className="login-join-btn">
+        <Link href="/join" className="login-join-btn">
             회원가입
-          </button>
         </Link>
+
+        <span className="login-link-divider">|</span>
 
         <button
           className="password-find-btn"
@@ -107,8 +108,15 @@ function Page() {
       <BottomDialog
         open={passwordFindOpen}
         onClose={() => setPasswordFindOpen(false)}
+        title={
+          passwordFindStep === 'verify'
+            ? '비밀번호 찾기'
+            : '새 비밀번호 설정'
+        }
       >
-        <PasswordFind />
+        <PasswordFind
+          setPasswordFindStep={setPasswordFindStep}
+        />
       </BottomDialog>
     </div>
   )

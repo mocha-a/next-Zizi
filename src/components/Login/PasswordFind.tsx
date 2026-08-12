@@ -2,15 +2,21 @@
 
 import React, { useState } from 'react'
 import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import { verifyPassword } from '@/lib/api/user'
 import SecurityQuestionSelect from '../auth/SecurityQuestionSelect'
 import { useSnackbarStore } from '@/store/useSnackbarStore';
+import LongBtn from '../common/LongBtn'
 
-function PasswordFind() {
-    const show = useSnackbarStore(state => state.show);
+interface Props {
+  setPasswordFindStep: React.Dispatch<
+    React.SetStateAction<'verify' | 'reset'>
+  >;
+}
+
+function PasswordFind({ setPasswordFindStep }: Props) {
+  const show = useSnackbarStore(state => state.show);
   const [step, setStep] = useState<'verify' | 'reset'>('verify')
 
   const [formData, setFormData] = useState({
@@ -31,40 +37,43 @@ function PasswordFind() {
     }))
   }
 
-    const handleVerify = async () => {
+  // 일치하는 회원 찾기
+  const handleVerify = async () => {
     try {
-        const data = await verifyPassword({
+      const data = await verifyPassword({
         username: formData.id,
         securityQuestion: formData.securityQuestion,
         securityAnswer: formData.answer,
-        });
+      });
 
-        if (data.success) {
+      if (data.success) {
         setStep('reset');
-        }
+        setPasswordFindStep('reset');
+      }
     } catch (error) {
         console.error('비밀번호 찾기 본인 확인 에러:', error);
 
-        show('일치하는 회원이 없어 இᯅஇ');
+        show('일치하는 zi존이가 없어 இᯅஇ');
     }
-    };
+  };
 
   const handleReset = () => {
     // 나중에 API 연결
     console.log('비밀번호 변경', formData)
   }
 
+  const isValid =
+    formData.id.trim() !== '' &&
+    formData.securityQuestion !== '' &&
+    formData.answer.trim() !== ''
+
   return (
     <Box className="password-find">
       {step === 'verify' ? (
         <>
-          <Typography className="password-find-title">
-            비밀번호 찾기
-          </Typography>
-
           <TextField
             label="아이디"
-            placeholder="아이디를 입력해주세요."
+            placeholder="아이디를 입력해줘"
             className="textfield"
             variant="standard"
             value={formData.id}
@@ -83,7 +92,7 @@ function PasswordFind() {
 
           <TextField
             label="답변"
-            placeholder="답변을 입력해주세요."
+            placeholder="답변을 입력해줘"
             className="textfield"
             variant="standard"
             value={formData.answer}
@@ -93,19 +102,15 @@ function PasswordFind() {
             fullWidth
           />
 
-          <Button
-            fullWidth
+          <LongBtn
+            label="확인"
+            className={`login ${isValid ? 'active' : ''}`}
             onClick={handleVerify}
-          >
-            확인
-          </Button>
+            disabled={!isValid}
+          />
         </>
       ) : (
         <>
-          <Typography className="password-find-title">
-            새 비밀번호 설정
-          </Typography>
-
           <TextField
             label="새 비밀번호"
             type="password"

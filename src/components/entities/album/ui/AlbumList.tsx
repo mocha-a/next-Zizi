@@ -7,7 +7,7 @@ import AlbumCard from './AlbumCard';
 import EmptyState from '@/components/common/EmptyState';
 
 interface Props {
-  query: string;
+  query?: string;
   albums: Album[];
   artist?: SearchArtist;
   loading: boolean;
