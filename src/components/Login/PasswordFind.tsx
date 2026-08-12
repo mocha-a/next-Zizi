@@ -3,11 +3,11 @@
 import React, { useState } from 'react'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
-import Button from '@mui/material/Button'
 import { verifyPassword } from '@/lib/api/user'
-import SecurityQuestionSelect from '../auth/SecurityQuestionSelect'
 import { useSnackbarStore } from '@/store/useSnackbarStore';
+import SecurityQuestionSelect from '../auth/SecurityQuestionSelect'
 import LongBtn from '../common/LongBtn'
+import PasswordField from '../common/PasswordField'
 
 interface Props {
   setPasswordFindStep: React.Dispatch<
@@ -80,7 +80,6 @@ function PasswordFind({ setPasswordFindStep }: Props) {
             onChange={(e) =>
               handleChange('id', e.target.value)
             }
-            fullWidth
           />
 
           <SecurityQuestionSelect
@@ -99,7 +98,6 @@ function PasswordFind({ setPasswordFindStep }: Props) {
             onChange={(e) =>
               handleChange('answer', e.target.value)
             }
-            fullWidth
           />
 
           <LongBtn
@@ -111,32 +109,26 @@ function PasswordFind({ setPasswordFindStep }: Props) {
         </>
       ) : (
         <>
-          <TextField
+          <PasswordField
             label="새 비밀번호"
-            type="password"
+            className="textfield"
             value={formData.password}
-            onChange={(e) =>
-              handleChange('password', e.target.value)
-            }
-            fullWidth
+            onChange={(value) => handleChange('password', value)}
           />
 
-          <TextField
+          <PasswordField
             label="새 비밀번호 확인"
-            type="password"
+            className="textfield"
             value={formData.passwordConfirm}
-            onChange={(e) =>
-              handleChange('passwordConfirm', e.target.value)
-            }
-            fullWidth
+            onChange={(value) => handleChange('passwordConfirm', value)}
           />
 
-          <Button
-            fullWidth
+          <LongBtn
+            label="비밀번호 변경"
+            className={`login ${isValid ? 'active' : ''}`}
             onClick={handleReset}
-          >
-            비밀번호 변경
-          </Button>
+            disabled={!isValid}
+          />
         </>
       )}
     </Box>

@@ -8,7 +8,7 @@ import EmptyState from '@/components/common/EmptyState';
 import { Track } from '@/types/deezer/deezer';
 
 interface Props {
-  query: string;
+  query?: string;
   tracks: Track[];
   loading: boolean;
   hasMore: boolean;

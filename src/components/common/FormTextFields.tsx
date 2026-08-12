@@ -18,12 +18,7 @@ interface FormTextFieldsProps {
   onChange: (type: string, value: string) => void;
 }
 
-export const FormTextFielFieldDatas = ({
-  listData,
-  formData,
-  errors,
-  onChange,
-}: FormTextFieldsProps) => {
+export const FormTextFielFieldDatas = ({ listData, formData, errors, onChange }: FormTextFieldsProps) => {
   return (
     <>
       {listData.map((item, i) => {
