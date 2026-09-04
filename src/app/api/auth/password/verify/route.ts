@@ -6,7 +6,6 @@ import bcrypt from 'bcryptjs';
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-
     const { username, securityQuestion, securityAnswer } = body;
 
     // 필수값 체크

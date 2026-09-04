@@ -116,6 +116,7 @@ function Page() {
       >
         <PasswordFind
           setPasswordFindStep={setPasswordFindStep}
+          onClose={() => setPasswordFindOpen(false)}
         />
       </BottomDialog>
     </div>

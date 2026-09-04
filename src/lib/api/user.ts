@@ -42,3 +42,13 @@ export const verifyPassword = async (data: {
 
   return res.data;
 };
+
+// 비밀번호 변경
+export const resetPassword = async (data: {
+  username: string;
+  newPassword: string;
+}) => {
+  const res = await api.patch('/auth/password/reset', data);
+  
+  return res.data;
+};

@@ -6,6 +6,7 @@ import { signIn } from "next-auth/react";
 import { useMutation } from '@tanstack/react-query';
 import { JoinField } from '@/types/join';
 import { checkDuplicate, join } from '@/lib/api/user';
+import { validate } from '@/lib/validation';
 import { FormTextFielFieldDatas } from '@/components/common/FormTextFields'
 import LongBtn from '@/components/common/LongBtn';
 import Agree from '@/components/join/Agree';
@@ -35,39 +36,6 @@ function JoinForm({ listData }: { listData: JoinField[] }) {
 
   }, [formData, errors, isAgree, listData]);
   
-  // 유효성 검사
-  const validate = (type: string, value: string, originalPassword?: string) => {
-    let error = "";
-
-    switch (type) {
-      case 'username':
-        const idReg = /^[a-zA-Z0-9]{4,16}$/;
-        if (!idReg.test(value)) error = "✨ 영문 · 숫자를 조합해 4~16자로 입력해줘";
-        break;
-
-      case 'password':
-        const pwReg = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,}$/;
-        if (!pwReg.test(value)) error = "🔒 영문 · 숫자 · 특수문자를 포함해 8자 이상 입력해줘";
-        break;
-
-      case 'password-check':
-        // formdata['password']와 현재 입력값(value) 비교
-        if (value !== originalPassword) error = "🔑 비밀번호를 한 번 더 확인해줘";
-        break;
-
-      case 'email':
-        const emailReg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailReg.test(value)) error = "📧 이메일 형식으로 입력해줘";
-        break;
-
-      case 'security-answer':
-        if (!value.trim()) error = '💬 답변을 입력해줘';
-        break;
-    }
-
-    return error;
-  };
-
   const handleFormChange = (type: string, value: string) => {
       // 아이디, 이메일은 공백 제거
       if (type === 'username' || type === 'email') {

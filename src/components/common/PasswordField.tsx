@@ -16,9 +16,10 @@ interface Props {
   placeholder?: string;
   className?: string;
   onChange: (value: string) => void;
+  onBlur?: () => void;
 }
 
-const PasswordField = ({ label, value, error, required, placeholder, className, onChange }: Props) => {
+const PasswordField = ({ label, value, error, required, placeholder, className, onChange, onBlur }: Props) => {
   const [showPw, setShowPw] = useState(false);
 
   return (
@@ -33,6 +34,7 @@ const PasswordField = ({ label, value, error, required, placeholder, className, 
       error={!!error}
       helperText={error}
       onChange={(e) => onChange(e.target.value)}
+      onBlur={onBlur}
       slotProps={{
         input: { //(input)의 (position="end" = 끝)에 (endAdornment = 추가요소)를 넣어줘
           endAdornment: (
