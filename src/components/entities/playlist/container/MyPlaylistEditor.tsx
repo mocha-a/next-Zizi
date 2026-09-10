@@ -14,7 +14,7 @@ import TrashButton from '@/components/common/TrashButton';
 import NewPlaylistForm from '@/components/entities/playlist/ui/playlist/NewPlaylistForm';
 import PlaylistTrackListDnD from '@/components/entities/playlist/ui/track/PlaylistTrackListDnD';
 
-import '@/styles/myPlaylist/newPlaylist.scss';
+import '@/styles/myPlaylist/NewPlaylist.scss';
 import { useSnackbarStore } from '@/store/useSnackbarStore';
 
 interface Props {

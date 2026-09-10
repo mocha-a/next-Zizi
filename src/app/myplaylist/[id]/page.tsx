@@ -18,7 +18,7 @@ import PlaylistTrackList from '@/components/entities/playlist/container/Playlist
 import MediaPageSkeleton from '@/components/loading/page/MediaPageSkeleton';
 import ThumbnailGrid from '@/components/myPage/myplaylist/ThumbnailGrid';
 
-import '@/styles/myPlaylist/newPlaylist.scss';
+import '@/styles/myPlaylist/NewPlaylist.scss';
 
 const Page = () => {
   const queryClient = useQueryClient();

@@ -17,7 +17,7 @@ import Check from '@/components/icons/Check';
 import ThumbnailGrid from './ThumbnailGrid';
 import PlaylistCard from '../../entities/playlist/ui/playlist/PlaylistCard';
 
-import '@/styles/myPlaylist/newPlaylist.scss';
+import '@/styles/myPlaylist/NewPlaylist.scss';
 import AddPlaylistButton from '@/components/common/AddPlaylistButton';
 import { useSnackbarStore } from '@/store/useSnackbarStore';
 import EmptyState from '@/components/common/EmptyState';
