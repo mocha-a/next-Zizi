@@ -2,15 +2,17 @@ import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 
 interface Props {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 // 내 플리 id기준으로 가져오기
 export async function GET(_req: Request, { params }: Props) {
+  const { id } = await params;
+
   try {
     const playlist = await prisma.playlist.findUnique({
       where: {
-        id: Number(params.id),
+        id: Number(id),
       },
       include: {
         user: true,
@@ -63,11 +65,11 @@ export async function GET(_req: Request, { params }: Props) {
 // 내 플리 수정
 export async function PATCH(req: Request, { params }: Props) {
   try {
-    const body = await req.json();
-    
+    const body = await req.json(); 
     const { title, description, thumbnails, tracks } = body;
 
-    const playlistId = Number(params.id);
+    const { id } = await params;
+    const playlistId = Number(id);
 
     // 플레이리스트 정보 수정
     await prisma.playlist.update({
