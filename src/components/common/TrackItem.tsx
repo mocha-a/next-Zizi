@@ -1,8 +1,8 @@
 import React from 'react'
 import Image from "next/image";
-import TrackItemRight from './TrackItemRight';
-import { Track } from '@/types/deezer/deezer';
 import { useRouter } from 'next/navigation';
+import { Track } from '@/types/deezer/deezer';
+import TrackItemRight from './TrackItemRight';
 
 interface PropsType {
     track: Track;  // data

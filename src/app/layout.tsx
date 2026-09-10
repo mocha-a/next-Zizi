@@ -4,13 +4,14 @@ import NextAuthProvider from "./providers";
 import SessionGate from "@/components/auth/SessionGate";
 import SimpleBottomNavigation from "@/components/common/BottomNavigation";
 import ReactQueryProvider from "@/lib/providers/ReactQueryProvider";
+
+import VisitTracker from "@/components/auth/VisitTracker";
 import GlobalTrackDialog from "@/components/common/GlobalTrackDialog";
 import MainPlayer from "@/components/common/MainPlayer";
+import AppSnackbar from "@/components/common/AppSnackbar";
 
 import 'flag-icons/css/flag-icons.min.css';
 import '@/styles/_style.scss';
-import VisitTracker from "@/components/auth/VisitTracker";
-import AppSnackbar from "@/components/common/AppSnackbar";
 
 const decoshadow = localFont({
   src: './fonts/Cafe24Decoshadow.woff2',

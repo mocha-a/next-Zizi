@@ -2,9 +2,8 @@
 
 import { DraggableProvided } from '@hello-pangea/dnd';
 import { SearchTrack } from '@/types/deezer/search';
-
-import TrackSelectItem from '../../../track/ui/TrackSelectItem';
 import DraggableItem from '@/components/common/dnd/DraggableItem';
+import TrackSelectItem from '../../../track/ui/TrackSelectItem';
 
 interface Props {
   track: SearchTrack;

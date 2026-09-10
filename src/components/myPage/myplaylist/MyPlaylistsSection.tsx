@@ -3,25 +3,27 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { DropResult } from '@hello-pangea/dnd';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+
 import { useUIStore } from '@/store/useUIStore';
+import { useSnackbarStore } from '@/store/useSnackbarStore';
 import { usePlaylistEditStore } from '@/store/usePlaylistEditStore';
 import { useUserProfile } from '@/hooks/useUserProfile';
 import { getPlaylists, deletePlaylists, updatePlaylistOrder } from '@/lib/api/myPlaylist';
 import { MyPlaylist } from '@/types/user/myPlaylist';
+
+import CDcase from '@/components/icons/CDcase';
+import EmptyState from '@/components/common/EmptyState';
 import TrashButton from '@/components/common/TrashButton';
+import AddPlaylistButton from '@/components/common/AddPlaylistButton';
 import MediaSkeleton from '@/components/loading/item/MediaSkeleton';
 import PlaylistListDnD from '@/components/entities/playlist/ui/playlist/PlaylistListDnD';
 import Check from '@/components/icons/Check';
 import ThumbnailGrid from './ThumbnailGrid';
 import PlaylistCard from '../../entities/playlist/ui/playlist/PlaylistCard';
 
-import '@/styles/myplaylist/NewPlaylist.scss';
-import AddPlaylistButton from '@/components/common/AddPlaylistButton';
-import { useSnackbarStore } from '@/store/useSnackbarStore';
-import EmptyState from '@/components/common/EmptyState';
-import CDcase from '@/components/icons/CDcase';
+import '@/styles/myPlaylist/newPlaylist.scss';
 
 const MyPlaylistsSection = () => {
   const { isEditMode, selectedIds, toggleSelect, setEditMode, setSelectedIds } = usePlaylistEditStore();

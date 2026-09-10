@@ -1,9 +1,9 @@
 import React from 'react'
 import { RecentPlaylist } from '@/types/recent';
-import RecentPlaylistCard from './RecentPlaylistCard';
 import MediaSkeleton from '@/components/loading/item/MediaSkeleton';
 import EmptyState from '@/components/common/EmptyState';
 import CDcase from '@/components/icons/CDcase';
+import RecentPlaylistCard from './RecentPlaylistCard';
 
 interface Props{
   items: RecentPlaylist[];

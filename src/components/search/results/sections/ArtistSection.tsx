@@ -5,13 +5,13 @@ import Link from 'next/link';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { SearchArtist } from '@/types/deezer/search';
+import EmptyState from '@/components/common/EmptyState';
 import ArtistCard from '@/components/entities/artist/ui/ArtistCard';
-import SectionHeader from '../../ui/SectionHeader';
 import ArtistSkeleton from '@/components/loading/item/ArtistSkeleton';
+import SectionHeader from '../../ui/SectionHeader';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
-import EmptyState from '@/components/common/EmptyState';
 
 interface Props {
   data: SearchArtist[];

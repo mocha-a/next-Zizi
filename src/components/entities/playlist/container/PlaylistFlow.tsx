@@ -1,9 +1,9 @@
-import TrackItem from '@/components/common/TrackItem';
-import TrackSkeleton from '@/components/loading/item/TrackSkeleton';
+import React from 'react'
+import { useQuery } from '@tanstack/react-query';
 import { getFlow } from '@/lib/api/playlist';
 import { Track } from '@/types/deezer/deezer';
-import { useQuery } from '@tanstack/react-query';
-import React from 'react'
+import TrackItem from '@/components/common/TrackItem';
+import TrackSkeleton from '@/components/loading/item/TrackSkeleton';
 
 interface Props{
   id: number;

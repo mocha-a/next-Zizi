@@ -1,11 +1,10 @@
 'use client';
 
 import { DraggableProvided } from '@hello-pangea/dnd';
-
 import { MyPlaylist } from '@/types/user/myPlaylist';
 import DraggableItem from '@/components/common/dnd/DraggableItem';
+import ThumbnailGrid from '@/components/myPage/myPlaylist/ThumbnailGrid';
 import PlaylistCard from './PlaylistCard';
-import ThumbnailGrid from '@/components/myPage/myplaylist/ThumbnailGrid';
 
 interface Props {
   playlist: MyPlaylist;

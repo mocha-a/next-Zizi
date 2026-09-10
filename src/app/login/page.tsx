@@ -3,13 +3,14 @@ import React, { useState } from 'react'
 import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react'
 import Link from 'next/link'
+
 import { FormTextFielFieldDatas } from '@/components/common/FormTextFields'
 import LongBtn from '@/components/common/LongBtn'
-import LoginButtons from '@/components/Login/LoginButton'
-
-import '../../styles/login/login.scss'
 import BottomDialog from '@/components/common/Dialog';
+import LoginButtons from '@/components/Login/LoginButton'
 import PasswordFind from '@/components/Login/PasswordFind';
+
+import '@/styles/login/login.scss'
 
 function Page() {
   const router = useRouter();

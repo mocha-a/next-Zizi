@@ -1,6 +1,7 @@
 import { genreIcons } from "@/constants/genreIcons";
 import { excludedGenres, genreMap } from "@/constants/metadata";
 import { api } from "./axios";
+import { DeezerGenre } from "@/types/deezer/deezer";
 
 export const getAllGenre = async () => { 
   try {
@@ -10,8 +11,8 @@ export const getAllGenre = async () => {
     const rawRes = res.data.data;
     
     const processedGenres = rawRes
-      .filter((genre: any) => !excludedGenres.includes(genre.name)) // 제외 장르 제거
-      .map((genre: any) => {
+      .filter((genre: DeezerGenre) => !excludedGenres.includes(genre.name)) // 제외 장르 제거
+      .map((genre: DeezerGenre) => {
         // 1. 이름 맵핑
         const mappedNme = genreMap[genre.name] || genre.name;
 
@@ -20,7 +21,7 @@ export const getAllGenre = async () => {
           name: mappedNme,
 
           // 매핑된 이름을 기준으로 아이콘 추가 (없으면 기본값)
-          icon: genreIcons[mappedNme] || genreIcons["default"]
+          icon: genreIcons[mappedNme] || genreIcons["defalut"],
         };
     });
   

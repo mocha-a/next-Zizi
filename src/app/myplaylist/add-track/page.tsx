@@ -5,6 +5,7 @@ import { useTrackStore } from '@/store/useSelectedTrackStore';
 import { useInfiniteList } from '@/hooks/useInfiniteList';
 import { SearchTrack } from '@/types/deezer/search';
 import { typeSearch } from '@/lib/api/serach';
+
 import Back from '@/components/icons/Back'
 import TabsContainer from '@/components/common/TabsContainer';
 import SearchBar from '@/components/search/ui/SearchBar';
@@ -12,7 +13,7 @@ import TrackSelectList from '@/components/entities/track/ui/TrackSelectList';
 import Recommendation from '@/components/entities/track/container/Recommendation';
 import RecentContent from '@/components/myPage/recent/RecentContent';
 
-import '@/styles/myplaylist/NewPlaylist.scss';
+import '@/styles/myPlaylist/newPlaylist.scss';
 
 const LIMIT = 50;
 

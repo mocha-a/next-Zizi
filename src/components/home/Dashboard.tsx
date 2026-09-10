@@ -1,21 +1,22 @@
 'use client';
 
+import { useSession } from "next-auth/react";
+import Image from "next/image";
+import Link from "next/link";
+import Skeleton from "@mui/material/Skeleton";
+import { useQuery } from "@tanstack/react-query";
 import { useUserProfile } from "@/hooks/useUserProfile";
 import { getChart } from "@/lib/api/chart";
 import { getPlaylists } from "@/lib/api/myPlaylist";
 import { MyPlaylist } from "@/types/user/myPlaylist";
-import { useQuery } from "@tanstack/react-query";
-import { useSession } from "next-auth/react";
-import Image from "next/image";
-import ThumbnailGrid from "../myPage/myplaylist/ThumbnailGrid";
-import Link from "next/link";
-import Skeleton from "@mui/material/Skeleton";
+import { Playlist } from '@/types/deezer/deezer';
+import ThumbnailGrid from "../myPage/myPlaylist/ThumbnailGrid";
 
 function Dashboard() {
     const { data: session } = useSession();
     const { data: user } = useUserProfile(session);
 
-    const { data: playlistsOfApi, isLoading : isApiLoading, error : isApiError } = useQuery<any, Error>({
+    const { data: playlistsOfApi, isLoading : isApiLoading, error : isApiError } = useQuery<Playlist[], Error>({
         queryKey: ['playlistsOfApi', 'playlistsOfApi'],
         queryFn: () =>  getChart.getGlobalTracks({ type: 'playlists' }),
         staleTime: 1000 * 60 * 30,

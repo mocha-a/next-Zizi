@@ -1,8 +1,8 @@
 'use client';
 
-import { getAllGenre } from '@/lib/api/genre';
-import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { getAllGenre } from '@/lib/api/genre';
 
 interface GenreTypes {
   id: string;
@@ -20,7 +20,7 @@ export function GetDailyGenre() {
             if ( saved && savedDate === today ) {
                 try {
                     return JSON.parse(saved); // 저장된 값이 있으면 사용
-                } catch (e) {
+                } catch {
                     return null;
                 }
             }
@@ -28,10 +28,7 @@ export function GetDailyGenre() {
         return null; // 저장된 게 없으면 null
     });
 
-    // 기본 장르 설정 (API 실패 시 대비)
-    const DEFAULT_GENRE = { id: "132", name: "Pop" };
-
-    const { data: genreList, isLoading, error } = useQuery({
+    const { data: genreList, error } = useQuery({
         queryKey: ['genres'],
         queryFn: getAllGenre,
         staleTime: 1000 * 60 * 60 * 24,
@@ -53,7 +50,7 @@ export function GetDailyGenre() {
         const fallback = { id: "132", name: "Pop" };
         setDailyGenre(fallback);
         }
-    },[genreList, today, dailyGenre]);
+    },[genreList, today, dailyGenre, error]);
 
     return { dailyGenre };
 }

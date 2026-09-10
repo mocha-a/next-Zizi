@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 
-import '@/styles/myplaylist/thumbnailGrid.scss';
+import '@/styles/myPlaylist/thumbnailGrid.scss';
 
 interface Props {
   thumbnails: string[];

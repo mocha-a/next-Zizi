@@ -8,6 +8,7 @@ import { recent } from '@/lib/recent';
 import { formatDate, formatUpDate } from '@/lib/format';
 import { getCreator, getPlaylist, getTranslate } from '@/lib/api/playlist';
 import { Playlist } from '@/types/deezer/deezer';
+import Skeleton from '@mui/material/Skeleton';
 
 import Back from '@/components/icons/Back';
 import CreatorBadge from '@/components/entities/playlist/ui/playlist/CreatorBadge';
@@ -15,10 +16,9 @@ import PlaylistTrackList from '@/components/entities/playlist/container/Playlist
 import PlaylistFlow from '@/components/entities/playlist/container/PlaylistFlow';
 import TabsContainer from '@/components/common/TabsContainer';
 import ReadMore from '@/components/entities/playlist/ui/ReadMore';
+import MediaPageSkeleton from '@/components/loading/page/MediaPageSkeleton';
 
 import '@/styles/playlist/playlist.scss';
-import MediaPageSkeleton from '@/components/loading/page/MediaPageSkeleton';
-import Skeleton from '@mui/material/Skeleton';
 
 const Page = () => {
   const { id } = useParams() as { id: string };
@@ -31,7 +31,6 @@ const Page = () => {
     queryFn: () => getPlaylist(Number(id)),
     enabled: !!id,
   });
-  // console.log(playlist);
 
   // 플레이리스트 제작자 api
   const creatorId = playlist?.creator?.id;

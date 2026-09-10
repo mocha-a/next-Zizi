@@ -1,9 +1,9 @@
 import React from 'react'
-import Back from '@/components/icons/Back'
 import JoinForm from './joinForm';
+import Back from '@/components/icons/Back'
+import { JoinField } from '@/types/join';
 
 import '../../styles/join/join.scss'
-import { JoinField } from '@/types/join';
 
 function page() {
     const data: JoinField[] = [

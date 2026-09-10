@@ -2,8 +2,8 @@
 import { Playlist } from '@/types/deezer/deezer';
 import InfiniteScroll from '@/components/common/InfiniteScroll';
 import MediaSkeleton from '@/components/loading/item/MediaSkeleton';
-import PlaylistCard from './PlaylistCard';
 import EmptyState from '@/components/common/EmptyState';
+import PlaylistCard from './PlaylistCard';
 
 interface Props {
   query: string;

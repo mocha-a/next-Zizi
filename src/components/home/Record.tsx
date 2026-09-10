@@ -18,26 +18,6 @@ import 'swiper/css/grid';
 import 'swiper/css/pagination';
 
 function Record() {
-    // const testdata = [
-    //     {
-    //         id: 0,
-    //         title: '그 시절 여름 기억조작 레트로 시티팝',
-    //         imgUrl: 'record0.png',
-    //         recordUrl: '',
-    //     },
-    //     {
-    //         id: 1,
-    //         title: '오래된 로맨스 영화 속 엔딩 크레딧처럼',
-    //         imgUrl: 'record1.png',
-    //         recordUrl: '',
-    //     },
-    //     {
-    //         id: 2,
-    //         title: '감성을 파고드는 드라마 속 발라드 OST',
-    //         imgUrl: 'record2.png',
-    //         recordUrl: '',
-    //     },
-    // ];
     const router = useRouter();
     const { data: session } = useSession();
     const { dailyGenre } = GetDailyGenre();

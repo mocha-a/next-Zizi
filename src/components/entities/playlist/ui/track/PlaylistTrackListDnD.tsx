@@ -2,7 +2,6 @@
 
 import { DropResult } from '@hello-pangea/dnd';
 import { SearchTrack } from '@/types/deezer/search';
-
 import DndList from '@/components/common/dnd/DndList';
 import DraggableTrackCard from '@/components/entities/playlist/ui/track/DraggableTrackCard';
 

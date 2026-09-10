@@ -5,6 +5,7 @@ import { DropResult } from '@hello-pangea/dnd';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useUIStore } from '@/store/useUIStore';
 import { useTrackStore } from '@/store/useSelectedTrackStore';
+import { useSnackbarStore } from '@/store/useSnackbarStore';
 import { createPlaylist, updatePlaylist } from '@/lib/api/myPlaylist';
 import { MyPlaylist, UpdatePlaylistParams } from '@/types/user/myPlaylist';
 import { Track } from '@/types/deezer/deezer';
@@ -14,8 +15,7 @@ import TrashButton from '@/components/common/TrashButton';
 import NewPlaylistForm from '@/components/entities/playlist/ui/playlist/NewPlaylistForm';
 import PlaylistTrackListDnD from '@/components/entities/playlist/ui/track/PlaylistTrackListDnD';
 
-import '@/styles/myplaylist/NewPlaylist.scss';
-import { useSnackbarStore } from '@/store/useSnackbarStore';
+import '@/styles/myPlaylist/newPlaylist.scss';
 
 interface Props {
   mode?: 'create' | 'edit';
@@ -81,23 +81,18 @@ const MyPlaylistEditor = ({ mode='create', myplaylistData, tracksData } : Props)
     }
   });
 
-  const initEditor = () => {
+  useEffect(() => {
+    if (mode !== 'edit' || !myplaylistData || !tracksData) return;
+
     const store = useTrackStore.getState();
 
     if (store.hasInitialized) return;
-    if (!myplaylistData || !tracksData) return;
 
     store.setTitle(myplaylistData.title);
     store.setDescription(myplaylistData.description);
     store.setTracks(tracksData);
 
     store.setInitialized(true);
-  };
-
-  useEffect(() => {
-    if (mode === 'edit' && myplaylistData && tracksData) {
-      initEditor();
-    }
   }, [mode, myplaylistData, tracksData]);
 
   useEffect(() => {

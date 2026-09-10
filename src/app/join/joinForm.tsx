@@ -4,9 +4,10 @@ import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation';
 import { signIn } from "next-auth/react";
 import { useMutation } from '@tanstack/react-query';
-import { JoinField } from '@/types/join';
-import { checkDuplicate, join } from '@/lib/api/user';
 import { validate } from '@/lib/validation';
+import { checkDuplicate, join } from '@/lib/api/user';
+import { JoinField } from '@/types/join';
+
 import { FormTextFielFieldDatas } from '@/components/common/FormTextFields'
 import LongBtn from '@/components/common/LongBtn';
 import Agree from '@/components/join/Agree';
@@ -115,7 +116,7 @@ function JoinForm({ listData }: { listData: JoinField[] }) {
         return;
       }
 
-      // 3️⃣ 통과 → 회원가입
+      // 통과 → 회원가입
       mutate({
         name: formData.name,
         username: formData.username,

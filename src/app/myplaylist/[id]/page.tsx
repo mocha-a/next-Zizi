@@ -16,9 +16,9 @@ import ReadMore from '@/components/entities/playlist/ui/ReadMore';
 import CreatorBadge from '@/components/entities/playlist/ui/playlist/CreatorBadge';
 import PlaylistTrackList from '@/components/entities/playlist/container/PlaylistTrackList';
 import MediaPageSkeleton from '@/components/loading/page/MediaPageSkeleton';
-import ThumbnailGrid from '@/components/myPage/myplaylist/ThumbnailGrid';
+import ThumbnailGrid from '@/components/myPage/myPlaylist/ThumbnailGrid';
 
-import '@/styles/myplaylist/NewPlaylist.scss';
+import '@/styles/myPlaylist/newPlaylist.scss';
 
 const Page = () => {
   const queryClient = useQueryClient();
@@ -65,7 +65,7 @@ const Page = () => {
     (acc, cur) => acc + cur.duration,
     0
   );
-// console.log(myplaylist);
+
   return (
     <div className='playlist-detail'>
       <div className='playlist-header detailHeader'>

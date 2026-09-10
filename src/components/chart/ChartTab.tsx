@@ -10,7 +10,6 @@ function ChartTab() {
     const tabs = [
         { label: '인기차트', content: <ChartTabContent tabType={'top'} /> },
         { label: '장르별', content: <ChartTabContent tabType={'genre'} /> },
-      //{ label: '무드별', content: <ChartTabContent tabType={'mood'} /> },
     ];
 
   return (

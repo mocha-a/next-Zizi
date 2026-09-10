@@ -4,7 +4,7 @@ import React from 'react'
 import PageTitle from '@/components/common/PageTitle'
 import ChartTab from '@/components/chart/ChartTab';
 
-import '../../styles/chart/chart.scss';
+import '@/styles/chart/chart.scss';
 
 export default function Page() {
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 import { MyPlaylist } from '@/types/user/myPlaylist';
-import ThumbnailGrid from "../myPage/myplaylist/ThumbnailGrid";
+import ThumbnailGrid from "../myPage/myPlaylist/ThumbnailGrid";
 
 // Swiper 스타일 CSS 필수 임포트
 import 'swiper/css';

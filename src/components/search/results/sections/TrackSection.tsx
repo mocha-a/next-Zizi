@@ -3,8 +3,8 @@ import React from 'react';
 import { SearchTrack } from '@/types/deezer/search';
 import TrackItem from '@/components/common/TrackItem';
 import TrackSkeleton from '@/components/loading/item/TrackSkeleton';
-import SectionHeader from '../../ui/SectionHeader';
 import EmptyState from '@/components/common/EmptyState';
+import SectionHeader from '../../ui/SectionHeader';
 
 interface Props {
   data: SearchTrack[];

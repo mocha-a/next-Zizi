@@ -1,4 +1,4 @@
-export const genreIcons: Record<string, any> = {
+export const genreIcons: Record<string, string> = {
     // "defalut": "💿",
     "Pop": "🎤",
     "Hip-Hop": "😎",

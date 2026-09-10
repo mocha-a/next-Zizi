@@ -2,9 +2,9 @@ import React from 'react';
 import Link from 'next/link';
 import { SearchPlaylist } from '@/types/deezer/search';
 import PlaylistCard from '@/components/entities/playlist/ui/playlist/PlaylistCard';
-import SectionHeader from '../../ui/SectionHeader';
 import MediaSkeleton from '@/components/loading/item/MediaSkeleton';
 import EmptyState from '@/components/common/EmptyState';
+import SectionHeader from '../../ui/SectionHeader';
 
 interface Props {
   data: SearchPlaylist[];

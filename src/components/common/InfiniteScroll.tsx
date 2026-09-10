@@ -35,7 +35,7 @@ const InfiniteScroll: React.FC<InfiniteScrollProps> = ({
     <>
       {children}
 
-      {/* 👇 이게 핵심 (grid 영향 안 받음) */}
+      {/* 이게 핵심 (grid 영향 안 받음) */}
       {hasMore && <div ref={lastRef} />}
     </>
   );

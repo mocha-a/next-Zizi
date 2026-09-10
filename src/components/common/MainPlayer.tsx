@@ -1,7 +1,7 @@
 'use client';
 
-import { usePlayerStore } from '@/store/usePlayerStore';
 import React, { useState } from 'react'
+import { usePlayerStore } from '@/store/usePlayerStore';
 import DeezerPlayer from './DeezerPlayer';
 import Close from '../icons/Close';
 

@@ -44,7 +44,7 @@ const Page = () => {
     recent({
       type: 'album',
       id,
-      isLoggedIn: !!session,
+      isLoggedIn: !!session?.user?.id,
     });
   }, [id, session?.user?.id]);
 

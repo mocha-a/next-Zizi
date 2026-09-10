@@ -1,24 +1,25 @@
 'use client';
 
-import { Track } from "@/types/deezer/deezer";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
-import { useUserProfile } from "@/hooks/useUserProfile";
-import { MyPlaylist, UpdatePlaylistParams } from "@/types/user/myPlaylist";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { getPlaylists, updatePlaylist } from "@/lib/api/myPlaylist";
-import Back from "../icons/Back";
-import Plus from "../icons/Plus";
-import TagBtn from "./TagBtn";
-import PlaylistSwiplerinDialog from "./PlaylistSwiperinDialog";
 import TextField from "@mui/material/TextField";
-import Popup from "./Popup";
+import { useUserProfile } from "@/hooks/useUserProfile";
 import { useTrackStore } from "@/store/useSelectedTrackStore";
 import { useTrackDialog } from "@/store/useTrackDialog";
 import { useSnackbarStore } from "@/store/useSnackbarStore";
+import { getPlaylists, updatePlaylist } from "@/lib/api/myPlaylist";
 import { queryClient } from "@/lib/react-query/queryClient";
+import { MyPlaylist, UpdatePlaylistParams } from "@/types/user/myPlaylist";
+import { Track } from "@/types/deezer/deezer";
+
+import PlaylistSwiplerinDialog from "./PlaylistSwiperinDialog";
 import EmptyState from "./EmptyState";
+import Popup from "./Popup";
+import TagBtn from "./TagBtn";
+import Back from "../icons/Back";
+import Plus from "../icons/Plus";
 
 interface Types {
   trackData: Track;  // data
@@ -124,7 +125,7 @@ export default function TrackDialogContent({ trackData }: Types) {
       }
 
       // 기존 플리 곡 id 목록 추출
-      const existingTrackIds = (targetPlaylist.tracks || []).map((track: any) => ({
+      const existingTrackIds = (targetPlaylist.tracks).map((track) => ({
         id: Number(track.trackId),
       }));
 
@@ -132,7 +133,7 @@ export default function TrackDialogContent({ trackData }: Types) {
       const currentTrackId = Number(trackData.id);
 
       // 중복 검사
-      const isDuplicate = existingTrackIds.some((track: any) => track.id === currentTrackId);
+      const isDuplicate = existingTrackIds.some((track) => track.id === currentTrackId);
       if (isDuplicate) {
         show('⚠️ 이미 플레이리스트에 있는 곡입니다!');
         closeDialog();

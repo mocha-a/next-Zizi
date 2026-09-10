@@ -2,9 +2,9 @@ import React from 'react'
 import { formatDuration } from '@/lib/format';
 import { Track } from '@/types/deezer/deezer';
 import TrackItem from '@/components/common/TrackItem';
+import TrackSkeleton from '@/components/loading/item/TrackSkeleton';
 
 import '@/styles/playlist/playlist.scss';
-import TrackSkeleton from '@/components/loading/item/TrackSkeleton';
 
 interface Props {
   track: Track[];

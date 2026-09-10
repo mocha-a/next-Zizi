@@ -1,9 +1,9 @@
 import React from 'react'
 import { RecentAlbum } from '@/types/recent';
-import RecentAlbumCard from './RecentAlbumCard';
 import MediaSkeleton from '@/components/loading/item/MediaSkeleton';
 import EmptyState from '@/components/common/EmptyState';
 import CDcase from '@/components/icons/CDcase';
+import RecentAlbumCard from './RecentAlbumCard';
 
 interface Props{
   items: RecentAlbum[];

@@ -12,9 +12,9 @@ import Back from '@/components/icons/Back';
 import TabsContainer from '@/components/common/TabsContainer';
 import ArtistAlbums from '@/components/entities/artist/container/ArtistAlbums';
 import ArtistTracks from '@/components/entities/artist/container/ArtistTrack';
+import ArtistPageSkeleton from '@/components/loading/page/ArtistPageSkeleton';
 
 import '@/styles/artist/artist.scss';
-import ArtistPageSkeleton from '@/components/loading/page/ArtistPageSkeleton';
 
 const Page = () => {
   // URL에서 아티스트 id 추출
@@ -43,10 +43,10 @@ const Page = () => {
     recent({
       type: 'artist',
       id,
-      isLoggedIn: !!session,
+      isLoggedIn: !!session?.user?.id,
     });
   }, [id, session?.user?.id]);
-  // console.log(artist);
+
   return (
     <div className="artist-detail">
       {isLoading ? (

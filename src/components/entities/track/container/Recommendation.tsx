@@ -1,10 +1,10 @@
-import TrackSkeleton from '@/components/loading/item/TrackSkeleton';
+import React from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { useTrackStore } from '@/store/useSelectedTrackStore';
 import { getChart } from '@/lib/api/chart';
 import { Track } from '@/types/deezer/deezer';
-import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import TrackSkeleton from '@/components/loading/item/TrackSkeleton';
 import TrackSelectItem from '../ui/TrackSelectItem';
-import { useTrackStore } from '@/store/useSelectedTrackStore';
 
 const Recommendation = () => {
   const toggleSelect = useTrackStore(state => state.toggleSelect);

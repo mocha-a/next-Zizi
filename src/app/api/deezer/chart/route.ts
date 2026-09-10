@@ -9,7 +9,7 @@ export async function GET(request: Request) {
   const limit = searchParams.get('limit') || '50';
 
   try {
-    let targetUrl = ( genreId && genreId !== '0' )
+    const targetUrl = ( genreId && genreId !== '0' )
     ? `https://api.deezer.com/editorial/${genreId}/charts` // 장르별 차트
     : 'https://api.deezer.com/chart/0';                    // 기본 차트
 

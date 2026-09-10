@@ -1,14 +1,15 @@
 import React from 'react'
-import TagBtn from '@/components/common/TagBtn';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode } from 'swiper/modules';
+import { ChartTag } from '@/types/chart';
+import TagBtn from '@/components/common/TagBtn';
 
 import 'swiper/css';
 import 'swiper/css/free-mode';
 
 interface TagSwiperProps {
     // tabType: 'top' | 'genre' | 'mood';
-    tagList: any[];
+    tagList: ChartTag[];
     selectedTag: string;
     setSelectedTag: (tag: string) => void;
 }

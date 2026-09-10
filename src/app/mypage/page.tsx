@@ -11,13 +11,13 @@ import { getGreeting } from '@/lib/getGreeting';
 import LogoutButton from '@/components/auth/LogoutButton';
 import PageTitle from '@/components/common/PageTitle';
 import TabsContainer from '@/components/common/TabsContainer';
+import Popup from '@/components/common/Popup';
 import MyRoom from '@/components/myPage/MyRoom';
 import CdImage from '@/components/myPage/CdImage';
-import MyPlaylistsSection from '@/components/myPage/myplaylist/MyPlaylistsSection';
+import MyPlaylistsSection from '@/components/myPage/myPlaylist/MyPlaylistsSection';
 import RecentSection from '@/components/myPage/recent/RecentSection';
 
 import '@/styles/myPage/myPage.scss';
-import Popup from '@/components/common/Popup';
 
 function Page() {
   const { isEditMode } = usePlaylistEditStore();

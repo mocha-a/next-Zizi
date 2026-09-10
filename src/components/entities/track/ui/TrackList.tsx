@@ -1,11 +1,11 @@
 'use client';
 
 import React from 'react';
+import { Track } from '@/types/deezer/deezer';
 import TrackItem from '@/components/common/TrackItem';
 import InfiniteScroll from '@/components/common/InfiniteScroll';
 import TrackSkeleton from '@/components/loading/item/TrackSkeleton';
 import EmptyState from '@/components/common/EmptyState';
-import { Track } from '@/types/deezer/deezer';
 
 interface Props {
   query?: string;

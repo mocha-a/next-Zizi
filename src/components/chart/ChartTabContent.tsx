@@ -1,15 +1,14 @@
 "use client";
 
 import React, { useEffect, useMemo, useState } from 'react'
-// import { allTags } from '@/constants/chartTags';
 import TrackItem from '@/components/common/TrackItem';
 import ChartTagSwiper from './ChartTagSwiper';
 import { useQuery } from '@tanstack/react-query';
-import { Track } from '@/types/deezer/deezer';
 import { getChart } from '@/lib/api/chart';
 import { getAllGenre } from '@/lib/api/genre';
-import TrackSkeleton from '../loading/item/TrackSkeleton';
+import { Track } from '@/types/deezer/deezer';
 import { useInfiniteList } from '@/hooks/useInfiniteList';
+import TrackSkeleton from '../loading/item/TrackSkeleton';
 import InfiniteScroll from '../common/InfiniteScroll';
 
 interface ChartTabContentProps {

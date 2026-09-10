@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // 1. 유저 찾기
+    // 유저 찾기
     const user = await prisma.user.findUnique({
       where: {
         username,
@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // 2. 소셜 로그인 계정 체크 (password 없는 경우)
+    // 소셜 로그인 계정 체크 (password 없는 경우)
     if (!user.password) {
       return NextResponse.json(
         { message: '소셜 로그인으로 가입된 계정입니다.' },
@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // 3. 비밀번호 비교
+    // 비밀번호 비교
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
@@ -48,7 +48,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // 4. 성공 (여기서 JWT or session 처리 가능)
+    // 성공 (여기서 JWT or session 처리 가능)
     return NextResponse.json({
       success: true,
       user: {

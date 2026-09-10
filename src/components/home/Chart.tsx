@@ -2,15 +2,15 @@
 
 import React, { useEffect } from "react";
 import { usePathname } from "next/navigation";
-// import { Track } from "@/pages/api/lastfm/lastfm";
-import TrackItem from "../common/TrackItem";
-import { useTrackDialog } from "@/store/useTrackDialog";
-import Dialog from "@mui/material/Dialog";
-import TrackDialogContent from "../common/TrackDialogContent";
 import { useQuery } from "@tanstack/react-query";
+import Dialog from "@mui/material/Dialog";
+import { useTrackDialog } from "@/store/useTrackDialog";
 import { getChart } from "@/lib/api/chart";
 import { Track } from '@/types/deezer/deezer';
+
 import TrackSkeleton from "../loading/item/TrackSkeleton";
+import TrackDialogContent from "../common/TrackDialogContent";
+import TrackItem from "../common/TrackItem";
 
 export default function TopTracksList() {
   const pathname = usePathname();
@@ -25,7 +25,7 @@ export default function TopTracksList() {
 
   useEffect(() => {
     closeDialog();
-  },[pathname])
+  },[pathname, closeDialog]);
 
   // useEffect(() => {
   //   fetch('/api/lastfm/lastfm')

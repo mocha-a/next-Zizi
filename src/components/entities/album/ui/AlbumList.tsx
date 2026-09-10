@@ -3,8 +3,8 @@ import type { SearchArtist } from '@/types/deezer/search';
 import type { Album } from '@/types/deezer/deezer';
 import InfiniteScroll from '@/components/common/InfiniteScroll';
 import MediaSkeleton from '@/components/loading/item/MediaSkeleton';
-import AlbumCard from './AlbumCard';
 import EmptyState from '@/components/common/EmptyState';
+import AlbumCard from './AlbumCard';
 
 interface Props {
   query?: string;
