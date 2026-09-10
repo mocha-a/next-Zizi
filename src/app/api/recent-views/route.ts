@@ -96,7 +96,7 @@ export async function PUT(req: Request) {
 }
 
 // Deezer에서 최근 기록 상세 정보 가져오기
-export const getRecentDetail = async ( type: TypeKey, targetId: string ) => {
+const getRecentDetail = async ( type: TypeKey, targetId: string ) => {
   let endpoint = '';
 
   switch (type) {
