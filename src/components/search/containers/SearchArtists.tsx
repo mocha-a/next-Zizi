@@ -58,17 +58,16 @@ const SearchArtists = () => {
     }
   })();
 
+
   const getArtistLevel = (fans: number) => {
     if (fans > 500000)
-      return { 
-              label: 'World Star👑', 
-              src: '/imgs/wolrd-star.gif',
-              className: 'world' 
-            };
+      return { label: 'World Star👑', className: 'world' };
+
     if (fans > 100000)
-      return { label: 'Top Star', className: 'top' };
+      return { label: 'Top Star🥈', className: 'top' };
+
     if (fans > 10000)
-      return { label: 'Popular Star', className: 'popular' };
+      return { label: 'Popular Star🥉', className: 'popular' };
 
     return null;
   };

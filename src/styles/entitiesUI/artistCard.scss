@@ -17,10 +17,25 @@
     .artist-box-info{
         >img{ width: 80px;}
         .artist-level{
+            display: inline-block;
+            color: $white;
+            padding: 2px 8px;
+            margin-bottom: 5px;
+            border-radius: 5px;
             font-family: var(--font-Galmuri9);
-            font-weight: normal;
-            font-size: 10px;
-            margin-bottom: 10px;
+            font-size: 9px;
+            margin-bottom: 5px;
+        }
+         .world {
+            background: #FFD620;
+        }
+
+        .top {
+            background: #E2E2E2;
+        }
+
+        .popular {
+            background: #cd7f32;
         }
         .artist-name{
             @include ellipsis(2);

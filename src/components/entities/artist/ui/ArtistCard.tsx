@@ -11,7 +11,6 @@ interface Props {
   fan?: number;
   level?: {
     label: string;
-    src?: string;
     className: string;
   } | null;
   showFans: boolean;
@@ -30,20 +29,7 @@ const ArtistCard = ({ name, imageUrl, fan, level, showFans, onClick }: Props) =>
         />
       </div>
       <div className='artist-box-info'>
-        {level ? (
-          level.src ? (
-            /* GIF 이미지가 있는 경우 */
-            <Image
-              src={level.src} 
-              alt={level.label} 
-              width={1}
-              height={1}// 크기 조절
-            />
-          ) : (
-            /* 일반 텍스트인 경우 */
-            <span>{level.label}</span>
-          )
-        ) : null}
+        {level && <span className={`artist-level ${level.className}`}>{level.label}</span>}
         <p className='artist-name'>{name}</p>
         {showFans&& 
         <div className='artist-fans'>
