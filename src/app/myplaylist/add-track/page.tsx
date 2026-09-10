@@ -12,7 +12,7 @@ import TrackSelectList from '@/components/entities/track/ui/TrackSelectList';
 import Recommendation from '@/components/entities/track/container/Recommendation';
 import RecentContent from '@/components/myPage/recent/RecentContent';
 
-import '@/styles/myPlaylist/NewPlaylist.scss';
+import '@/styles/myplaylist/NewPlaylist.scss';
 
 const LIMIT = 50;
 
