@@ -5,6 +5,7 @@ import SessionGate from "@/components/auth/SessionGate";
 import SimpleBottomNavigation from "@/components/common/BottomNavigation";
 import ReactQueryProvider from "@/lib/providers/ReactQueryProvider";
 
+import Splash from '@/components/common/Splash';
 import VisitTracker from "@/components/auth/VisitTracker";
 import GlobalTrackDialog from "@/components/common/GlobalTrackDialog";
 import MainPlayer from "@/components/common/MainPlayer";
@@ -60,9 +61,8 @@ export default function RootLayout({
       ${emoji.variable}
       ${gmarketBold.variable}
       ${gmarketMedium.variable}`}>
-      <body
-        className={'antialiased'}
-      >
+      <body className={'antialiased'} >
+        <Splash/>
         <ReactQueryProvider>              {/* 서버 데이터 관리 */}
           <NextAuthProvider>              {/* 인증 상태 관리 */}  
             <VisitTracker />              {/* 마지막 접속 */}  

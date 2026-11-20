@@ -1,0 +1,63 @@
+.splash-overlay {
+  width: 100%;
+  max-width: 390px;
+  height: 100vh;
+
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+
+  z-index: 99999;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: #E9F7FF;
+  // background-image:
+  //   linear-gradient(#fff 1px, transparent 1px),
+  //   linear-gradient(90deg, #fff 1px, transparent 1px);
+  // background-size: 20px 20px;
+}
+
+.splash-CD {
+  position: relative;
+  width: 310px;
+  height: 264px;
+
+  .splash-CDcase {
+    width: 310px;
+    height: 264px;
+  }
+
+  .splash-CDimage {
+    width: 253px;
+    height: 253px;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -116px;
+    margin-top: -126px;
+
+    animation: spin 3s linear infinite;
+  }
+}
+
+.splash .splash-CDimage {
+  animation: spin 3s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// .splash{
+//   margin-left: 36px;
+// }
